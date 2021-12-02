@@ -1,0 +1,43 @@
+.sidebar {
+  &__nav {
+    background: #15171c;
+    width: 250px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: -250px;
+    transition: 350ms;
+    z-index: 999;
+
+    &--active {
+      left: 0;
+    }
+  }
+
+  &__wrap {
+    margin-top: 5rem;
+    width: 100%;
+  }
+
+  &__icon {
+    margin-right: -2rem;
+    font-size: 2rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #15171c;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    opacity: .5;
+  }
+
+  // &__arrow {
+  //   background-color: aqua;
+  //   height: 10vh;
+  //   width: 20rem;
+  //   position: fixed;
+  // }
+}

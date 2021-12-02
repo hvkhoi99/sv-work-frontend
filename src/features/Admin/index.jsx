@@ -1,6 +1,7 @@
 import NotFoundPage from 'components/NotFound';
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import AdminNav from './components/Nav';
 import Sidebar from './components/Sidebar';
 import AdminDashboardPage from './pages/Dashboard';
 import VerificationPage from './pages/VerificationPage';
@@ -14,6 +15,7 @@ function AdminFeature(props) {
 
   return (
     <>
+      <AdminNav />
       <Sidebar />
       <Switch>
         <Route exact path={match.url} component={AdminDashboardPage} />

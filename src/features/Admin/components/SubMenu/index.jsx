@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import './styles.scss';
+import './SubMenu.scss';
 
 const SubMenu = ({ item, onUpdateMenuStatus, index }) => {
   const history = useHistory();

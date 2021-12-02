@@ -1,15 +1,23 @@
-import logo from '../assets/img/logo.png';
 import home from '../assets/img/home.png';
 import notFound from '../assets/img/not-found.png';
 import emoji from '../assets/img/emoji.png';
 import minami from '../assets/img/minami.jpg';
+import bgRight from '../assets/img/bg-right.png';
+import background from '../assets/img/background.png';
+import fptSoftware from '../assets/img/fpt-software.jpg';
+import smDot from '../assets/img/smDot.png';
+import eventcircle from '../assets/img/eventcircle.png';
 
 const Images = {
-  logo,
   home,
   notFound,
   emoji,
-  minami
+  minami,
+  bgRight,
+  background,
+  fptSoftware, 
+  smDot,
+  eventcircle
 }
 
 export default Images;
