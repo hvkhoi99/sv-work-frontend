@@ -1,0 +1,87 @@
+@import "variables.scss";
+@import "typography.scss";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  overflow-x: hidden;
+}
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  text-transform: initial;
+}
+ul {
+  list-style: inside;
+}
+ol {
+  list-style: decimal;
+}
+body {
+  font-size: 16px;
+  font-family: "Samsung Sharp Sans";
+  line-height: 1;
+}
+
+.wrapper {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.MuiSvgIcon-colorPrimary {
+  color: #0dab42 !important;
+}
+
+@mixin buttonPrimary($width, $height, $left, $top) {
+  width: $width;
+  height: $height;
+  left: $left;
+  top: $top;
+
+  background: $primary-color;
+  border-radius: 10px;
+  border: none;
+
+  font-family: "Samsung Sharp Sans";
+
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  color: $white-color;
+
+  cursor: pointer;
+}
+
+@mixin container {
+  width: 100%;
+}
+
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin centerOption($flexDirection, $justifyContent, $alignItem) {
+  display: flex;
+  align-items: $alignItem;
+  flex-direction: $flexDirection;
+  justify-content: $justifyContent;
+}
+
+@mixin background() {
+  background-image: url("../../img/background.png");
+}
+.MuiTypography-body1 {
+  font-family: "Samsung Sharp Sans" !important;
+}
+
+.MuiTypography-body2 {
+  font-family: "Samsung Sharp Sans Regular" !important;
+}
