@@ -1,22 +1,33 @@
 .nav {
-  background: #242222;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  // width: 4rem;
 
   &__icon {
     background-color: #242222;
-    margin-left: 2rem;
     font-size: 2rem;
-    height: 80px;
+    height: 5rem;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-evenly;
     align-items: center;
+    width: 12rem;
+    margin: 1rem 1rem 0 0;
+    border-radius: 5rem;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  }
+
+  &__span {
+    font-size: 2rem;
+    font-weight: normal;
+    height: 5rem;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    // width: 12rem;
+    margin: 1rem 0 0 3rem;
   }
 
   &__options {
-    margin-right: 2rem;
     font-size: 2rem;
     height: 80px;
     display: flex;
@@ -54,6 +65,7 @@
     height: 5rem;
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: #15171c;
     border-top-right-radius: 1rem;
     border-bottom-right-radius: 1rem;

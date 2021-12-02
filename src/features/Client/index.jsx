@@ -3,9 +3,7 @@ import Header from 'components/Header';
 import NotFoundPage from 'components/NotFound';
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import EventPage from './Event';
 import HomePage from './Home';
-import SignUpPage from './SignUp';
 
 ClientFeature.propTypes = {
 

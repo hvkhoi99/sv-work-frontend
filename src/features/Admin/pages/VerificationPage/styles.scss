@@ -1,0 +1,25 @@
+.verification {
+  display: flex;
+  flex-direction: row;
+  margin: 2rem;
+
+  &__company {
+    width: 40%;
+
+    &__item {
+      display: flex;
+      flex-direction: row;
+      background-color: aqua;
+
+      & > div {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+
+  &__detail {
+    width: 100%;
+    height: auto;
+  }
+}
