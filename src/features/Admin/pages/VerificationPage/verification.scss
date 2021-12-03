@@ -1,17 +1,14 @@
 .verification {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   background-image: url("../../../../assets/img/background.png");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  color: #fff;
   
   &__main {
     display: flex;
     flex-direction: row;
-    margin: 2rem ;
+    margin: 8rem 2rem 2rem 2rem ;
     width: 100%;
   }
 
@@ -19,8 +16,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    width: 40%;
-    margin-left: 14rem;
+    // width: 30%;
+    margin-left: 15rem;
 
     &__item {
       display: flex;
@@ -71,13 +68,14 @@
     justify-content: center;
     width: 100%;
     height: auto;
+    // background: blue;
 
     &__form {
       display: flex;
       flex-direction:column;
       padding: 2rem;
       font-size: 1.5rem;
-      width: 75%;
+      width: 85%;
       border-radius: 1rem;
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       
@@ -102,27 +100,9 @@
     justify-content: center;
     align-items: flex-end;
     height: 4rem;
-    // width: 60%;
 
     & > button {
       border-radius: 1.5rem;
     }
-  }
-
-  // &__nav {
-  //   display: flex;
-  //   justify-content: space-between;
-  // }
-}
-
-.nav {
-  &__span {
-    font-size: 2rem;
-    font-weight: normal;
-    height: 4rem;
-    display: flex;
-    align-items: center;
-    // width: 12rem;
-    margin: 0 0 1rem -28rem;
   }
 }

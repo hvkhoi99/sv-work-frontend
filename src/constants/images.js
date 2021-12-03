@@ -7,6 +7,7 @@ import background from '../assets/img/background.png';
 import fptSoftware from '../assets/img/fpt-software.jpg';
 import smDot from '../assets/img/smDot.png';
 import eventcircle from '../assets/img/eventcircle.png';
+import admin from '../assets/img/admin.png';
 
 const Images = {
   home,
@@ -17,7 +18,8 @@ const Images = {
   background,
   fptSoftware, 
   smDot,
-  eventcircle
+  eventcircle,
+  admin
 }
 
 export default Images;

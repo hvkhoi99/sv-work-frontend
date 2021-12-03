@@ -12,9 +12,15 @@ AdminNav.propTypes = {
 function AdminNav(props) {
   const history = useHistory();
   const [hiddenLogout, setHiddenLogout] = useState(true);
+
   const showLogout = () => {
     setHiddenLogout(!hiddenLogout);
   }
+
+  const showNotification = () => {
+    setHiddenLogout(true);
+  }
+
   const logOut = () => {
     setHiddenLogout(!hiddenLogout);
     history.push("/");
@@ -23,11 +29,11 @@ function AdminNav(props) {
   return (
     <div className="nav">
       <div className="nav__icon">
-        <Link className="nav__options" to='#'>
-          <RiIcons.RiNotification2Fill />
+        <Link className="nav__options" to='#' onClick={showNotification}>
+          <RiIcons.RiNotification2Fill className="nav__options__icon"/>
         </Link>
         <Link className="nav__options" to='#' onClick={showLogout}>
-          <FaIcons.FaUserCircle />
+          <FaIcons.FaUserCircle className="nav__options__icon"/>
         </Link>
       </div>
       <ul

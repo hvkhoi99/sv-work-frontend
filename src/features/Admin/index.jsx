@@ -1,10 +1,7 @@
-import NotFoundPage from 'components/NotFound';
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import AdminNav from './components/Nav';
-import Sidebar from './components/Sidebar';
-import AdminDashboardPage from './pages/Dashboard';
-import VerificationPage from './pages/VerificationPage';
+import AdminLoginPage from './pages/Login';
+import AdminMainPage from './pages/MainPage';
 
 AdminFeature.propTypes = {
 
@@ -15,12 +12,9 @@ function AdminFeature(props) {
 
   return (
     <>
-      <AdminNav />
-      <Sidebar />
       <Switch>
-        <Route exact path={match.url} component={AdminDashboardPage} />
-        <Route path={`${match.url}/verification`} component={VerificationPage} />
-        <Route element={NotFoundPage} />
+        <Route exact path={`${match.url}/login`} component={AdminLoginPage} />
+        <Route path={match.url} component={AdminMainPage} />
       </Switch>
     </>
   );

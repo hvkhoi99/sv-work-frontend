@@ -34,7 +34,7 @@ function InputField(props) {
 
   return (
     <FormGroup>
-      {label && <Label style={label === "Tax Code" ? {color: "rgb(68, 214, 68)"} : {color: "black"}} className="label" for={name}>{label}</Label>}
+      {label && <Label style={label === "Tax Code" ? {color: "var(--success)"} : {color: "black"}} className="label" for={name}>{label}</Label>}
       <Input 
       id={name}
       {...field}

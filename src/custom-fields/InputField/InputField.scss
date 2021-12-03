@@ -2,15 +2,20 @@
   font-size: 1rem;
 
   &:last-child {
-    color: green;
+    color: var(--success);
   }
 }
 
 .input-field {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
   border-width: 0;
+  border-radius: .5rem;
 
   &:disabled {
     background-color: #fff;
+  }
+
+  &::placeholder {
+    color: rgb(190, 189, 189);
   }
 }

@@ -1,6 +1,46 @@
 .dashboard {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 95vh;
+  background-image: url("../../../../assets/img/background.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+
+  &__main {
+    margin: 8rem 0 2rem 15rem;
+    width: 80%
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-evenly;
+
+    &__item {
+      display: flex;
+      justify-content: space-around;
+      box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+      height: 7rem;
+      width: 14rem;
+      border-radius: 1rem;
+      padding: 1rem 0;
+
+      &__left {
+        display: flex;
+        flex-direction: column;
+
+        &__count {
+          font-size: 2rem;
+          color: var(--success);
+        }
+      }
+
+      & > img {
+        border-radius: 50%;
+        border: 0.2rem solid var(--success);
+        width: 3rem;
+        height: 3rem;
+      }
+    }
+  }
 }
