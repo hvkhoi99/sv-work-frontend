@@ -23,7 +23,7 @@
 
   &__options {
     font-size: 2rem;
-    height: 80px;
+    // height: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,6 +33,7 @@
       
       &:hover {
         color: var(--success);
+        transition: all 0.2s ease-out;
       }
 
       &--active {
@@ -40,9 +41,9 @@
       }
     }
 
-    &:hover {
-      transition: all 0.2s ease-out;
-    }
+    // &:hover {
+    //   transition: all 0.2s ease-out;
+    // }
   }
 
   & > ul {
@@ -65,7 +66,7 @@
     }
 
     &:hover {
-      background-color: rgb(184, 179, 179);
+      background-color: var(--secondary);
       transition: all 0.2s ease-out;
     }
   }

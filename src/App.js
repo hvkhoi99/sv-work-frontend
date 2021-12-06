@@ -4,14 +4,25 @@ import AdminFeature from 'features/Admin';
 import ClientFeature from 'features/Client';
 import EventPage from 'features/Client/Event';
 import SignUpPage from 'features/Client/SignUp';
-import { Suspense } from 'react';
+import { SnackbarProvider } from 'notistack';
+import { createRef, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 
 function App() {
+  const notistackRef = createRef();
   return (
     <div className="App">
       <Suspense fallback={LoadingUI}>
+      <SnackbarProvider
+			persist="true"
+			anchorOrigin={{
+				vertical: 'top',
+				horizontal: 'right',
+			}}
+			ref={notistackRef}
+			autoHideDuration={2500}
+			anchororigintopright={{ marginTop: '50px' }}>
         <Router>
           <Switch>
             {/* <Redirect exact from="/" to="/home" /> */}
@@ -23,6 +34,7 @@ function App() {
             <Route path="*" component={NotFoundPage} />
           </Switch>
         </Router>
+        </SnackbarProvider>
       </Suspense>
     </div>
   );

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import * as FaIcons from 'react-icons/fa';
 import * as RiIcons from 'react-icons/ri';
 import * as AiIcons from 'react-icons/ai';
 import { Link, useHistory } from 'react-router-dom';
 import './AdminNav.scss';
+import { logout } from 'features/Auth/adminSlice';
 
 AdminNav.propTypes = {
 
@@ -12,6 +14,7 @@ AdminNav.propTypes = {
 function AdminNav(props) {
   const history = useHistory();
   const [hiddenLogout, setHiddenLogout] = useState(true);
+  const dispatch = useDispatch();
 
   const showLogout = () => {
     setHiddenLogout(!hiddenLogout);
@@ -21,9 +24,10 @@ function AdminNav(props) {
     setHiddenLogout(true);
   }
 
-  const logOut = () => {
+  const logOut = async () => {
     setHiddenLogout(!hiddenLogout);
-    history.push("/");
+    dispatch(logout());
+    history.push("/admin/login");
   }
 
   return (

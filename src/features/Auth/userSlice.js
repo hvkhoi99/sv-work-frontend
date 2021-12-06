@@ -6,11 +6,10 @@ export const register = createAsyncThunk(
   '/register',
 
   async (payload) => {
-    // call API to register
     const data = await userApi.signup(payload);
 
     console.log(data.data);
-    // return user data
+    
     return data.data;
   }
 
@@ -20,15 +19,12 @@ export const login = createAsyncThunk(
   '/login',
 
   async (payload) => {
-    // call API to register
     const data = await userApi.login(payload);
 
-    // Save data to local storage
     localStorage.setItem('access_token', data.data.data.token);
     localStorage.setItem('user', JSON.stringify(data.data.data));
-    localStorage.setItem('role', data.data.data.role);
+    localStorage.setItem('role', data.data.data.role_id);
 
-    // return user data
     return data.data.data;
   }
 );
@@ -38,15 +34,12 @@ export const loginGoogle = createAsyncThunk(
 
   async (payload) => {
     console.log("payload", payload)
-    // call API to register
     const data = await userApi.loginGoogle(payload);
-    console.log(data);
-    // Save data to local storage
+    
     localStorage.setItem('access_token', data.data.token);
     localStorage.setItem('user', JSON.stringify(data.data));
     localStorage.setItem('role', data.data.role);
 
-    // return user data
     return data;
   }
 
@@ -56,18 +49,17 @@ export const loginGoogle = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    // Infor Login User
     current: JSON.parse(localStorage.getItem('user')) || {},
     settings: {},
   },
   // Async action
   reducers: {
     logout(state) {
-      // clear local storage
       localStorage.removeItem('access_token');
       localStorage.removeItem('user');
       localStorage.removeItem('role');
-      // reset current
+      console.log("logout");
+      
       state.current = {};
     },
 
