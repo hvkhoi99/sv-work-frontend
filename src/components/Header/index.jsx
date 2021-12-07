@@ -37,11 +37,6 @@ function Header() {
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
-              <Link to='/admin' className='nav-links' onClick={closeMobileMenu}>
-                Admin
-              </Link>
-            </li>
-            <li className='nav-item'>
               <Link to='/event' className='nav-links' onClick={closeMobileMenu}>
                 Event
               </Link>

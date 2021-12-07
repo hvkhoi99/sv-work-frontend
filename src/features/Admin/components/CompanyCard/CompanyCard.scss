@@ -9,6 +9,7 @@
     margin: 0 0 1.5rem 0;
     border-radius: 1.2rem;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background-color: #fff;
 
     & > img {
       display: flex;
@@ -33,9 +34,9 @@
       border-bottom: 4px solid var(--success);
     }
 
-    // &--visited {
-    //   background-color: var(--secondary);
-    // }
+    &--visited {
+      background-color: rgb(151, 247, 151);
+    }
   }
 
   &__name {

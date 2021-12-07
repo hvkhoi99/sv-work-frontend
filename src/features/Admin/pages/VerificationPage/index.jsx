@@ -15,6 +15,7 @@ VerificationPage.propTypes = {
   company: PropTypes.object,
   currentPage: PropTypes.number,
   lastPage: PropTypes.number,
+  activeIndex: PropTypes.number,
 }
 
 VerificationPage.defaultProps = {
@@ -25,6 +26,7 @@ VerificationPage.defaultProps = {
   company: {},
   currentPage: 1,
   lastPage: 1,
+  activeIndex: null
 }
 
 function VerificationPage(props) {
@@ -36,18 +38,9 @@ function VerificationPage(props) {
     handleVerifyCompany,
     currentPage,
     lastPage,
-    company
+    company,
+    activeIndex
   } = props;
-
-  // const recruiterZeroIndex = recruiters[0];
-  // const initialValues = Object.keys(company).length === 0 && company.constructor === Object ? {
-  //   companyName: recruiterZeroIndex.company_name,
-  //   location: recruiterZeroIndex.address,
-  //   phoneNumber: recruiterZeroIndex.phone_number,
-  //   companyIndustry: recruiterZeroIndex.company_industry,
-  //   companySize: recruiterZeroIndex.company_size,
-  //   taxCode: recruiterZeroIndex.tax_code
-  // } : company;
 
   const isCompanyEmpty = (Object.keys(company).length === 0 && company.constructor === Object);
 
@@ -65,11 +58,14 @@ function VerificationPage(props) {
       <div className="verification__main">
         <div className="verification__company">
           {recruiters.map((recruiter, index) => {
+            const className = activeIndex === index ? "company-card__item company-card__item--visited" : "company-card__item";
             return (
               <CompanyCard
                 key={index}
+                index={index}
                 handleCompanyClick={handleCompanyClick}
                 recruiter={recruiter}
+                className={className}
               />
             )
           })}

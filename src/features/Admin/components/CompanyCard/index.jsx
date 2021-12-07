@@ -5,22 +5,28 @@ import './CompanyCard.scss';
 // import { Link } from 'react-router-dom';
 
 CompanyCard.propTypes = {
-  handleCompanyClick: PropTypes.func
+  handleCompanyClick: PropTypes.func,
+  recruiter: PropTypes.object,
+  className: PropTypes.string,
+  index: PropTypes.number
 }
 
 CompanyCard.defaultProps = {
-  handleCompanyClick: null
+  handleCompanyClick: null,
+  recruiter: {},
+  className: '',
+  index: 0
 }
 
 function CompanyCard(props) {
-  const { recruiter, handleCompanyClick } = props;
+  const { recruiter, handleCompanyClick, className, index } = props;
 
-  const handleCard = (recruiter) => {
-    handleCompanyClick(recruiter)
+  const handleCard = (index, recruiter) => {
+    handleCompanyClick(index, recruiter)
   }
 
   return (
-    <div className="company-card__item company-card__item--visited" onClick={() => handleCard(recruiter)}>
+    <div className={className} onClick={() => handleCard(index, recruiter)}>
       <img src={Images.fptSoftware} alt="emoji" />
       <div>
         <span className="company-card__name">{recruiter.company_name}</span>

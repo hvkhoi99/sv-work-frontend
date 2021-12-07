@@ -23,6 +23,7 @@ function AdminMainPage(props) {
   const [recruiter, setRecruiter] = useState({});
   const [lastPage, setLastPage] = useState(1);
   const { enqueueSnackbar } = useSnackbar();
+  const [activeIndex, setActiveIndex] = useState(null);
 
   useEffect(() => {
     const fetchDashboard = async () => {
@@ -74,7 +75,8 @@ function AdminMainPage(props) {
     }
   }
 
-  const handleCompanyClick = (company) => {
+  const handleCompanyClick = (index, company) => {
+    setActiveIndex(index);
     setRecruiter(company);
   }
 
@@ -125,6 +127,7 @@ function AdminMainPage(props) {
                 currentPage={currentPage}
                 company={recruiter}
                 lastPage={lastPage}
+                activeIndex={activeIndex}
               />
             }
           />

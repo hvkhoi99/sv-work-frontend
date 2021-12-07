@@ -13,6 +13,8 @@ AdminDashboardPage.defaultProps = {
 
 function AdminDashboardPage(props) {
   const { data } = props;
+  const token = localStorage.getItem('access_token');
+  console.log(token)
 
   return (
     <div className="dashboard">
