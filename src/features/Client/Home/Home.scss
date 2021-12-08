@@ -53,10 +53,25 @@
           }
         }
 
-        &__input {
+        &__form {
           margin: 1rem 0 0 0;
+
+          & > form {
+            display: flex;
+            flex-direction: row;
+            // justify-content: space-between;
+          }
         }
       }
     }
   }
+}
+
+.search-input {
+  width: 15rem;
+}
+
+.select-input {
+  width: 8rem;
+  margin: 0 1rem;
 }
