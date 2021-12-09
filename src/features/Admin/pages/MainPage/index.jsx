@@ -7,7 +7,7 @@ import { getRecruiters, removeCompany, verifyCompany } from 'features/Auth/admin
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import AdminDashboardPage from '../Dashboard';
 import VerificationPage from '../VerificationPage';
 
@@ -104,7 +104,6 @@ function AdminMainPage(props) {
     }
   }
 
-  if (admin.current.role_id === 1) {
     return (
       <>
         <Sidebar />
@@ -135,9 +134,6 @@ function AdminMainPage(props) {
         </Switch>
       </>
     );
-  } else {
-    return <Redirect to="/admin/login" />
-  }
 }
 
 export default AdminMainPage;

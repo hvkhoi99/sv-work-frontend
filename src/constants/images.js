@@ -9,6 +9,7 @@ import smDot from '../assets/img/smDot.png';
 import eventcircle from '../assets/img/eventcircle.png';
 import admin from '../assets/img/admin.png';
 import teamwork from '../assets/img/teamwork.png';
+import overview from '../assets/img/overview.png';
 
 const Images = {
   home,
@@ -21,7 +22,8 @@ const Images = {
   smDot,
   eventcircle,
   admin,
-  teamwork
+  teamwork,
+  overview
 }
 
 export default Images;

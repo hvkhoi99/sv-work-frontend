@@ -1,13 +1,13 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { unwrapResult } from '@reduxjs/toolkit';
 import Images from 'constants/images';
-import InputField from 'custom-fields/InputField';
+import RHFInputField from 'custom-fields/RHFInputField';
 import { login } from 'features/Auth/adminSlice';
-import { FastField, Form, Formik } from 'formik';
 import { useSnackbar } from 'notistack';
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Button, FormGroup, Spinner } from 'reactstrap';
 import * as Yup from 'yup';
 import './AdminLogin.scss';
 
@@ -21,17 +21,19 @@ function AdminLoginPage(props) {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
-  const initialValues = {
-    email: '',
-    password: ''
-  }
-
   const validationSchema = Yup.object().shape({
     email: Yup.string().required('This field is required'),
     password: Yup.string().required('This field is required')
   })
 
-  const handleSubmit = async (values) => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting }
+  } = useForm({ resolver: yupResolver(validationSchema) })
+
+  const onLogin = async (values) => {
     try {
       const action = login({
         email: values.email,
@@ -40,11 +42,15 @@ function AdminLoginPage(props) {
 
       const actionResult = await dispatch(action);
       unwrapResult(actionResult);
-      
+
       history.push("/admin");
     } catch (error) {
       enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
     }
+  };
+
+  const checkKeyDown = (e) => {
+    if (e.code === 'Enter') e.preventDefault();
   };
 
   return (
@@ -57,58 +63,34 @@ function AdminLoginPage(props) {
           <span>Sign in</span>
           <img src={Images.smDot} alt="smDot" />
         </div>
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleSubmit}
-        >
-          {formikProps => {
-
-            const { isSubmitting } = formikProps;
-            // console.log({ values, errors, touched });
-
-            return (
-              <Form>
-                <FastField
-                  name="email"
-                  component={InputField}
-
-                  // label="Email"
-                  placeholder="Email ..."
-                  disabled={false}
-                />
-
-                <FastField
-                  name="password"
-                  type="password"
-                  component={InputField}
-
-                  // label="Password"
-                  placeholder="Password ..."
-                  disabled={false}
-                />
-
-                <FormGroup className="login__form__button">
-                  <Button style={{
-                    borderRadius: "1.5rem",
-                    boxShadow: "rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px"
-                  }}
-                    type="submit"
-                    color={"success"}
-                  >
-                    {isSubmitting
-                      && <Spinner
-                        children=""
-                        size="sm"
-                        style={{ marginRight: ".5rem" }}
-                      />
-                    } Sign in
-                  </Button>
-                </FormGroup>
-              </Form>
-            )
-          }}
-        </Formik>
+        <form onSubmit={handleSubmit(onLogin)} onKeyDown={(e) => checkKeyDown(e)}>
+          <div className="form-group">
+            <RHFInputField
+              register={register}
+              inputName="email"
+              control={control}
+              scheme={errors.email}
+              placeholder="Ex: abc@gmail.com"
+              moreClassName="shadow radius"
+            />
+          </div>
+          <div className="form-group">
+            <RHFInputField
+              register={register}
+              inputName="password"
+              control={control}
+              scheme={errors.password}
+              type="password"
+              moreClassName="shadow radius"
+            />
+          </div>
+          <div className="form-group button">
+            <button disabled={isSubmitting} className="btn btn-success btn-sm" type="submit">
+              {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+              Sign in
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

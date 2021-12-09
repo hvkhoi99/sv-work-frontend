@@ -25,12 +25,20 @@ function HomePage(props) {
     register,
     handleSubmit,
     control,
-    formState: { errors }
+    formState: { errors, isSubmitting }
   } = useForm({ resolver: yupResolver(schema) });
 
-  const onLoginSubmit = (data) => {
-    console.log(data);
-    // console.log("type: ", typeof register);
+  const onFind = (data) => {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        console.log("data: ", data);
+        resolve(true);
+      }, 2000)
+    })
+  };
+
+  const checkKeyDown = (e) => {
+    if (e.code === 'Enter') e.preventDefault();
   };
 
   return (
@@ -44,24 +52,58 @@ function HomePage(props) {
           <div className="home__container__find__main">
             <div className="home__container__find__main__text">
               <p>There are 123 developer jobs.</p>
-              <h2>Find now!</h2>
+              <h1>Find now!</h1>
             </div>
             <div className="home__container__find__main__form">
-              <form onSubmit={handleSubmit(onLoginSubmit)}>
+              <form onSubmit={handleSubmit(onFind)} onKeyDown={(e) => checkKeyDown(e)}>
                 <div className="form-group search-input">
-                  <RHFInputField register={register} inputName="search" control={control} scheme={errors.search} />
+                  <RHFInputField
+                    register={register}
+                    inputName="search"
+                    control={control}
+                    scheme={errors.search}
+                    placeholder="Ex: Company abc..."
+                    type="text"
+                  />
                 </div>
                 <div className="form-group select-input">
-                  <RHFSelectField control={control} options={options} />
+                  <RHFSelectField
+                    control={control}
+                    options={options}
+                    placeholder="city..."
+                  />
                 </div>
                 <div>
-                  <button className="btn btn-success btn-sm" type="submit">Find</button>
+                  <button disabled={isSubmitting} className="btn-success btn-custom" type="submit">
+                    {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                    <i class="fa fa-search" style={{ fontSize: '1.5rem' }} />
+                  </button>
                 </div>
               </form>
             </div>
           </div>
         </div>
+        <div className="home__container__overview">
+          <div className="home__container__overview__title"><h1>Overview</h1></div>
+          <div className="home__container__overview__main">
+            <div className="home__container__overview__main__text">
+              <p>“Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto inventore quas maxime sequi aut! Assumenda aperiam eveniet saepe ad sunt nam necessitatibus sit odio. Voluptatum a eum recusandae. Soluta, amet.”</p>
+            </div>
+            <div className="home__container__overview__main__img">
+              <img src={Images.overview} alt="overview" />
+            </div>
+          </div>
+        </div>
 
+        <div className="home__container__top-recruiter">
+          <div className="home__container__top-recruiter__title">
+            <h1>Top Recruiter</h1>
+            <img src={Images.smDot} alt="smDot" />
+          </div>
+          <div className="home__container__top-recruiter__main">
+            abc
+          </div>
+        </div>
       </div>
     </div>
   );

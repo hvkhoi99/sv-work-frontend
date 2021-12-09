@@ -27,7 +27,7 @@ function AdminNav(props) {
   const logOut = async () => {
     setHiddenLogout(!hiddenLogout);
     dispatch(logout());
-    history.push("/admin/login");
+    history.push("/admin/auth/login");
   }
 
   return (

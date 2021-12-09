@@ -1,12 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Controller } from 'react-hook-form';
+import './RHFInputField.scss';
 
 RHFInputField.propTypes = {
   inputName: PropTypes.string,
   register: PropTypes.func,
   control: PropTypes.object,
-  scheme: PropTypes.object
+  scheme: PropTypes.object,
+  placeholder: PropTypes.string,
+  moreClassName: PropTypes.string,
+  type: PropTypes.string,
 };
 
 RHFInputField.defaultProps = {
@@ -14,28 +18,33 @@ RHFInputField.defaultProps = {
   register: null,
   control: {},
   scheme: {},
+  placeholder: '',
+  moreClassName: '',
+  type: '',
 }
 
 function RHFInputField(props) {
-  const { inputName, register, control, scheme } = props;
+  const { inputName, register, control, scheme, placeholder, moreClassName, type } = props;
   const isSchemeEmpty = (Object.keys(scheme).length === 0 && scheme.constructor === Object);
-
 
   return (
     <>
       <Controller
         control={control}
         defaultValue="Search"
-        name="options"
-        render={({ field: { onChange } }) => (
+        name=''
+        render={({ field }) => (
           <>
             <input
-              className={isSchemeEmpty ? "form-control" : "form-control is-invalid"}
+              {...field}
+              className={isSchemeEmpty ? `form-control ${moreClassName}` : `form-control is-invalid ${moreClassName}`}
               {...register(inputName)}
-              onChange={(e) => onChange(parseInt(e.target.value))}
+              onChange={(e) => field.onChange(parseInt(e.target.value))}
+              placeholder={placeholder}
+              type={type}
             />
-            {/* {scheme &&
-              <span className="text-danger">{scheme?.message}</span>} */}
+            {scheme &&
+              <span className="text-danger form-span">{scheme?.message}</span>}
           </>
         )}
       />

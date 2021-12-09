@@ -1,9 +1,10 @@
 export const CITY_OPTIONS = [
-  { value: 1, label: "Da Nang" },
-  { value: 2, label: "Ho Chi Minh" },
-  { value: 3, label: "Hai Phong" },
-  { value: 4, label: "Ha Noi" },
-  { value: 5, label: "Hai Duong" },
+  { value: 1, label: "None" },
+  { value: 2, label: "Da Nang" },
+  { value: 3, label: "Ho Chi Minh" },
+  { value: 4, label: "Hai Phong" },
+  { value: 5, label: "Ha Noi" },
+  { value: 6, label: "Hai Duong" },
 ];
 
 export const PHOTO_CATEGORY_OPTIONS = [
