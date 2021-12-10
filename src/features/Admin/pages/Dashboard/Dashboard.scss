@@ -9,7 +9,7 @@
 
   &__main {
     margin: 8rem 0 2rem 15rem;
-    width: 80%
+    width: 80%;
   }
 
   &__header {
@@ -18,29 +18,86 @@
 
     &__item {
       display: flex;
-      justify-content: space-around;
-      box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-      height: 6.5rem;
-      width: 14rem;
+      flex-direction: column;
+      align-items: stretch;
+      width: auto;
       border-radius: 1rem;
-      padding: 1rem 0;
+      padding: 1rem 1rem 0.5rem;
+      box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+        rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 
-      &__left {
+      &__top {
         display: flex;
-        flex-direction: column;
+        justify-content: space-between;
 
-        &__count {
-          font-size: 2rem;
-          color: var(--success);
+        &__left {
+          display: flex;
+          flex-direction: column;
+
+          // &__title {
+          //   font-family: "Poppins", sans-serif;
+          //   font-weight: normal;
+          // }
+
+          &__count {
+            display: flex;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--success);
+          }
+        }
+
+        & > img {
+          border-radius: 50%;
+          width: 4rem;
+          height: 4rem;
         }
       }
 
-      & > img {
-        border-radius: 50%;
-        border: 0.2rem solid var(--success);
-        width: 3rem;
-        height: 3rem;
+      &__bottom {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 1rem 0 0 0;
+
+        & > img {
+          width: 1rem;
+          height: 1rem;
+        }
       }
     }
   }
+}
+
+.span-percent {
+  color: var(--success);
+  font-family: "Poppins", sans-serif;
+  font-size: 0.8rem;
+  font-weight: medium;
+  margin: 0 0.5rem;
+}
+
+.span-text {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.8rem;
+}
+
+.graph-arrow {
+  color: var(--success);
+}
+
+.red {
+  color: darkred;
+}
+
+.orange {
+  color: darkorange;
+}
+
+.yellow {
+  color: gold;
+}
+
+.violet {
+  color: darkviolet;
 }

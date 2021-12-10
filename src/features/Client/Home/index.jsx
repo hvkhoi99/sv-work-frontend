@@ -1,15 +1,34 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import homeApi from 'api/homeApi';
 import { CITY_OPTIONS } from 'constants/global';
 import Images from 'constants/images';
 import RHFInputField from 'custom-fields/RHFInputField';
 import RHFSelectField from 'custom-fields/RHFSelectField';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+import TopRecruiterGroupCard from "./components/TopRecruiterGroupCard";
 import './Home.scss';
 
 function HomePage(props) {
   const options = CITY_OPTIONS;
+  const [topRecruiters, setTopRecruiters] = useState([]);
+
+  const listImg = [
+    [{ src: Images.fptSoftware }, { src: Images.fb }],
+    [{ src: Images.levis }, { src: Images.shopee }],
+    [{ src: Images.apple }],
+    [{ src: Images.vinfast }, { src: Images.tw }],
+    [{ src: Images.lamborghini }, { src: Images.burger }]
+  ]
+
+  const cardSize = [
+    [{ size: "small-image" }, { size: "small-image" }],
+    [{ size: "medium-image" }, { size: "medium-image" }],
+    [{ size: "large-image" }],
+    [{ size: "medium-image" }, { size: "medium-image" }],
+    [{ size: "small-image" }, { size: "small-image" }]
+  ]
 
   const schema = yup.object().shape({
     search: yup
@@ -27,6 +46,19 @@ function HomePage(props) {
     control,
     formState: { errors, isSubmitting }
   } = useForm({ resolver: yupResolver(schema) });
+
+  useEffect(() => {
+    const fetchTopRecruiters = async () => {
+      try {
+        const result = await homeApi.getTopRecruiters();
+        setTopRecruiters(result.data.data);
+      } catch (error) {
+        console.log("Cannot get top recruiters. Error: ", error.message);
+      }
+    }
+
+    fetchTopRecruiters();
+  }, []);
 
   const onFind = (data) => {
     return new Promise((resolve, reject) => {
@@ -64,6 +96,7 @@ function HomePage(props) {
                     scheme={errors.search}
                     placeholder="Ex: Company abc..."
                     type="text"
+                    moreClassName="focus-input"
                   />
                 </div>
                 <div className="form-group select-input">
@@ -71,12 +104,14 @@ function HomePage(props) {
                     control={control}
                     options={options}
                     placeholder="city..."
+                    isTheme={true}
+                    isStyles={true}
                   />
                 </div>
                 <div>
                   <button disabled={isSubmitting} className="btn-success btn-custom" type="submit">
                     {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                    <i class="fa fa-search" style={{ fontSize: '1.5rem' }} />
+                    <i className="fa fa-search" style={{ fontSize: '1.5rem' }} />
                   </button>
                 </div>
               </form>
@@ -101,7 +136,14 @@ function HomePage(props) {
             <img src={Images.smDot} alt="smDot" />
           </div>
           <div className="home__container__top-recruiter__main">
-            abc
+            {topRecruiters.map((recruiters, index) => {
+              return <TopRecruiterGroupCard
+                cardSize={cardSize[index]}
+                listImg={listImg[index]}
+                recruiters={recruiters}
+                key={index}
+              />
+            })}
           </div>
         </div>
       </div>

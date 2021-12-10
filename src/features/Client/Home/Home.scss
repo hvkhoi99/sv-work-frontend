@@ -8,7 +8,7 @@
   background-repeat: no-repeat;
 
   &__container {
-    width: 90%;
+    width: 100%;
     margin: auto 1rem;
 
     &__find {
@@ -54,7 +54,8 @@
           & > h1 {
             background-color: white;
             color: var(--success);
-            width: 90%;
+            width: 50%;
+            background-color: transparent;
           }
         }
 
@@ -86,7 +87,7 @@
         flex-direction: row;
         width: 100%;
 
-        background-image: url("../../../assets/img/smDot.png");
+        background-image: url("../../../assets/img/Ellipse.png");
         background-position: left;
         background-size: auto;
         background-repeat: no-repeat;
@@ -114,7 +115,7 @@
 
           & > img {
             border-radius: 1rem;
-            width: 100%;
+            width: 80%;
           }
         }
       }
@@ -125,9 +126,9 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      height: 85vh;
+      // height: 85vh;
       padding: 2rem 0;
-      background-image: url("../../../assets/img/smDot.png");
+      background-image: url("../../../assets/img/dollar.png");
       background-position: right center;
       background-size: auto;
       background-repeat: no-repeat;
@@ -135,6 +136,7 @@
       &__title {
         display: flex;
         align-items: center;
+        margin: 0 0 1rem 0;
 
         & > img {
           margin: 0.5rem 0 0 0.5rem;
@@ -143,8 +145,16 @@
           border-radius: 50%;
         }
 
-        & > h1 {
-        }
+        // & > h1 {
+        // }
+      }
+
+      &__main {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
       }
     }
   }

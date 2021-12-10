@@ -7,17 +7,21 @@ import './RHFSelectField.scss';
 RHFSelectField.propTypes = {
   control: PropTypes.object,
   options: PropTypes.array,
-  placeholder: PropTypes.string
+  placeholder: PropTypes.string,
+  isStyles: PropTypes.bool,
+  isTheme: PropTypes.bool,
 };
 
 RHFSelectField.defaultProps = {
   control: {},
   options: [],
-  placeholder: ''
+  placeholder: '',
+  isStyles: false,
+  isTheme: false,
 }
 
 function RHFSelectField(props) {
-  const { control, options, placeholder } = props;
+  const { control, options, placeholder, isStyles, isTheme } = props;
 
   const colourStyles = {
     placeholder: (defaultStyles) => {
@@ -38,6 +42,15 @@ function RHFSelectField(props) {
     }),
   }
 
+  const theme = (theme) => ({
+    ...theme,
+    borderRadius: 0,
+    colors: {
+      ...theme.colors,
+      primary: 'var(--success)',
+    },
+  })
+
   return (
     <>
       <Controller
@@ -54,15 +67,8 @@ function RHFSelectField(props) {
               onChange(selectedOption.label);
             }}
             placeholder={placeholder}
-            styles={colourStyles}
-            theme={(theme) => ({
-              ...theme,
-              borderRadius: 0,
-              colors: {
-                ...theme.colors,
-                primary: 'var(--success)',
-              },
-            })}
+            styles={isStyles ? colourStyles : ''}
+            theme= {isTheme ? theme : null}
           // isMulti
           />
         )}
