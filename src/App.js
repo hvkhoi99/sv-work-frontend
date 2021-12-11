@@ -1,9 +1,10 @@
 import LoadingUI from 'components/Loading';
 import NotFoundPage from 'components/NotFound';
+import { PrivateRouteUserAuth } from 'components/PrivateRoute';
 import AdminFeature from 'features/Admin';
+import AuthFeature from 'features/Auth';
 import ClientFeature from 'features/Client';
 import EventPage from 'features/Client/Event';
-import SignUpPage from 'features/Client/SignUp';
 import { SnackbarProvider } from 'notistack';
 import { createRef, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -11,6 +12,7 @@ import './App.css';
 
 function App() {
   const notistackRef = createRef();
+  
   return (
     <div className="App">
       <Suspense fallback={LoadingUI}>
@@ -27,9 +29,9 @@ function App() {
           <Switch>
             {/* <Redirect exact from="/" to="/home" /> */}
             <Route exact path="/" component={ClientFeature} />
+            <PrivateRouteUserAuth path="/auth" component={AuthFeature} />
             <Route path="/admin" component={AdminFeature} />
             <Route path="/event" component={EventPage} />
-            <Route path="/sign-up" component={SignUpPage} />
 
             <Route path="*" component={NotFoundPage} />
           </Switch>

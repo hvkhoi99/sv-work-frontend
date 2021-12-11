@@ -38,7 +38,9 @@ function RHFSelectField(props) {
       outline: state.isFocused ? '0 none' : null,
       "&:hover": {
         borderColor: state.isFocused ? null : "var(--success)"
-      }
+      },
+      fontFamily: "Poppins, sans-serif",
+      fontSize: ".9rem",
     }),
   }
 

@@ -20,30 +20,13 @@ import fb from '../assets/img/fb.png';
 import vinfast from '../assets/img/vinfast.png';
 import burger from '../assets/img/burger.png';
 import lamborghini from '../assets/img/lamborghini.jpg';
+import student from '../assets/img/student.png';
+import recruiter from '../assets/img/recruiter.png';
 
 const Images = {
-  home,
-  notFound,
-  emoji,
-  minami,
-  bgRight,
-  background,
-  fptSoftware, 
-  smDot,
-  eventcircle,
-  admin,
-  teamwork,
-  overview,
-  ellipse,
-  apple,
-  coffeeTime,
-  levis,
-  tw,
-  shopee,
-  fb,
-  vinfast,
-  burger,
-  lamborghini
+  home, notFound, emoji, minami, bgRight, background, fptSoftware, smDot, eventcircle, 
+  admin, teamwork, overview, ellipse, apple, coffeeTime, levis, tw, shopee, fb, vinfast, 
+  burger, lamborghini, student, recruiter
 }
 
 export default Images;

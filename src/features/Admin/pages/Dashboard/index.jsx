@@ -19,7 +19,6 @@ function AdminDashboardPage(props) {
   const application = data.application ?? '';
   const event = data.event ?? '';
 
-  console.log({ student, recruiter, application, event });
   return (
     <div className="dashboard">
       <div className="dashboard__main">

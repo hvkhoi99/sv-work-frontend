@@ -3,7 +3,7 @@ import userReducer from 'features/Auth/userSlice';
 import adminReducer from 'features/Auth/adminSlice';
 
 const rootReducer = {
-    users: userReducer,
+    user: userReducer,
     admin: adminReducer
 };
 

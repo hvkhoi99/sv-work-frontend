@@ -3,7 +3,7 @@ import userApi from 'api/userApi';
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
 export const register = createAsyncThunk(
-  '/register',
+  'auth/register',
 
   async (payload) => {
     const data = await userApi.signup(payload);
@@ -16,14 +16,14 @@ export const register = createAsyncThunk(
 );
 
 export const login = createAsyncThunk(
-  '/login',
+  'auth/login',
 
   async (payload) => {
     const data = await userApi.login(payload);
 
     localStorage.setItem('access_token', data.data.data.token);
     localStorage.setItem('user', JSON.stringify(data.data.data));
-    localStorage.setItem('role', data.data.data.role_id);
+    // localStorage.setItem('role', data.data.data.role_id);
 
     return data.data.data;
   }
@@ -38,7 +38,7 @@ export const loginGoogle = createAsyncThunk(
     
     localStorage.setItem('access_token', data.data.token);
     localStorage.setItem('user', JSON.stringify(data.data));
-    localStorage.setItem('role', data.data.role);
+    // localStorage.setItem('role', data.data.role);
 
     return data;
   }
@@ -57,7 +57,7 @@ const userSlice = createSlice({
     logout(state) {
       localStorage.removeItem('access_token');
       localStorage.removeItem('user');
-      localStorage.removeItem('role');
+      // localStorage.removeItem('role');
       console.log("logout");
       
       state.current = {};

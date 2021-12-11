@@ -4,7 +4,7 @@ import userApi from "api/userApi";
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
 export const login = createAsyncThunk(
-  '/admin/login',
+  '/admin/auth/login',
 
   async (payload) => {
     const data = await userApi.login(payload);
@@ -45,6 +45,7 @@ const adminSlice = createSlice({
     logout(state) {
       localStorage.removeItem('access_token');
       localStorage.removeItem('admin');
+      state.recruiters = [];
       state.current = {};
     },
     removeCompany: (state, action) => {

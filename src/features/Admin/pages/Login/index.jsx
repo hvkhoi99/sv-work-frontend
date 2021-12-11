@@ -1,16 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { unwrapResult } from '@reduxjs/toolkit';
+import LoadingUI from "components/Loading";
 import Images from 'constants/images';
 import RHFInputField from 'custom-fields/RHFInputField';
 import { login } from 'features/Auth/adminSlice';
 import { useSnackbar } from 'notistack';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import './AdminLogin.scss';
-
 
 AdminLoginPage.propTypes = {
 
@@ -20,6 +20,7 @@ function AdminLoginPage(props) {
   const history = useHistory();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+  const [isLoading, setIsLoading] = useState(true);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().required('This field is required'),
@@ -32,6 +33,12 @@ function AdminLoginPage(props) {
     control,
     formState: { errors, isSubmitting }
   } = useForm({ resolver: yupResolver(validationSchema) })
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+  })
 
   const onLogin = async (values) => {
     try {
@@ -53,47 +60,51 @@ function AdminLoginPage(props) {
     if (e.code === 'Enter') e.preventDefault();
   };
 
-  return (
-    <div className="login">
-      <div className="login__image">
-        <img src={Images.admin} alt="admin" />
-      </div>
-      <div className="login__form">
-        <div className="login__form__title">
-          <span>Sign in</span>
-          <img src={Images.smDot} alt="smDot" />
+  const currentUI = isLoading
+    ? <LoadingUI />
+    : (
+      <div className="login">
+        <div className="login__image">
+          <img src={Images.admin} alt="admin" />
         </div>
-        <form onSubmit={handleSubmit(onLogin)} onKeyDown={(e) => checkKeyDown(e)}>
-          <div className="form-group">
-            <RHFInputField
-              register={register}
-              inputName="email"
-              control={control}
-              scheme={errors.email}
-              placeholder="Ex: abc@gmail.com"
-              moreClassName="shadow radius"
-            />
+        <div className="login__formm">
+          <div className="login__formm__title">
+            <span>Sign in</span>
+            <img src={Images.smDot} alt="smDot" />
           </div>
-          <div className="form-group">
-            <RHFInputField
-              register={register}
-              inputName="password"
-              control={control}
-              scheme={errors.password}
-              type="password"
-              moreClassName="shadow radius"
-            />
-          </div>
-          <div className="form-group button">
-            <button disabled={isSubmitting} className="btn btn-success btn-sm" type="submit">
-              {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
-              Sign in
-            </button>
-          </div>
-        </form>
+          <form onSubmit={handleSubmit(onLogin)} onKeyDown={(e) => checkKeyDown(e)}>
+            <div className="form-group">
+              <RHFInputField
+                register={register}
+                inputName="email"
+                control={control}
+                scheme={errors.email}
+                placeholder="Ex: abc@gmail.com"
+                moreClassName="shadow-input radius"
+              />
+            </div>
+            <div className="form-group">
+              <RHFInputField
+                register={register}
+                inputName="password"
+                control={control}
+                scheme={errors.password}
+                type="password"
+                moreClassName="shadow-input radius"
+              />
+            </div>
+            <div className="form-group button">
+              <button disabled={isSubmitting} className="btn btn-success btn-sm" type="submit">
+                {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                Sign in
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-    </div>
-  );
+    );
+
+  return <>{currentUI}</>
 }
 
 export default AdminLoginPage;
