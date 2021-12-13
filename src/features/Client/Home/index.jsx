@@ -15,7 +15,7 @@ function HomePage(props) {
   const [topRecruiters, setTopRecruiters] = useState([]);
 
   const listImg = [
-    [{ src: Images.fptSoftware }, { src: Images.fb }],
+    [{ src: Images.bmw }, { src: Images.fb }],
     [{ src: Images.levis }, { src: Images.shopee }],
     [{ src: Images.apple }],
     [{ src: Images.vinfast }, { src: Images.tw }],
@@ -33,7 +33,7 @@ function HomePage(props) {
   const schema = yup.object().shape({
     search: yup
       .string()
-      .required()
+      .required("Need to enter information to search")
       .max(20),
     city: yup
       .string()

@@ -34,16 +34,16 @@
           display: flex;
           flex-direction: column;
 
-          // &__title {
-          //   font-family: "Poppins", sans-serif;
-          //   font-weight: normal;
-          // }
+          &__title {
+            font-weight: 600;
+          }
 
           &__count {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             font-size: 2rem;
             color: var(--success);
+            font-weight: 400;
           }
         }
 
@@ -71,14 +71,12 @@
 
 .span-percent {
   color: var(--success);
-  font-family: "Poppins", sans-serif;
   font-size: 0.8rem;
   font-weight: medium;
   margin: 0 0.5rem;
 }
 
 .span-text {
-  font-family: "Poppins", sans-serif;
   font-size: 0.8rem;
 }
 

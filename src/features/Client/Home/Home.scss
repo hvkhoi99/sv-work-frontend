@@ -3,6 +3,16 @@
   justify-content: center;
   align-items: center;
 
+  background-image: linear-gradient(
+      to right bottom,
+      rgba(235, 240, 243, 0.8),
+      rgba(234, 234, 242, 0.8)
+    ),
+    url("../../../assets/img/verifBG.png");
+  background-size: cover;
+  background-position: top;
+  background-attachment: fixed;
+
   &__container {
     width: 100%;
     margin: auto 1rem;
@@ -52,6 +62,7 @@
             color: var(--success);
             width: 50%;
             background-color: transparent;
+            font-weight: 700;
           }
         }
 

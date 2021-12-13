@@ -14,6 +14,7 @@ AdminNav.propTypes = {
 function AdminNav(props) {
   const history = useHistory();
   const [hiddenLogout, setHiddenLogout] = useState(true);
+  // const [hiddenNotification, sethiddenNotification] = useState(true);
   const dispatch = useDispatch();
 
   const showLogout = () => {
@@ -33,22 +34,26 @@ function AdminNav(props) {
   return (
     <div className="nav">
       <div className="nav__icon">
-        <Link className="nav__options" to='#' onClick={showNotification}>
-          <RiIcons.RiNotification2Fill className="nav__options__icon"/>
-        </Link>
-        <Link className="nav__options" to='#' onClick={showLogout}>
-          <FaIcons.FaUserCircle className="nav__options__icon"/>
-        </Link>
+        <div className="nav__icon__group">
+          <Link className="nav__options" to='#' onClick={showNotification}>
+            <RiIcons.RiNotification2Fill className="nav__options__icon" />
+          </Link>
+        </div>
+        <div className="nav__icon__group">
+          <Link className="nav__options" to='#' onClick={showLogout}>
+            <FaIcons.FaUserCircle className={hiddenLogout ? "nav__options__icon" : "nav__options__icon isVisited"} />
+          </Link>
+          <ul
+            className={hiddenLogout ? 'hidden-ul' : 'visible-ul'}
+            onClick={logOut}
+          >
+            <li>
+              <AiIcons.AiOutlineLogout />
+              <span>&nbsp; Log out</span>
+            </li>
+          </ul>
+        </div>
       </div>
-      <ul
-        className={hiddenLogout ? "hidden-ul" : "display-ul"}
-        onClick={logOut}
-      >
-        <li>
-          <AiIcons.AiOutlineLogout />
-          <span>&nbsp; Log out</span>
-        </li>
-      </ul>
     </div>
   );
 }

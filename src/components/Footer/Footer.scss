@@ -96,6 +96,11 @@
 .social-icon-link {
   color: #fff;
   font-size: 24px;
+
+  &:hover {
+    transition: all 0.2s ease-out;
+    color: var(--success);
+  }
 }
 
 .social-media {
@@ -128,9 +133,12 @@
   font-size: 2rem;
   display: flex;
   align-items: center;
+  font-weight: 700;
 
   &:hover {
     text-decoration: none;
+    transition: all 0.2s ease-out;
+    color: var(--success);
   }
 }
 

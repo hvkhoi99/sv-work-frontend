@@ -32,14 +32,18 @@ function AdminMainPage(props) {
       try {
         const result = await adminApi.getDashboard();
         setDashboard(result.data.data);
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 1000)
       } catch (error) {
         console.log("error dashboard: ", error.message);
       }
     }
+    
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000)
+
     fetchDashboard();
+
+    return () => clearTimeout(timer);
   }, [])
 
   useEffect(() => {
@@ -55,6 +59,7 @@ function AdminMainPage(props) {
         const actionResult = await dispatch(action);
         const result = unwrapResult(actionResult);
         setLastPage(result.last_page);
+
       } catch (error) {
         console.log("error show: ", error.message);
       }
@@ -98,6 +103,7 @@ function AdminMainPage(props) {
       const removeCompanyAction = removeCompany(id);
       const action = verifyCompany(params);
       setRecruiter({});
+      setActiveIndex(null);
       enqueueSnackbar(`Successfully ${verify ? 'Approved' : 'Rejected'}`, { variant: "success" });
 
       dispatch(removeCompanyAction);

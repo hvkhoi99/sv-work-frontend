@@ -14,10 +14,13 @@ function ClientFeature(props) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
+    let timer = setTimeout(() => {
       setIsLoading(false);
-    }, 1000)
-  }, [])
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   const currentUI = isLoading
     ? <LoadingUI />

@@ -23,8 +23,13 @@ function AdminLoginPage(props) {
   const [isLoading, setIsLoading] = useState(true);
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required('This field is required'),
-    password: Yup.string().required('This field is required')
+    email: Yup
+      .string()
+      .email('Email is invalid')
+      .required('Email is required'),
+    password: Yup
+      .string()
+      .required('Password is required')
   })
 
   const {
@@ -35,10 +40,13 @@ function AdminLoginPage(props) {
   } = useForm({ resolver: yupResolver(validationSchema) })
 
   useEffect(() => {
-    setTimeout(() => {
+    let timer = setTimeout(() => {
       setIsLoading(false);
     }, 1000);
-  })
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
 
   const onLogin = async (values) => {
     try {
@@ -79,7 +87,7 @@ function AdminLoginPage(props) {
                 inputName="email"
                 control={control}
                 scheme={errors.email}
-                placeholder="Ex: abc@gmail.com"
+                placeholder="Email"
                 moreClassName="shadow-input radius"
               />
             </div>
@@ -91,6 +99,7 @@ function AdminLoginPage(props) {
                 scheme={errors.password}
                 type="password"
                 moreClassName="shadow-input radius"
+                placeholder="Password"
               />
             </div>
             <div className="form-group button">

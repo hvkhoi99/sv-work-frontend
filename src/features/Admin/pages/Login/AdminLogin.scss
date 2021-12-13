@@ -40,8 +40,9 @@
       justify-content: center;
 
       & > button {
-        border-radius: .5rem;
-        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        border-radius: 0.5rem;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
+          rgba(0, 0, 0, 0.23) 0px 3px 6px;
       }
     }
   }

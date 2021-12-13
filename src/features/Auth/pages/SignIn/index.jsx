@@ -1,29 +1,36 @@
-import React, { useEffect, useState } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
 // import PropTypes from 'prop-types';
 import Footer from 'components/Footer';
-import Images from 'constants/images';
-import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as Yup from 'yup';
-import RHFInputField from 'custom-fields/RHFInputField';
-import './SignIn.scss';
-import { Link } from 'react-router-dom';
-import * as FcIcons from 'react-icons/fc';
 import LoadingUI from 'components/Loading';
+import Images from 'constants/images';
+import RHFInputField from 'custom-fields/RHFInputField';
+import { useSnackbar } from 'notistack';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import * as FcIcons from 'react-icons/fc';
+import { Link, useHistory } from 'react-router-dom';
+import * as Yup from 'yup';
+import './SignIn.scss';
 
 SignInPage.propTypes = {
 
 };
 
 function SignInPage(props) {
-  // const history = useHistory();
+  const history = useHistory();
   // const dispatch = useDispatch();
-  // const { enqueueSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const [isLoading, setIsLoading] = useState(true);
+  const [isSpinner, setIsSpinner] = useState(false);
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required('This field is required'),
-    password: Yup.string().required('This field is required')
+    email: Yup
+      .string()
+      .email('Email is invalid')
+      .required('Email is required'),
+    password: Yup
+      .string()
+      .required('Password is required')
   })
 
   const {
@@ -34,26 +41,39 @@ function SignInPage(props) {
   } = useForm({ resolver: yupResolver(validationSchema) })
 
   useEffect(() => {
-    setTimeout(() => {
+    let timer = setTimeout(() => {
       setIsLoading(false);
     }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   const onLogin = async (values) => {
     try {
-      //   const action = login({
-      //     email: values.email,
-      //     password: values.password
-      //   });
+      // const action = login({
+      //   email: values.email,
+      //   password: values.password
+      // });
 
-      //   const actionResult = await dispatch(action);
-      //   unwrapResult(actionResult);
+      // const actionResult = await dispatch(action);
+      // unwrapResult(actionResult);
 
-      //   history.push("/admin");
+      history.push("/auth/sign-up");
     } catch (error) {
-      // enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
     }
   };
+
+  const onGoogleLogin = () => {
+    setIsSpinner(true);
+    let timer = setTimeout(() => {
+      setIsSpinner(false);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }
 
   const checkKeyDown = (e) => {
     if (e.code === 'Enter') e.preventDefault();
@@ -82,7 +102,7 @@ function SignInPage(props) {
                   inputName="email"
                   control={control}
                   scheme={errors.email}
-                  placeholder="Ex: abc@gmail.com"
+                  placeholder="Email"
                   moreClassName="shadow-input radius"
                 />
               </div>
@@ -94,6 +114,7 @@ function SignInPage(props) {
                   scheme={errors.password}
                   type="password"
                   moreClassName="shadow-input radius"
+                  placeholder="Password"
                 />
               </div>
               <div className="form-group remember-forget">
@@ -119,8 +140,13 @@ function SignInPage(props) {
               </div>
 
               <div className="form-group button">
-                <button disabled={isSubmitting} className="btn btn-sm google" type="submit">
-                  {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                <button
+                  disabled={isSpinner && true}
+                  className="btn btn-sm google"
+                  type="button"
+                  onClick={onGoogleLogin}
+                >
+                  {isSpinner && <span className="spinner-border spinner-border-sm mr-2" />}
                   <FcIcons.FcGoogle className="google__icon" />
                   Sign in with Google
                 </button>

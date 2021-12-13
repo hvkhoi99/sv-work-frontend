@@ -53,8 +53,9 @@
       justify-content: center;
 
       & > button {
+        display: flex;
+        align-items: center;
         border-radius: 0.5rem;
-        // box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
           rgba(0, 0, 0, 0.23) 0px 3px 6px;
       }
@@ -67,7 +68,7 @@
     align-items: center;
 
     & > img {
-      width: 20rem;
+      width: 25rem;
     }
   }
 }
@@ -96,7 +97,6 @@
     & > p {
       margin: 0 0 0 0.5rem;
       color: darkgrey;
-      font-family: "Poppins", sans-serif;
       font-size: 0.9rem;
     }
   }
@@ -104,7 +104,6 @@
   &__link {
     text-decoration: underline;
     color: var(--success);
-    font-family: "Poppins", sans-serif;
     font-size: 0.9rem;
     // font-weight: medium;
 
@@ -147,12 +146,11 @@
 
 .signUp {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
 
   & > span {
     height: 100%;
-    font-family: "Poppins", sans-serif;
     font-size: 0.9rem;
     color: darkgrey;
   }
@@ -160,6 +158,8 @@
   &__link {
     margin: 0 0 0 .5rem;
     text-decoration: underline;
+    font-size: 0.9rem;
+    font-weight: 700;
     color: var(--success);
 
     &:hover {

@@ -42,6 +42,7 @@ function RHFInputField(props) {
               onChange={(e) => field.onChange(parseInt(e.target.value))}
               placeholder={placeholder}
               type={type}
+              autoComplete={inputName}
             />
             {scheme &&
               <span className="text-danger form-span">{scheme?.message}</span>}

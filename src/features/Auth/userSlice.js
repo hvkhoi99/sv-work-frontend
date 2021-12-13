@@ -50,6 +50,9 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     current: JSON.parse(localStorage.getItem('user')) || {},
+    // current: {
+    //   role_id: 2
+    // },
     settings: {},
   },
   // Async action
