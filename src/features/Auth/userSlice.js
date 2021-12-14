@@ -2,28 +2,25 @@ import userApi from 'api/userApi';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
-export const register = createAsyncThunk(
-  'auth/register',
+export const signup = createAsyncThunk(
+  'auth/sign-up/:roleId',
 
   async (payload) => {
     const data = await userApi.signup(payload);
 
-    console.log(data.data);
-    
     return data.data;
   }
 
 );
 
 export const login = createAsyncThunk(
-  'auth/login',
+  '/auth/sign-in',
 
   async (payload) => {
     const data = await userApi.login(payload);
-
     localStorage.setItem('access_token', data.data.data.token);
     localStorage.setItem('user', JSON.stringify(data.data.data));
-    // localStorage.setItem('role', data.data.data.role_id);
+    localStorage.setItem('role_id', JSON.stringify(data.data.data.role_id));
 
     return data.data.data;
   }
@@ -38,21 +35,16 @@ export const loginGoogle = createAsyncThunk(
     
     localStorage.setItem('access_token', data.data.token);
     localStorage.setItem('user', JSON.stringify(data.data));
-    // localStorage.setItem('role', data.data.role);
+    localStorage.setItem('role_id', JSON.stringify(data.data.role_id));
 
     return data;
   }
-
-
 );
 
 const userSlice = createSlice({
   name: 'user',
   initialState: {
     current: JSON.parse(localStorage.getItem('user')) || {},
-    // current: {
-    //   role_id: 2
-    // },
     settings: {},
   },
   // Async action
@@ -60,8 +52,7 @@ const userSlice = createSlice({
     logout(state) {
       localStorage.removeItem('access_token');
       localStorage.removeItem('user');
-      // localStorage.removeItem('role');
-      console.log("logout");
+      localStorage.removeItem('role_id');
       
       state.current = {};
     },
@@ -77,9 +68,9 @@ const userSlice = createSlice({
     // 'user/login/pending'
     // 'user/login/error'
 
-    [register.fulfilled]: (state, action) => {
-      state.current = action.payload;
-    },
+    // [register.fulfilled]: (state, action) => {
+    //   state.current = action.payload;
+    // },
     [login.fulfilled]: (state, action) => {
       state.current = action.payload;
     },

@@ -41,12 +41,12 @@ axiosClient.interceptors.response.use(
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    console.log('error', error.response);
+    console.log('error axios: ', error.response);
     try {
       const { config, status, data } = error.response;
       console.log({ config, status, data })
 
-      if (config.url === '/register' && status === 400) {
+      if (config.url === '/auth/account/register' && status === 400) {
         // const errorMessage = data.message;
 
         window.location.href = '/error';

@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import Select from 'react-select';
-import './RHFSelectField.scss';
 
 RHFSelectField.propTypes = {
   control: PropTypes.object,
@@ -10,6 +9,7 @@ RHFSelectField.propTypes = {
   placeholder: PropTypes.string,
   isStyles: PropTypes.bool,
   isTheme: PropTypes.bool,
+  scheme: PropTypes.object
 };
 
 RHFSelectField.defaultProps = {
@@ -18,10 +18,11 @@ RHFSelectField.defaultProps = {
   placeholder: '',
   isStyles: false,
   isTheme: false,
+  scheme: {}
 }
 
 function RHFSelectField(props) {
-  const { control, options, placeholder, isStyles, isTheme } = props;
+  const { control, options, placeholder, isStyles, isTheme, scheme } = props;
 
   const colourStyles = {
     placeholder: (defaultStyles) => {
@@ -60,19 +61,23 @@ function RHFSelectField(props) {
         defaultValue=''
         name="options"
         render={({ field: { onChange, name, value, ref } }) => (
-          <Select
-            inputRef={ref}
-            value={options.find((option) => option.value === value)}
-            name={name}
-            options={options}
-            onChange={(selectedOption) => {
-              onChange(selectedOption.label);
-            }}
-            placeholder={placeholder}
-            styles={isStyles ? colourStyles : ''}
-            theme= {isTheme ? theme : null}
-          // isMulti
-          />
+          <>
+            <Select
+              inputRef={ref}
+              value={options.find((option) => option.value === value)}
+              name={name}
+              options={options}
+              onChange={(selectedOption) => {
+                onChange(selectedOption.label);
+              }}
+              placeholder={placeholder}
+              styles={isStyles ? colourStyles : ''}
+              theme={isTheme ? theme : null}
+            // isMulti
+            />
+            {scheme &&
+              <span className="text-danger form-span">{scheme?.message}</span>}
+          </>
         )}
       />
     </>

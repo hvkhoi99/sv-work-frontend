@@ -4,7 +4,7 @@ import userApi from "api/userApi";
 const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
 
 export const login = createAsyncThunk(
-  '/admin/auth/login',
+  '/admin/auth/admin-sign-in',
 
   async (payload) => {
     const data = await userApi.login(payload);

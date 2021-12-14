@@ -1,12 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { unwrapResult } from '@reduxjs/toolkit';
 import Footer from 'components/Footer';
 import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
 import RHFInputField from 'custom-fields/RHFInputField';
+import { signup } from 'features/Auth/userSlice';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link, useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import '../SignIn/SignIn.scss';
 
@@ -16,9 +19,10 @@ SignUpPage.propTypes = {
 
 function SignUpPage(props) {
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const history = useHistory();
+  const dispatch = useDispatch();
   const { roleId } = useParams();
-  // const history = useHistory();
-  // const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
   const validationSchema = Yup.object().shape({
@@ -59,17 +63,18 @@ function SignUpPage(props) {
 
   const onRegister = async (values) => {
     try {
-      // const action = login({
-      //   email: values.email,
-      //   password: values.password
-      // });
+      const action = signup({
+        email: values.email,
+        password: values.passwordConfirmation,
+        role_id: parseInt(roleId, 10)
+      });
 
-      // const actionResult = await dispatch(action);
-      // unwrapResult(actionResult);
-      console.log({ values, roleId: parseInt(roleId, 10) });
+      const actionResult = await dispatch(action);
+      unwrapResult(actionResult);
       enqueueSnackbar("You have successfully registered an account.", { variant: "success" });
-      // history.push("/auth/sign-in");
+      history.push("/auth/sign-in");
     } catch (error) {
+      setIsError(true);
       enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
     }
   };
@@ -127,11 +132,13 @@ function SignUpPage(props) {
                   placeholder="Confirm password"
                 />
               </div>
-              <div className="form-group button">
-                <button disabled={isSubmitting} className="btn btn-success btn-sm" type="submit">
+              <div className="form-group button signin-button">
+                <button disabled={isSubmitting} className="btn btn-success btn-sm justify-content-center" type="submit">
                   {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
                   Sign Up
                 </button>
+                {isError &&
+                  <span className="text-danger form-span">This email address is already being used</span>}
               </div>
               <div className="form-group signUp">
                 <span>Already have an account?</span>

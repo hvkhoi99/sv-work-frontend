@@ -103,6 +103,7 @@ function HomePage(props) {
                   <RHFSelectField
                     control={control}
                     options={options}
+                    scheme={errors.city}
                     placeholder="city..."
                     isTheme={true}
                     isStyles={true}

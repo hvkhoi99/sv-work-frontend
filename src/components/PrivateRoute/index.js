@@ -50,9 +50,9 @@ export function PrivateRouteUserAuth({ component: Component, ...rest }) {
 			<Route
 				{...rest}
 				render={(props) => {
-					return userRole.role_id === 2 ? (
+					return userRole.role_id === 3 ? (
 						<Redirect to='/' />
-					) : user.role_id === 3 ? (
+					) : user.role_id === 2 ? (
 						<Redirect to='/recruiter' />
 					) : (
 						<Component {...props} />
