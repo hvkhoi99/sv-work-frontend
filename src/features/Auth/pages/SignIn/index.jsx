@@ -11,7 +11,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as FcIcons from 'react-icons/fc';
 import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 import './SignIn.scss';
 
@@ -20,12 +20,13 @@ SignInPage.propTypes = {
 };
 
 function SignInPage(props) {
-  const history = useHistory();
+  // const history = useHistory();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const [isLoading, setIsLoading] = useState(true);
   const [isSpinner, setIsSpinner] = useState(false);
   const [isError, setIsError] = useState(false);
+  const isRecruiterPath = localStorage.getItem('isRecruiterPath');
 
   const validationSchema = Yup.object().shape({
     email: Yup
@@ -62,7 +63,8 @@ function SignInPage(props) {
 
       const actionResult = await dispatch(action);
       unwrapResult(actionResult);
-      history.push("/");
+      isRecruiterPath && localStorage.removeItem('isRecruiterPath');
+      // history.push(result.role_id === 3 ? "/student" : result.role_id === 2 ? "/recruiter" : "/error");
     } catch (error) {
       setIsError(true);
       enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });

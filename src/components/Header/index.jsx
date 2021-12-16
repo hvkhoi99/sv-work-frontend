@@ -1,13 +1,14 @@
 import { Button } from 'components/Button';
 import NotificationCard from 'components/NotificationCard';
+import Paths from 'constants/paths';
 import { logout } from 'features/Auth/userSlice';
 import React, { useEffect, useRef, useState } from 'react';
 import * as AiIcons from 'react-icons/ai';
+import * as BsIcons from 'react-icons/bs';
 import * as FaIcons from 'react-icons/fa';
+import * as ImIcons from 'react-icons/im';
 import * as MdIcons from 'react-icons/md';
 import * as RiIcons from 'react-icons/ri';
-import * as BsIcons from 'react-icons/bs';
-import * as ImIcons from 'react-icons/im';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import './Header.scss';
@@ -21,16 +22,18 @@ Header.defaultProps = {
 }
 
 function Header(props) {
+  const user = useSelector((state) => state.user.current);
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
-  const user = useSelector((state) => state.user.current);
   const [hiddenNoti, setHiddenNoti] = useState(true);
   const [hiddenMe, setHiddenMe] = useState(true);
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const currentRoleId = parseInt(localStorage.getItem('role_id'), 10);
-  const [roleId, setRoleId] = useState(currentRoleId);
+  const roleId = parseInt(localStorage.getItem('role_id'), 10);
+  // const [isRecruiterPath, setisRecruiterPath] = useState(false);
+  // const [roleId, setRoleId] = useState(currentRoleId);
+  let isRecruiterPath = localStorage.getItem('isRecruiterPath') === "true";
 
   const ref = useRef(null);
 
@@ -76,29 +79,32 @@ function Header(props) {
 
   window.addEventListener('resize', showButton);
 
-  const logOut = () => {
+  const logOut = async () => {
     setHiddenMe(true);
     dispatch(logout());
     history.push("/auth/sign-in");
   }
 
-  const changeStatusRole = () => {
-    const handleRole = roleId === 3 ? 2 : 3;
-    localStorage.setItem("role_id", handleRole)
-    setRoleId(handleRole);
+  const handleMoveToRecruiter = () => {
+    localStorage.setItem("role_id", 2);
+    history.push("/recruiter");
+  }
+
+  const handleMoveToStudent = () => {
+    localStorage.setItem("role_id", 3);
+    user.role_id === 2 && logOut();
+    user.role_id !==2 && history.push("/")
   }
 
   const handleChangeRole = () => {
-    const result = user.role_id === 3
-      ? changeStatusRole()
-      : logOut();
-    return result;
+    localStorage.setItem("isRecruiterPath", !isRecruiterPath);
+    history.push(isRecruiterPath ? "/" : "/recruiter");
   }
 
   const currentUI = !roleId ? (
     <nav className='navbar'>
       <div className='navbar-container'>
-        <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
+        <Link to={isRecruiterPath ? Paths.recruiterHome : Paths.clientHome} className='navbar-logo' onClick={closeMobileMenu}>
           WORK
           <i className="fab fa-linode"></i>
         </Link>
@@ -107,23 +113,34 @@ function Header(props) {
         </div>
         <ul className={click ? 'nav-menu active' : 'nav-menu'}>
           <li className='nav-item'>
-            <Link to='/event' className='nav-links' onClick={closeMobileMenu}>
+            <Link to={isRecruiterPath ? Paths.recruiterEvent : Paths.clientEvent} className='nav-links' onClick={closeMobileMenu}>
               <BsIcons.BsFillCalendar2EventFill className="menu-link-icon" />
               Event
             </Link>
           </li>
           <li className='nav-item'>
             <Link
-              to='/find-job'
+              to={isRecruiterPath ? Paths.recruiterFindCandidates : Paths.clientFindJobs}
               className='nav-links'
               onClick={closeMobileMenu}
             >
-              Find Jobs
+              {isRecruiterPath ? "Candidates" : "Jobs"}
             </Link>
           </li>
           <li className='nav-item'>
             <Link
-              to='/auth/sign-in'
+              to='#'
+              className='nav-links'
+              onClick={handleChangeRole}
+            >
+              <FaIcons.FaBuilding className="menu-link-icon" />
+              {/* {isCurrentStudent ? "Recruier" : "Student"} */}
+              {isRecruiterPath ? "Student" : "Recruiter"}
+            </Link>
+          </li>
+          <li className='nav-item'>
+            <Link
+              to={Paths.signin}
               className='nav-links-mobile'
               onClick={closeMobileMenu}
             >
@@ -137,7 +154,7 @@ function Header(props) {
   ) : roleId === 2 ? (
     <nav className='navbar'>
       <div className='navbar-container'>
-        <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
+        <Link to={Paths.recruiterHome} className='navbar-logo' onClick={closeMobileMenu}>
           WORK
           <i className="fab fa-linode"></i>
         </Link>
@@ -146,14 +163,14 @@ function Header(props) {
         </div>
         <ul className={click ? 'nav-menu active' : 'nav-menu'}>
           <li className='nav-item'>
-            <Link to='/event' className='nav-links' onClick={closeMobileMenu}>
+            <Link to={Paths.recruiterEvent} className='nav-links' onClick={closeMobileMenu}>
               <BsIcons.BsFillCalendar2EventFill className="menu-link-icon" />
               Event
             </Link>
           </li>
           <li className='nav-item'>
             <Link
-              to='/find-job'
+              to={Paths.recruiterFindCandidates}
               className='nav-links'
               onClick={closeMobileMenu}
             >
@@ -165,7 +182,7 @@ function Header(props) {
             <Link
               to='#'
               className='nav-links'
-              onClick={handleChangeRole}
+              onClick={handleMoveToStudent}
             >
               <FaIcons.FaUserGraduate className="menu-link-icon" />
               Student
@@ -199,19 +216,19 @@ function Header(props) {
               <p className="notify-me__action__me__user-infor">Signed in as&nbsp;<span>{user.name}</span></p>
               <ul>
                 <li>
-                  <Link to="#" className="me-link">
+                  <Link to={Paths.recruiterDashboard} className="me-link">
                     <MdIcons.MdDashboard className="me-link__icon" />
                     <span>Dashboard</span>
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="me-link">
+                  <Link to={Paths.recruiterProfile} className="me-link">
                     <RiIcons.RiProfileLine className="me-link__icon" />
                     <span>Profile</span>
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="me-link">
+                  <Link to={Paths.recruiterAccount} className="me-link">
                     <AiIcons.AiFillSetting className="me-link__icon" />
                     <span>Account</span>
                   </Link>
@@ -231,7 +248,7 @@ function Header(props) {
   ) : (
     <nav className='navbar'>
       <div className='navbar-container'>
-        <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
+        <Link to={Paths.clientHome} className='navbar-logo' onClick={closeMobileMenu}>
           WORK
           <i className="fab fa-linode"></i>
         </Link>
@@ -240,26 +257,26 @@ function Header(props) {
         </div>
         <ul className={click ? 'nav-menu active' : 'nav-menu'}>
           <li className='nav-item'>
-            <Link to='/event' className='nav-links' onClick={closeMobileMenu}>
+            <Link to={Paths.clientEvent} className='nav-links' onClick={closeMobileMenu}>
               <BsIcons.BsFillCalendar2EventFill className="menu-link-icon" />
               Event
             </Link>
           </li>
           <li className='nav-item'>
             <Link
-              to='/find-job'
+              to={Paths.clientFindJobs}
               className='nav-links'
               onClick={closeMobileMenu}
             >
               <ImIcons.ImSearch className="menu-link-icon" />
-              Find Jobs
+              Jobs
             </Link>
           </li>
           <li className='nav-item'>
             <Link
               to='#'
               className='nav-links'
-              onClick={handleChangeRole}
+              onClick={handleMoveToRecruiter}
             >
               <FaIcons.FaBuilding className="menu-link-icon" />
               Recruier
@@ -293,19 +310,19 @@ function Header(props) {
               <p className="notify-me__action__me__user-infor">Signed in as&nbsp;<span>{user.name}</span></p>
               <ul>
                 <li>
-                  <Link to="#" className="me-link">
+                  <Link to={Paths.clientDashboard} className="me-link">
                     <MdIcons.MdDashboard className="me-link__icon" />
                     <span>Dashboard</span>
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="me-link">
+                  <Link to={Paths.clientProfile} className="me-link">
                     <RiIcons.RiProfileLine className="me-link__icon" />
                     <span>Profile</span>
                   </Link>
                 </li>
                 <li>
-                  <Link to="#" className="me-link">
+                  <Link to={Paths.clientAccount} className="me-link">
                     <AiIcons.AiFillSetting className="me-link__icon" />
                     <span>Account</span>
                   </Link>

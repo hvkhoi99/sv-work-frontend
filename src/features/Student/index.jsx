@@ -3,13 +3,15 @@ import Header from 'components/Header';
 import LoadingUI from 'components/Loading';
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import HomePage from './Home';
+import StudentEventFeature from './Event';
+import StudentFindFeature from './Find';
+import StudentHomeFeature from './Home';
 
-ClientFeature.propTypes = {
+StudentFeature.propTypes = {
 
 };
 
-function ClientFeature(props) {
+function StudentFeature(props) {
   const match = useRouteMatch();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -28,7 +30,9 @@ function ClientFeature(props) {
       <>
         <Header />
         <Switch>
-          <Route exact path={match.url} component={HomePage} />
+          <Route exact path={match.url} component={StudentHomeFeature} />
+          <Route path={`${match.url}/event`} component={StudentEventFeature} />
+          <Route path={`${match.url}/find-jobs`} component={StudentFindFeature} />
         </Switch>
         <Footer />
       </>
@@ -37,4 +41,4 @@ function ClientFeature(props) {
   return <>{currentUI}</>;
 }
 
-export default ClientFeature;
+export default StudentFeature;

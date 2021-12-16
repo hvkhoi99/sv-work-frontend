@@ -1,10 +1,10 @@
 import React from 'react';
 
-CreateEventPage.propTypes = {
+RecruiterCreateEventPage.propTypes = {
 
 };
 
-function CreateEventPage(props) {
+function RecruiterCreateEventPage(props) {
   return (
     <div className="event-create">
       Create event page.
@@ -12,4 +12,4 @@ function CreateEventPage(props) {
   );
 }
 
-export default CreateEventPage;
+export default RecruiterCreateEventPage;

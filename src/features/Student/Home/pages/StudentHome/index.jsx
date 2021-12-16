@@ -7,10 +7,10 @@ import RHFSelectField from 'custom-fields/RHFSelectField';
 import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import TopRecruiterGroupCard from "./components/TopRecruiterGroupCard";
-import './Home.scss';
+import TopRecruiterGroupCard from "../../components/TopRecruiterGroupCard";
+import './StudentHome.scss';
 
-function HomePage(props) {
+function StudentHomePage(props) {
   const options = CITY_OPTIONS;
   const [topRecruiters, setTopRecruiters] = useState([]);
 
@@ -152,4 +152,4 @@ function HomePage(props) {
   );
 }
 
-export default HomePage;
+export default StudentHomePage;

@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import React from 'react';
-import { PuffLoader } from 'react-spinners';
+import { BounceLoader } from 'react-spinners';
 
 LoadingUI.propTypes = {
 
@@ -16,7 +16,7 @@ const override = css`
 function LoadingUI(props) {
   return (
     <div>
-      <PuffLoader css={override} size={100} color='#0DAB42' />
+      <BounceLoader css={override} size={100} color='#0DAB42' />
     </div>
   );
 }
