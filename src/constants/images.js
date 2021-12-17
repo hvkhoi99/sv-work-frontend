@@ -23,11 +23,14 @@ import lamborghini from '../assets/img/lamborghini.jpg';
 import student from '../assets/img/student.png';
 import recruiter from '../assets/img/recruiter.png';
 import bmw from '../assets/img/bmw.png';
+import create from '../assets/img/create.png';
+import searchCard from '../assets/img/search-card.png';
+import recruitmentManageCard from '../assets/img/recruitment-manage.png';
 
 const Images = {
   home, notFound, emoji, minami, bgRight, background, fptSoftware, smDot, eventcircle, 
   admin, teamwork, overview, ellipse, apple, coffeeTime, levis, tw, shopee, fb, vinfast, 
-  burger, lamborghini, student, recruiter, bmw
+  burger, lamborghini, student, recruiter, bmw, create, searchCard, recruitmentManageCard
 }
 
 export default Images;

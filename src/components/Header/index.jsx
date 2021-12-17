@@ -50,12 +50,12 @@ function Header(props) {
 
   const showNotification = () => {
     setHiddenNoti(!hiddenNoti);
-    hiddenMe && setHiddenMe(true);
+    setHiddenMe(true);
   }
 
   const showMe = () => {
     setHiddenMe(!hiddenMe);
-    hiddenNoti && setHiddenNoti(true);
+    setHiddenNoti(true);
   }
 
   useEffect(() => {
@@ -93,7 +93,7 @@ function Header(props) {
   const handleMoveToStudent = () => {
     localStorage.setItem("role_id", 3);
     user.role_id === 2 && logOut();
-    user.role_id !==2 && history.push("/")
+    user.role_id !== 2 && history.push("/")
   }
 
   const handleChangeRole = () => {
@@ -115,7 +115,7 @@ function Header(props) {
           <li className='nav-item'>
             <Link to={isRecruiterPath ? Paths.recruiterEvent : Paths.clientEvent} className='nav-links' onClick={closeMobileMenu}>
               <BsIcons.BsFillCalendar2EventFill className="menu-link-icon" />
-              Event
+              {isRecruiterPath ? "Manage Events" : "Event"}
             </Link>
           </li>
           <li className='nav-item'>
@@ -124,6 +124,7 @@ function Header(props) {
               className='nav-links'
               onClick={closeMobileMenu}
             >
+              <ImIcons.ImSearch className="menu-link-icon" />
               {isRecruiterPath ? "Candidates" : "Jobs"}
             </Link>
           </li>
@@ -134,7 +135,6 @@ function Header(props) {
               onClick={handleChangeRole}
             >
               <FaIcons.FaBuilding className="menu-link-icon" />
-              {/* {isCurrentStudent ? "Recruier" : "Student"} */}
               {isRecruiterPath ? "Student" : "Recruiter"}
             </Link>
           </li>

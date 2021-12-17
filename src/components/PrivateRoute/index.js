@@ -90,7 +90,7 @@ export function PrivateRouteRecruiter({ component: Component, ...rest }) {
   // const user = useSelector((state) => state.user.current);
   // const userRole = user.role_id;
   const userRole = parseInt(localStorage.getItem('role_id'));
-  localStorage.removeItem('isRecruiterPath');
+  // localStorage.removeItem('isRecruiterPath');
 
   return (
     <div>
