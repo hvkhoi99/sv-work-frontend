@@ -1,5 +1,6 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 DashboardSelectOption.propTypes = {
   option: PropTypes.object,
@@ -17,9 +18,9 @@ function DashboardSelectOption(props) {
   const { option, className, onChangeIndex } = props;
 
   return (
-    <div className={className} onClick={() => onChangeIndex(option)}>
+    <Link to={option.path} className={className} onClick={() => onChangeIndex(option)}>
       <span>{option.name}</span>
-    </div>
+    </Link>
   );
 }
 

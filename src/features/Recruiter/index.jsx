@@ -1,5 +1,6 @@
 import Footer from 'components/Footer';
 import Header from 'components/Header';
+import NotFoundPage from 'components/NotFound';
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import RecruiterEventFeature from './Event';
@@ -20,6 +21,7 @@ function RecruiterFeature(props) {
         <Route path={`${match.url}/event`} component={RecruiterEventFeature} />
         <Route path={`${match.url}/find-candidates`} component={RecruiterFindFeature} />
         <Route path={`${match.url}/me`} component={RecruiterMeFeature} />
+        <Route path="*" component={NotFoundPage} />
       </Switch>
       <Footer />
     </>

@@ -6,6 +6,10 @@
   width: 100%;
   padding: 4rem 4rem;
   margin: 0;
+  // background-image: url("../../../../../assets/img/background.png");
+  // background-size: cover;
+  // background-repeat: no-repeat;
+  // background-position: center;
 
   &__container {
     display: flex;
@@ -31,6 +35,7 @@
         width: 30%;
         padding: 0.5rem;
         // border-right: 1px solid black;
+
         &__inforCard {
           display: flex;
           justify-content: center;
@@ -144,27 +149,29 @@
     &__bottom {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      // align-items: center;
       width: 100%;
       height: auto;
-      margin: 4rem 0 0 0;
+      margin: 3rem 0 0 0;
       // background-color: greenyellow;
 
       &__left {
-        padding: 0.5rem;
-        width: 28.7%;
+        display: flex;
+        flex-direction: column;
+        padding: .5rem;
+        width: 28.5%;
         height: auto;
         // background-color: burlywood;
-        // border-right: 1px solid black;
 
         &__item {
           display: flex;
           align-items: center;
           height: 2.5rem;
-          margin: 1.5rem 0 0 0;
+          margin: 0 0 1.5rem 0;
           border-bottom: 1px solid darkgrey;
           cursor: pointer;
           border-radius: 0.5rem 0.5rem 0 0;
+          text-decoration: none;
 
           & > span {
             // color: var(--success);
@@ -175,6 +182,7 @@
           &:hover {
             background-color: rgb(196, 255, 196);
             transition: all 0.2s ease-out;
+            text-decoration: none;
           }
 
           &:active {
@@ -185,7 +193,12 @@
       }
 
       &__right {
-        width: 70%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: calc(100% - 28.5%);
+        height: auto;
+        padding: 0.5rem 2.5rem;
       }
     }
   }

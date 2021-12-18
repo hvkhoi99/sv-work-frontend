@@ -1,31 +1,36 @@
 import Images from 'constants/images';
+import Paths from 'constants/paths';
 import React, { useState } from 'react';
-import * as HiIcons from 'react-icons/hi';
 import * as BsIcons from 'react-icons/bs';
-import './RecruiterDashboard.scss';
+import * as HiIcons from 'react-icons/hi';
+import { useHistory } from 'react-router-dom';
+import AvailableJobs from '../../components/AvailableJobs';
+import ClosedRecruitments from '../../components/ClosedRecruitments';
 import DashboardSelectOption from '../../components/DashboardSelectOption';
+import './RecruiterDashboard.scss';
 
 RecruiterDashboardPage.propTypes = {
 
 };
 
 function RecruiterDashboardPage(props) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
+  const availableJobsPath = `${Paths.recruiterDashboard}/available-jobs`;
+  const closedRecruitmentsPath = `${Paths.recruiterDashboard}/closed-recruitments`;
+  const history = useHistory();
+  const location = history.location.pathname;
+  const [currentPath, setCurrentPath] = useState(location);
   const options = [
-    { id: 0, name: "Available Jobs" },
-    { id: 1, name: "Closed Recruitments" }
+    { id: 0, name: "Available Jobs", path: availableJobsPath },
+    { id: 1, name: "Closed Recruitments", path: closedRecruitmentsPath }
   ]
 
   const onChangeIndex = (option) => {
-    setCurrentIndex(option.id);
-    console.log({option})
+    setCurrentPath(option.path);
   }
 
   return (
     <div className="recruiter-dashboard">
       <div className="recruiter-dashboard__container">
-
         <div className="recruiter-dashboard__container__top">
           <div className="recruiter-dashboard__container__top__left">
             <div className="recruiter-dashboard__container__top__left__inforCard">
@@ -66,17 +71,17 @@ function RecruiterDashboardPage(props) {
         <div className="recruiter-dashboard__container__bottom">
           <div className="recruiter-dashboard__container__bottom__left">
             {options.map((option, index) => {
-              const className = currentIndex === option.id ? "recruiter-dashboard__container__bottom__left__item visited-card" : "recruiter-dashboard__container__bottom__left__item";
+              const className = currentPath === option.path ? "recruiter-dashboard__container__bottom__left__item visited-card" : "recruiter-dashboard__container__bottom__left__item";
               return <DashboardSelectOption
                 option={option}
-                key={option.id}
+                key={index}
                 className={className}
                 onChangeIndex={onChangeIndex}
               />
             })}
           </div>
           <div className="recruiter-dashboard__container__bottom__right">
-
+            {currentPath === availableJobsPath ? <AvailableJobs /> : currentPath === closedRecruitmentsPath ? <ClosedRecruitments /> : <></>}
           </div>
         </div>
       </div>

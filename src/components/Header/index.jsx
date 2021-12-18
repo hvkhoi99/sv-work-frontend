@@ -61,8 +61,8 @@ function Header(props) {
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
-        hiddenMe && setHiddenMe(true);
-        hiddenNoti && setHiddenNoti(true);
+        setHiddenMe(true);
+        setHiddenNoti(true);
       }
     }
 
