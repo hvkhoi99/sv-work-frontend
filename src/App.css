@@ -45,3 +45,44 @@
   color: #fff;
   font-size: 100px;
 } */
+
+.pagination {
+  margin: 4rem 0 0 0;
+}
+
+.pagination > li > a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: white;
+  color: var(--success);
+  font-weight: 400;
+
+  margin: 0 0.1rem;
+  border-radius: 50%;
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+  color: var(--success);
+  background-color: #eee;
+  border-color: #ddd;
+}
+
+.pagination > .active > a {
+  color: white;
+  background-color: var(--success) !important;
+  border: solid 1px var(--success) !important;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.pagination > .active > a:hover {
+  background-color: var(--success) !important;
+  border: solid 1px var(--success);
+}

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import './HashtagCard.scss';
 
 HashTagCard.propTypes = {
   hashtag: PropTypes.object
@@ -13,7 +14,7 @@ function HashTagCard(props) {
   const { hashtag } = props;
 
   return (
-    <span className="available-jobs__container__bottom__item-second__hashtags__hashtag">
+    <span className="hashtag-card">
       {/* <TextTruncate
         line={1}
         element="span"

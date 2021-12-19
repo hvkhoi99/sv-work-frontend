@@ -1,5 +1,111 @@
 .closed-recruitments {
-  width: 10rem;
-  height: 10rem;
-  background-color: blue;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: auto;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+
+    margin: 0 0 2rem 0;
+    padding: 1rem 2rem 1.5rem;
+    box-shadow: #63636333 0px 2px 8px 0px;
+    border-radius: 0.5rem;
+
+    &__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      &__title {
+        font-weight: 600;
+      }
+
+      &__date {
+        font-size: 0.9rem;
+        color: darkgrey;
+      }
+    }
+
+    &__bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      margin: 1rem 0 0 0;
+      width: 100%;
+      height: auto;
+
+      &__left {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        width: auto;
+
+        &__item {
+          display: flex;
+
+          & > span {
+            font-size: 0.9rem;
+          }
+
+          &__location {
+            margin: 0 0 0.3rem 0;
+          }
+        }
+      }
+
+      &__center {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.9rem;
+        height: auto;
+        width: 50%;
+
+        &__applicants {
+          margin: 0 0 0.3rem 0;
+          & > span {
+            font-weight: 600;
+            color: var(--success);
+          }
+        }
+
+        &__hashtags {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: auto;
+        }
+      }
+
+      &__right {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: auto;
+
+        & > button {
+          border-radius: 1.5rem;
+          font-weight: 500;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          // cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.delete {
+  margin: 0 0 0 1rem;
 }

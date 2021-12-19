@@ -11,21 +11,8 @@ RecruiterMeFeature.propTypes = {
 
 function RecruiterMeFeature(props) {
   const match = useRouteMatch();
-  // const [isLoading, setIsLoading] = useState(true);
-
-  // useEffect(() => {
-  //   let timer = setTimeout(() => {
-  //     setIsLoading(false);
-  //   }, 3000);
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, []);
 
   const currentUI =
-    // isLoading
-    //   ? <LoadingUI />
-    //   : (
     <>
       <Switch>
         <Redirect
@@ -41,8 +28,6 @@ function RecruiterMeFeature(props) {
         <Route path="*" component={NotFoundPage} />
       </Switch>
     </>
-  // )
-
 
   return (
     <>

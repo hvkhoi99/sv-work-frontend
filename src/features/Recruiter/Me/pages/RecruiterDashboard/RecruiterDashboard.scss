@@ -1,8 +1,8 @@
 .recruiter-dashboard {
   display: flex;
   justify-content: center;
-  align-items: center;
-  // height: auto;
+  align-items: flex-start;
+  height: auto;
   width: 100%;
   padding: 4rem 4rem;
   margin: 0;
@@ -158,7 +158,7 @@
       &__left {
         display: flex;
         flex-direction: column;
-        padding: .5rem;
+        padding: 0.5rem;
         width: 28.5%;
         height: auto;
         // background-color: burlywood;
@@ -190,14 +190,26 @@
             transition: all 0.2s ease-out;
           }
         }
+
+        &__img {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: auto;
+
+          & > img {
+            width: 90%;
+          }
+        }
       }
 
       &__right {
         display: flex;
         justify-content: center;
-        align-items: center;
+        align-items: flex-start;
         width: calc(100% - 28.5%);
-        height: auto;
+        height: 10;
         padding: 0.5rem 2.5rem;
       }
     }
@@ -221,4 +233,10 @@
     font-weight: 500;
     color: var(--success);
   }
+}
+
+.loading-ui {
+  display: flex;
+  align-items: center;
+  height: 85vh;
 }

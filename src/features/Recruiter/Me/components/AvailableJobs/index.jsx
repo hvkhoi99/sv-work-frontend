@@ -1,9 +1,9 @@
 import recruiterApi from 'api/recruiterApi';
 import React, { useEffect, useState } from 'react';
+import * as MdIcons from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
 import AvailableJobsCard from '../AvailableJobsCard';
 import './AvailableJobs.scss';
-import * as MdIcons from 'react-icons/md';
 
 AvailableJobs.propTypes = {
 
@@ -13,6 +13,7 @@ function AvailableJobs(props) {
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setpageCount] = useState(0);
+  // const [isLoading, setIsLoading] = useState(true);
 
   const limit = 3;
 
@@ -28,6 +29,7 @@ function AvailableJobs(props) {
         const total = data.data.data.total;
         setpageCount(Math.ceil(total / limit));
         setItems(data.data.data.data);
+        // setIsLoading(false);
         return data.data.data;
       } catch (error) {
         console.log("Cannot get avilable jobs. Error: ", error.message);
@@ -45,6 +47,12 @@ function AvailableJobs(props) {
 
   return (
     <div className="available-jobs">
+      {/* {isLoading
+        ? <LoadingChildUI />
+        : items.map((item, index) => {
+          return <AvailableJobsCard item={item} key={index} />
+        })
+      } */}
       {items.map((item, index) => {
         return <AvailableJobsCard item={item} key={index} />
       })}
@@ -55,7 +63,7 @@ function AvailableJobs(props) {
         nextLabel={
           <MdIcons.MdArrowForwardIos />
         }
-        
+
         breakLabel={"..."}
         pageCount={pageCount}
         marginPagesDisplayed={3}

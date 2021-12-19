@@ -15,7 +15,6 @@ AvailableJobsCard.defaultProps = {
 
 function AvailableJobsCard(props) {
   const { item } = props;
-  console.log({ item })
 
   return (
     <div className="available-jobs__container">

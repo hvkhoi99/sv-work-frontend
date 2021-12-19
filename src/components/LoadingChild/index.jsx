@@ -2,23 +2,23 @@ import { css } from '@emotion/react';
 import React from 'react';
 import { PuffLoader } from 'react-spinners';
 
-LoadingUI.propTypes = {
+LoadingChildUI.propTypes = {
 
 };
 
 const override = css`
-	position: absolute;
+	position: relative;
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
 `;
 
-function LoadingUI(props) {
+function LoadingChildUI(props) {
   return (
     <div>
-      <PuffLoader css={override} size={100} color='#0DAB42' />
+      <PuffLoader css={override} size={60} color='#0DAB42' />
     </div>
   );
 }
 
-export default LoadingUI;
+export default LoadingChildUI;

@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: auto;
+  // min-height: 10rem;
 
   &__container {
     display: flex;
@@ -16,7 +16,7 @@
 
     margin: 0 0 2rem 0;
     padding: 1rem 2rem 1.5rem;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    box-shadow: #63636333 0px 2px 8px 0px;
     border-radius: 0.5rem;
 
     &__top {
@@ -94,18 +94,18 @@
           width: 100%;
           height: auto;
 
-          &__hashtag {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgb(190, 255, 190);
-            max-width: 5rem;
-            padding: 0 0.2rem;
-            margin: 0 0.2rem;
+          // &__hashtag {
+          //   display: flex;
+          //   justify-content: center;
+          //   align-items: center;
+          //   background-color: rgb(190, 255, 190);
+          //   max-width: 5rem;
+          //   padding: 0 0.2rem;
+          //   margin: 0 0.2rem;
 
-            border-radius: 1rem;
-            font-weight: 500;
-          }
+          //   border-radius: 1rem;
+          //   font-weight: 500;
+          // }
         }
       }
 
@@ -119,49 +119,10 @@
         & > button {
           border-radius: 1.5rem;
           font-weight: 500;
+          box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          // cursor: pointer;
         }
       }
     }
   }
-}
-
-.pagination {
-  margin: 4rem 0 0 0;
-}
-
-.pagination > li > a {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background-color: white;
-  color: var(--success);
-  font-weight: 400;
-
-  margin: 0 0.1rem;
-  border-radius: 50%;
-  width: 2.2rem;
-  height: 2.2rem;
-}
-
-.pagination > li > a:focus,
-.pagination > li > a:hover,
-.pagination > li > span:focus,
-.pagination > li > span:hover {
-  color: var(--success);
-  background-color: #eee;
-  border-color: #ddd;
-}
-
-.pagination > .active > a {
-  color: white;
-  background-color: var(--success) !important;
-  border: solid 1px var(--success) !important;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-
-.pagination > .active > a:hover {
-  background-color: var(--success) !important;
-  border: solid 1px var(--success);
 }
