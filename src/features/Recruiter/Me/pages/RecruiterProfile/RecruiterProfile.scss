@@ -1,7 +1,148 @@
 .recruiter-profile {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 90vh;
   width: 100%;
+  min-height: 85vh;
+  padding: 2rem 8rem;
+  background-image: url("../../../../../assets/img/background.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    // align-items: center;
+    width: 100%;
+    height: auto;
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: auto;
+
+      &__top {
+        display: flex;
+        justify-content: space-evenly;
+
+        padding: 0 8rem;
+        width: 100%;
+        height: auto;
+
+        &__left {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 50%;
+          height: auto;
+
+          & > img {
+            width: 10rem;
+            height: 10rem;
+            border-radius: 50%;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+          }
+        }
+
+        &__right {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          width: 50%;
+          height: auto;
+          line-height: 1.8rem;
+
+          &__recruiter-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+          }
+
+          &__recruiter-industry {
+            font-size: 1rem;
+            font-weight: 500;
+          }
+
+          &__recruiter-address {
+            font-size: 0.9rem;
+            color: darkgrey;
+          }
+
+          &__btn-edit {
+            margin: 0.5rem 0 0 0;
+
+            & > button {
+              font-size: 0.8rem;
+              border-radius: 2rem;
+              padding: 0.4rem 0.3rem;
+              font-weight: 600;
+              box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            }
+          }
+        }
+      }
+
+      &__bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        width: 75%;
+        height: auto;
+        font-size: 0.9rem;
+        margin: 4rem 0;
+      }
+    }
+
+    &__overall {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      &__title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      & > p {
+        margin: 1rem 0 2rem;
+        text-align: center;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+.edit-icon {
+  font-size: 1.5rem;
+  color: var(--success);
+  padding: 0.3rem;
+  background-color: #fff;
+  border-radius: 50%;
+  margin: 0 0.2rem 0 0;
+}
+
+.bottom-icon {
+  color: var(--success);
+  font-size: 1.2rem;
+  margin: 0 0.7rem 0 0;
+}
+
+.bottom-span {
+  background-color: rgb(175, 255, 175);
+  padding: 0.1rem 0.3rem;
+  border-radius: 2rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.title-dot {
+  color: var(--success);
+  margin: 0.2rem 0 0 0;
 }

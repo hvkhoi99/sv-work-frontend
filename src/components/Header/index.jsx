@@ -216,19 +216,19 @@ function Header(props) {
               <p className="notify-me__action__me__user-infor">Signed in as&nbsp;<span>{user.name}</span></p>
               <ul>
                 <li>
-                  <Link to={Paths.recruiterDashboard} className="me-link">
+                  <Link to={Paths.recruiterDashboard} className="me-link" onClick={showMe}>
                     <MdIcons.MdDashboard className="me-link__icon" />
                     <span>Dashboard</span>
                   </Link>
                 </li>
                 <li>
-                  <Link to={Paths.recruiterProfile} className="me-link">
+                  <Link to={Paths.recruiterProfile} className="me-link" onClick={showMe}>
                     <RiIcons.RiProfileLine className="me-link__icon" />
                     <span>Profile</span>
                   </Link>
                 </li>
                 <li>
-                  <Link to={Paths.recruiterAccount} className="me-link">
+                  <Link to={Paths.recruiterAccount} className="me-link" onClick={showMe}>
                     <AiIcons.AiFillSetting className="me-link__icon" />
                     <span>Account</span>
                   </Link>
