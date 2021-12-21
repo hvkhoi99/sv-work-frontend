@@ -12,7 +12,7 @@ import StudentMeFeature from 'features/Student/Me';
 import { SnackbarProvider } from 'notistack';
 import { createRef, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import './App.css';
+import './App.scss';
 
 function App() {
   const notistackRef = createRef();

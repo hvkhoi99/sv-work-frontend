@@ -1,7 +1,265 @@
 .account {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 90vh;
+  align-items: flex-start;
+  min-height: 180vh;
   width: 100%;
+
+  padding: 0 6rem;
+
+  background-image: url("../../../../../assets/img/background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: aqua;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    margin: 4rem 0;
+
+    &__profile {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: auto;
+
+      &__img {
+        // display: flex;
+        // flex-direction: column;
+        // align-items: center;
+        width: 100%;
+        height: auto;
+
+        &__avatar {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: auto;
+
+          & > img {
+            width: 13rem;
+            border-radius: 50%;
+            z-index: 1;
+            // padding: 0 0 0 0;
+            margin: 0 0 -2rem 0;
+          }
+        }
+
+        &__app {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          &__name {
+            font-family: "Slackey", "cursive";
+            font-size: 8rem;
+            font-weight: bold;
+            color: var(--success);
+            position: absolute;
+          }
+
+          &__signature {
+            font-size: 3.5rem;
+            font-family: "Meow Script", "cursive";
+            font-weight: bold;
+            letter-spacing: 0.1rem;
+            z-index: 1;
+            padding: 2rem 0 0 0;
+          }
+        }
+      }
+
+      &__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        padding: 1rem 0 2rem 0;
+
+        &__name {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.2rem;
+          font-weight: 600;
+        }
+
+        // &__industry {
+        //   display: flex;
+        //   justify-content: center;
+        //   align-items: center;
+        // }
+      }
+    }
+
+    &__settings {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      // margin: 2rem 0 0 0;
+      // padding: 0 0 4rem 0;
+
+      width: 100%;
+      border-radius: 1rem;
+
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+      &__title {
+        display: flex;
+        align-items: center;
+        width: auto;
+        height: 3.5rem;
+        padding: 0 4rem;
+        border-radius: 0 0 3rem 3rem;
+
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #fff;
+        background-color: var(--success);
+      }
+
+      &__form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        padding: 2rem 0 4rem;
+
+        & > form {
+          width: 28rem;
+          height: auto;
+        }
+      }
+    }
+
+    &__bottom {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4rem 0 4rem 0;
+      background-color: transparent;
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+.password-span {
+  margin: 1rem 0 0 0;
+}
+
+.change-password-link {
+  font-weight: 500;
+  color: var(--success);
+  text-decoration: underline;
+}
+
+.account-form {
+  display: flex;
+  flex-direction: column;
+  line-height: 2rem;
+  width: 100%;
+  height: auto;
+
+  &__item {
+    margin: 1rem 0 0 0;
+
+    & > span {
+      font-weight: 600;
+    }
+
+    &__password {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      & > input {
+        width: 65%;
+        border-radius: 1rem;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+        &:disabled {
+          background-color: lightgrey;
+        }
+      }
+    }
+  }
+
+  & > div > input {
+    border-radius: 2rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+    &:disabled {
+      background-color: lightgrey;
+    }
+  }
+}
+
+.change-password-form {
+  & > div {
+    & > span {
+      font-weight: 600;
+    }
+
+    & > input {
+      // background-color: #fff;
+      border-radius: 2rem;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    }
+  }
+
+  .form-button {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 2rem 0 0 0;
+    // width: 50%;
+
+    & > button {
+      border-radius: 2rem;
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+      font-weight: 600;
+
+      &:last-child {
+        background-color: black;
+
+        &:hover {
+          background-color: rgb(58, 58, 58);
+          transition: all 0.2s ease-out;
+        }
+      }
+    }
+  }
+}
+
+.change-height {
+  min-height: 200vh;
+}
+
+.disable-form {
+  display: none;
+}
+
+.visible-form {
+  display: block;
+}
+
+.text-danger {
+  font-size: 0.9rem;
+  font-weight: 400 !important;
 }

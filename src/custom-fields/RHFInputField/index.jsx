@@ -37,7 +37,7 @@ function RHFInputField(props) {
           <>
             <input
               {...field}
-              className={isSchemeEmpty ? `form-control ${moreClassName}` : `form-control is-invalid ${moreClassName}`}
+              className={isSchemeEmpty ? `form-control form-control-input ${moreClassName}` : `form-control form-control-input is-invalid ${moreClassName}`}
               {...register(inputName)}
               onChange={(e) => field.onChange(parseInt(e.target.value))}
               placeholder={placeholder}

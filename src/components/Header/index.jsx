@@ -105,8 +105,7 @@ function Header(props) {
     <nav className='navbar'>
       <div className='navbar-container'>
         <Link to={isRecruiterPath ? Paths.recruiterHome : Paths.clientHome} className='navbar-logo' onClick={closeMobileMenu}>
-          WORK
-          <i className="fab fa-linode"></i>
+          <span className='app-name'>AIO</span>
         </Link>
         <div className='menu-icon' onClick={handleClick}>
           <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
@@ -155,8 +154,7 @@ function Header(props) {
     <nav className='navbar'>
       <div className='navbar-container'>
         <Link to={Paths.recruiterHome} className='navbar-logo' onClick={closeMobileMenu}>
-          WORK
-          <i className="fab fa-linode"></i>
+          <span className='app-name'>AIO</span>
         </Link>
         <div className='menu-icon' onClick={handleClick}>
           <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
@@ -249,8 +247,7 @@ function Header(props) {
     <nav className='navbar'>
       <div className='navbar-container'>
         <Link to={Paths.clientHome} className='navbar-logo' onClick={closeMobileMenu}>
-          WORK
-          <i className="fab fa-linode"></i>
+          <span className='app-name'>AIO</span>
         </Link>
         <div className='menu-icon' onClick={handleClick}>
           <i className={click ? 'fas fa-times' : 'fas fa-bars'} />

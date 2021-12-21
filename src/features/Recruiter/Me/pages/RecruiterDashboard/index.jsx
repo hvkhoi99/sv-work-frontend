@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import * as BsIcons from 'react-icons/bs';
 import * as HiIcons from 'react-icons/hi';
 import { useHistory } from 'react-router-dom';
+import scroll from 'utils/common';
 import AvailableJobs from '../../components/AvailableJobs';
 import ClosedRecruitments from '../../components/ClosedRecruitments';
 import DashboardSelectOption from '../../components/DashboardSelectOption';
@@ -42,6 +43,10 @@ function RecruiterDashboardPage(props) {
 
     fetchDashboardIndex();
   }, [])
+
+  useEffect(() => {
+    scroll.scrollToTop();
+  }, []);
 
   const onChangeIndex = (option) => {
     setCurrentPath(option.path);

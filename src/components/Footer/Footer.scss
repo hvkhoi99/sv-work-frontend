@@ -130,10 +130,13 @@
   margin-left: 20px;
   cursor: pointer;
   text-decoration: none;
-  font-size: 2rem;
+  // font-size: 2rem;
   display: flex;
   align-items: center;
-  font-weight: 700;
+  // font-weight: 700;
+  font-family: 'Slackey', "cursive";
+  font-size: 3rem;
+  font-weight: bold;
 
   &:hover {
     text-decoration: none;

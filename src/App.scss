@@ -19,50 +19,53 @@
   font-size: 3rem;
 }
 
-/* .services {
-  background-image: url("/images/img-2.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-size: 100px;
+.loading-ui {
+  display: flex;
+  align-items: center;
+  height: 85vh;
 }
 
-.products {
-  background-image: url("/images/img-1.jpg");
-  background-position: center;
-  background-size: fill;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-size: 100px;
-}
-
-.sign-up {
-  background-image: url("/images/img-8.jpg");
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: #fff;
-  font-size: 100px;
-} */
+// .services {
+//   background-image: url("/images/img-2.jpg");
+//   background-position: center;
+//   background-size: cover;
+//   background-repeat: no-repeat;
+//   color: #fff;
+//   font-size: 100px;
+// }
 
 .pagination {
-  margin: 4rem 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center ;
+  margin: 4rem 0 0 0.8rem;
 }
 
-.pagination > li > a {
+.pagination > li:not(:first-child, :last-child) > a {
   display: flex;
   justify-content: center;
   align-items: center;
-
   background-color: white;
   color: var(--success);
   font-weight: 400;
 
-  margin: 0 0.1rem;
+  margin: 0 0.2rem;
   border-radius: 50%;
   width: 2.2rem;
   height: 2.2rem;
+}
+
+.pagination > li:first-child > a,
+.pagination > li:last-child > a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  color: var(--success);
+  border-radius: 50% !important;
+  border: none;
+  padding: .5rem;
+  font-size: 1.5rem;
 }
 
 .pagination > li > a:focus,
@@ -78,11 +81,22 @@
   color: white;
   background-color: var(--success) !important;
   border: solid 1px var(--success) !important;
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 500 !important;
 }
 
 .pagination > .active > a:hover {
   background-color: var(--success) !important;
   border: solid 1px var(--success);
+}
+
+.loading-child-ui {
+  height: 5rem;
+  display: flex;
+  align-items: center;
+}
+
+.inforCard-icon {
+  color: var(--success);
+  margin: 0 0 0 0.5rem;
 }
