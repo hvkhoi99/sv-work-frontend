@@ -64,8 +64,7 @@ export function PrivateRouteUserAuth({ component: Component, ...rest }) {
 }
 
 export function PrivateRouteStudent({ component: Component, ...rest }) {
-  // const user = useSelector((state) => state.user.current);
-  // const userRole = user.role_id;
+  const user = useSelector((state) => state.user.current);
   const userRole = parseInt(localStorage.getItem('role_id'));
 
   return (
@@ -73,22 +72,54 @@ export function PrivateRouteStudent({ component: Component, ...rest }) {
       <Route
         {...rest}
         render={(props) => {
+          // return userRole === 3 ? (
+          //   <Component {...props} />
+          // ) : userRole === 2 ? (
+          //   <Redirect to='/recruiter' />
+          // ) : (
+          //   <Redirect to='/' />
+          // );
           return userRole === 3 ? (
-            <Component {...props} />
+            user.s_profile !== null
+              ? <Component {...props} />
+              : <Redirect to='/update-student-profile' />
           ) : userRole === 2 ? (
-            <Redirect to='/recruiter' />
-          ) : (
-            <Redirect to='/' />
-          );
+            user.r_profile !== null
+              ? <Redirect to='/recruiter' />
+              : <Redirect to='/update-recruiter-profile' />
+          ) : <Redirect to='/' />
         }}
       />
     </div>
   );
 }
 
+export function PrivateRouteFirstUpdateProfile({ component: Component, ...rest }) {
+  const user = useSelector((state) => state.user.current);
+  const userRole = parseInt(localStorage.getItem('role_id'));
+
+  return (
+    <div>
+      <Route
+        {...rest}
+        render={(props) => {
+          return userRole === 3 && user.s_profile === null
+            ? (
+              <Component {...props} />
+            )
+            : userRole === 2 && user.r_profile === null
+              ? (
+                <Component {...props} />
+              )
+              : <Redirect to='/' />;
+        }}
+      />
+    </div>
+  )
+}
+
 export function PrivateRouteRecruiter({ component: Component, ...rest }) {
-  // const user = useSelector((state) => state.user.current);
-  // const userRole = user.role_id;
+  const user = useSelector((state) => state.user.current);
   const userRole = parseInt(localStorage.getItem('role_id'));
   // localStorage.removeItem('isRecruiterPath');
 
@@ -98,7 +129,9 @@ export function PrivateRouteRecruiter({ component: Component, ...rest }) {
         {...rest}
         render={(props) => {
           return userRole === 2 ? (
-            <Component {...props} />
+            user.r_profile !== null
+              ? <Component {...props} />
+              : <Redirect to='/update-recruiter-profile' />
           ) : (
             <Redirect to='/auth/sign-in' />
           );

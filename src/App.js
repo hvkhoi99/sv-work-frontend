@@ -1,14 +1,16 @@
 import LoadingUI from 'components/Loading';
 import NotFoundPage from 'components/NotFound';
-import { PrivateRouteRecruiter, PrivateRouteStudent, PrivateRouteUserAuth } from 'components/PrivateRoute';
+import { PrivateRouteFirstUpdateProfile, PrivateRouteRecruiter, PrivateRouteStudent, PrivateRouteUserAuth } from 'components/PrivateRoute';
 import AdminFeature from 'features/Admin';
 import AuthFeature from 'features/Auth';
 import RecruiterFeature from 'features/Recruiter';
 import RecruiterHomeFeature from 'features/Recruiter/Home';
+import RecruiterUpdateProfilePage from 'features/Recruiter/Me/pages/RecruiterUpdateProfile';
 import StudentEventFeature from 'features/Student/Event';
 import StudentFindFeature from 'features/Student/Find';
 import StudentHomeFeature from 'features/Student/Home';
 import StudentMeFeature from 'features/Student/Me';
+import StudentUpdateProfilePage from 'features/Student/Me/pages/StudentUpdateProfile';
 import { SnackbarProvider } from 'notistack';
 import { createRef, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -33,13 +35,15 @@ function App() {
             <Switch>
               {/* <Redirect exact from="/" to="/home" /> */}
               <Route path="/" exact component={StudentHomeFeature} />
-              <Route path="/recruiter" exact component={RecruiterHomeFeature} />
+              <PrivateRouteRecruiter path="/recruiter" exact component={RecruiterHomeFeature} />
 
               <PrivateRouteUserAuth path="/auth" component={AuthFeature} />
 
               <Route path="/event" component={StudentEventFeature} />
               <Route path="/find-jobs" component={StudentFindFeature} />
-              
+              <PrivateRouteFirstUpdateProfile path="/update-student-profile" component={StudentUpdateProfilePage} />
+              <PrivateRouteFirstUpdateProfile path="/update-recruiter-profile" component={RecruiterUpdateProfilePage} />
+
               <PrivateRouteStudent path="/me" component={StudentMeFeature} />
               <PrivateRouteRecruiter path="/recruiter" component={RecruiterFeature} />
 

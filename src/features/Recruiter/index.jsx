@@ -18,6 +18,7 @@ function RecruiterFeature(props) {
     <>
       <Header />
       <Switch>
+        {/* <Route path="/recruiter" exact component={RecruiterHomeFeature} /> */}
         <Route path={`${match.url}/event`} component={RecruiterEventFeature} />
         <Route path={`${match.url}/find-candidates`} component={RecruiterFindFeature} />
         <Route path={`${match.url}/me`} component={RecruiterMeFeature} />

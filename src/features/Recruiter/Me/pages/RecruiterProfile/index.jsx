@@ -1,51 +1,53 @@
+import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
 import React, { useEffect, useState } from 'react';
-import './RecruiterProfile.scss';
-import * as MdIcons from 'react-icons/md';
 import * as AiIcons from 'react-icons/ai';
 import * as GoIcons from 'react-icons/go';
-import * as TiIcons from 'react-icons/ti';
 import * as HiIcons from 'react-icons/hi';
-import recruiterApi from 'api/recruiterApi';
-import LoadingUI from 'components/Loading';
+import * as MdIcons from 'react-icons/md';
+import * as TiIcons from 'react-icons/ti';
+import { useSelector } from 'react-redux';
 import scroll from 'utils/common';
+import './RecruiterProfile.scss';
 
 RecruiterProfilePage.propTypes = {
 
 };
 
 function RecruiterProfilePage(props) {
-  const [recruiter, setRecruiter] = useState({
-    company_name: '',
-    company_industry: '',
-    company_size: '',
-    contact_email: '',
-    phone_number: '',
-    description: ''
-  });
+  const recruiter = useSelector((state) => state.user.current.r_profile);
+  // console.log({r_profile});
+  // const [recruiter, setRecruiter] = useState({
+  //   company_name: '',
+  //   company_industry: '',
+  //   company_size: '',
+  //   contact_email: '',
+  //   phone_number: '',
+  //   description: ''
+  // });
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchRecruiterProfile = async () => {
-      const data = await recruiterApi.getRecruiterProfile();
-      setRecruiter(data.data.data);
-      setIsLoading(false);
-      return data.data
-    }
+  // useEffect(() => {
+  //   const fetchRecruiterProfile = async () => {
+  //     const data = await recruiterApi.getRecruiterProfile();
+  //     setRecruiter(data.data.data);
+  //     setIsLoading(false);
+  //     return data.data
+  //   }
 
-    fetchRecruiterProfile();
-  }, [])
+  //   fetchRecruiterProfile();
+  // }, [])
 
   useEffect(() => {
     scroll.scrollToTop();
 
-    // const timer = setTimeout(() => {
-    //   setIsLoading(false);
-    // }, 2000)
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000)
 
-    // return () => {
-    //   clearTimeout(timer);
-    // }
+    return () => {
+      clearTimeout(timer);
+    }
   }, []);
 
   return (

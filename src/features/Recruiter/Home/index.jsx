@@ -19,11 +19,15 @@ function RecruiterHomeFeature(props) {
     }, 3000);
     return () => {
       clearTimeout(timer);
+
     };
   }, []);
 
   const currentUI = isLoading
-    ? <LoadingUI />
+    ?
+    // <div className="loading-ui">
+      <LoadingUI />
+    // </div>
     : (
       <>
         <Header />
