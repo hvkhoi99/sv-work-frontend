@@ -3,14 +3,13 @@ import NotFoundPage from 'components/NotFound';
 import { PrivateRouteFirstUpdateProfile, PrivateRouteRecruiter, PrivateRouteStudent, PrivateRouteUserAuth } from 'components/PrivateRoute';
 import AdminFeature from 'features/Admin';
 import AuthFeature from 'features/Auth';
+import BeginnerFeature from 'features/Beginner';
 import RecruiterFeature from 'features/Recruiter';
 import RecruiterHomeFeature from 'features/Recruiter/Home';
-import RecruiterUpdateProfilePage from 'features/Recruiter/Me/pages/RecruiterUpdateProfile';
 import StudentEventFeature from 'features/Student/Event';
 import StudentFindFeature from 'features/Student/Find';
 import StudentHomeFeature from 'features/Student/Home';
 import StudentMeFeature from 'features/Student/Me';
-import StudentUpdateProfilePage from 'features/Student/Me/pages/StudentUpdateProfile';
 import { SnackbarProvider } from 'notistack';
 import { createRef, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -41,8 +40,7 @@ function App() {
 
               <Route path="/event" component={StudentEventFeature} />
               <Route path="/find-jobs" component={StudentFindFeature} />
-              <PrivateRouteFirstUpdateProfile path="/update-student-profile" component={StudentUpdateProfilePage} />
-              <PrivateRouteFirstUpdateProfile path="/update-recruiter-profile" component={RecruiterUpdateProfilePage} />
+              <PrivateRouteFirstUpdateProfile path="/first-update" component={BeginnerFeature} />
 
               <PrivateRouteStudent path="/me" component={StudentMeFeature} />
               <PrivateRouteRecruiter path="/recruiter" component={RecruiterFeature} />

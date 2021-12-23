@@ -4,8 +4,9 @@ import CompanyCard from 'features/Admin/components/CompanyCard';
 import { Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, FormGroup } from 'reactstrap';
+import { Button, FormGroup, Label } from 'reactstrap';
 import './verification.scss';
+import * as IoIcons from 'react-icons/io';
 
 VerificationPage.propTypes = {
   handlePageClick: PropTypes.func,
@@ -73,14 +74,18 @@ function VerificationPage(props) {
             <Button
               type="button"
               disabled={currentPage === 1 && true}
-              color={currentPage === 1 ? "secondary" : "primary"}
+              // color={currentPage === 1 ? "secondary" : "primary"}
               style={
                 currentPage === 1 ? { cursor: "default" } : { cursor: "pointer" }
               }
               onClick={(e) => handlePageClick(e, 0)}
             >
-              Prev
+              <IoIcons.IoIosArrowBack
+                style={currentPage === 1 ? { color: "var(--secondary)" } : { color: "var(--success)" }}
+                className="paginate-icon"
+              />
             </Button>
+            <Label className="paginate-totalPage">{currentPage}/{lastPage}</Label>
             <Button
               type="button"
               style={
@@ -88,10 +93,12 @@ function VerificationPage(props) {
               }
               cursor="default"
               disabled={currentPage === lastPage && true}
-              color={currentPage === lastPage ? "secondary" : "primary"}
               onClick={(e) => handlePageClick(e, 1)}
             >
-              Next
+              <IoIcons.IoIosArrowForward
+                style={currentPage === lastPage ? { color: "var(--secondary)" } : { color: "var(--success)" }}
+                className="paginate-icon"
+              />
             </Button>
           </div>
         </div>

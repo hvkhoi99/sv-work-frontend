@@ -82,11 +82,11 @@ export function PrivateRouteStudent({ component: Component, ...rest }) {
           return userRole === 3 ? (
             user.s_profile !== null
               ? <Component {...props} />
-              : <Redirect to='/update-student-profile' />
+              : <Redirect to='/first-update' />
           ) : userRole === 2 ? (
             user.r_profile !== null
               ? <Redirect to='/recruiter' />
-              : <Redirect to='/update-recruiter-profile' />
+              : <Redirect to='/first-update' />
           ) : <Redirect to='/' />
         }}
       />
@@ -131,7 +131,7 @@ export function PrivateRouteRecruiter({ component: Component, ...rest }) {
           return userRole === 2 ? (
             user.r_profile !== null
               ? <Component {...props} />
-              : <Redirect to='/update-recruiter-profile' />
+              : <Redirect to='/first-update' />
           ) : (
             <Redirect to='/auth/sign-in' />
           );

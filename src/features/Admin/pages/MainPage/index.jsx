@@ -36,7 +36,7 @@ function AdminMainPage(props) {
         console.log("error dashboard: ", error.message);
       }
     }
-    
+
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1000)
@@ -69,17 +69,18 @@ function AdminMainPage(props) {
   }, [currentPage, isVerify, dispatch]);
 
   const handlePageClick = (e, state) => {
-    e.preventDefault();
     switch (state) {
       case 0:
         if (currentPage === 1) return;
         setCurrentPage(--currentPage);
         setRecruiter({});
+        setActiveIndex(null);
         break;
       case 1:
         if (currentPage === lastPage) return;
         setCurrentPage(++currentPage);
         setRecruiter({});
+        setActiveIndex(null);
         break;
       default: break;
     }
@@ -91,7 +92,6 @@ function AdminMainPage(props) {
   }
 
   const handleVerifyCompany = async (e, company, verify) => {
-    e.preventDefault();
     try {
       const id = company.id;
 
