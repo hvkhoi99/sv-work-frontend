@@ -25,7 +25,7 @@ function InputField(props) {
 
   const {
     field, form,
-    type, label, placeholder, disabled, 
+    type, label, placeholder, disabled, moreClassName
   } = props;
 
   const {name} = field;
@@ -33,7 +33,7 @@ function InputField(props) {
   const showError = errors[name] && touched[name];
 
   return (
-    <FormGroup>
+    <FormGroup className={`${moreClassName}`}>
       {label && <Label style={label === "Tax Code" ? {color: "var(--success)"} : {color: "black"}} className="label" for={name}>{label}</Label>}
       <Input 
       id={name}

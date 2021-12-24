@@ -12,7 +12,8 @@
 
   &__container {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: auto;
 
@@ -21,7 +22,7 @@
       flex-direction: column;
       justify-content: flex-start;
       // align-items: center;
-      width: 45%;
+      width: 35%;
       height: auto;
 
       &__img {
@@ -30,9 +31,13 @@
         justify-content: center;
         width: 100%;
         height: auto;
+        background-color: lightblue;
+        border-radius: 50%;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 
         & > img {
-          width: 70%;
+          display: flex;
+          width: 100%;
         }
       }
     }
@@ -41,7 +46,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 55%;
+      width: 65%;
       height: 100%;
       // background-color: blue;
 
@@ -54,8 +59,20 @@
         box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
           rgba(0, 0, 0, 0.23) 0px 3px 6px;
         padding: 1rem 2rem;
-
         border-radius: 1rem;
+
+        &__dot {
+          display: flex;
+          // justify-content: center;
+          width: 58%;
+          margin: -4.5rem 0 0 0;
+          position: absolute;
+
+          &__icon {
+            color: var(--success);
+            font-size: 7rem;
+          }
+        }
 
         &__form-title {
           display: flex;

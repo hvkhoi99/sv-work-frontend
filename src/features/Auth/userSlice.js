@@ -57,6 +57,10 @@ const userSlice = createSlice({
       state.current = {};
     },
 
+    updateUser(state, action) {
+      state.current = action.payload
+    },
+
     uploadAvatar(state, action) {
       const linkAvatar = action.payload.linkAva;
       state.current.avatarLink = linkAvatar;
@@ -81,5 +85,5 @@ const userSlice = createSlice({
 });
 
 const { actions, reducer } = userSlice;
-export const { logout, uploadAvatar } = actions;
+export const { logout, updateUser, uploadAvatar } = actions;
 export default reducer;

@@ -22,6 +22,11 @@ const recruiterApi = {
   getRecruiterProfile: () => {
     const url = "/student/recruiter/profile/index";
     return axiosClient.get(url);
+  },
+
+  createRecruiterProfile: (params) => {
+    const url = "/student/recruiter/profile/store";
+    return axiosClient.post(url, params);
   }
 }
 
