@@ -105,9 +105,10 @@ export function PrivateRouteFirstUpdateProfile({ component: Component, ...rest }
         render={(props) => {
           return userRole === 3 && user.s_profile === null
             ? (
-              window.location.pathname !== "/first-update/recruiter" 
-              ? <Component {...props} />
-              : <Redirect to='/' />
+              <Component {...props} />
+              // window.location.pathname !== "/first-update/recruiter" 
+              // ? <Component {...props} />
+              // : <Redirect to='/' />
             )
             : userRole === 2 && user.r_profile === null
               ? (

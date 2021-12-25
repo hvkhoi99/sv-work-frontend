@@ -12,6 +12,7 @@ import * as RiIcons from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import './Header.scss';
+import LinesEllipsis from 'react-lines-ellipsis'
 
 Header.propTypes = {
 
@@ -211,7 +212,23 @@ function Header(props) {
               </ul>
             </div>
             <div className={hiddenMe ? "notify-me__action__me" : "notify-me__action__me isVisible"}>
-              <p className="notify-me__action__me__user-infor">Signed in as&nbsp;<span>{user.name}</span></p>
+              <div className="notify-me__action__me__user-infor">
+                Signed in as&nbsp;
+                <span>
+                  <LinesEllipsis
+                    text={
+                      user.r_profile === null
+                        ? "Recruiter"
+                        : user.r_profile.company_name
+                    }
+                    maxLine='1'
+                    ellipsis='...'
+                    trimRight
+                    basedOn='letters'
+                    className="notify-me__action__me__user-infor__name"
+                  />
+                </span>
+              </div>
               <ul>
                 <li>
                   <Link to={Paths.recruiterDashboard} className="me-link" onClick={showMe}>
@@ -304,7 +321,23 @@ function Header(props) {
               </ul>
             </div>
             <div className={hiddenMe ? "notify-me__action__me" : "notify-me__action__me isVisible"}>
-              <p className="notify-me__action__me__user-infor">Signed in as&nbsp;<span>{user.name}</span></p>
+              <p className="notify-me__action__me__user-infor">
+                Signed in as&nbsp;
+                <span>
+                  <LinesEllipsis
+                    text={
+                      user.s_profile === null
+                        ? "Student"
+                        : user.s_profile.last_name
+                    }
+                    maxLine='1'
+                    ellipsis='...'
+                    trimRight
+                    basedOn='letters'
+                    className="notify-me__action__me__user-infor__name"
+                  />
+                </span>
+              </p>
               <ul>
                 <li>
                   <Link to={Paths.clientDashboard} className="me-link">

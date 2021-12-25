@@ -4,28 +4,28 @@ const recruiterApi = {
 
   // Dashboard
   getAvailableJobs: (params) => {
-    const url = `/student/recruiter/dashboard/available-recruitments?page=${params.page}&_limit=${params._limit}`;
+    const url = `/recruiter/dashboard/available-recruitments?page=${params.page}&_limit=${params._limit}`;
     return axiosClient.get(url, params);
   },
 
   getClosedRecruitments: (params) => {
-    const url = `/student/recruiter/dashboard/closed-recruitments?page=${params.page}&_limit=${params._limit}`;
+    const url = `/recruiter/dashboard/closed-recruitments?page=${params.page}&_limit=${params._limit}`;
     return axiosClient.get(url, params);
   },
 
   getDashboardIndex: () => {
-    const url = "/student/recruiter/dashboard/index";
+    const url = "/recruiter/dashboard/index";
     return axiosClient.get(url);
   },
 
   // Profile
   getRecruiterProfile: () => {
-    const url = "/student/recruiter/profile/index";
+    const url = "/recruiter/profile/index";
     return axiosClient.get(url);
   },
 
   createRecruiterProfile: (params) => {
-    const url = "/student/recruiter/profile/store";
+    const url = "/recruiter/profile/store";
     return axiosClient.post(url, params);
   }
 }

@@ -1,10 +1,13 @@
 import recruiterApi from 'api/recruiterApi';
+import studentApi from 'api/studentApi';
 import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
 import Paths from 'constants/paths';
 import React, { useEffect, useState } from 'react';
 import * as BsIcons from 'react-icons/bs';
 import * as HiIcons from 'react-icons/hi';
+import LinesEllipsis from 'react-lines-ellipsis';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import scroll from 'utils/common';
 import AvailableJobs from '../../components/AvailableJobs';
@@ -17,6 +20,7 @@ RecruiterDashboardPage.propTypes = {
 };
 
 function RecruiterDashboardPage(props) {
+  const user = useSelector((state) => state.user.current);
   const availableJobsPath = `${Paths.recruiterDashboard}/available-jobs`;
   const closedRecruitmentsPath = `${Paths.recruiterDashboard}/closed-recruitments`;
   const history = useHistory();
@@ -32,7 +36,9 @@ function RecruiterDashboardPage(props) {
   useEffect(() => {
     const fetchDashboardIndex = async () => {
       try {
-        const data = await recruiterApi.getDashboardIndex();
+        const data = user.role_id === 2
+          ? await recruiterApi.getDashboardIndex()
+          : await studentApi.getDashboardIndex();
         setDashboardIndexData(data.data.data);
         setIsLoading(false);
         return data.data;
@@ -42,7 +48,7 @@ function RecruiterDashboardPage(props) {
     };
 
     fetchDashboardIndex();
-  }, [])
+  }, [user])
 
   useEffect(() => {
     scroll.scrollToTop();
@@ -67,10 +73,31 @@ function RecruiterDashboardPage(props) {
                   <img src={Images.fb} alt="apple" />
                   <div className="recruiter-dashboard__container__top__left__inforCard__description">
                     <div className="recruiter-dashboard__container__top__left__inforCard__description__title">
-                      <span>{dashboardIndexData.profile.company_name}</span>
+                      {/* <span>{dashboardIndexData.profile.company_name}</span> */}
+                      <LinesEllipsis
+                        text={
+                          user.r_profile.company_name
+                        }
+                        maxLine='1'
+                        ellipsis='...'
+                        trimRight
+                        basedOn='letters'
+                        className="recruiter-dashboard__container__top__left__inforCard__description__title__company-name"
+                      />
                       {dashboardIndexData.profile.verify && <HiIcons.HiCheckCircle className="inforCard-icon" />}
                     </div>
-                    <span>{dashboardIndexData.profile.company_industry}</span>
+                    {/* <span>{dashboardIndexData.profile.company_industry}</span>
+                     */}
+                     <LinesEllipsis
+                        text={
+                          user.r_profile.company_industry
+                        }
+                        maxLine='1'
+                        ellipsis='...'
+                        trimRight
+                        basedOn='letters'
+                        className="recruiter-dashboard__container__top__left__inforCard__description__company-industry"
+                      />
                   </div>
                 </div>
               </div>

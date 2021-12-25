@@ -68,14 +68,18 @@
               width: 100%;
               height: auto;
 
-              & > span {
+              &__company-name {
                 font-size: 1.2rem;
                 font-weight: 600;
+                width: 100%;
+                word-wrap: break-word;
               }
             }
 
-            & > span {
+            &__company-industry {
               color: darkgrey;
+              width: 100%;
+              word-wrap: break-word;  
             }
           }
         }
@@ -227,5 +231,12 @@
   & > span {
     font-weight: 500;
     color: var(--success);
+  }
+}
+
+.no-available {
+  & > span {
+    // font-weight: 500;
+    font-size: 1.2rem;
   }
 }

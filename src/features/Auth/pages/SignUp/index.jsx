@@ -1,13 +1,12 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { unwrapResult } from '@reduxjs/toolkit';
 import Footer from 'components/Footer';
 import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
-import RHFInputField from 'custom-fields/RHFInputField';
+import InputField from 'custom-fields/InputField';
 import { signup } from 'features/Auth/userSlice';
+import { FastField, Form, Formik } from 'formik';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -24,6 +23,12 @@ function SignUpPage(props) {
   const dispatch = useDispatch();
   const { roleId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
+
+  const initialValues = {
+    email: '',
+    password: '',
+    passwordConfirmation: ''
+  }
 
   const validationSchema = Yup.object().shape({
     email: Yup
@@ -45,12 +50,12 @@ function SignUpPage(props) {
       )
   })
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors, isSubmitting }
-  } = useForm({ resolver: yupResolver(validationSchema) })
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   control,
+  //   formState: { errors, isSubmitting }
+  // } = useForm({ resolver: yupResolver(validationSchema) })
 
   useEffect(() => {
     let timer = setTimeout(() => {
@@ -79,9 +84,9 @@ function SignUpPage(props) {
     }
   };
 
-  const checkKeyDown = (e) => {
-    if (e.code === 'Enter') e.preventDefault();
-  };
+  // const checkKeyDown = (e) => {
+  //   if (e.code === 'Enter') e.preventDefault();
+  // };
 
   const currentUI = isLoading
     ? <LoadingUI />
@@ -99,7 +104,7 @@ function SignUpPage(props) {
               <span>Sign up</span>
               <img src={Images.smDot} alt="smDot" />
             </div>
-            <form onSubmit={handleSubmit(onRegister)} onKeyDown={(e) => checkKeyDown(e)}>
+            {/* <form onSubmit={handleSubmit(onRegister)} onKeyDown={(e) => checkKeyDown(e)}>
               <div className="form-group">
                 <RHFInputField
                   register={register}
@@ -144,7 +149,56 @@ function SignUpPage(props) {
                 <span>Already have an account?</span>
                 <Link to="/auth/sign-in" className="signUp__link">Sign in</Link>
               </div>
-            </form>
+            </form> */}
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={onRegister}
+            >
+              {formikProps => {
+                const { isSubmitting } = formikProps;
+
+                return (
+                  <Form>
+                    <FastField
+                      name="email"
+                      component={InputField}
+
+                      placeholder="Email"
+                    />
+
+                    <FastField
+                      name="password"
+                      component={InputField}
+
+                      placeholder="Password*"
+                      type="password"
+                    />
+
+                    <FastField
+                      name="passwordConfirmation"
+                      component={InputField}
+
+                      placeholder="Password Confirmation"
+                      type="password"
+                    />
+
+                    <div className="button signup-button">
+                      <button disabled={isSubmitting} className="btn btn-success btn-sm justify-content-center" type="submit">
+                        {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                        Sign Up
+                      </button>
+                      {isError &&
+                        <span className="text-danger form-span">This email address is already being used</span>}
+                    </div>
+                    <div className="form-group signUp">
+                      <span>Already have an account?</span>
+                      <Link to="/auth/sign-in" className="signUp__link">Sign in</Link>
+                    </div>
+                  </Form>
+                );
+              }}
+            </Formik>
           </div>
         </div>
         <Footer />

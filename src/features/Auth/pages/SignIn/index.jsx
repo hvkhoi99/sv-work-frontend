@@ -1,14 +1,13 @@
-import { yupResolver } from '@hookform/resolvers/yup';
 import { unwrapResult } from '@reduxjs/toolkit';
 // import PropTypes from 'prop-types';
 import Footer from 'components/Footer';
 import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
-import RHFInputField from 'custom-fields/RHFInputField';
+import InputField from 'custom-fields/InputField';
 import { login } from 'features/Auth/userSlice';
+import { FastField, Form, Formik } from 'formik';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import * as FcIcons from 'react-icons/fc';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -20,13 +19,17 @@ SignInPage.propTypes = {
 };
 
 function SignInPage(props) {
-  // const history = useHistory();
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const [isLoading, setIsLoading] = useState(true);
   const [isSpinner, setIsSpinner] = useState(false);
   const [isError, setIsError] = useState(false);
   const isRecruiterPath = localStorage.getItem('isRecruiterPath');
+
+  const initialValues = {
+    email: '',
+    password: ''
+  }
 
   const validationSchema = Yup.object().shape({
     email: Yup
@@ -38,12 +41,12 @@ function SignInPage(props) {
       .required('Password is required')
   })
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors, isSubmitting }
-  } = useForm({ resolver: yupResolver(validationSchema) })
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   control,
+  //   formState: { errors, isSubmitting }
+  // } = useForm({ resolver: yupResolver(validationSchema) })
 
   useEffect(() => {
     let timer = setTimeout(() => {
@@ -81,9 +84,9 @@ function SignInPage(props) {
     };
   }
 
-  const checkKeyDown = (e) => {
-    if (e.code === 'Enter') e.preventDefault();
-  };
+  // const checkKeyDown = (e) => {
+  //   if (e.code === 'Enter') e.preventDefault();
+  // };
 
   const currentUI = isLoading
     ? <LoadingUI />
@@ -101,7 +104,7 @@ function SignInPage(props) {
               <span>Sign in</span>
               <img src={Images.smDot} alt="smDot" />
             </div>
-            <form onSubmit={handleSubmit(onSignIn)} onKeyDown={(e) => checkKeyDown(e)}>
+            {/* <form onSubmit={handleSubmit(onSignIn)} onKeyDown={(e) => checkKeyDown(e)}>
               <div className="form-group">
                 <RHFInputField
                   register={register}
@@ -162,7 +165,88 @@ function SignInPage(props) {
                 <span>Don't have an account?</span>
                 <Link to="/auth/sign-up" className="signUp__link">Sign up</Link>
               </div>
-            </form>
+            </form> */}
+            <Formik
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={onSignIn}
+            >
+              {formikProps => {
+                const { isSubmitting } = formikProps;
+
+                return (
+                  <Form>
+                    <FastField
+                      name="email"
+                      component={InputField}
+
+                      placeholder="Email"
+                    />
+
+                    <FastField
+                      name="password"
+                      component={InputField}
+
+                      placeholder="Password*"
+                      type="password"
+                    />
+
+                    {/* <FormGroup>
+                      <Button
+                        type="submit"
+                        color={'success'}
+                        className="formGroup-button__btn-update"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting && <Spinner children="" size="sm" />}
+                        &nbsp;Sign in
+                      </Button>
+                    </FormGroup> */}
+
+                    <div className="form-group remember-forget">
+                      <div className="remember-forget__left">
+                        <input type="checkbox" />
+                        <p>Remember</p>
+                      </div>
+                      <Link to="/auth/forget-password" className="remember-forget__link">
+                        Forget Password
+                      </Link>
+                    </div>
+                    <div className="form-group signin-button">
+                      <button disabled={isSubmitting} className="btn btn-success btn-sm" type="submit">
+                        {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                        Sign in
+                      </button>
+                      {isError &&
+                        <span className="text-danger form-span">You have entered an invalid username or password</span>}
+                    </div>
+                    <div className="form-group under-line">
+                      <div className="under-line__line" />
+                      <p>With</p>
+                      <div className="under-line__line" />
+                    </div>
+
+                    <div className="form-group button">
+                      <button
+                        disabled={isSpinner && true}
+                        className="btn btn-sm google"
+                        type="button"
+                        onClick={onGoogleLogin}
+                      >
+                        {isSpinner && <span className="spinner-border spinner-border-sm mr-2" />}
+                        <FcIcons.FcGoogle className="google__icon" />
+                        Sign in with Google
+                      </button>
+                    </div>
+                    <div className="form-group signUp">
+                      <span>Don't have an account?</span>
+                      <Link to="/auth/sign-up" className="signUp__link">Sign up</Link>
+                    </div>
+
+                  </Form>
+                );
+              }}
+            </Formik>
           </div>
         </div>
         <Footer />

@@ -21,7 +21,6 @@ function StudentHomeFeature(props) {
     }, 3000);
     return () => {
       clearTimeout(timer);
-      
     };
   }, []);
 

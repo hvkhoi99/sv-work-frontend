@@ -1,12 +1,11 @@
 import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
+import { logout } from 'features/Auth/userSlice';
 import React, { useEffect, useState } from 'react';
-import * as IoIcons from 'react-icons/io';
 import * as RiIcons from 'react-icons/ri';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import './ConfirmFirstUpdate.scss';
-
 
 ConfirmFirstUpdatePage.propTypes = {
 
@@ -14,6 +13,7 @@ ConfirmFirstUpdatePage.propTypes = {
 
 function ConfirmFirstUpdatePage(props) {
   const history = useHistory();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.current);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,7 +30,7 @@ function ConfirmFirstUpdatePage(props) {
     return () => {
       window.removeEventListener('popstate', handleBack);
     };
-  }, []);
+  });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -43,10 +43,21 @@ function ConfirmFirstUpdatePage(props) {
   }, []);
 
   const handleBack = () => {
-    localStorage.setItem("role_id", 3);
-    window.location.replace(
-      "/"
-    );
+    switch (user.role_id) {
+      case 2:
+        dispatch(logout());
+        history.push("/auth/sign-in");
+        break;
+      case 3:
+        localStorage.setItem("role_id", 3);
+        history.push("/");
+        break;
+      default:
+        break;
+    }
+    // window.location.replace(
+    //   "/"
+    // );
   }
 
   const handleToUpdateProfilePage = (rolePath) => {
@@ -107,8 +118,8 @@ function ConfirmFirstUpdatePage(props) {
                 </div>
                 <div className="confirm-first-update__container__confirm-form__select-role__button">
                   <button className="btn btn-secondary btn-sm" type="button" onClick={handleBack}>
-                    <IoIcons.IoIosArrowBack className="back-icon" />
-                    Back
+                    {/* <IoIcons.IoIosArrowBack className="back-icon" /> */}
+                    {user.role_id === 3 ? "Go home." : "Will be back next time."}
                   </button>
                 </div>
               </div>

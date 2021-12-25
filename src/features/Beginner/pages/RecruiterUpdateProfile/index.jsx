@@ -4,11 +4,13 @@ import UpdateCompanyInfoForm from 'components/UpdateCompanyInfoForm';
 import Images from 'constants/images';
 import { updateUser } from 'features/Auth/userSlice';
 import { useSnackbar } from 'notistack';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as GoIcons from 'react-icons/go';
-import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect, useHistory } from 'react-router-dom';
 import './RecruiterUpdateProfile.scss';
+import LoadingUI from 'components/Loading';
+import studentApi from 'api/studentApi';
 
 RecruiterUpdateProfilePage.propTypes = {
 
@@ -16,9 +18,11 @@ RecruiterUpdateProfilePage.propTypes = {
 
 
 function RecruiterUpdateProfilePage(props) {
+  const user = useSelector((state) => state.user.current);
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
 
   const initialValues = {
     companyName: '',
@@ -42,10 +46,12 @@ function RecruiterUpdateProfilePage(props) {
         tax_code: values.taxCode,
       }
 
-      const data = await recruiterApi.createRecruiterProfile(params);
+      const data = user.role_id === 2 
+      ? await recruiterApi.createRecruiterProfile(params)
+      : await studentApi.createRecruiterProfile(params);
       localStorage.setItem('user', JSON.stringify(data.data.data));
       const result = dispatch(updateUser(data.data.data));
-      enqueueSnackbar("Your profile has been created.", { variant: "success" });
+      enqueueSnackbar("Your profile has been updated.", { variant: "success" });
 
       if (result.payload.r_profile !== null) {
         localStorage.setItem('role_id', 2);
@@ -56,33 +62,51 @@ function RecruiterUpdateProfilePage(props) {
     }
   }
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000)
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   return (
     <>
-      <div className="first-update-profile">
-        <div className="first-update-profile__container">
-          <div className="first-update-profile__container__information">
-            <div className="first-update-profile__container__information__img">
-              <img src={Images.create} alt="create" />
-            </div>
+      {user.r_profile !== null
+        ? <Redirect to="/" />
+        : isLoading
+          ? <div className="loading-ui">
+            <LoadingUI />
           </div>
-          <div className="first-update-profile__container__form">
-            <div className="first-update-profile__container__form__wrap">
-              <div className="first-update-profile__container__form__wrap__dot">
-                <GoIcons.GoPrimitiveDot className="first-update-profile__container__form__wrap__dot__icon" />
+          : <>
+            <div className="first-update-profile">
+              <div className="first-update-profile__container">
+                <div className="first-update-profile__container__information">
+                  <div className="first-update-profile__container__information__img">
+                    <img src={Images.create} alt="create" />
+                  </div>
+                </div>
+                <div className="first-update-profile__container__form">
+                  <div className="first-update-profile__container__form__wrap">
+                    <div className="first-update-profile__container__form__wrap__dot">
+                    </div>
+                    <div className="first-update-profile__container__form__wrap__form-title">
+                      <label>Update Company Info</label>
+                      <GoIcons.GoPrimitiveDot className="first-update-profile__container__form__wrap__form-title__icon" />
+                    </div>
+                    <UpdateCompanyInfoForm
+                      initialValues={initialValues}
+                      onSubmit={handleSubmit}
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="first-update-profile__container__form__wrap__form-title">
-                <label>Update Company Info</label>
-                <GoIcons.GoPrimitiveDot className="first-update-profile__container__form__wrap__form-title__icon" />
-              </div>
-              <UpdateCompanyInfoForm
-                initialValues={initialValues}
-                onSubmit={handleSubmit}
-              />
             </div>
-          </div>
-        </div>
-      </div>
-      <Footer />
+            <Footer />
+          </>
+      }
     </>
   );
 }

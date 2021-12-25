@@ -12,6 +12,7 @@ InputField.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
+  autoComplete: PropTypes.string
 };
 
 InputField.defaultProps = {
@@ -19,13 +20,14 @@ InputField.defaultProps = {
   label: '',
   placeholder: '',
   disabled: false,
+  autoComplete: ''
 }
 
 function InputField(props) {
 
   const {
     field, form,
-    type, label, placeholder, disabled, moreClassName
+    type, label, placeholder, disabled, moreClassName, autoComplete
   } = props;
 
   const {name} = field;
@@ -44,6 +46,7 @@ function InputField(props) {
       disabled={disabled}
       invalid={showError}
       className="input-field"
+      autoComplete={autoComplete}
       />
     <ErrorMessage name={name} component={FormFeedback} />
     </FormGroup>
