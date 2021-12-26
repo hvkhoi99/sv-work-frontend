@@ -20,9 +20,9 @@ RecruiterDashboardPage.propTypes = {
 };
 
 function RecruiterDashboardPage(props) {
-  const user = useSelector((state) => state.user.current);
   const availableJobsPath = `${Paths.recruiterDashboard}/available-jobs`;
   const closedRecruitmentsPath = `${Paths.recruiterDashboard}/closed-recruitments`;
+  const user = useSelector((state) => state.user.current);
   const history = useHistory();
   const location = history.location.pathname;
   const [dashboardIndexData, setDashboardIndexData] = useState({});
@@ -58,6 +58,11 @@ function RecruiterDashboardPage(props) {
     setCurrentPath(option.path);
   }
 
+  const onViewRecruitment = (recruitment) => {
+    console.log({ recruitment })
+    history.push(`${Paths.recruiterDashboard}/available-jobs/${recruitment.id}`);
+  }
+
   return (
     <>
       {isLoading
@@ -73,7 +78,6 @@ function RecruiterDashboardPage(props) {
                   <img src={Images.fb} alt="apple" />
                   <div className="recruiter-dashboard__container__top__left__inforCard__description">
                     <div className="recruiter-dashboard__container__top__left__inforCard__description__title">
-                      {/* <span>{dashboardIndexData.profile.company_name}</span> */}
                       <LinesEllipsis
                         text={
                           user.r_profile.company_name
@@ -86,18 +90,16 @@ function RecruiterDashboardPage(props) {
                       />
                       {dashboardIndexData.profile.verify && <HiIcons.HiCheckCircle className="inforCard-icon" />}
                     </div>
-                    {/* <span>{dashboardIndexData.profile.company_industry}</span>
-                     */}
-                     <LinesEllipsis
-                        text={
-                          user.r_profile.company_industry
-                        }
-                        maxLine='1'
-                        ellipsis='...'
-                        trimRight
-                        basedOn='letters'
-                        className="recruiter-dashboard__container__top__left__inforCard__description__company-industry"
-                      />
+                    <LinesEllipsis
+                      text={
+                        user.r_profile.company_industry
+                      }
+                      maxLine='1'
+                      ellipsis='...'
+                      trimRight
+                      basedOn='letters'
+                      className="recruiter-dashboard__container__top__left__inforCard__description__company-industry"
+                    />
                   </div>
                 </div>
               </div>
@@ -141,7 +143,7 @@ function RecruiterDashboardPage(props) {
                 </div>
               </div>
               <div className="recruiter-dashboard__container__bottom__right">
-                {currentPath === availableJobsPath ? <AvailableJobs /> : currentPath === closedRecruitmentsPath ? <ClosedRecruitments /> : <></>}
+                {currentPath === availableJobsPath ? <AvailableJobs onViewRecruitment={onViewRecruitment} /> : currentPath === closedRecruitmentsPath ? <ClosedRecruitments /> : <></>}
               </div>
             </div>
           </div>

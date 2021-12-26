@@ -76,6 +76,10 @@ function Header(props) {
 
   useEffect(() => {
     showButton();
+
+    // return () => {
+    //   setButton(true);
+    // }
   }, []);
 
   window.addEventListener('resize', showButton);
@@ -321,7 +325,7 @@ function Header(props) {
               </ul>
             </div>
             <div className={hiddenMe ? "notify-me__action__me" : "notify-me__action__me isVisible"}>
-              <p className="notify-me__action__me__user-infor">
+              <div className="notify-me__action__me__user-infor">
                 Signed in as&nbsp;
                 <span>
                   <LinesEllipsis
@@ -337,7 +341,7 @@ function Header(props) {
                     className="notify-me__action__me__user-infor__name"
                   />
                 </span>
-              </p>
+              </div>
               <ul>
                 <li>
                   <Link to={Paths.clientDashboard} className="me-link">

@@ -6,15 +6,21 @@ import ReactTimeAgo from 'react-time-ago'
 import HashTagCard from '../HashTagCard';
 
 AvailableJobsCard.propTypes = {
-  item: PropTypes.object
+  item: PropTypes.object,
+  onViewRecruitment: PropTypes.func
 };
 
 AvailableJobsCard.defaultProps = {
-  item: {}
+  item: {},
+  onViewRecruitment: null
 }
 
 function AvailableJobsCard(props) {
-  const { item } = props;
+  const { item, onViewRecruitment } = props;
+
+  const handleViewRecruitment = (recruitment) => {
+    return onViewRecruitment(recruitment);
+  }
 
   return (
     <div className="available-jobs__container">
@@ -47,7 +53,11 @@ function AvailableJobsCard(props) {
           </div>
         </div>
         <div className="available-jobs__container__bottom__item-third">
-          <button className="btn btn-success btn-sm">View</button>
+          <button
+            className="btn btn-success btn-sm"
+            type="button"
+            onClick={() => handleViewRecruitment(item)}
+          >View</button>
         </div>
       </div>
     </div>

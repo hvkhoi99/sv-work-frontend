@@ -26,6 +26,7 @@ import smDot from '../assets/img/smDot.png';
 import student from '../assets/img/student.png';
 import teamwork from '../assets/img/teamwork.png';
 import tw from '../assets/img/tw.png';
+import ship from '../assets/img/ship.png';
 import vinfast from '../assets/img/vinfast.png';
 import threeMinions from '../assets/img/three-minions.png';
 
@@ -33,7 +34,7 @@ const Images = {
   home, notFound, emoji, minami, bgRight, background, fptSoftware, smDot, eventcircle, 
   admin, teamwork, overview, ellipse, apple, coffeeTime, levis, tw, shopee, fb, vinfast, 
   burger, lamborghini, student, recruiter, bmw, create, searchCard, recruitmentManageCard, aio,
-  threeMinions
+  threeMinions, ship
 }
 
 export default Images;

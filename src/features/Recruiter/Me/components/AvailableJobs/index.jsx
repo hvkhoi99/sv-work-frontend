@@ -8,10 +8,15 @@ import { useSelector } from 'react-redux';
 import scroll from 'utils/common';
 import AvailableJobsCard from '../AvailableJobsCard';
 import './AvailableJobs.scss';
+import PropTypes from 'prop-types';
 
 AvailableJobs.propTypes = {
-
+  onViewRecruitment: PropTypes.func
 };
+
+AvailableJobs.defaultProps = {
+  onViewRecruitment: null
+}
 
 function AvailableJobs(props) {
   const user = useSelector((state) => state.user.current);
@@ -19,6 +24,7 @@ function AvailableJobs(props) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setpageCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const {onViewRecruitment} = props;
 
   const limit = 3;
 
@@ -63,7 +69,7 @@ function AvailableJobs(props) {
         <>
           {
             items.map((item, index) => {
-              return <AvailableJobsCard item={item} key={index} />
+              return <AvailableJobsCard item={item} key={index} onViewRecruitment={onViewRecruitment}/>
             })
           }
           {
