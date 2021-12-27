@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import * as HiIcons from 'react-icons/hi';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import scroll from 'utils/common';
+import helper from 'utils/common';
 import * as Yup from 'yup';
 import './RecruiterAccount.scss';
 
@@ -48,7 +48,7 @@ function RecruiterAccountPage(props) {
 
 
   useEffect(() => {
-    scroll.scrollToTop();
+    helper.scrollToTop();
 
     const timer = setTimeout(() => {
       setIsLoading(false);

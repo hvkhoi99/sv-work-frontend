@@ -1,4 +1,5 @@
 import LoadingChildUI from 'components/LoadingChild';
+import RecruitmentCard from 'components/RecruitmentCard';
 import Images from 'constants/images';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -8,14 +9,15 @@ import * as TiIcons from 'react-icons/ti';
 import './RecruitmentDetail.scss';
 
 RecruitmentDetail.propTypes = {
-  recruitment: PropTypes.object
+  recruitmentDetail: PropTypes.object
 };
 
 RecruitmentDetail.defaultProps = {
-  recruitment: {}
+  recruitmentDetail: {}
 }
 
 function RecruitmentDetail(props) {
+  const { recruitmentDetail } = props;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -43,7 +45,7 @@ function RecruitmentDetail(props) {
                 <div className="benefits__content__left__attach">
                   <div className="benefits__content__left__attach__icon" />
                 </div>
-                <ul>
+                {/* <ul>
                   <li>13th month salary + Quarterly bonus</li>
                   <li>Periodic health examination</li>
                   <li>Provide Laptop</li>
@@ -53,7 +55,8 @@ function RecruitmentDetail(props) {
                   <li>13th month salary + Quarterly bonus</li>
                   <li>Periodic health examination</li>
                   <li>Provide Laptop</li>
-                </ul>
+                </ul> */}
+                {recruitmentDetail.benefits}
               </div>
               <div className="benefits__content__right">
                 <div className="benefits__content__right__date">
@@ -98,17 +101,7 @@ function RecruitmentDetail(props) {
               <div className="job-description__attach__icon" />
             </div>
             <div className="job-description__content">
-              <ul>
-                <li>13th month salary + Quarterly bonus</li>
-                <li>Periodic health examination</li>
-                <li>Provide Laptop</li>
-                <li>13th month salary + Quarterly bonus</li>
-                <li>Periodic health examination</li>
-                <li>Provide Laptop</li>
-                <li>13th month salary + Quarterly bonus</li>
-                <li>Periodic health examination</li>
-                <li>Provide Laptop</li>
-              </ul>
+              {recruitmentDetail.description}
             </div>
           </div>
           <div className="recruitment-detail-item requirements">
@@ -117,31 +110,33 @@ function RecruitmentDetail(props) {
               <div className="requirements__attach__icon" />
             </div>
             <div className="requirements__content">
-              <ul>
-                <li>13th month salary + Quarterly bonus</li>
-                <li>Periodic health examination</li>
-                <li>Provide Laptop</li>
-                <li>13th month salary + Quarterly bonus</li>
-                <li>Periodic health examination</li>
-                <li>Provide Laptop</li>
-                <li>13th month salary + Quarterly bonus</li>
-                <li>Periodic health examination</li>
-                <li>Provide Laptop</li>
-              </ul>
+              {recruitmentDetail.requirement}
             </div>
           </div>
           <div className="work-location">
             <div className="work-location__left">
               <h3>Work Location</h3>
+              <div className="work-location__attach">
+                <div className="work-location__attach__icon" />
+              </div>
               <div className="work-location__left__content">
-                <TiIcons.TiLocation className="work-location__left__content__icon"/>
+                <TiIcons.TiLocation className="work-location__left__content__icon" />
                 <span className="work-location__left__content__description">
-                  123 Da Nang, Viet Nam
+                  {recruitmentDetail.location}
                 </span>
               </div>
             </div>
             <div className="work-location__right">
               <img src={Images.ship} alt="ship" />
+            </div>
+          </div>
+          <div className="similar-job">
+            <h3>Similar Job for you</h3>
+            <div className="similar-job__content">
+              <RecruitmentCard />
+              <RecruitmentCard />
+              <RecruitmentCard />
+              <RecruitmentCard />
             </div>
           </div>
         </>

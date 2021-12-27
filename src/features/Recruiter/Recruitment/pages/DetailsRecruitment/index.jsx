@@ -1,36 +1,45 @@
+import studentApi from 'api/studentApi';
 import LoadingUI from 'components/Loading';
-// import PropTypes from 'prop-types';
 import Images from 'constants/images';
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import scroll from 'utils/common';
+import { useSelector } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
+import helper from 'utils/common';
 import RecruitmentDetail from '../RecruitmentDetail';
 import './DetailsRecruitment.scss';
 
 DetailsRecruitmentPage.propTypes = {
-
 };
 
 function DetailsRecruitmentPage(props) {
+  const user = useSelector((state) => state.user.current);
   const [isActiveIndex, setIsActiveIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const { recruitmentId } = useParams();
+  const [recruitmentDetail, setRecruitmentDetail] = useState({});
 
   const handleChangeOptionMenu = (index) => {
     return setIsActiveIndex(index)
   }
 
   useEffect(() => {
-    scroll.scrollToTop();
-  }, [])
+    const fetchRecruitmentDetail = async () => {
+      try {
+        const data = await studentApi.getRecruimentDetail(recruitmentId);
+        setRecruitmentDetail(data.data.data)
+        setIsLoading(false);
+        console.log({ data });
+        return data.data;
+      } catch (error) {
+        console.log("Cannot fetch recruitment detail. Error: " + error)
+      }
+    }
+
+    fetchRecruitmentDetail();
+  }, [recruitmentId])
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000)
-
-    return () => {
-      clearTimeout(timer);
-    }
+    helper.scrollToTop();
   }, [])
 
   return (
@@ -48,15 +57,22 @@ function DetailsRecruitmentPage(props) {
                     <img src={Images.tw} alt="avatar" />
                   </div>
                   <div className="details-recruitment__container__top__left__info">
-                    <h5>Twitter Twitter Twitter</h5>
-                    <span>The company entertainment</span>
-                    <span>Danang, VN</span>
-                    <span>$1500 - $2000</span>
+                    <h4>{recruitmentDetail.title}</h4>
+                    <span className="details-recruitment__container__top__left__info__company-name">
+                      {user.r_profile.company_name}
+                    </span>
+                    <span>{recruitmentDetail.location}</span>
+                    <span>${recruitmentDetail.min_salary} - ${recruitmentDetail.max_salary}</span>
                   </div>
                 </div>
                 <div className="details-recruitment__container__top__right">
-                  <button className="btn btn-sm btn-success btn-edit">Edit</button>
-                  <button className="btn btn-sm btn-success btn-close">Close</button>
+                  {recruitmentDetail.is_closed
+                    ? <button className="btn btn-sm btn-danger btn-close">Delete</button>
+                    : <>
+                      <button className="btn btn-sm btn-success btn-edit">Edit</button>
+                      <button className="btn btn-sm btn-success btn-close">Close</button>
+                    </>
+                  }
                 </div>
               </div>
               <div className="details-recruitment__container__bottom">
@@ -80,7 +96,7 @@ function DetailsRecruitmentPage(props) {
                 </div>
                 <div className="details-recruitment__container__bottom__description">
                   {isActiveIndex === 0
-                    ? <RecruitmentDetail />
+                    ? <RecruitmentDetail recruitmentDetail={recruitmentDetail} />
                     : <></>}
                 </div>
               </div>

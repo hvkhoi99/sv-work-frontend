@@ -7,7 +7,7 @@ import * as HiIcons from 'react-icons/hi';
 import * as MdIcons from 'react-icons/md';
 import * as TiIcons from 'react-icons/ti';
 import { useSelector } from 'react-redux';
-import scroll from 'utils/common';
+import helper from 'utils/common';
 import './RecruiterProfile.scss';
 
 RecruiterProfilePage.propTypes = {
@@ -39,7 +39,7 @@ function RecruiterProfilePage(props) {
   // }, [])
 
   useEffect(() => {
-    scroll.scrollToTop();
+    helper.scrollToTop();
 
     const timer = setTimeout(() => {
       setIsLoading(false);

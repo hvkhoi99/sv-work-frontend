@@ -1,14 +1,14 @@
 import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
 import LoadingChildUI from 'components/LoadingChild';
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
-import scroll from 'utils/common';
+import helper from 'utils/common';
 import AvailableJobsCard from '../AvailableJobsCard';
 import './AvailableJobs.scss';
-import PropTypes from 'prop-types';
 
 AvailableJobs.propTypes = {
   onViewRecruitment: PropTypes.func
@@ -56,7 +56,7 @@ function AvailableJobs(props) {
     setCurrentPage(data.selected + 1);
     // scroll to the top
     // window.scrollTo(0, 0)
-    scroll.scrollToTop();
+    helper.scrollToTop();
   };
 
   return (

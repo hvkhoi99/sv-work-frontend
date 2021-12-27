@@ -1,0 +1,117 @@
+.recruitment-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 13rem;
+
+  padding: 1rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  border-radius: 2rem;
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    &__left {
+      &__img {
+        & > img {
+          width: 4rem;
+          height: 4rem;
+          border-radius: 50%;
+        }
+      }
+
+      &__company-name {
+        display: flex;
+        justify-content: center;
+
+        margin: 0.2rem 0 0 0;
+
+        & > span {
+          font-weight: 600;
+          color: darkgrey;
+        }
+      }
+    }
+
+    &__right {
+      display: flex;
+      margin: 0 0 3rem 0rem;
+      align-items: center;
+
+      & > span {
+        color: darkgrey;
+      }
+
+      &__icon {
+        display: flex;
+        align-items: center;
+
+        margin: 0 0 0 0.2rem;
+        font-size: 1.2rem;
+        color: var(--success);
+      }
+    }
+  }
+
+  &__center {
+    margin: 0.5rem 0 0 0;
+    line-height: 1.5rem;
+
+    &__title {
+      font-weight: 600;
+    }
+
+    &__location {
+      display: flex;
+      align-items: center;
+
+      &__icon {
+        font-size: 1rem;
+        margin: 0 0.3rem 0 0;
+      }
+
+      // & > span {
+      //   color: darkgrey;
+      // }
+    }
+
+    &__salary {
+      display: flex;
+      align-items: center;
+      &__icon {
+        font-size: 1rem;
+        margin: 0 0.3rem 0 0;
+      }
+
+      // & > span {
+      //   color: darkgrey;
+      // }
+    }
+
+    &__applicants {
+
+      & > span {
+        color: var(--success);
+        font-weight: 600;
+      }
+    }
+
+    &__hashtags {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      margin: .3rem 0 0 0;
+
+      & > span {
+        background-color: var(--success);
+        padding: 0rem 0.5rem;
+        border-radius: 2rem;
+        font-weight: 500;
+        color: #fff;
+      }
+    }
+  }
+}

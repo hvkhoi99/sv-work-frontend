@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
-import scroll from 'utils/common';
+import helper from 'utils/common';
 import ClosedRecruitmentsCard from '../ClosedRecruitmentsCard';
 import './ClosedRecruitments.scss';
 
@@ -48,7 +48,7 @@ function ClosedRecruitments(props) {
 
   const handlePageClick = async (data) => {
     setCurrentPage(data.selected + 1);
-    scroll.scrollToTop();
+    helper.scrollToTop();
   };
 
   return (

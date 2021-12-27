@@ -9,7 +9,7 @@ import * as HiIcons from 'react-icons/hi';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import scroll from 'utils/common';
+import helper from 'utils/common';
 import AvailableJobs from '../../components/AvailableJobs';
 import ClosedRecruitments from '../../components/ClosedRecruitments';
 import DashboardSelectOption from '../../components/DashboardSelectOption';
@@ -51,7 +51,7 @@ function RecruiterDashboardPage(props) {
   }, [user])
 
   useEffect(() => {
-    scroll.scrollToTop();
+    helper.scrollToTop();
   }, []);
 
   const onChangeIndex = (option) => {
@@ -61,6 +61,11 @@ function RecruiterDashboardPage(props) {
   const onViewRecruitment = (recruitment) => {
     console.log({ recruitment })
     history.push(`${Paths.recruiterDashboard}/available-jobs/${recruitment.id}`);
+  }
+
+  const handleCreateRecruitment = () => {
+    // console.log("clicked");
+    history.push('/recruiter/recruitment/create');
   }
 
   return (
@@ -116,7 +121,10 @@ function RecruiterDashboardPage(props) {
                   <span className="recruiter-dashboard__container__top__right__card__count">{dashboardIndexData.closedJobs}</span>
                   <span className="recruiter-dashboard__container__top__right__card__type">Closed</span>
                 </div>
-                <div className="recruiter-dashboard__container__top__right__card">
+                <div
+                  className="recruiter-dashboard__container__top__right__card"
+                  onClick={handleCreateRecruitment}
+                >
                   <div className="recruiter-dashboard__container__top__right__card__plus-icon">
                     <BsIcons.BsFillPlusCircleFill className="plus-icon" />
                   </div>

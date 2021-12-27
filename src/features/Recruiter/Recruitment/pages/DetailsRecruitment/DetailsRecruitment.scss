@@ -44,12 +44,22 @@
         &__info {
           display: flex;
           flex-direction: column;
+          justify-content: center;
 
           margin: 0 0 0 2rem;
           line-height: 2rem;
 
+          & > h4 {
+            font-weight: 600;
+          }
+
           & > span {
             font-weight: 400;
+            font-size: 1rem;
+          }
+
+          &__company-name {
+            font-weight: 500;
           }
         }
       }
