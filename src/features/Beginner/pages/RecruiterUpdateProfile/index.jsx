@@ -1,7 +1,7 @@
 import recruiterApi from 'api/recruiterApi';
 import Footer from 'components/Footer';
-import UpdateCompanyInfoForm from 'components/UpdateCompanyInfoForm';
-import Images from 'constants/images';
+import UpdateCompanyInfoForm from 'features/Beginner/components/UpdateCompanyInfoForm';
+// import Images from 'constants/images';
 import { updateUser } from 'features/Auth/userSlice';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
@@ -83,11 +83,11 @@ function RecruiterUpdateProfilePage(props) {
           : <>
             <div className="first-update-profile">
               <div className="first-update-profile__container">
-                <div className="first-update-profile__container__information">
+                {/* <div className="first-update-profile__container__information">
                   <div className="first-update-profile__container__information__img">
                     <img src={Images.create} alt="create" />
                   </div>
-                </div>
+                </div> */}
                 <div className="first-update-profile__container__form">
                   <div className="first-update-profile__container__form__wrap">
                     <div className="first-update-profile__container__form__wrap__dot">

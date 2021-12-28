@@ -61,7 +61,7 @@ function ConfirmFirstUpdatePage(props) {
   }
 
   const handleToUpdateProfilePage = (rolePath) => {
-    localStorage.setItem("role_id", 3);
+    user.role_id === 3 && localStorage.setItem("role_id", 3);
     return history.push(`/first-update/${rolePath}`);
   }
 

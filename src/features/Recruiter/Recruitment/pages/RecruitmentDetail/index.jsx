@@ -1,5 +1,5 @@
 import LoadingChildUI from 'components/LoadingChild';
-import RecruitmentCard from 'components/RecruitmentCard';
+import RecruitmentCard from 'features/Recruiter/Me/components/RecruitmentCard';
 import Images from 'constants/images';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';

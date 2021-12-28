@@ -7,12 +7,20 @@ export const CITY_OPTIONS = [
   { value: 6, label: "Hai Duong" },
 ];
 
-export const PHOTO_CATEGORY_OPTIONS = [
-  { value: 1, label: "Technology" },
-  { value: 2, label: "Education" },
-  { value: 3, label: "Nature" },
-  { value: 4, label: "Animals" },
-  { value: 5, label: "Styles" },
+export const JOB_TYPE_OPTIONS = [
+  { value: 1, label: "Web Developer" },
+  { value: 2, label: "Quality Assurance Tester" },
+  { value: 3, label: "Systems Analyst" },
+  { value: 4, label: "Network Engineer" },
+  { value: 5, label: "Software Engineer" },
+];
+
+export const JOB_CATEGORY_OPTIONS = [
+  { value: 1, label: "Designer" },
+  { value: 2, label: "Developer" },
+  { value: 3, label: "Software Engineer" },
+  { value: 4, label: "Manager" },
+  { value: 5, label: "Support" },
 ];
 
 export const GENDER = [
@@ -62,3 +70,23 @@ export function getUnique(arr, comp) {
 
   return unique;
 }
+
+export const toolbarConfig = {
+  // Optionally specify the groups to display (displayed in the order listed).
+  display: ['INLINE_STYLE_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'LINK_BUTTONS', 'BLOCK_TYPE_DROPDOWN', 'HISTORY_BUTTONS'],
+  INLINE_STYLE_BUTTONS: [
+    { label: 'Bold', style: 'BOLD', className: 'custom-css-class' },
+    { label: 'Italic', style: 'ITALIC' },
+    { label: 'Underline', style: 'UNDERLINE' }
+  ],
+  BLOCK_TYPE_DROPDOWN: [
+    { label: 'Normal', style: 'unstyled' },
+    { label: 'Heading Large', style: 'header-one' },
+    { label: 'Heading Medium', style: 'header-two' },
+    { label: 'Heading Small', style: 'header-three' }
+  ],
+  BLOCK_TYPE_BUTTONS: [
+    { label: 'UL', style: 'unordered-list-item' },
+    { label: 'OL', style: 'ordered-list-item' }
+  ]
+};

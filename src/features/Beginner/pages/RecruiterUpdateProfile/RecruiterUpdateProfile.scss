@@ -5,10 +5,11 @@
   padding: 2rem 2rem;
   width: 100%;
 
-  background-image: url("../../../../assets/img/background.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  // background-image: url("../../../../assets/img/background.png");
+  // background-size: cover;
+  // background-repeat: no-repeat;
+  // background-position: center;
+  background-color: #ACE1AF;
 
   &__container {
     display: flex;
@@ -49,7 +50,6 @@
       align-items: center;
       width: 65%;
       height: 100%;
-      // background-color: blue;
 
       &__wrap {
         display: flex;
@@ -61,6 +61,7 @@
           rgba(0, 0, 0, 0.23) 0px 3px 6px;
         padding: 1rem 2rem;
         border-radius: 1rem;
+        background-color: #fff;
 
         &__dot {
           margin: -2rem 42rem 0 0;
@@ -79,12 +80,12 @@
           justify-content: center;
 
           width: 100%;
-          margin: 0 0 2rem 0;
+          margin: 0 0 1rem 0;
 
           & > label {
             font-size: 1.5rem;
             font-weight: 600;
-            // color: var(--success);
+            color: var(--success);
           }
 
           &__icon {

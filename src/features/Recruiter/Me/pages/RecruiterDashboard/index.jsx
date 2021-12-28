@@ -65,7 +65,7 @@ function RecruiterDashboardPage(props) {
 
   const handleCreateRecruitment = () => {
     // console.log("clicked");
-    history.push('/recruiter/recruitment/create');
+    history.push(`${Paths.recruiterDashboard}/available-jobs/create`);
   }
 
   return (

@@ -28,6 +28,17 @@ function SelectField(props) {
   const showError = errors[name] && touched[name];
 
   const selectedOption = options.find(option => option.value === value);
+  const colourStyles = {
+    control: (base, state) => ({
+      ...base,
+      borderRadius: '.5rem',
+      border: state.isFocused ? "default" : "1px solid #fff",
+      boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
+      "&:hover": {
+        cursor: 'text'
+      },
+    }),
+  }
 
   const handleSelectedOptionChange = (selectedOption) => {
     const selectedValue = selectedOption ? selectedOption.value : selectedOption;
@@ -41,19 +52,33 @@ function SelectField(props) {
     field.onChange(changeEvent);
   }
 
+  // const onBlur = () => {
+  //   const changeEvent = {
+  //     target: {
+  //       name: "none",
+  //       value: ''
+  //     }
+  //   };
+  //   field.onChange(changeEvent);
+  // }
+
   return (
     <FormGroup>
-      {label && <Label for={name}>{label}</Label>}
+      {label && <Label style={{
+        fontWeight: "500"
+      }} for={name}>{label}</Label>}
 
       <Select
         id={name}
         {...field}
         value={selectedOption}
         onChange={handleSelectedOptionChange}
-
+        // onBlur={handleSelectedOptionChange}
+        isClearable={true}
         placeholder={placeholder}
         isDisabled={disabled}
         options={options}
+        styles={colourStyles}
 
         className={showError ? 'is-invalid' : ''}
       />
