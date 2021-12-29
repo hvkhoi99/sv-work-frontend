@@ -1,0 +1,35 @@
+.text-editor {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  & > label {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--success);
+    text-align: center;
+  }
+
+  &__btn-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+
+    margin: 1rem 0;
+    width: 100%;
+
+    & > button {
+      margin: 0 0 0 1rem;
+      border-radius: .5rem;
+    }
+  }
+}
+
+.ck-editor__editable_inline {
+  min-height: 20rem;
+}
+
+.ck-editor__editable {
+  padding: 0 2rem !important;
+}

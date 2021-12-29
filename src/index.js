@@ -1,16 +1,17 @@
+import 'aos/dist/aos.css';
+import store from 'app/store';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en.json';
+import ru from 'javascript-time-ago/locale/ru.json';
+import { SnackbarProvider } from 'notistack';
 import React from 'react';
+import "react-datepicker/dist/react-datepicker.css";
 import ReactDOM from 'react-dom';
-// import './index.css';
+import { Provider } from 'react-redux';
+import 'reactjs-popup/dist/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux';
-import store from 'app/store';
-import { SnackbarProvider } from 'notistack';
-import TimeAgo from 'javascript-time-ago'
-
-import en from 'javascript-time-ago/locale/en.json'
-import ru from 'javascript-time-ago/locale/ru.json'
 
 TimeAgo.addDefaultLocale(en)
 TimeAgo.addLocale(ru)

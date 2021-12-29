@@ -1,16 +1,15 @@
 import recruiterApi from 'api/recruiterApi';
+import studentApi from 'api/studentApi';
 import Footer from 'components/Footer';
-import UpdateCompanyInfoForm from 'features/Beginner/components/UpdateCompanyInfoForm';
-// import Images from 'constants/images';
+import LoadingUI from 'components/Loading';
 import { updateUser } from 'features/Auth/userSlice';
+import UpdateCompanyInfoForm from 'features/Beginner/components/UpdateCompanyInfoForm';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import * as GoIcons from 'react-icons/go';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import './RecruiterUpdateProfile.scss';
-import LoadingUI from 'components/Loading';
-import studentApi from 'api/studentApi';
 
 RecruiterUpdateProfilePage.propTypes = {
 

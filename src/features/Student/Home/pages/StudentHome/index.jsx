@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import Aos from "aos";
 import homeApi from 'api/homeApi';
 import { CITY_OPTIONS } from 'constants/global';
 import Images from 'constants/images';
@@ -48,6 +49,17 @@ function StudentHomePage(props) {
   } = useForm({ resolver: yupResolver(schema) });
 
   useEffect(() => {
+    Aos.init({
+      offset: 100,
+      duration: 600,
+      easing: 'ease-in-sine',
+      delay: 100,
+      mirror: true
+
+    });
+  }, []);
+
+  useEffect(() => {
     const fetchTopRecruiters = async () => {
       try {
         const result = await homeApi.getTopRecruiters();
@@ -76,10 +88,11 @@ function StudentHomePage(props) {
   return (
     <div className="home">
       <div className="home__container">
-        <div className="home__container__find">
+        <div
+          data-aos="fade-zoom-in"
+          className="home__container__find">
           <div className="home__container__find__img">
             <img src={Images.teamwork} alt="find" />
-
           </div>
           <div className="home__container__find__main">
             <div className="home__container__find__main__text">
@@ -122,10 +135,14 @@ function StudentHomePage(props) {
         <div className="home__container__overview">
           <div className="home__container__overview__title"><h1>Overview</h1></div>
           <div className="home__container__overview__main">
-            <div className="home__container__overview__main__text">
+            <div
+              data-aos="fade-right"
+              className="home__container__overview__main__text">
               <p>“Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto inventore quas maxime sequi aut! Assumenda aperiam eveniet saepe ad sunt nam necessitatibus sit odio. Voluptatum a eum recusandae. Soluta, amet.”</p>
             </div>
-            <div className="home__container__overview__main__img">
+            <div
+              data-aos="fade-left"
+              className="home__container__overview__main__img">
               <img src={Images.overview} alt="overview" />
             </div>
           </div>
@@ -136,7 +153,9 @@ function StudentHomePage(props) {
             <h1>Top Recruiter</h1>
             <img src={Images.smDot} alt="smDot" />
           </div>
-          <div className="home__container__top-recruiter__main">
+          <div
+            data-aos="fade-zoom-in"
+            className="home__container__top-recruiter__main">
             {topRecruiters.map((recruiters, index) => {
               return <TopRecruiterGroupCard
                 cardSize={cardSize[index]}

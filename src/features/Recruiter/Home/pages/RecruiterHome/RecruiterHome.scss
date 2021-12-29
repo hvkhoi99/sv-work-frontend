@@ -4,10 +4,10 @@
   align-items: flex-start;
   // height: 90vh;
   width: 100%;
-  background-image: url("../../../../../assets/img/background.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
+  // background-image: url("../../../../../assets/img/background.png");
+  // background-size: cover;
+  // background-repeat: no-repeat;
+  // background-position: center;
 
   &__container {
     // background-color: yellowgreen;
@@ -36,11 +36,15 @@
         align-items: center;
         width: 50%;
         height: 100%;
-        // background-color: rgb(117, 117, 247);
+
+        
+      background-image: url("../../../../../assets/img/Ellipse.png");
+      background-size: auto;
+      background-repeat: no-repeat;
+      background-position: bottom right;
 
         & > img {
           width: 75%;
-          // height: 100%;
         }
       }
 
@@ -51,7 +55,6 @@
         align-items: center;
         width: 50%;
         height: 100%;
-        // background-color: rgb(253, 115, 115);
         padding: 1rem 4rem;
 
         &__title {
@@ -89,10 +92,6 @@
       align-items: center;
       width: 100%;
       height: auto;
-      background-image: url("../../../../../assets/img/Ellipse.png");
-      background-size: auto;
-      background-repeat: no-repeat;
-      background-position: top center;
 
       &__left {
         display: flex;
@@ -152,10 +151,10 @@
       width: 100%;
       height: auto;
       padding: 5rem 0 0 0;
-      background-image: url("../../../../../assets/img/smDot.png");
-      background-size: auto;
-      background-repeat: no-repeat;
-      background-position: left top;
+      // background-image: url("../../../../../assets/img/smDot.png");
+      // background-size: auto;
+      // background-repeat: no-repeat;
+      // background-position: left top;
 
       &__top {
         display: flex;

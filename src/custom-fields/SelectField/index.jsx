@@ -22,17 +22,18 @@ SelectField.defaultProps = {
 }
 
 function SelectField(props) {
-  const { field, form, options, label, placeholder, disabled } = props;
-  const { name, value } = field;
+  const {field, form, label, placeholder, disabled, options} = props;
+  const {name, value} = field;
+  const selectedOption = options.find(option => option.value === value);
   const { errors, touched } = form;
   const showError = errors[name] && touched[name];
-
-  const selectedOption = options.find(option => option.value === value);
+  
   const colourStyles = {
     control: (base, state) => ({
       ...base,
       borderRadius: '.5rem',
-      border: state.isFocused ? "default" : "1px solid #fff",
+      // border: state.isFocused ? "default" : "1px solid #fff",
+      borderColor: showError ? "#dc3545" : state.isFocused ? "#17a2b8" : "#fff",
       boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
       "&:hover": {
         cursor: 'text'
@@ -52,16 +53,6 @@ function SelectField(props) {
     field.onChange(changeEvent);
   }
 
-  // const onBlur = () => {
-  //   const changeEvent = {
-  //     target: {
-  //       name: "none",
-  //       value: ''
-  //     }
-  //   };
-  //   field.onChange(changeEvent);
-  // }
-
   return (
     <FormGroup>
       {label && <Label style={{
@@ -73,7 +64,7 @@ function SelectField(props) {
         {...field}
         value={selectedOption}
         onChange={handleSelectedOptionChange}
-        // onBlur={handleSelectedOptionChange}
+
         isClearable={true}
         placeholder={placeholder}
         isDisabled={disabled}
