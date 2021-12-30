@@ -1,0 +1,25 @@
+.date-picker-field {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  width: 100%;
+}
+
+.invalid-validation {
+  border: 1px solid #dc3545;
+
+  &:focus {
+    border-color: #dc3545;
+    -webkit-box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.2);
+    box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.2);
+    transition: all 0.15s ease-out;
+  }
+
+  &__icon {
+    position: absolute;
+    margin: 0 0 0 -.5rem;
+    font-size: 1.2rem;
+    color: #dc3545;
+  }
+}

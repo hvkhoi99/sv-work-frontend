@@ -22,27 +22,32 @@ SelectField.defaultProps = {
 }
 
 function SelectField(props) {
-  const {field, form, label, placeholder, disabled, options} = props;
-  const {name, value} = field;
-  const selectedOption = options.find(option => option.value === value);
+  const { field, form, label, placeholder, disabled, options } = props;
+  const { name, value } = field;
   const { errors, touched } = form;
   const showError = errors[name] && touched[name];
   
+  const selectedOption = options.find(option => option.value === value);
+
   const colourStyles = {
     control: (base, state) => ({
       ...base,
       borderRadius: '.5rem',
-      // border: state.isFocused ? "default" : "1px solid #fff",
-      borderColor: showError ? "#dc3545" : state.isFocused ? "#17a2b8" : "#fff",
-      boxShadow: "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
+      borderColor: showError
+        ? "#dc3545"
+        : state.isFocused ? "rgba(0, 0, 255, 0.2)" : "#fff",
+      boxShadow: state.isFocused
+        ? (showError ? "0 0 0 3px rgba(255, 0, 0, 0.2)" : "0 0 0 3px rgba(0, 150, 255, 0.3)")
+        : "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
       "&:hover": {
         cursor: 'text'
       },
+      "transition": state.isFocused && "all 0.15s ease-out",
     }),
   }
 
   const handleSelectedOptionChange = (selectedOption) => {
-    const selectedValue = selectedOption ? selectedOption.value : selectedOption;
+    const selectedValue = selectedOption ? selectedOption.label : selectedOption;
 
     const changeEvent = {
       target: {

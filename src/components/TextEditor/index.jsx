@@ -9,19 +9,19 @@ TextEditor.propTypes = {
   title: PropTypes.string,
   close: PropTypes.func,
   onTextChange: PropTypes.func,
-  text: PropTypes.string
+  initData: PropTypes.string
 };
 
 TextEditor.defaultProps = {
   title: '',
   close: null,
   onTextChange: null,
-  text: ''
+  initData: ''
 }
 
 function TextEditor(props) {
-  const { title, close, onTextChange, text } = props;
-  const [data, setData] = useState(text)
+  const { title, close, onTextChange, initData } = props;
+  const [data, setData] = useState(initData)
 
   const handleChange = (e, editor) => {
     const currentData = editor.getData();
@@ -39,7 +39,6 @@ function TextEditor(props) {
       <CKEditor
         editor={ClassicEditor}
         // config={{
-          
         // }}
         data={data}
         onChange={handleChange}

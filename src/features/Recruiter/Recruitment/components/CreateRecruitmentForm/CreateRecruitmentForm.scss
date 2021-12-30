@@ -41,35 +41,6 @@
   }
 }
 
-.formGroup-text-editor {
-  width: 100%;
-
-  &__title {
-    display: flex;
-
-    &__icon {
-      font-size: 1.5rem;
-      color: var(--success);
-      cursor: pointer;
-      border-radius: .2rem;
-
-      &:hover {
-        color: green;
-        transition: all 0.2s ease-out;
-      }
-    }
-  }
-
-  &__content {
-    padding: 0.5rem 1rem;
-    width: 100%;
-    min-height: 10rem;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    border-radius: 0.5rem;
-  }
-}
-
 .formGroup-salary {
   display: flex;
 

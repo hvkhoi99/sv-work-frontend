@@ -5,8 +5,8 @@ import { ErrorMessage } from 'formik';
 import './InputField.scss';
 
 InputField.propTypes = {
-  field: PropTypes.object.isRequired,
-  form: PropTypes.object.isRequired,
+  field: PropTypes.object,
+  form: PropTypes.object,
 
   type: PropTypes.string,
   label: PropTypes.string,
@@ -15,10 +15,14 @@ InputField.propTypes = {
   autoComplete: PropTypes.string,
   moreClassName: PropTypes.string,
   inputClassName: PropTypes.string,
-  value: PropTypes.string,
+
+  newValue: PropTypes.string,
 };
 
 InputField.defaultProps = {
+  field: {},
+  form: {},
+
   type: 'text',
   label: '',
   placeholder: '',
@@ -26,34 +30,36 @@ InputField.defaultProps = {
   autoComplete: '',
   moreClassName: '',
   inputClassName: '',
+  newValue: ''
 }
 
 function InputField(props) {
 
   const {
     field, form,
-    type, label, placeholder, disabled, moreClassName, autoComplete, inputClassName
+    type, label, placeholder, disabled, moreClassName, autoComplete, inputClassName, newValue
   } = props;
 
-  const {name} = field;
-  const {errors, touched} = form;
+  const { name } = field;
+  const { errors, touched } = form;
   const showError = errors[name] && touched[name];
 
   return (
     <FormGroup className={`${moreClassName}`}>
-      {label && <Label style={label === "Tax Code" ? {color: "var(--success)"} : {color: "black"}} className="label" for={name}>{label}</Label>}
-      <Input 
-      id={name}
-      {...field}
+      {label && <Label style={label === "Tax Code" ? { color: "var(--success)" } : { color: "black" }} className="label" for={name}>{label}</Label>}
+      <Input
+        id={name}
+        {...field}
+        value={field.value || newValue}
 
-      type={type}
-      placeholder={placeholder}
-      disabled={disabled}
-      invalid={showError}
-      className={`input-field ${inputClassName}`}
-      autoComplete={autoComplete}
+        type={type}
+        placeholder={placeholder}
+        disabled={disabled}
+        invalid={showError}
+        className={`input-field ${inputClassName}`}
+        autoComplete={autoComplete}
       />
-    <ErrorMessage name={name} component={FormFeedback} />
+      <ErrorMessage name={name} component={FormFeedback} />
     </FormGroup>
   );
 }

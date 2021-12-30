@@ -50,7 +50,7 @@ function StudentHomePage(props) {
 
   useEffect(() => {
     Aos.init({
-      offset: 100,
+      offset: 200,
       duration: 600,
       easing: 'ease-in-sine',
       delay: 100,

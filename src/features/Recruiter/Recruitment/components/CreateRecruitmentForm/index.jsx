@@ -1,4 +1,3 @@
-import PopupTextEditor from 'components/PopupTextEditor';
 import { JOB_CATEGORY_OPTIONS, JOB_TYPE_OPTIONS } from 'constants/global';
 import DatePickerField from 'custom-fields/DatePickerField';
 import InputField from 'custom-fields/InputField';
@@ -8,14 +7,14 @@ import React, { useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import { Button, FormGroup, Label, Spinner } from 'reactstrap';
 import * as Yup from 'yup';
+import DivAreaText from '../DivAreaText';
 import './CreateRecruitmentForm.scss';
-import ReactHtmlParser from 'react-html-parser';
 
 CreateRecruitmentForm.propTypes = {
 };
 
 function CreateRecruitmentForm(props) {
-  var [initialValues, setInitialValues] = useState({
+  var initialValues = {
     jobName: '',
     typeOfJob: '',
     jobCategory: '',
@@ -25,18 +24,10 @@ function CreateRecruitmentForm(props) {
     maxSalary: '',
     benefits: '',
     expiryDate: ''
-  });
-  // let initialValues = {
-  //   jobName: '',
-  //   typeOfJob: '',
-  //   jobCategory: '',
-  //   location: '',
-  //   description: '',
-  //   minSalary: '',
-  //   maxSalary: '',
-  //   benefits: '',
-  //   expiryDate: ''
-  // }
+  };
+  const [description, setDescription] = useState('');
+  const [benefits, setBenefits] = useState('');
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const validationSchema = Yup.object().shape({
     jobName: Yup
@@ -51,10 +42,10 @@ function CreateRecruitmentForm(props) {
     location: Yup
       .string()
       .required('Location is required'),
-    description: Yup
-      .string()
-      .required('Description is required')
-      .min(10, "Description must be at least 10 characters"),
+    // description: Yup
+    //   .string()
+    //   .required('Description is required')
+    //   .min(10, "Description must be at least 10 characters"),
     minSalary: Yup
       .string()
       .required('Min Salary is required')
@@ -63,29 +54,42 @@ function CreateRecruitmentForm(props) {
       .string()
       .required('Max Salary is required')
       .matches(/^[0-9]+$/, "Must be only digits"),
-    benefits: Yup
-      .string()
-      .required('Benefits is required')
-      .min(10, "Benefits must be at least 10 characters"),
-    expiryDate: Yup
-      .string()
-      .required('Expiry Date is required')
+    // benefits: Yup
+    //   .string()
+    //   .required('Benefits is required')
+    //   .min(10, "Benefits must be at least 10 characters"),
+    // expiryDate: Yup
+    //   .string()
+    //   .required('Expiry Date is required')
   });
 
   const onTextChange = (currentData) => {
-    // console.log("abc: ", ReactHtmlParser(currentData))
-    const newInitialValues = {...initialValues, description: ReactHtmlParser(currentData)};
-    setInitialValues(newInitialValues);
+    setDescription(currentData);
   }
 
   const onBenefitsChange = (currentData) => {
-    // console.log({ currentData })
-    const newInitialValues = {...initialValues, benefits: currentData};
-    setInitialValues(newInitialValues);
+    setBenefits(currentData);
+  }
+
+  const onRereshField = (name) => {
+    switch (name) {
+      case "description":
+        setDescription("");
+        break;
+      case "benefits":
+        setBenefits("");
+        break;
+      default:
+        break;
+    }
+  }
+
+  const handleClick = () => {
+    setIsSubmit(true);
   }
 
   const onSubmit = (values) => {
-    console.log({ values })
+    console.log({ ...values, description: description, benefits: benefits })
   }
 
   return (
@@ -143,23 +147,15 @@ function CreateRecruitmentForm(props) {
                     placeholder=""
                   />
 
-                  <FormGroup className="formGroup-text-editor">
-                    <div className="formGroup-text-editor__title">
-                      <Label style={{
-                        fontWeight: "500"
-                      }}>Description</Label>
-                      <PopupTextEditor onTextChange={onTextChange} />
-                    </div>
-                    <FastField
-                      name="description"
-                      component={InputField}
+                  <DivAreaText
+                    name="description"
 
-                      placeholder=""
-                      type="textarea"
-                    />
-
-                    <div>{initialValues.description}</div>
-                  </FormGroup>
+                    label="Description"
+                    textValue={description}
+                    onTextChange={onTextChange}
+                    onRereshField={onRereshField}
+                    isSubmit={isSubmit}
+                  />
 
                   <div className="formGroup-salary">
                     <FastField
@@ -179,21 +175,15 @@ function CreateRecruitmentForm(props) {
                     />
                   </div>
 
-                  <FormGroup className="formGroup-text-editor">
-                    <div className="formGroup-text-editor__title">
-                      <Label style={{
-                        fontWeight: "500"
-                      }}>Benefits</Label>
-                      <PopupTextEditor onTextChange={onBenefitsChange} />
-                    </div>
-                    <FastField
-                      name="benefits"
-                      component={InputField}
+                  <DivAreaText
+                    name="benefits"
 
-                      placeholder=""
-                      type="textarea"
-                    />
-                  </FormGroup>
+                    label="Benefits"
+                    textValue={benefits}
+                    onTextChange={onBenefitsChange}
+                    onRereshField={onRereshField}
+                    isSubmit={isSubmit}
+                  />
 
                   <FormGroup>
                     <div className="formGroup-text-editor__title">
@@ -201,21 +191,15 @@ function CreateRecruitmentForm(props) {
                         fontWeight: "500"
                       }}>Expiry Date</Label>
                     </div>
-                    {/* <DatePicker
-                      name="expiryDate"
-
-                      selected={startDate}
-                      onChange={(date) => setStartDate(date)}
-                      withPortal
-                      fixedHeight
-                      isClearable={true}
-                      className="form-control"
-                    /> */}
-                    <DatePickerField name="expiryDate" />
+                    <DatePickerField 
+                    name="expiryDate" 
+                    label="Expiry Date"
+                    isSubmit={isSubmit}
+                    />
                   </FormGroup>
 
                   <FormGroup className="formGroup-btn-publish">
-                    <Button type="submit" color={'success'}>
+                    <Button type="submit" color={'success'} onClick={handleClick}>
                       {isSubmitting && <Spinner children="" size="sm" />}
                       {'Publish'}
                     </Button>
