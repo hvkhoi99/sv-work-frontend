@@ -16,6 +16,7 @@ import reportWebVitals from './reportWebVitals';
 TimeAgo.addDefaultLocale(en)
 TimeAgo.addLocale(ru)
 
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>

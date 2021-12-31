@@ -3,7 +3,7 @@ import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import helper from 'utils/common';
 import RecruitmentDetail from '../RecruitmentDetail';
 import './DetailsRecruitment.scss';
@@ -17,10 +17,11 @@ function DetailsRecruitmentPage(props) {
   const [isLoading, setIsLoading] = useState(true);
   const { recruitmentId } = useParams();
   const [recruitmentDetail, setRecruitmentDetail] = useState({});
+  const history = useHistory();
 
   const handleChangeOptionMenu = (index) => {
-    return setIsActiveIndex(index)
-  }
+    return setIsActiveIndex(index);
+  };
 
   useEffect(() => {
     const fetchRecruitmentDetail = async () => {
@@ -33,14 +34,22 @@ function DetailsRecruitmentPage(props) {
       } catch (error) {
         console.log("Cannot fetch recruitment detail. Error: " + error)
       }
-    }
+    };
 
     fetchRecruitmentDetail();
-  }, [recruitmentId])
+  }, [recruitmentId]);
 
   useEffect(() => {
     helper.scrollToTop();
-  }, [])
+  }, []);
+
+  const handleToEditRecruitment = () => {
+
+    history.push({
+      pathname: `/recruiter/me/dashboard/available-jobs/${recruitmentId}/update`,
+      state: {...recruitmentDetail}
+    })
+  };
 
   return (
     <>
@@ -69,7 +78,10 @@ function DetailsRecruitmentPage(props) {
                   {recruitmentDetail.is_closed
                     ? <button className="btn btn-sm btn-danger btn-close">Delete</button>
                     : <>
-                      <button className="btn btn-sm btn-success btn-edit">Edit</button>
+                      <button
+                        className="btn btn-sm btn-success btn-edit"
+                        onClick={handleToEditRecruitment}
+                      >Edit</button>
                       <button className="btn btn-sm btn-success btn-close">Close</button>
                     </>
                   }

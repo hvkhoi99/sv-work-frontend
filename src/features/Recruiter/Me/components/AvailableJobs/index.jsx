@@ -1,12 +1,14 @@
 import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
 import LoadingChildUI from 'components/LoadingChild';
+import Paths from 'constants/paths';
 import PropTypes from 'prop-types';
+import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
-import helper from 'utils/common';
+import { useHistory, useLocation } from 'react-router-dom';
 import AvailableJobsCard from '../AvailableJobsCard';
 import './AvailableJobs.scss';
 
@@ -20,11 +22,16 @@ AvailableJobs.defaultProps = {
 
 function AvailableJobs(props) {
   const user = useSelector((state) => state.user.current);
+  const history = useHistory();
+  const {search} = useLocation();
+  const page = parseInt(queryString.parse(search).page);
   const [items, setItems] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(page !== "" ? page : 1);
   const [pageCount, setpageCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const {onViewRecruitment} = props;
+
+  // console.log({page})
 
   const limit = 3;
 
@@ -32,7 +39,7 @@ function AvailableJobs(props) {
     const fetchAvailableJobs = async () => {
       try {
         const params = {
-          page: currentPage,
+          page: page,
           _limit: limit
         }
 
@@ -50,13 +57,15 @@ function AvailableJobs(props) {
     };
 
     fetchAvailableJobs();
-  }, [limit, currentPage, user]);
+  }, [limit, page, user]);
 
   const handlePageClick = async (data) => {
-    setCurrentPage(data.selected + 1);
+    const newPage = data.selected + 1;
+    // setCurrentPage(newPage);
+    history.push(`${Paths.recruiterDashboard}/available-jobs?page=${newPage}`);
     // scroll to the top
     // window.scrollTo(0, 0)
-    helper.scrollToTop();
+    // helper.scrollToTop();
   };
 
   return (
@@ -84,7 +93,9 @@ function AvailableJobs(props) {
                 nextLabel={
                   <MdIcons.MdArrowForwardIos />
                 }
-
+                
+                // initialPage={1}
+                forcePage={page-1}
                 breakLabel={"..."}
                 pageCount={pageCount}
                 marginPagesDisplayed={3}

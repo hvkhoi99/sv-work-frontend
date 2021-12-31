@@ -1,8 +1,9 @@
-import { JOB_CATEGORY_OPTIONS, JOB_TYPE_OPTIONS } from 'constants/global';
+import { JOB_TAGS_OPTIONS, JOB_TYPE_OPTIONS } from 'constants/global';
 import DatePickerField from 'custom-fields/DatePickerField';
 import InputField from 'custom-fields/InputField';
 import SelectField from 'custom-fields/SelectField';
 import { FastField, Form, Formik } from 'formik';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import { Button, FormGroup, Label, Spinner } from 'reactstrap';
@@ -11,73 +12,102 @@ import DivAreaText from '../DivAreaText';
 import './CreateRecruitmentForm.scss';
 
 CreateRecruitmentForm.propTypes = {
+  recruitment: PropTypes.object,
+  isEditMode: PropTypes.bool
 };
 
+CreateRecruitmentForm.defaultProps = {
+  recruitment: {},
+  isEditMode: false
+}
+
 function CreateRecruitmentForm(props) {
-  var initialValues = {
-    jobName: '',
-    typeOfJob: '',
-    jobCategory: '',
-    location: '',
-    description: '',
-    minSalary: '',
-    maxSalary: '',
-    benefits: '',
-    expiryDate: ''
-  };
-  const [description, setDescription] = useState('');
-  const [benefits, setBenefits] = useState('');
+  const { recruitment, isEditMode } = props;
+
+  const initialValues = isEditMode
+    ? recruitment
+    : {
+      title: '',
+      is_full_time: '',
+      job_category: '',
+      expiry_date: '',
+      benefits: '',
+      description: '',
+      requirement: '',
+      min_salary: '',
+      max_salary: '',
+      location: '',
+      hashtags: ''
+    };
+
+  const [benefits, setBenefits] = useState(recruitment.benefits);
+  const [description, setDescription] = useState(recruitment.description);
+  const [requirement, setRequirement] = useState(recruitment.requirement);
+  const [isBeautiful, setIsBeautiful] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
 
   const validationSchema = Yup.object().shape({
-    jobName: Yup
+    title: Yup
       .string()
+      .typeError('Job Name is required')
       .required('Job Name is required'),
-    typeOfJob: Yup
+    is_full_time: Yup
       .string()
+      .typeError('Type of Job is required')
       .required('Type of Job is required'),
-    jobCategory: Yup
+    job_category: Yup
+      // .array()
+      // .min(1, 'Job Category is required')
       .string()
+      .typeError('Job Category is required')
       .required('Job Category is required'),
     location: Yup
       .string()
+      .typeError('Location is required')
       .required('Location is required'),
-    // description: Yup
-    //   .string()
-    //   .required('Description is required')
-    //   .min(10, "Description must be at least 10 characters"),
-    minSalary: Yup
+    min_salary: Yup
       .string()
+      .typeError('Min Salary is required')
       .required('Min Salary is required')
       .matches(/^[0-9]+$/, "Must be only digits"),
-    maxSalary: Yup
+    max_salary: Yup
       .string()
+      .typeError('Max Salary is required')
       .required('Max Salary is required')
       .matches(/^[0-9]+$/, "Must be only digits"),
-    // benefits: Yup
-    //   .string()
-    //   .required('Benefits is required')
-    //   .min(10, "Benefits must be at least 10 characters"),
-    // expiryDate: Yup
-    //   .string()
-    //   .required('Expiry Date is required')
+    expiry_date: Yup
+      .string()
+      .typeError('Expiry Date is required')
+      .required('Expiry Date is required'),
+    hashtags: Yup
+      .array()
+      // .typeError('Job Tags is required')
+      .min(1, 'Job Tags is required')
+      .required('Job Tags is required'),
   });
-
-  const onTextChange = (currentData) => {
-    setDescription(currentData);
-  }
 
   const onBenefitsChange = (currentData) => {
     setBenefits(currentData);
   }
 
+  const onTextChange = (currentData) => {
+    setDescription(currentData);
+  }
+
+  const onRequirementChange = (currentData) => {
+    setRequirement(currentData);
+  }
+
   const onRereshField = (name) => {
     switch (name) {
+      case "benefits":
+        setBenefits("");
+        break;
       case "description":
         setDescription("");
         break;
-      case "benefits":
-        setBenefits("");
+      case "requirement":
+        setRequirement("");
         break;
       default:
         break;
@@ -86,10 +116,24 @@ function CreateRecruitmentForm(props) {
 
   const handleClick = () => {
     setIsSubmit(true);
+    setIsBeautiful((description.length <= 0 || benefits.length <= 0 || requirement.length <= 0) ? false : true);
   }
 
   const onSubmit = (values) => {
-    console.log({ ...values, description: description, benefits: benefits })
+    if (!isBeautiful) {
+      return
+    } else {
+      console.log({ 
+        ...values, 
+        is_full_time: "Full Time" ? true : false, 
+        description: description, 
+        benefits: benefits, 
+        requirement: requirement,
+        min_salary: parseInt(values.min_salary),
+        max_salary: parseInt(values.max_salary),
+        expiry_date: new Date(values.expiry_date)
+      })
+    }
   }
 
   return (
@@ -98,7 +142,7 @@ function CreateRecruitmentForm(props) {
         <div className="create-recruitment-form__container__title">
           <MdIcons.MdWork className="create-recruitment-form__container__title__icon" />
           <span className="create-recruitment-form__container__title__form-title">
-            Create a Recruitment
+            {isEditMode ? "Update Recruitment" : "Create a Recruitment"}
           </span>
         </div>
         <div className="create-recruitment-form__container__form">
@@ -114,7 +158,7 @@ function CreateRecruitmentForm(props) {
               return (
                 <Form>
                   <FastField
-                    name="jobName"
+                    name="title"
                     component={InputField}
 
                     label="Job Name"
@@ -122,29 +166,44 @@ function CreateRecruitmentForm(props) {
                   />
 
                   <FastField
-                    name="typeOfJob"
+                    name="is_full_time"
                     component={SelectField}
 
                     label="Type of Job"
                     placeholder=""
                     options={JOB_TYPE_OPTIONS}
+                    isOptionValue={true}
                   />
 
-                  <FastField
-                    name="jobCategory"
+
+                  {/* <FastField
+                    name="job_category"
                     component={SelectField}
 
                     label="Job Category"
                     placeholder=""
                     options={JOB_CATEGORY_OPTIONS}
-                  />
+                    // isMulti={true}
+                    isCreatableSelect={true}
+                    isOptionValue={true}
+                  /> */}
 
                   <FastField
-                    name="location"
+                    name="job_category"
                     component={InputField}
 
-                    label="Location"
+                    label="Job Category"
                     placeholder=""
+                  />
+
+                  <DivAreaText
+                    name="benefits"
+
+                    label="Benefits"
+                    textValue={benefits}
+                    onTextChange={onBenefitsChange}
+                    onRereshField={onRereshField}
+                    isSubmit={isSubmit}
                   />
 
                   <DivAreaText
@@ -157,9 +216,19 @@ function CreateRecruitmentForm(props) {
                     isSubmit={isSubmit}
                   />
 
+                  <DivAreaText
+                    name="requirement"
+
+                    label="Requirement"
+                    textValue={requirement}
+                    onTextChange={onRequirementChange}
+                    onRereshField={onRereshField}
+                    isSubmit={isSubmit}
+                  />
+
                   <div className="formGroup-salary">
                     <FastField
-                      name="minSalary"
+                      name="min_salary"
                       component={InputField}
 
                       label="Min Salary"
@@ -168,22 +237,12 @@ function CreateRecruitmentForm(props) {
                     <span className="formGroup-salary__span">~</span>
 
                     <FastField
-                      name="maxSalary"
+                      name="max_salary"
                       component={InputField}
 
                       label="Max Salary"
                     />
                   </div>
-
-                  <DivAreaText
-                    name="benefits"
-
-                    label="Benefits"
-                    textValue={benefits}
-                    onTextChange={onBenefitsChange}
-                    onRereshField={onRereshField}
-                    isSubmit={isSubmit}
-                  />
 
                   <FormGroup>
                     <div className="formGroup-text-editor__title">
@@ -191,17 +250,42 @@ function CreateRecruitmentForm(props) {
                         fontWeight: "500"
                       }}>Expiry Date</Label>
                     </div>
-                    <DatePickerField 
-                    name="expiryDate" 
-                    label="Expiry Date"
-                    isSubmit={isSubmit}
+                    <DatePickerField
+                      name="expiry_date"
+                      label="Expiry Date"
+                      isSubmit={isSubmit}
                     />
                   </FormGroup>
 
+
+                  <FastField
+                    name="location"
+                    component={InputField}
+
+                    label="Location"
+                    placeholder=""
+                  />
+
+                  <FastField
+                    name="hashtags"
+                    component={SelectField}
+
+                    label="Job Tags"
+                    placeholder=""
+                    options={JOB_TAGS_OPTIONS}
+                    isMulti={true}
+                    isCreatableSelect={true}
+                  />
+
                   <FormGroup className="formGroup-btn-publish">
-                    <Button type="submit" color={'success'} onClick={handleClick}>
-                      {isSubmitting && <Spinner children="" size="sm" />}
-                      {'Publish'}
+                    <Button
+                      // disabled={(isSubmitting && isBeautiful)}
+                      type="submit"
+                      color={'success'}
+                      onClick={handleClick}
+                    >
+                      {(isSubmitting && isBeautiful) && <Spinner className="mr-2" children="" size="sm" />}
+                      {isEditMode ? "Update" : "Publish"}
                     </Button>
                   </FormGroup>
                 </Form>

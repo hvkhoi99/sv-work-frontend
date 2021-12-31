@@ -5,12 +5,12 @@ const studentApi = {
   // Student -> Recruiter
   getAvailableJobs: (params) => {
     const url = `/student/recruiter/dashboard/available-recruitments?page=${params.page}&_limit=${params._limit}`;
-    return axiosClient.get(url, params);
+    return axiosClient.get(url);
   },
 
   getClosedRecruitments: (params) => {
     const url = `/student/recruiter/dashboard/closed-recruitments?page=${params.page}&_limit=${params._limit}`;
-    return axiosClient.get(url, params);
+    return axiosClient.get(url);
   },
 
   getDashboardIndex: () => {

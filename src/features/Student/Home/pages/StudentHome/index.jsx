@@ -54,7 +54,7 @@ function StudentHomePage(props) {
       duration: 600,
       easing: 'ease-in-sine',
       delay: 100,
-      mirror: true
+      // mirror: true
 
     });
   }, []);
@@ -141,7 +141,7 @@ function StudentHomePage(props) {
               <p>“Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto inventore quas maxime sequi aut! Assumenda aperiam eveniet saepe ad sunt nam necessitatibus sit odio. Voluptatum a eum recusandae. Soluta, amet.”</p>
             </div>
             <div
-              data-aos="fade-left"
+              // data-aos="fade-left"
               className="home__container__overview__main__img">
               <img src={Images.overview} alt="overview" />
             </div>

@@ -57,7 +57,6 @@ function PopupTextEditor(props) {
               close={close}
               onTextChange={onTextChange}
               initData={initData}
-
             />
           )
         }

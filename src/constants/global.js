@@ -8,11 +8,8 @@ export const CITY_OPTIONS = [
 ];
 
 export const JOB_TYPE_OPTIONS = [
-  { value: 1, label: "Web Developer" },
-  { value: 2, label: "Quality Assurance Tester" },
-  { value: 3, label: "Systems Analyst" },
-  { value: 4, label: "Network Engineer" },
-  { value: 5, label: "Software Engineer" },
+  { value: false, label: "Part Time" },
+  { value: true, label: "Full Time" }
 ];
 
 export const JOB_CATEGORY_OPTIONS = [
@@ -21,6 +18,14 @@ export const JOB_CATEGORY_OPTIONS = [
   { value: 3, label: "Software Engineer" },
   { value: 4, label: "Manager" },
   { value: 5, label: "Support" },
+];
+
+export const JOB_TAGS_OPTIONS = [
+  { value: 1, label: "Java" },
+  { value: 2, label: "UX/UI Designer" },
+  { value: 3, label: "Tester" },
+  { value: 4, label: "PHP" },
+  { value: 5, label: "Data Analyst" },
 ];
 
 export const GENDER = [

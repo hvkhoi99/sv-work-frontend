@@ -1,38 +1,50 @@
 import { ErrorMessage } from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
+import CreatableSelect from 'react-select/creatable';
 import Select from 'react-select';
 import { FormFeedback, FormGroup, Label } from 'reactstrap';
 
 SelectField.propTypes = {
-  field: PropTypes.object.isRequired,
-  form: PropTypes.object.isRequired,
+  field: PropTypes.object,
+  form: PropTypes.object,
 
   label: PropTypes.string,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
   options: PropTypes.array,
+  isMulti: PropTypes.bool,
+  isOptionValue: PropTypes.bool,
+  isCreatableSelect: PropTypes.bool
 };
 
 SelectField.defaultProps = {
+  field: {},
+  form: {},
+
   label: '',
   placeholder: '',
   disabled: false,
   options: [],
+  isMulti: false,
+  isOptionValue: false,
+  isCreatableSelect: false,
 }
 
 function SelectField(props) {
-  const { field, form, label, placeholder, disabled, options } = props;
+  const { field, form, label, placeholder, disabled, options, isMulti, isOptionValue, isCreatableSelect } = props;
   const { name, value } = field;
   const { errors, touched } = form;
   const showError = errors[name] && touched[name];
-  
-  const selectedOption = options.find(option => option.value === value);
+
+  const selectedOption = options.find(option => option.label === value);
 
   const colourStyles = {
     control: (base, state) => ({
       ...base,
       borderRadius: '.5rem',
+      // border: showError
+      //   ? "1px solid #dc3545" : (state.isFocused ? "1px solid rgba(0, 0, 255, 0.4)" : "none"),
       borderColor: showError
         ? "#dc3545"
         : state.isFocused ? "rgba(0, 0, 255, 0.2)" : "#fff",
@@ -47,12 +59,13 @@ function SelectField(props) {
   }
 
   const handleSelectedOptionChange = (selectedOption) => {
-    const selectedValue = selectedOption ? selectedOption.label : selectedOption;
+    const selectedValue = selectedOption ? selectedOption.value : selectedOption;
+    const selectedValueB = selectedOption && selectedOption;
 
     const changeEvent = {
       target: {
         name: name,
-        value: selectedValue
+        value: isOptionValue ? selectedValue : selectedValueB
       }
     };
     field.onChange(changeEvent);
@@ -64,20 +77,41 @@ function SelectField(props) {
         fontWeight: "500"
       }} for={name}>{label}</Label>}
 
-      <Select
-        id={name}
-        {...field}
-        value={selectedOption}
-        onChange={handleSelectedOptionChange}
+      {isCreatableSelect
+        ? <CreatableSelect
+          id={name}
+          {...field}
+          // value={isOptionValue && field.value}
+          
+          onChange={handleSelectedOptionChange}
 
-        isClearable={true}
-        placeholder={placeholder}
-        isDisabled={disabled}
-        options={options}
-        styles={colourStyles}
+          isClearable={true}
+          isMulti={isMulti}
 
-        className={showError ? 'is-invalid' : ''}
-      />
+          options={options}
+          placeholder={placeholder}
+          isDisabled={disabled}
+          styles={colourStyles}
+
+          className={showError ? 'is-invalid' : ''}
+        /> : <Select
+          id={name}
+          {...field}
+          value={isOptionValue ? selectedOption : field.value}
+          onChange={handleSelectedOptionChange}
+
+          isClearable={true}
+          isMulti={isMulti}
+
+          options={options}
+          placeholder={placeholder}
+          isDisabled={disabled}
+          styles={colourStyles}
+
+          className={showError ? 'is-invalid' : ''}
+        />
+      }
+
 
       <ErrorMessage name={name} component={FormFeedback} />
     </FormGroup>

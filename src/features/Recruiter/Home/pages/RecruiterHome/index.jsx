@@ -11,7 +11,7 @@ RecruiterHomePage.propTypes = {
 function RecruiterHomePage(props) {
   useEffect(() => {
     AOS.init({
-      offset: 100,
+      offset: 200,
       duration: 600,
       easing: 'ease-in-sine',
       delay: 100,

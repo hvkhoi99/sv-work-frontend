@@ -1,11 +1,9 @@
 import PopupTextEditor from 'components/PopupTextEditor';
-// import InputField from 'custom-fields/InputField';
-// import { FastField } from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import * as CgIcons from 'react-icons/cg';
-import * as TiIcons from 'react-icons/ti';
+import * as RiIcons from 'react-icons/ri';
 import { FormGroup, Label } from 'reactstrap';
 import './DivAreaText.scss';
 
@@ -48,7 +46,7 @@ function DivAreaText(props) {
           label={label}
           initData={textValue}
         />
-        {textValue !== "" && <TiIcons.TiDelete
+        {textValue !== "" && <RiIcons.RiDeleteBack2Fill
           className="formGroup-text-editor__title__icon"
           onClick={handleRefreshField}
         />}
