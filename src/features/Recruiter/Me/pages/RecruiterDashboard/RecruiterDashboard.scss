@@ -34,7 +34,6 @@
         height: auto;
         width: 30%;
         padding: 0.5rem;
-        // border-right: 1px solid black;
 
         &__inforCard {
           display: flex;
@@ -45,7 +44,6 @@
           padding: 1.5rem;
           border-radius: 1rem;
           box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-          // border: 1px solid black;
 
           & > img {
             width: 30%;
@@ -239,4 +237,8 @@
     // font-weight: 500;
     font-size: 1.2rem;
   }
+}
+
+.inforCard-icon {
+  font-size: 1.2rem;
 }

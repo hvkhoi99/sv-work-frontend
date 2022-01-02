@@ -1,8 +1,10 @@
 import LoadingChildUI from 'components/LoadingChild';
-import RecruitmentCard from 'features/Recruiter/Me/components/RecruitmentCard';
 import Images from 'constants/images';
+import RecruitmentCard from 'features/Recruiter/Me/components/RecruitmentCard';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import ReactHtmlParser from 'react-html-parser';
 import * as BsIcons from 'react-icons/bs';
 import * as MdIcons from 'react-icons/md';
 import * as TiIcons from 'react-icons/ti';
@@ -19,6 +21,7 @@ RecruitmentDetail.defaultProps = {
 function RecruitmentDetail(props) {
   const { recruitmentDetail } = props;
   const [isLoading, setIsLoading] = useState(true);
+  console.log({recruitmentDetail})
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -45,18 +48,7 @@ function RecruitmentDetail(props) {
                 <div className="benefits__content__left__attach">
                   <div className="benefits__content__left__attach__icon" />
                 </div>
-                {/* <ul>
-                  <li>13th month salary + Quarterly bonus</li>
-                  <li>Periodic health examination</li>
-                  <li>Provide Laptop</li>
-                  <li>13th month salary + Quarterly bonus</li>
-                  <li>Periodic health examination</li>
-                  <li>Provide Laptop</li>
-                  <li>13th month salary + Quarterly bonus</li>
-                  <li>Periodic health examination</li>
-                  <li>Provide Laptop</li>
-                </ul> */}
-                {recruitmentDetail.benefits}
+                {ReactHtmlParser(recruitmentDetail.benefits)}
               </div>
               <div className="benefits__content__right">
                 <div className="benefits__content__right__date">
@@ -66,7 +58,8 @@ function RecruitmentDetail(props) {
                       Posted Date - Expiry Date
                     </span>
                     <span className="benefits__content__right__date__info__description">
-                      28/04/2021 - 30/08/2021
+                      {/* 28/04/2021 - 30/08/2021 */}
+                      {moment(recruitmentDetail.created_at).format('MM/DD/YYYY')} - {recruitmentDetail.expiry_date}
                     </span>
                   </div>
                 </div>
@@ -77,7 +70,7 @@ function RecruitmentDetail(props) {
                       Job Category
                     </span>
                     <span className="benefits__content__right__job-category__info__description">
-                      Software Engineering
+                      {recruitmentDetail.job_category}
                     </span>
                   </div>
                 </div>
@@ -88,7 +81,7 @@ function RecruitmentDetail(props) {
                       Type of Job
                     </span>
                     <span className="benefits__content__right__type__info__description">
-                      Full-time
+                      {recruitmentDetail.is_full_time ? "Full Time" : "Part Time"}
                     </span>
                   </div>
                 </div>
@@ -101,7 +94,7 @@ function RecruitmentDetail(props) {
               <div className="job-description__attach__icon" />
             </div>
             <div className="job-description__content">
-              {recruitmentDetail.description}
+              {ReactHtmlParser(recruitmentDetail.description)}
             </div>
           </div>
           <div className="recruitment-detail-item requirements">
@@ -110,7 +103,7 @@ function RecruitmentDetail(props) {
               <div className="requirements__attach__icon" />
             </div>
             <div className="requirements__content">
-              {recruitmentDetail.requirement}
+              {ReactHtmlParser(recruitmentDetail.requirement)}
             </div>
           </div>
           <div className="work-location">

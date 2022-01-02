@@ -22,7 +22,7 @@ function HashTagCard(props) {
         text={hashtag.name}
       // textTruncateChild={<Link to="#">Read on</Link>}
       /> */}
-      {hashtag.name}
+      {hashtag.label}
     </span>
   );
 }

@@ -9,14 +9,15 @@ CreateRecruitmentPage.propTypes = {
 
 function CreateRecruitmentPage(props) {
   const history = useHistory();
+  const historyRecruitment = history.location.state;
   const [isLoading, setIsLoading] = useState(true);
   const { update } = useParams();
-  const historyRecruitment = history.location.state;
   const isEditMode = update === "update";
-  const recruitment = !isEditMode ? {
+  let recruitment = !isEditMode ? {
     title: '',
     is_full_time: '',
     job_category: '',
+    position: '',
     expiry_date: '',
     benefits: '',
     description: '',

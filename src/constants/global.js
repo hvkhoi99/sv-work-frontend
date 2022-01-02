@@ -21,11 +21,11 @@ export const JOB_CATEGORY_OPTIONS = [
 ];
 
 export const JOB_TAGS_OPTIONS = [
-  { value: 1, label: "Java" },
-  { value: 2, label: "UX/UI Designer" },
-  { value: 3, label: "Tester" },
-  { value: 4, label: "PHP" },
-  { value: 5, label: "Data Analyst" },
+  { value: "Java", label: "Java" },
+  { value: "UX/UI Designer", label: "UX/UI Designer" },
+  { value: "Tester", label: "Tester" },
+  { value: "PHP", label: "PHP" },
+  { value: "Data Analyst", label: "Data Analyst" },
 ];
 
 export const GENDER = [

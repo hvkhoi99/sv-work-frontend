@@ -1,28 +1,35 @@
+import studentApi from 'api/studentApi';
 import { JOB_TAGS_OPTIONS, JOB_TYPE_OPTIONS } from 'constants/global';
 import DatePickerField from 'custom-fields/DatePickerField';
 import InputField from 'custom-fields/InputField';
 import SelectField from 'custom-fields/SelectField';
 import { FastField, Form, Formik } from 'formik';
+import moment from 'moment';
+import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import * as MdIcons from 'react-icons/md';
+import { useHistory } from 'react-router-dom';
 import { Button, FormGroup, Label, Spinner } from 'reactstrap';
 import * as Yup from 'yup';
 import DivAreaText from '../DivAreaText';
 import './CreateRecruitmentForm.scss';
 
+
 CreateRecruitmentForm.propTypes = {
   recruitment: PropTypes.object,
-  isEditMode: PropTypes.bool
+  isEditMode: PropTypes.bool,
 };
 
 CreateRecruitmentForm.defaultProps = {
   recruitment: {},
-  isEditMode: false
+  isEditMode: false,
 }
 
 function CreateRecruitmentForm(props) {
   const { recruitment, isEditMode } = props;
+  const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
 
   const initialValues = isEditMode
     ? recruitment
@@ -30,6 +37,7 @@ function CreateRecruitmentForm(props) {
       title: '',
       is_full_time: '',
       job_category: '',
+      position: '',
       expiry_date: '',
       benefits: '',
       description: '',
@@ -43,7 +51,7 @@ function CreateRecruitmentForm(props) {
   const [benefits, setBenefits] = useState(recruitment.benefits);
   const [description, setDescription] = useState(recruitment.description);
   const [requirement, setRequirement] = useState(recruitment.requirement);
-  const [isBeautiful, setIsBeautiful] = useState(false);
+  let [isBeautiful, setIsBeautiful] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
 
   const validationSchema = Yup.object().shape({
@@ -59,6 +67,10 @@ function CreateRecruitmentForm(props) {
       .string()
       .typeError('Job Category is required')
       .required('Job Category is required'),
+    position: Yup
+      .string()
+      .typeError('Position is required')
+      .required('Position is required'),
     location: Yup
       .string()
       .typeError('Location is required')
@@ -117,27 +129,39 @@ function CreateRecruitmentForm(props) {
     setIsBeautiful((description.length <= 0 || benefits.length <= 0 || requirement.length <= 0) ? false : true);
   }
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     if (!isBeautiful) {
       return
     } else {
-      console.log({ 
-        title: values.title,
-        position: values.position,
-        is_full_time: "Full Time" ? true : false, 
-        job_category: values.job_category,
-        location: values.location,
-        description: description, 
-        benefits: benefits, 
-        requirement: requirement,
-        min_salary: parseInt(values.min_salary),
-        max_salary: parseInt(values.max_salary),
-        expiry_date: values.expiry_date,
-        is_closed: values.is_closed,
-        hashtags: values.hashtags,
-        // expiry_date: new Date(values.expiry_date)
-        // expiry_date: moment(values.expiry_date).format('MM/DD/YYYY')
-      })
+      try {
+        const params = {
+          title: values.title,
+          position: values.position,
+          is_full_time: values.is_full_time === "Full Time" ? true : false,
+          job_category: values.job_category,
+          location: values.location,
+          description: description,
+          benefits: benefits,
+          requirement: requirement,
+          min_salary: parseInt(values.min_salary),
+          max_salary: parseInt(values.max_salary),
+          expiry_date: moment(values.expiry_date).format("MM/DD/YYYY"),
+          // is_closed: values.is_closed,
+          hashtags: values.hashtags
+        };
+        if (!isEditMode) {
+          await studentApi.createNewRecruitment(params);
+          enqueueSnackbar("Your recruitment has been created.", { variant: "success" });
+        } else {
+          await studentApi.updateRecruitment(recruitment.id, params);
+          enqueueSnackbar("Your recruitment has been updated.", { variant: "success" });
+        }
+        history.goBack();
+      } catch (error) {
+        isBeautiful = false;
+        console.log("Cannot create/update recruitment. Error" + error.message);
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      }
     }
   }
 
@@ -198,6 +222,14 @@ function CreateRecruitmentForm(props) {
                     component={InputField}
 
                     label="Job Category"
+                    placeholder=""
+                  />
+
+                  <FastField
+                    name="position"
+                    component={InputField}
+
+                    label="Position"
                     placeholder=""
                   />
 
@@ -284,7 +316,7 @@ function CreateRecruitmentForm(props) {
 
                   <FormGroup className="formGroup-btn-publish">
                     <Button
-                      // disabled={(isSubmitting && isBeautiful)}
+                      disabled={(isSubmitting && isBeautiful)}
                       type="submit"
                       color={'success'}
                       onClick={handleClick}
