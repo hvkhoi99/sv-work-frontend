@@ -23,13 +23,13 @@ AvailableJobs.defaultProps = {
 function AvailableJobs(props) {
   const user = useSelector((state) => state.user.current);
   const history = useHistory();
-  const {search} = useLocation();
+  const { search } = useLocation();
   const page = parseInt(queryString.parse(search).page);
+  const [currentPage, setCurrentPage] = useState(page > 0 ? page : 1);
   const [items, setItems] = useState([]);
-  // const [currentPage, setCurrentPage] = useState(page !== "" ? page : 1);
   const [pageCount, setpageCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const {onViewRecruitment} = props;
+  const { onViewRecruitment } = props;
 
   // console.log({page})
 
@@ -39,7 +39,7 @@ function AvailableJobs(props) {
     const fetchAvailableJobs = async () => {
       try {
         const params = {
-          page: page,
+          page: currentPage,
           _limit: limit
         }
 
@@ -57,15 +57,12 @@ function AvailableJobs(props) {
     };
 
     fetchAvailableJobs();
-  }, [limit, page, user]);
+  }, [limit, currentPage, user]);
 
   const handlePageClick = async (data) => {
     const newPage = data.selected + 1;
-    // setCurrentPage(newPage);
+    setCurrentPage(newPage);
     history.push(`${Paths.recruiterDashboard}/available-jobs?page=${newPage}`);
-    // scroll to the top
-    // window.scrollTo(0, 0)
-    // helper.scrollToTop();
   };
 
   return (
@@ -78,7 +75,7 @@ function AvailableJobs(props) {
         <>
           {
             items.map((item, index) => {
-              return <AvailableJobsCard item={item} key={index} onViewRecruitment={onViewRecruitment}/>
+              return <AvailableJobsCard item={item} key={index} onViewRecruitment={onViewRecruitment} />
             })
           }
           {
@@ -93,9 +90,10 @@ function AvailableJobs(props) {
                 nextLabel={
                   <MdIcons.MdArrowForwardIos />
                 }
-                
+
                 // initialPage={1}
-                forcePage={page-1}
+                // initialPage={currentPage}
+                forcePage={currentPage - 1}
                 breakLabel={"..."}
                 pageCount={pageCount}
                 marginPagesDisplayed={3}

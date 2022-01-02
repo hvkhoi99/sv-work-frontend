@@ -45,6 +45,13 @@ axiosClient.interceptors.response.use(
     try {
       const { config, status, data } = error.response;
       console.log({ config, status, data })
+      
+      if (error.response.status === 401) {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('role_id');
+        return Promise.reject(error);
+      }
 
       if (config.url === '/auth/account/register' && status === 400) {
         // const errorMessage = data.message;

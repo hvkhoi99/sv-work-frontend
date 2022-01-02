@@ -11,7 +11,7 @@
   &__formm {
     width: 20rem;
     height: auto;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     padding: 1rem 2rem;
     border-radius: 1rem;
 
@@ -21,6 +21,10 @@
       justify-content: center;
       align-items: center;
       margin-bottom: 1rem;
+
+      & > span {
+        font-weight: 600;
+      }
 
       & > img {
         margin: 1rem 0 0 0.2rem;

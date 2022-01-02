@@ -9,10 +9,10 @@ import * as FaIcons from 'react-icons/fa';
 import * as ImIcons from 'react-icons/im';
 import * as MdIcons from 'react-icons/md';
 import * as RiIcons from 'react-icons/ri';
+import LinesEllipsis from 'react-lines-ellipsis';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import './Header.scss';
-import LinesEllipsis from 'react-lines-ellipsis'
 
 Header.propTypes = {
 
@@ -23,17 +23,15 @@ Header.defaultProps = {
 }
 
 function Header(props) {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const user = useSelector((state) => state.user.current);
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const [hiddenNoti, setHiddenNoti] = useState(true);
   const [hiddenMe, setHiddenMe] = useState(true);
-  const dispatch = useDispatch();
-  const history = useHistory();
 
   const roleId = parseInt(localStorage.getItem('role_id'), 10);
-  // const [isRecruiterPath, setisRecruiterPath] = useState(false);
-  // const [roleId, setRoleId] = useState(currentRoleId);
   let isRecruiterPath = localStorage.getItem('isRecruiterPath') === "true";
 
   const ref = useRef(null);
@@ -49,21 +47,25 @@ function Header(props) {
     }
   };
 
-  const showNotification = () => {
+  const showNotification = (e) => {
+    e.preventDefault();
     setHiddenNoti(!hiddenNoti);
     setHiddenMe(true);
   }
 
-  const showMe = () => {
+  const showMe = (e) => {
     setHiddenMe(!hiddenMe);
     setHiddenNoti(true);
+    // e.preventDefault();
   }
 
   useEffect(() => {
+    showButton();
+
     const handleClickOutside = (event) => {
       if (ref.current && !ref.current.contains(event.target)) {
-        setHiddenMe(true);
-        setHiddenNoti(true);
+        hiddenMe === false && setHiddenMe(true);
+        hiddenNoti === false && setHiddenNoti(true);
       }
     }
 
@@ -72,15 +74,7 @@ function Header(props) {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [ref]);
-
-  useEffect(() => {
-    showButton();
-
-    // return () => {
-    //   setButton(true);
-    // }
-  }, []);
+  }, [ref, hiddenMe, hiddenNoti]);
 
   window.addEventListener('resize', showButton);
 
@@ -194,13 +188,13 @@ function Header(props) {
         </ul>
         <div ref={ref} className="notify-me">
           <div className="notify-me__icon">
-            <Link to="#" className="notify-me__notify" onClick={showNotification}>
+            <div className="notify-me__notify" onClick={(e) => showNotification(e)}>
               <RiIcons.RiNotification4Line className="notify-me__notify__icon" />
               <span className="notify-me__notify__count">4</span>
-            </Link>
-            <Link to="#" className="notify-me__notify" onClick={showMe}>
+            </div>
+            <div className="notify-me__notify" onClick={(e) => showMe(e)}>
               <FaIcons.FaUserAstronaut className="notify-me__notify__icon" />
-            </Link>
+            </div>
           </div>
           <div className="notify-me__action">
             <div className={hiddenNoti ? "notify-me__action__notification" : "notify-me__action__notification isVisible"}>
@@ -235,19 +229,19 @@ function Header(props) {
               </div>
               <ul>
                 <li>
-                  <Link to={Paths.recruiterDashboard} className="me-link" onClick={showMe}>
+                  <Link to={Paths.recruiterDashboard} className="me-link" onClick={(e) => showMe(e)}>
                     <MdIcons.MdDashboard className="me-link__icon" />
                     <span>Dashboard</span>
                   </Link>
                 </li>
                 <li>
-                  <Link to={Paths.recruiterProfile} className="me-link" onClick={showMe}>
+                  <Link to={Paths.recruiterProfile} className="me-link" onClick={(e) => showMe(e)}>
                     <RiIcons.RiProfileLine className="me-link__icon" />
                     <span>Profile</span>
                   </Link>
                 </li>
                 <li>
-                  <Link to={Paths.recruiterAccount} className="me-link" onClick={showMe}>
+                  <Link to={Paths.recruiterAccount} className="me-link" onClick={(e) => showMe(e)}>
                     <AiIcons.AiFillSetting className="me-link__icon" />
                     <span>Account</span>
                   </Link>
@@ -303,13 +297,13 @@ function Header(props) {
         </ul>
         <div ref={ref} className="notify-me">
           <div className="notify-me__icon">
-            <Link to="#" className="notify-me__notify" onClick={showNotification}>
+            <div className="notify-me__notify" onClick={(e) => showNotification(e)}>
               <RiIcons.RiNotification4Line className="notify-me__notify__icon" />
               <span className="notify-me__notify__count">4</span>
-            </Link>
-            <Link to="#" className="notify-me__notify" onClick={showMe}>
+            </div>
+            <div className="notify-me__notify" onClick={(e) => showMe(e)}>
               <FaIcons.FaUserAstronaut className="notify-me__notify__icon" />
-            </Link>
+            </div>
           </div>
           <div className="notify-me__action">
             <div className={hiddenNoti ? "notify-me__action__notification" : "notify-me__action__notification isVisible"}>

@@ -33,6 +33,16 @@ const studentApi = {
   getRecruimentDetail: (id) => {
     const url = `/student/recruiter/recruitment/${id}`;
     return axiosClient.get(url);
+  },
+
+  createNewRecruitment: (params) => {
+    const url = "/student/recruiter/recruitment/store";
+    return axiosClient.post(url, params);
+  },
+
+  updateRecruitment: (id, params) => {
+    const url = `/student/recruiter/recruitment/${id}`;
+    return axiosClient.put(url, params);
   }
 }
 

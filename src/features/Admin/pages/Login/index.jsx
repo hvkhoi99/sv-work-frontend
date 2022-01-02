@@ -1,12 +1,11 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import { unwrapResult } from '@reduxjs/toolkit';
 import LoadingUI from "components/Loading";
 import Images from 'constants/images';
-import RHFInputField from 'custom-fields/RHFInputField';
+import InputField from "custom-fields/InputField";
 import { login } from 'features/Auth/adminSlice';
+import { FastField, Form, Formik } from 'formik';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -21,6 +20,8 @@ function AdminLoginPage(props) {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
+  const isRecruiterPath = localStorage.getItem('isRecruiterPath');
 
   const validationSchema = Yup.object().shape({
     email: Yup
@@ -32,13 +33,6 @@ function AdminLoginPage(props) {
       .required('Password is required')
   })
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors, isSubmitting }
-  } = useForm({ resolver: yupResolver(validationSchema) })
-
   useEffect(() => {
     let timer = setTimeout(() => {
       setIsLoading(false);
@@ -48,7 +42,7 @@ function AdminLoginPage(props) {
     };
   }, []);
 
-  const onLogin = async (values) => {
+  const onSignIn = async (values) => {
     try {
       const action = login({
         email: values.email,
@@ -57,15 +51,12 @@ function AdminLoginPage(props) {
 
       const actionResult = await dispatch(action);
       unwrapResult(actionResult);
-
+      isRecruiterPath && localStorage.removeItem('isRecruiterPath');
       history.push("/admin");
     } catch (error) {
+      setIsError(true);
       enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
     }
-  };
-
-  const checkKeyDown = (e) => {
-    if (e.code === 'Enter') e.preventDefault();
   };
 
   const currentUI = isLoading
@@ -80,7 +71,7 @@ function AdminLoginPage(props) {
             <span>Sign in</span>
             <img src={Images.smDot} alt="smDot" />
           </div>
-          <form onSubmit={handleSubmit(onLogin)} onKeyDown={(e) => checkKeyDown(e)}>
+          {/* <form onSubmit={handleSubmit(onLogin)} onKeyDown={(e) => checkKeyDown(e)}>
             <div className="form-group">
               <RHFInputField
                 register={register}
@@ -108,7 +99,47 @@ function AdminLoginPage(props) {
                 Sign in
               </button>
             </div>
-          </form>
+          </form> */}
+          <Formik
+              initialValues={{
+                email: '',
+                password: ''
+              }}
+              validationSchema={validationSchema}
+              onSubmit={onSignIn}
+            >
+              {formikProps => {
+                const { isSubmitting } = formikProps;
+
+                return (
+                  <Form>
+                    <FastField
+                      name="email"
+                      component={InputField}
+
+                      placeholder="Email"
+                    />
+
+                    <FastField
+                      name="password"
+                      component={InputField}
+
+                      placeholder="Password*"
+                      type="password"
+                    />
+
+                    <div className="form-group signin-button">
+                      <button disabled={isSubmitting} className="btn btn-success btn-sm" type="submit">
+                        {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                        Sign in
+                      </button>
+                      {isError &&
+                        <span className="text-danger form-span">You have entered an invalid username or password</span>}
+                    </div>
+                  </Form>
+                );
+              }}
+            </Formik>
         </div>
       </div>
     );

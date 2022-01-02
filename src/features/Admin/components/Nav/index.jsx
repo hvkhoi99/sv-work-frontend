@@ -17,11 +17,13 @@ function AdminNav(props) {
   // const [hiddenNotification, sethiddenNotification] = useState(true);
   const dispatch = useDispatch();
 
-  const showLogout = () => {
+  const showLogout = (e) => {
+    e.preventDefault();
     setHiddenLogout(!hiddenLogout);
   }
 
-  const showNotification = () => {
+  const showNotification = (e) => {
+    e.preventDefault();
     setHiddenLogout(true);
   }
 
@@ -35,12 +37,12 @@ function AdminNav(props) {
     <div className="nav">
       <div className="nav__icon">
         <div className="nav__icon__group">
-          <Link className="nav__options" to='#' onClick={showNotification}>
+          <Link className="nav__options" to='#' onClick={(e) => showNotification(e)}>
             <RiIcons.RiNotification2Fill className="nav__options__icon" />
           </Link>
         </div>
         <div className="nav__icon__group">
-          <Link className="nav__options" to='#' onClick={showLogout}>
+          <Link className="nav__options" to='#' onClick={(e) => showLogout(e)}>
             <FaIcons.FaUserCircle className={hiddenLogout ? "nav__options__icon" : "nav__options__icon isVisited"} />
           </Link>
           <ul

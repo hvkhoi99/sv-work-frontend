@@ -59,7 +59,6 @@ function RecruiterDashboardPage(props) {
   }
 
   const onViewRecruitment = (recruitment) => {
-    console.log({ recruitment })
     history.push(`${Paths.recruiterDashboard}/available-jobs/${recruitment.id}`);
   }
 

@@ -56,8 +56,6 @@ function CreateRecruitmentForm(props) {
       .typeError('Type of Job is required')
       .required('Type of Job is required'),
     job_category: Yup
-      // .array()
-      // .min(1, 'Job Category is required')
       .string()
       .typeError('Job Category is required')
       .required('Job Category is required'),
@@ -124,14 +122,21 @@ function CreateRecruitmentForm(props) {
       return
     } else {
       console.log({ 
-        ...values, 
+        title: values.title,
+        position: values.position,
         is_full_time: "Full Time" ? true : false, 
+        job_category: values.job_category,
+        location: values.location,
         description: description, 
         benefits: benefits, 
         requirement: requirement,
         min_salary: parseInt(values.min_salary),
         max_salary: parseInt(values.max_salary),
-        expiry_date: new Date(values.expiry_date)
+        expiry_date: values.expiry_date,
+        is_closed: values.is_closed,
+        hashtags: values.hashtags,
+        // expiry_date: new Date(values.expiry_date)
+        // expiry_date: moment(values.expiry_date).format('MM/DD/YYYY')
       })
     }
   }

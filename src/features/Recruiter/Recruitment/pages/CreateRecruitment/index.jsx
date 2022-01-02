@@ -2,15 +2,14 @@ import LoadingUI from 'components/Loading';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import CreateRecruitmentForm from '../../components/CreateRecruitmentForm';
-// import PropTypes from 'prop-types';
 import './CreateRecruitment.scss';
 
 CreateRecruitmentPage.propTypes = {
 };
 
 function CreateRecruitmentPage(props) {
-  const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(true);
   const { update } = useParams();
   const historyRecruitment = history.location.state;
   const isEditMode = update === "update";
@@ -26,10 +25,9 @@ function CreateRecruitmentPage(props) {
     max_salary: '',
     location: '',
     hashtags: ''
-  } : { 
-    ...historyRecruitment, 
-    is_full_time: historyRecruitment.is_full_time ? "Full Time" : "Part Time", 
-    hashtags: [{ value: 1, label: 'abc' }] 
+  } : {
+    ...historyRecruitment,
+    is_full_time: historyRecruitment.is_full_time ? "Full Time" : "Part Time",
   };
 
   useEffect(() => {
@@ -51,7 +49,6 @@ function CreateRecruitmentPage(props) {
           : <div className="create-recruitment">
             <div className="create-recruitment__container">
               <CreateRecruitmentForm
-                // recruitment={recruitment}
                 recruitment={recruitment}
                 isEditMode={isEditMode}
               />

@@ -20,9 +20,9 @@ SignInPage.propTypes = {
 
 function SignInPage(props) {
   const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
   const [isLoading, setIsLoading] = useState(true);
   const [isSpinner, setIsSpinner] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
   const [isError, setIsError] = useState(false);
   const isRecruiterPath = localStorage.getItem('isRecruiterPath');
 
@@ -58,19 +58,23 @@ function SignInPage(props) {
   }, []);
 
   const onSignIn = async (values) => {
-    try {
-      const action = login({
-        email: values.email,
-        password: values.password
-      });
-
-      const actionResult = await dispatch(action);
-      unwrapResult(actionResult);
-      isRecruiterPath && localStorage.removeItem('isRecruiterPath');
-      // history.push(result.role_id === 3 ? "/student" : result.role_id === 2 ? "/recruiter" : "/error");
-    } catch (error) {
+    if (values.email === "admin@gmail.com") {
       setIsError(true);
-      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+    } else {
+      try {
+        const action = login({
+          email: values.email,
+          password: values.password
+        });
+  
+        const actionResult = await dispatch(action);
+        unwrapResult(actionResult);
+        isRecruiterPath && localStorage.removeItem('isRecruiterPath');
+        // history.push(result.role_id === 3 ? "/student" : result.role_id === 2 ? "/recruiter" : "/error");
+      } catch (error) {
+        setIsError(true);
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      }
     }
   };
 

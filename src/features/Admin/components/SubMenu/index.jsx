@@ -5,12 +5,17 @@ import './SubMenu.scss';
 const SubMenu = ({ item, onUpdateMenuStatus, index }) => {
   const history = useHistory();
   const currentPath = history.location.pathname;
+  // const handleClick = (e, item) => {
+  //   e.preventDefault();
+  //   history.push(item.path);
+  // }
 
   return (
     <>
       <Link
         className={currentPath === item.path ? "sidebar__link sidebar__default" : "sidebar__link"}
         to={item.path}
+        // onClick={(e) => handleClick(e, item)}
       >
         <div>
           {item.icon}

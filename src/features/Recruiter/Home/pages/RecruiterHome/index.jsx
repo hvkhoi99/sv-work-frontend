@@ -15,7 +15,7 @@ function RecruiterHomePage(props) {
       duration: 600,
       easing: 'ease-in-sine',
       delay: 100,
-      mirror: true
+      // mirror: true
     });
   }, []);
 

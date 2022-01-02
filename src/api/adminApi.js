@@ -16,7 +16,6 @@ const adminApi = {
     const url = `/admin/recruiter/${id}`;
     return axiosClient.post(url, { verify: params });
   }
-
 }
 
 export default adminApi;

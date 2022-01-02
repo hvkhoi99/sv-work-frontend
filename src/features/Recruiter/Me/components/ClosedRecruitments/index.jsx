@@ -1,13 +1,16 @@
 import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
 import LoadingChildUI from 'components/LoadingChild';
+import Paths from 'constants/paths';
+import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
-import helper from 'utils/common';
+import { useHistory, useLocation } from 'react-router-dom';
 import ClosedRecruitmentsCard from '../ClosedRecruitmentsCard';
 import './ClosedRecruitments.scss';
+
 
 ClosedRecruitments.propTypes = {
 
@@ -15,8 +18,12 @@ ClosedRecruitments.propTypes = {
 
 function ClosedRecruitments(props) {
   const user = useSelector((state) => state.user.current);
+  const history = useHistory();
+  const { search } = useLocation();
+  const page = parseInt(queryString.parse(search).page);
+
   const [items, setItems] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(page > 0 ? page : 1);
   const [pageCount, setpageCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -47,8 +54,10 @@ function ClosedRecruitments(props) {
   }, [limit, currentPage, user]);
 
   const handlePageClick = async (data) => {
-    setCurrentPage(data.selected + 1);
-    helper.scrollToTop();
+    const newPage = data.selected + 1;
+    setCurrentPage(newPage);
+
+    history.push(`${Paths.recruiterDashboard}/closed-recruitments?page=${newPage}`);
   };
 
   return (
@@ -76,6 +85,8 @@ function ClosedRecruitments(props) {
                   <MdIcons.MdArrowForwardIos />
                 }
 
+                // initialPage={currentPage}
+                forcePage={currentPage - 1}
                 breakLabel={"..."}
                 pageCount={pageCount}
                 marginPagesDisplayed={3}

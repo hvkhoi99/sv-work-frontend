@@ -8,7 +8,11 @@ import './Sidebar.scss';
 
 const Sidebar = () => {
   const [sidebar, setSidebar] = useState(false);
-  const showSidebar = () => setSidebar(!sidebar);
+  
+  const showSidebar = (e) => {
+    e.preventDefault();
+    setSidebar(!sidebar);
+  };
 
   return (
     <>
@@ -22,7 +26,7 @@ const Sidebar = () => {
               />;
             })}
           </div>
-          <Link className="sidebar__icon" to='#' onClick={showSidebar}>
+          <Link className="sidebar__icon" to='#' onClick={(e) => showSidebar(e)}>
             {sidebar
               ? <AiIcons.AiFillCaretLeft />
               : <AiIcons.AiFillCaretRight />

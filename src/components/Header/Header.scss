@@ -197,6 +197,7 @@
   &__notify {
     display: flex;
     align-items: center;
+    cursor: pointer;
 
     &__icon {
       display: flex;
@@ -215,6 +216,12 @@
         color: #fff;
         transition: all 0.2s ease-out;
       }
+      
+      // &:active {
+      //   background-color: #fff;
+      //   color: #fff;
+      //   transition: all 0.2s ease-out;
+      // }
     }
 
     &__count {

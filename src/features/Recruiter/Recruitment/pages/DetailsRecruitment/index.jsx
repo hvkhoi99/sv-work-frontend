@@ -29,7 +29,7 @@ function DetailsRecruitmentPage(props) {
         const data = await studentApi.getRecruimentDetail(recruitmentId);
         setRecruitmentDetail(data.data.data)
         setIsLoading(false);
-        console.log({ data });
+        // console.log("recruitment", data.data.data.hashtags);
         return data.data;
       } catch (error) {
         console.log("Cannot fetch recruitment detail. Error: " + error)
