@@ -10,22 +10,28 @@ import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import ClosedRecruitmentsCard from '../ClosedRecruitmentsCard';
 import './ClosedRecruitments.scss';
-
+import PropTypes from 'prop-types';
+import { useSnackbar } from 'notistack';
 
 ClosedRecruitments.propTypes = {
-
+  onViewRecruitment: PropTypes.func,
 };
 
+ClosedRecruitments.defaultProps = {
+  onViewRecruitment: null,
+}
+
 function ClosedRecruitments(props) {
-  const user = useSelector((state) => state.user.current);
+  const { onViewRecruitment } = props;
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(true);
   const { search } = useLocation();
   const page = parseInt(queryString.parse(search).page);
-
-  const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(page > 0 ? page : 1);
+  const user = useSelector((state) => state.user.current);
+  const [items, setItems] = useState([]);
   const [pageCount, setpageCount] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const { enqueueSnackbar } = useSnackbar();
 
   const limit = 3;
 
@@ -51,7 +57,7 @@ function ClosedRecruitments(props) {
     };
 
     fetchClosedRecruitments();
-  }, [limit, currentPage, user]);
+  }, [limit, currentPage, user, isLoading]);
 
   const handlePageClick = async (data) => {
     const newPage = data.selected + 1;
@@ -59,6 +65,24 @@ function ClosedRecruitments(props) {
 
     history.push(`${Paths.recruiterDashboard}/closed-recruitments?page=${newPage}`);
   };
+
+  const onDelete = async (recruitment) => {
+    try {
+      // const newItems = items.filter(item => {
+      //   return item.id !== recruitment.id
+      // })
+      // setItems(newItems);
+      user.role_id === 2
+      ? await recruiterApi.deleteRecruitment(recruitment.id)
+      : await studentApi.deleteRecruitment(recruitment.id);
+      enqueueSnackbar("Your recruitment has been deleted.", { variant: "success" });
+      setIsLoading(true);
+    } catch (error) {
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+    }
+  }
+
+  console.log("re-render")
 
   return (
     <div className="closed-recruitments">
@@ -69,7 +93,12 @@ function ClosedRecruitments(props) {
         : <>
           {
             items.map((item, index) => {
-              return <ClosedRecruitmentsCard recruitment={item} key={index} />
+              return <ClosedRecruitmentsCard
+                recruitment={item}
+                key={index}
+                onViewRecruitment={onViewRecruitment}
+                onDelete={onDelete}
+              />
             })
           }
           {

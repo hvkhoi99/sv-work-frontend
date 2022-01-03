@@ -17,7 +17,6 @@ AvailableJobsCard.defaultProps = {
 
 function AvailableJobsCard(props) {
   const { item, onViewRecruitment } = props;
-  console.log({item})
 
   const handleViewRecruitment = (recruitment) => {
     return onViewRecruitment(recruitment);

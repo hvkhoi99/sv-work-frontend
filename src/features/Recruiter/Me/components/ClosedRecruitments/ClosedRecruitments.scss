@@ -96,6 +96,8 @@
         height: auto;
 
         & > button {
+          display: flex;
+          align-items: center;
           border-radius: 1.5rem;
           font-weight: 500;
           box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;

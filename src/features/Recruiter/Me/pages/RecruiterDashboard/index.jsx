@@ -1,6 +1,7 @@
 import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
 import LoadingUI from 'components/Loading';
+import PopupConfirm from 'components/PopupConfirm';
 import Images from 'constants/images';
 import Paths from 'constants/paths';
 import React, { useEffect, useState } from 'react';
@@ -28,6 +29,8 @@ function RecruiterDashboardPage(props) {
   const [dashboardIndexData, setDashboardIndexData] = useState({});
   const [currentPath, setCurrentPath] = useState(location);
   const [isLoading, setIsLoading] = useState(true);
+  const [show, setShow] = useState(false);
+
   const options = [
     { id: 0, name: "Available Jobs", path: availableJobsPath },
     { id: 1, name: "Closed Recruitments", path: closedRecruitmentsPath }
@@ -63,8 +66,11 @@ function RecruiterDashboardPage(props) {
   }
 
   const handleCreateRecruitment = () => {
-    // console.log("clicked");
     history.push(`${Paths.recruiterDashboard}/available-jobs/create`);
+  }
+
+  const onShow = (value) => {
+    setShow(value);
   }
 
   return (
@@ -122,7 +128,7 @@ function RecruiterDashboardPage(props) {
                 </div>
                 <div
                   className="recruiter-dashboard__container__top__right__card"
-                  onClick={handleCreateRecruitment}
+                  onClick={dashboardIndexData.profile.verify ? handleCreateRecruitment : () => onShow(true)}
                 >
                   <div className="recruiter-dashboard__container__top__right__card__plus-icon">
                     <BsIcons.BsFillPlusCircleFill className="plus-icon" />
@@ -150,12 +156,25 @@ function RecruiterDashboardPage(props) {
                 </div>
               </div>
               <div className="recruiter-dashboard__container__bottom__right">
-                {currentPath === availableJobsPath ? <AvailableJobs onViewRecruitment={onViewRecruitment} /> : currentPath === closedRecruitmentsPath ? <ClosedRecruitments /> : <></>}
+                {currentPath === availableJobsPath
+                  ? <AvailableJobs
+                    onViewRecruitment={onViewRecruitment}
+                  />
+                  : currentPath === closedRecruitmentsPath
+                    ? <ClosedRecruitments
+                      onViewRecruitment={onViewRecruitment}
+                    /> : <></>}
               </div>
             </div>
           </div>
         </div>
       }
+      <PopupConfirm
+        show={show}
+        onShow={onShow}
+        pageUrl={`${Paths.recruiterProfile}/update`}
+        contentConfirm="You need to have your profile Verified to continue."
+      />
     </>
   );
 }

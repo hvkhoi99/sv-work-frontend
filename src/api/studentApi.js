@@ -43,6 +43,11 @@ const studentApi = {
   updateRecruitment: (id, params) => {
     const url = `/student/recruiter/recruitment/${id}`;
     return axiosClient.put(url, params);
+  },
+
+  deleteRecruitment: (id) => {
+    const url = `/student/recruiter/recruitment/${id}`;
+    return axiosClient.delete(url);
   }
 }
 

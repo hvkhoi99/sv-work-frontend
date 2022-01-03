@@ -1,23 +1,34 @@
+import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
 import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
+import Paths from 'constants/paths';
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import helper from 'utils/common';
 import RecruitmentDetail from '../RecruitmentDetail';
 import './DetailsRecruitment.scss';
+// import PropTypes from 'prop-types';
 
 DetailsRecruitmentPage.propTypes = {
+  // onDeleteRecruitment: PropTypes.func
 };
 
+DetailsRecruitmentPage.defaultProps = {
+  // onDeleteRecruitment: null
+}
+
 function DetailsRecruitmentPage(props) {
+  const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
   const user = useSelector((state) => state.user.current);
   const [isActiveIndex, setIsActiveIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const { recruitmentId } = useParams();
   const [recruitmentDetail, setRecruitmentDetail] = useState({});
-  const history = useHistory();
+  const [isClosing, setIsClosing] = useState(false);
 
   const handleChangeOptionMenu = (index) => {
     return setIsActiveIndex(index);
@@ -29,7 +40,6 @@ function DetailsRecruitmentPage(props) {
         const data = await studentApi.getRecruimentDetail(recruitmentId);
         setRecruitmentDetail(data.data.data)
         setIsLoading(false);
-        // console.log("recruitment", data.data.data.hashtags);
         return data.data;
       } catch (error) {
         console.log("Cannot fetch recruitment detail. Error: " + error)
@@ -44,12 +54,35 @@ function DetailsRecruitmentPage(props) {
   }, []);
 
   const handleToEditRecruitment = () => {
-
     history.push({
       pathname: `/recruiter/me/dashboard/available-jobs/${recruitmentId}/update`,
-      state: {...recruitmentDetail}
+      state: { ...recruitmentDetail }
     })
   };
+
+  const handleCloseRecruitment = async (e) => {
+    e.preventDefault();
+    setIsClosing(true);
+
+    try {
+      const params = {
+        ...recruitmentDetail,
+        is_closed: true
+      }
+      user.role_id === 2
+        ? await recruiterApi.updateRecruitment(recruitmentId, params)
+        : await studentApi.updateRecruitment(recruitmentId, params);
+      setIsClosing(false);
+      enqueueSnackbar("Your recruitment has been closed.", { variant: "success" });
+      history.push(`${Paths.recruiterDashboard}/available-jobs`);
+    } catch (error) {
+      setIsClosing(false);
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+    }
+  }
+
+  const handleDelete = (e, recruitment) => {
+  }
 
   return (
     <>
@@ -76,13 +109,26 @@ function DetailsRecruitmentPage(props) {
                 </div>
                 <div className="details-recruitment__container__top__right">
                   {recruitmentDetail.is_closed
-                    ? <button className="btn btn-sm btn-danger btn-close">Delete</button>
+                    ? <button
+                      type="button"
+                      className="btn btn-sm btn-danger btn-close"
+                      onClick={(e) => handleDelete(e, recruitmentDetail)}
+                    >Delete</button>
                     : <>
                       <button
+                        type="button"
                         className="btn btn-sm btn-success btn-edit"
                         onClick={handleToEditRecruitment}
                       >Edit</button>
-                      <button className="btn btn-sm btn-success btn-close">Close</button>
+                      <button
+                        type="button"
+                        className="btn btn-sm btn-success btn-close"
+                        onClick={(e) => handleCloseRecruitment(e)}
+                        disabled={recruitmentDetail.is_closed || isClosing}
+                      >
+                        {isClosing && <span className="spinner-border spinner-border-sm mr-2" />}
+                        {!recruitmentDetail.is_closed ? (isClosing ? "Closing" : "Close") : "Closed"}
+                      </button>
                     </>
                   }
                 </div>

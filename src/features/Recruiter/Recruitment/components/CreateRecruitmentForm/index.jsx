@@ -1,3 +1,4 @@
+import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
 import { JOB_TAGS_OPTIONS, JOB_TYPE_OPTIONS } from 'constants/global';
 import DatePickerField from 'custom-fields/DatePickerField';
@@ -7,7 +8,7 @@ import { FastField, Form, Formik } from 'formik';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useSelector, useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import { Button, FormGroup, Label, Spinner } from 'reactstrap';
@@ -53,6 +54,7 @@ function CreateRecruitmentForm(props) {
   const [requirement, setRequirement] = useState(recruitment.requirement);
   let [isBeautiful, setIsBeautiful] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
+  const user = useSelector((state) => state.user.current);
 
   const validationSchema = Yup.object().shape({
     title: Yup
@@ -150,10 +152,14 @@ function CreateRecruitmentForm(props) {
           hashtags: values.hashtags
         };
         if (!isEditMode) {
-          await studentApi.createNewRecruitment(params);
+          user.role_id === 2
+            ? await recruiterApi.createNewRecruitment(params)
+            : await studentApi.createNewRecruitment(params);
           enqueueSnackbar("Your recruitment has been created.", { variant: "success" });
         } else {
-          await studentApi.updateRecruitment(recruitment.id, params);
+          user.role_id === 2
+            ? await recruiterApi.updateRecruitment(recruitment.id, params)
+            : await studentApi.updateRecruitment(recruitment.id, params);
           enqueueSnackbar("Your recruitment has been updated.", { variant: "success" });
         }
         history.goBack();

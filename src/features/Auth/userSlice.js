@@ -68,13 +68,6 @@ const userSlice = createSlice({
   },
   // when thunk successfully, use extraReducer update data
   extraReducers: {
-    // 'user/login/fulfilled'
-    // 'user/login/pending'
-    // 'user/login/error'
-
-    // [register.fulfilled]: (state, action) => {
-    //   state.current = action.payload;
-    // },
     [login.fulfilled]: (state, action) => {
       state.current = action.payload;
     },

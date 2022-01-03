@@ -1,20 +1,36 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import * as BiIcons from 'react-icons/bi';
 import * as GrIcons from 'react-icons/gr';
 import ReactTimeAgo from 'react-time-ago';
 import HashTagCard from '../HashTagCard';
 
 ClosedRecruitmentsCard.propTypes = {
-  reruitment: PropTypes.object
+  reruitment: PropTypes.object,
+  onViewRecruitment: PropTypes.func,
+  onDelete: PropTypes.func,
+  isDeleting: PropTypes.bool,
 };
 
 ClosedRecruitmentsCard.defaultProps = {
-  recruitment: ''
+  recruitment: '',
+  onViewRecruitment: null,
+  onDelete: null,
 }
 
 function ClosedRecruitmentsCard(props) {
-  const { recruitment } = props;
+  const { recruitment, onViewRecruitment, onDelete} = props;
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleViewRecruitment = (e, recruitment) => {
+    return onViewRecruitment(recruitment);
+  }
+
+  const handleDelete = (e, item) => {
+    setIsDeleting(true);
+    onDelete(item);
+    // setIsDeleting(false);
+  }
 
   return (
     <div className="closed-recruitments__container">
@@ -49,8 +65,20 @@ function ClosedRecruitmentsCard(props) {
           </div>
         </div>
         <div className="closed-recruitments__container__bottom__right">
-          <button className="btn btn-success btn-sm view">View</button>
-          <button className="btn btn-danger btn-sm delete">Delete</button>
+          <button
+            type="button"
+            className="btn btn-success btn-sm view"
+            onClick={(e) => handleViewRecruitment(e, recruitment)}
+          >View</button>
+          <button
+            type="button"
+            className="btn btn-danger btn-sm delete"
+            onClick={(e) => handleDelete(e, recruitment)}
+            disabled={isDeleting}
+          >
+            {isDeleting && <span className="spinner-border spinner-border-sm mr-2" />}
+            {isDeleting ? "Deleting" : "Delete"}
+          </button>
         </div>
       </div>
     </div>

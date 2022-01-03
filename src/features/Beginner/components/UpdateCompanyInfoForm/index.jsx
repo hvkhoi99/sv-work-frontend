@@ -19,33 +19,33 @@ function UpdateCompanyInfoForm(props) {
   const phoneRegExp = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
   const validationSchema = Yup.object().shape({
-    companyName: Yup
+    company_name: Yup
       .string()
       .required('Company name is required')
       .min(5, "Company name must be at least 5 characters"),
-    phoneNumber: Yup
+    phone_number: Yup
       .string()
       .required('Phone number is required')
       .matches(phoneRegExp, 'Phone number is not valid'),
     // .min(10, "Phone number is too short")
     // .max(11, "Phone number is too long"),
-    contactEmail: Yup
+    contact_email: Yup
       .string()
       .email('Email is invalid')
       .required('Email is required'),
-    location: Yup
+    address: Yup
       .string()
       .required('Location is required')
       .min(10, "Location must be at least 10 characters"),
-    companyIndustry: Yup
+    company_industry: Yup
       .string()
       .required('Company industry is required')
       .min(10, "Company industry must be at least 10 characters"),
-    companySize: Yup
+    company_size: Yup
       .string()
       .required("Company size is required")
       .matches(/^[0-9]+$/, "Must be only digits"),
-    taxCode: Yup
+    tax_code: Yup
       .string()
       .required("Company size is required")
   });
@@ -64,7 +64,7 @@ function UpdateCompanyInfoForm(props) {
         return (
           <Form>
             <FastField
-              name="companyName"
+              name="company_name"
               component={InputField}
 
               label="Company Name"
@@ -72,7 +72,7 @@ function UpdateCompanyInfoForm(props) {
 
             <div className="formGroup-phone-email">
               <FastField
-                name="phoneNumber"
+                name="phone_number"
                 component={InputField}
 
                 label="Phone Number"
@@ -80,7 +80,7 @@ function UpdateCompanyInfoForm(props) {
               />
 
               <FastField
-                name="contactEmail"
+                name="contact_email"
                 component={InputField}
 
                 label="Contact Email"
@@ -90,7 +90,7 @@ function UpdateCompanyInfoForm(props) {
             </div>
 
             <FastField
-              name="location"
+              name="address"
               component={InputField}
 
               label="Location"
@@ -99,7 +99,7 @@ function UpdateCompanyInfoForm(props) {
 
             <div className="formGroup-industry-size">
               <FastField
-                name="companyIndustry"
+                name="company_industry"
                 component={InputField}
 
                 label="Company Industry"
@@ -108,7 +108,7 @@ function UpdateCompanyInfoForm(props) {
               />
 
               <FastField
-                name="companySize"
+                name="company_size"
                 component={InputField}
 
                 label="Company Size"
@@ -121,7 +121,7 @@ function UpdateCompanyInfoForm(props) {
             </FormGroup>
 
             <FastField
-              name="taxCode"
+              name="tax_code"
               component={InputField}
 
               label="Tax Code"

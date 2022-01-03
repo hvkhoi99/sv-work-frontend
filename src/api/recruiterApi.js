@@ -33,6 +33,21 @@ const recruiterApi = {
   getRecruimentDetail: (id) => {
     const url = `/recruiter/recruitment/${id}`;
     return axiosClient.get(url);
+  },
+
+  createNewRecruitment: (params) => {
+    const url = "/recruiter/recruitment/store";
+    return axiosClient.post(url, params);
+  },
+
+  updateRecruitment: (id, params) => {
+    const url = `/recruiter/recruitment/${id}`;
+    return axiosClient.put(url, params);
+  },
+
+  deleteRecruitment: (id) => {
+    const url = `/recruiter/recruitment/${id}`;
+    return axiosClient.delete(url);
   }
 }
 

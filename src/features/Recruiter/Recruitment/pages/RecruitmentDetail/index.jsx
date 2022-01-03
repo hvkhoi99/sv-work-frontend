@@ -21,7 +21,6 @@ RecruitmentDetail.defaultProps = {
 function RecruitmentDetail(props) {
   const { recruitmentDetail } = props;
   const [isLoading, setIsLoading] = useState(true);
-  console.log({recruitmentDetail})
 
   useEffect(() => {
     const timer = setTimeout(() => {

@@ -1,4 +1,5 @@
 import NotFoundPage from 'components/NotFound';
+import RecruiterUpdateProfilePage from 'features/Beginner/pages/RecruiterUpdateProfile';
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import CreateRecruitmentPage from '../Recruitment/pages/CreateRecruitment';
@@ -24,6 +25,7 @@ function RecruiterMeFeature(props) {
           component={RecruiterDashboardPage}
         />
         <Route exact path={`${match.url}/profile`} component={RecruiterProfilePage} />
+        <Route exact path={`${match.url}/profile/:update`} component={RecruiterUpdateProfilePage} />
         <Route exact path={`${match.url}/dashboard/available-jobs`} component={RecruiterDashboardPage} />
         <Route exact path={`${match.url}/dashboard/available-jobs?page=.*`} component={RecruiterDashboardPage} />
         <Route exact path={`${match.url}/dashboard/available-jobs/create`} component={CreateRecruitmentPage} />
