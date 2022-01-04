@@ -15,7 +15,7 @@ PopupConfirm.propTypes = {
 PopupConfirm.defaultProps = {
   show: false,
   onShow: null,
-  titleConfirm: 'Ooops, something went wrong',
+  titleConfirm: 'Ooops... Something went wrong!',
   contentConfirm: '...',
   pageUrl: ''
 }

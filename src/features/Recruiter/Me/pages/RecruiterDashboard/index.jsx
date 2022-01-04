@@ -62,7 +62,9 @@ function RecruiterDashboardPage(props) {
   }
 
   const onViewRecruitment = (recruitment) => {
-    history.push(`${Paths.recruiterDashboard}/available-jobs/${recruitment.id}`);
+    currentPath === availableJobsPath
+      ? history.push(`${Paths.recruiterDashboard}/available-jobs/${recruitment.id}`)
+      : history.push(`${Paths.recruiterDashboard}/closed-recruitments/${recruitment.id}`)
   }
 
   const handleCreateRecruitment = () => {
@@ -71,6 +73,11 @@ function RecruiterDashboardPage(props) {
 
   const onShow = (value) => {
     setShow(value);
+  }
+
+  const onDeleteRecruitment = () => {
+    console.log({ dashboardIndexData })
+    dashboardIndexData.closedJobs > 0 && setDashboardIndexData({ ...dashboardIndexData, closedJobs: dashboardIndexData.closedJobs - 1 });
   }
 
   return (
@@ -163,6 +170,7 @@ function RecruiterDashboardPage(props) {
                   : currentPath === closedRecruitmentsPath
                     ? <ClosedRecruitments
                       onViewRecruitment={onViewRecruitment}
+                      onDeleteRecruitment={onDeleteRecruitment}
                     /> : <></>}
               </div>
             </div>
@@ -173,7 +181,11 @@ function RecruiterDashboardPage(props) {
         show={show}
         onShow={onShow}
         pageUrl={`${Paths.recruiterProfile}/update`}
-        contentConfirm="You need to have your profile Verified to continue."
+        contentConfirm={
+          user.r_profile.tax_code !== ""
+            ? "Your profile is pending approval. Do you want to update again?"
+            : "You need to have your profile Verified to continue."
+        }
       />
     </>
   );

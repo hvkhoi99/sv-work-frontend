@@ -245,6 +245,7 @@
 
     & > img {
       width: 15rem;
+      border-radius: 50%;
     }
   }
 }
@@ -266,4 +267,8 @@
 
     margin: 2rem 0;
   }
+}
+
+.hidden {
+  display: none;
 }

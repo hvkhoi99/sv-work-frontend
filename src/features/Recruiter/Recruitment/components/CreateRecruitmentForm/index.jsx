@@ -8,8 +8,9 @@ import { FastField, Form, Formik } from 'formik';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
-import React, { useSelector, useState } from 'react';
+import React, { useState } from 'react';
 import * as MdIcons from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, FormGroup, Label, Spinner } from 'reactstrap';
 import * as Yup from 'yup';
@@ -29,6 +30,7 @@ CreateRecruitmentForm.defaultProps = {
 
 function CreateRecruitmentForm(props) {
   const { recruitment, isEditMode } = props;
+  const user = useSelector((state) => state.user.current);
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -54,7 +56,6 @@ function CreateRecruitmentForm(props) {
   const [requirement, setRequirement] = useState(recruitment.requirement);
   let [isBeautiful, setIsBeautiful] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
-  const user = useSelector((state) => state.user.current);
 
   const validationSchema = Yup.object().shape({
     title: Yup

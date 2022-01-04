@@ -8,6 +8,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import helper from 'utils/common';
+import ListCandidates from '../ListCandidates';
 import RecruitmentDetail from '../RecruitmentDetail';
 import './DetailsRecruitment.scss';
 // import PropTypes from 'prop-types';
@@ -29,6 +30,7 @@ function DetailsRecruitmentPage(props) {
   const { recruitmentId } = useParams();
   const [recruitmentDetail, setRecruitmentDetail] = useState({});
   const [isClosing, setIsClosing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleChangeOptionMenu = (index) => {
     return setIsActiveIndex(index);
@@ -81,7 +83,19 @@ function DetailsRecruitmentPage(props) {
     }
   }
 
-  const handleDelete = (e, recruitment) => {
+  const handleDelete = async (e, recruitment) => {
+    setIsDeleting(true);
+    try {
+      user.role_id === 2
+        ? await recruiterApi.deleteRecruitment(recruitment.id)
+        : await studentApi.deleteRecruitment(recruitment.id);
+      enqueueSnackbar("Your recruitment has been deleted.", { variant: "success" });
+      setIsDeleting(false);
+      history.push(`${Paths.recruiterDashboard}/closed-recruitments`);
+    } catch (error) {
+      setIsDeleting(false);
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+    }
   }
 
   return (
@@ -113,7 +127,11 @@ function DetailsRecruitmentPage(props) {
                       type="button"
                       className="btn btn-sm btn-danger btn-close"
                       onClick={(e) => handleDelete(e, recruitmentDetail)}
-                    >Delete</button>
+                      disabled={isDeleting}
+                    >
+                      {isDeleting && <span className="spinner-border spinner-border-sm mr-2" />}
+                      {isDeleting ? "Deleting" : "Delete"}
+                    </button>
                     : <>
                       <button
                         type="button"
@@ -153,9 +171,11 @@ function DetailsRecruitmentPage(props) {
                   >List Candidates</Link>
                 </div>
                 <div className="details-recruitment__container__bottom__description">
-                  {isActiveIndex === 0
-                    ? <RecruitmentDetail recruitmentDetail={recruitmentDetail} />
-                    : <></>}
+                  {
+                    isActiveIndex === 0
+                      ? <RecruitmentDetail recruitmentDetail={recruitmentDetail} />
+                      : <ListCandidates />
+                  }
                 </div>
               </div>
             </div>

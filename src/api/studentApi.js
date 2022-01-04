@@ -29,6 +29,11 @@ const studentApi = {
     return axiosClient.post(url, params);
   },
 
+  updateRecruiterProfile: (id, params) => {
+    const url = `/student/recruiter/profile/${id}`;
+    return axiosClient.put(url, params);
+  },
+
   // Student -> Recruiter Recruitment
   getRecruimentDetail: (id) => {
     const url = `/student/recruiter/recruitment/${id}`;

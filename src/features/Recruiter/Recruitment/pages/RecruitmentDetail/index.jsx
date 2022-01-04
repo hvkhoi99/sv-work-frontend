@@ -122,7 +122,7 @@ function RecruitmentDetail(props) {
               <img src={Images.ship} alt="ship" />
             </div>
           </div>
-          <div className="similar-job">
+          <div className="similar-job hidden">
             <h3>Similar Job for you</h3>
             <div className="similar-job__content">
               <RecruitmentCard />

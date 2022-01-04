@@ -71,8 +71,13 @@ function RecruiterUpdateProfilePage(props) {
         }
       } else {
         console.log({values});
+        const data = user.role_id === 2
+        ? await recruiterApi.updateRecruiterProfile(values.user_id, params)
+        : await studentApi.updateRecruiterProfile(values.user_id, params);
+        localStorage.setItem('user', JSON.stringify(data.data.data));
+        dispatch(updateUser(data.data.data));
         enqueueSnackbar("Your profile has been updated.", { variant: "success" });
-        history.push(`${Paths.recruiterDashboard}/available-jobs/create`);
+        history.push(`${Paths.recruiterDashboard}`);
       }
 
     } catch (error) {

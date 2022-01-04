@@ -15,14 +15,16 @@ import { useSnackbar } from 'notistack';
 
 ClosedRecruitments.propTypes = {
   onViewRecruitment: PropTypes.func,
+  onDeleteRecruitment: PropTypes.func,
 };
 
 ClosedRecruitments.defaultProps = {
   onViewRecruitment: null,
+  onDeleteRecruitment: null
 }
 
 function ClosedRecruitments(props) {
-  const { onViewRecruitment } = props;
+  const { onViewRecruitment, onDeleteRecruitment } = props;
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
   const { search } = useLocation();
@@ -76,13 +78,12 @@ function ClosedRecruitments(props) {
       ? await recruiterApi.deleteRecruitment(recruitment.id)
       : await studentApi.deleteRecruitment(recruitment.id);
       enqueueSnackbar("Your recruitment has been deleted.", { variant: "success" });
+      onDeleteRecruitment()
       setIsLoading(true);
     } catch (error) {
       enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
     }
   }
-
-  console.log("re-render")
 
   return (
     <div className="closed-recruitments">
