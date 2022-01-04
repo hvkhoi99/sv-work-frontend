@@ -149,7 +149,7 @@ function CreateRecruitmentForm(props) {
           min_salary: parseInt(values.min_salary),
           max_salary: parseInt(values.max_salary),
           expiry_date: moment(values.expiry_date).format("MM/DD/YYYY"),
-          // is_closed: values.is_closed,
+          is_closed: false,
           hashtags: values.hashtags
         };
         if (!isEditMode) {

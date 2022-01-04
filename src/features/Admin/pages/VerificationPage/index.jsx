@@ -1,12 +1,12 @@
+import PaginationSimple from 'components/PaginationSimple';
 import Images from 'constants/images';
 import CompanyInfoForm from 'custom-fields/CompanyInfoForm';
 import CompanyCard from 'features/Admin/components/CompanyCard';
 import { Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, FormGroup, Label } from 'reactstrap';
+import { Button, FormGroup } from 'reactstrap';
 import './verification.scss';
-import * as IoIcons from 'react-icons/io';
 
 VerificationPage.propTypes = {
   handlePageClick: PropTypes.func,
@@ -70,37 +70,11 @@ function VerificationPage(props) {
               />
             )
           })}
-          <div className="verification__company__button-group">
-            <Button
-              type="button"
-              disabled={currentPage === 1 && true}
-              // color={currentPage === 1 ? "secondary" : "primary"}
-              style={
-                currentPage === 1 ? { cursor: "default" } : { cursor: "pointer" }
-              }
-              onClick={(e) => handlePageClick(e, 0)}
-            >
-              <IoIcons.IoIosArrowBack
-                style={currentPage === 1 ? { color: "var(--secondary)" } : { color: "var(--success)" }}
-                className="paginate-icon"
-              />
-            </Button>
-            <Label className="paginate-totalPage">{currentPage}/{lastPage}</Label>
-            <Button
-              type="button"
-              style={
-                currentPage === lastPage ? { cursor: "default" } : { cursor: "pointer" }
-              }
-              cursor="default"
-              disabled={currentPage === lastPage && true}
-              onClick={(e) => handlePageClick(e, 1)}
-            >
-              <IoIcons.IoIosArrowForward
-                style={currentPage === lastPage ? { color: "var(--secondary)" } : { color: "var(--success)" }}
-                className="paginate-icon"
-              />
-            </Button>
-          </div>
+          <PaginationSimple 
+          handlePageClick={handlePageClick}
+          currentPage={currentPage}
+          lastPage={lastPage}
+          />
         </div>
 
         <div className="verification__detail">

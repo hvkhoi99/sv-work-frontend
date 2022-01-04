@@ -1,0 +1,98 @@
+@keyframes move_left {
+  0% {
+    right: 0px;
+  }
+
+  100% {
+    left: 0;
+  }
+}
+
+.candidates-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  margin: 0 0 2rem 0;
+  border-radius: 1rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 255, 0, 0.1);
+    transition: all 0.15s ease-out;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    width: 88%;
+    padding: 1rem 1rem;
+
+    &__img {
+      & > img {
+        width: 6rem;
+        height: 6rem;
+        border-radius: 50%;
+      }
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.7rem;
+      margin-left: 0.5rem;
+
+      &__name {
+        font-size: 1rem;
+        font-weight: 600;
+      }
+
+      &__job-title {
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      &__location {
+        display: flex;
+        align-items: center;
+
+        &__icon {
+          margin: 0 .2rem 0 0;
+        }
+
+        &__name {
+          font-size: 0.8rem;
+          font-weight: 300;
+          word-wrap: break-word;
+        }
+      }
+    }
+  }
+
+  &__right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 12%;
+    height: 100%;
+    background-color: rgba(255, 215, 0, 0.4);
+    border-radius: 0 1rem 1rem 0;
+
+    &__icon {
+      font-size: 1.8rem;
+      color: orange;
+    }
+
+    animation-name: move-left;
+    animation-duration:3s;
+    animation-iteration-count:infinite;
+  }
+}
+
+.candidate-card-invisible {
+  display: none;
+}
+
+
