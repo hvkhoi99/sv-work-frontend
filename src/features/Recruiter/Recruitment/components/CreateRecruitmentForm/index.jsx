@@ -61,7 +61,8 @@ function CreateRecruitmentForm(props) {
     title: Yup
       .string()
       .typeError('Job Name is required')
-      .required('Job Name is required'),
+      .required('Job Name is required')
+      .min(10, "Title must be at least 10 characters"),
     is_full_time: Yup
       .string()
       .typeError('Type of Job is required')

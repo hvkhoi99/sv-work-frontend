@@ -39,29 +39,37 @@ axiosClient.interceptors.response.use(
     return response;
   },
   function (error) {
-    // Any status codes that falls outside the range of 2xx cause this function to trigger
-    // Do something with response error
+    // // Any status codes that falls outside the range of 2xx cause this function to trigger
+    // // Do something with response error
+    // console.log('error axios: ', error.response);
+    // try {
+    //   const { config, status, data } = error.response;
+    //   console.log({ config, status, data })
+
+    //   if (config.url === '/auth/account/register' && status === 400) {
+    //     // const errorMessage = data.message;
+
+    //     window.location.href = '/error';
+    //     //throw new Error(errorMessage);
+    //   }
+    // } catch (ex) {
+    //   console.log('error', ex);
+    //   window.location.href = '/error';
+    // }
+    // return Promise.reject(error);
     console.log('error axios: ', error.response);
-    try {
-      const { config, status, data } = error.response;
-      console.log({ config, status, data })
-      
-      if (error.response.status === 401) {
+
+    switch (error.response.status) {
+      case 401:
         localStorage.removeItem('access_token');
         localStorage.removeItem('user');
         localStorage.removeItem('role_id');
-        return Promise.reject(error);
-      }
-
-      if (config.url === '/auth/account/register' && status === 400) {
-        // const errorMessage = data.message;
-
+        break;
+      case 404:
         window.location.href = '/error';
-        //throw new Error(errorMessage);
-      }
-    } catch (ex) {
-      console.log('error', ex);
-      window.location.href = '/error';
+        break;
+      default:
+        break;
     }
     return Promise.reject(error);
   }
