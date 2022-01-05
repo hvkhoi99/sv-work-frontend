@@ -21,11 +21,13 @@
     &__right {
       display: flex;
       justify-content: center;
+      align-self: flex-start;
 
       width: calc(100% - 2rem - 25%);
 
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       border-radius: 1rem;
+      padding: 2rem 0rem;
     }
   }
 }

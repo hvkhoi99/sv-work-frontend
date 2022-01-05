@@ -1,0 +1,245 @@
+.candidate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+
+  &__above {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    &__img {
+      & > img {
+        width: 10rem;
+        height: 10rem;
+        border-radius: 50%;
+      }
+    }
+
+    &__candidate-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 0.5rem 0 0.2rem 0;
+    }
+
+    &__candidate-job-title {
+      margin: 0 0 1rem 0;
+    }
+
+    &__btn-group {
+      display: flex;
+      justify-content: center;
+
+      width: 100%;
+
+      & > button {
+        display: flex;
+        align-items: center;
+
+        border-radius: 2rem;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
+          rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        font-weight: 500;
+      }
+    }
+
+    &__overview {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      margin: 1.5rem 0 0 0;
+
+      &__title {
+        display: flex;
+        align-items: center;
+
+        margin: 0 0 1rem 0;
+
+        & > span {
+          font-size: 1.2rem;
+          font-weight: 600;
+        }
+
+        &__dot {
+          color: var(--success);
+          margin: 0.2rem 0 0 0;
+        }
+      }
+
+      &__description {
+        padding: 0 4rem;
+        font-weight: 300;
+      }
+    }
+  }
+
+  &__below {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    padding: 4rem 2rem 0;
+
+    &__left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      width: 42%;
+
+      &__personal-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        width: 100%;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border-radius: 1rem;
+
+        &__title {
+          display: flex;
+          justify-content: center;
+
+          width: 100%;
+
+          & > span {
+            padding: 0.5rem 1rem;
+            background-color: var(--success);
+            color: #fff;
+            font-weight: 500;
+            border-radius: 0 0 2rem 2rem;
+            font-size: 1rem;
+          }
+        }
+
+        &__content {
+          display: flex;
+          flex-direction: column;
+          // align-items: center;
+          width: 100%;
+          padding: 1rem 1rem;
+          line-height: 1.8rem;
+
+          &__top {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+
+            &__date {
+              display: flex;
+              align-items: center;
+
+              & > span {
+                font-weight: 300;
+              }
+            }
+
+            &__sex {
+              display: flex;
+              align-items: center;
+
+              & > span {
+                font-weight: 300;
+              }
+            }
+          }
+
+          &__center {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+
+            &__phone {
+              display: flex;
+              align-items: center;
+
+              & > span {
+                font-weight: 300;
+              }
+            }
+
+            &__contact-email {
+              display: flex;
+              align-items: center;
+              
+              &__email {
+                max-width: 8rem;
+                font-weight: 300;
+                word-wrap: break-word;
+              }
+            }
+          }
+
+          &__bottom {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+
+            &__location {
+              display: flex;
+              align-items: center;
+
+              &__name {
+                max-width: 8rem;
+                font-weight: 300;
+                word-wrap: break-word;
+              }
+            }
+
+            &__nationality {
+              display: flex;
+              align-items: center;
+              
+              & > span {
+                font-weight: 300;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &__right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      width: calc(100% - 2rem - 42%);
+
+      &__experiences {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        width: 100%;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border-radius: 1rem;
+
+        &__content {
+          width: 100%;
+
+          &__item {
+            width: 100%;
+
+            &__info {
+              width: 100%;
+
+              & > ul {
+                padding: 0 2rem;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.candidates-item-icon {
+  color: var(--success);
+  margin: 0 0.5rem 0 0;
+}

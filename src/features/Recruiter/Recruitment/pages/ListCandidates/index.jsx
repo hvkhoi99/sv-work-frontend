@@ -1,6 +1,7 @@
 import PaginationSimple from 'components/PaginationSimple';
 import React, { useState } from 'react';
 import CandidatesCard from '../../components/CandidatesCard';
+import CandidatePage from '../Candidate';
 // import PropTypes from 'prop-types';
 import './ListCandidates.scss';
 
@@ -33,7 +34,7 @@ function ListCandidates(props) {
         </div>
 
         <div className="list-candidates__container__right">
-
+          <CandidatePage />
         </div>
       </div>
     </div>
