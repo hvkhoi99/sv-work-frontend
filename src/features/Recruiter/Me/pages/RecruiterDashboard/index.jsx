@@ -24,9 +24,9 @@ function RecruiterDashboardPage(props) {
   const availableJobsPath = `${Paths.recruiterDashboard}/available-jobs`;
   const closedRecruitmentsPath = `${Paths.recruiterDashboard}/closed-recruitments`;
   const user = useSelector((state) => state.user.current);
+  const [dashboardIndexData, setDashboardIndexData] = useState({});
   const history = useHistory();
   const location = history.location.pathname;
-  const [dashboardIndexData, setDashboardIndexData] = useState({});
   const [currentPath, setCurrentPath] = useState(location);
   const [isLoading, setIsLoading] = useState(true);
   const [show, setShow] = useState(false);
@@ -68,7 +68,10 @@ function RecruiterDashboardPage(props) {
   }
 
   const handleCreateRecruitment = () => {
-    history.push(`${Paths.recruiterDashboard}/available-jobs/create`);
+    history.push({
+      pathname: `${Paths.recruiterDashboard}/available-jobs/create`,
+      state: {isCreateMode: true}
+    });
   }
 
   const onShow = (value) => {

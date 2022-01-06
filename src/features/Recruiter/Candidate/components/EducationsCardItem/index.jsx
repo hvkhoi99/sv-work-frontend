@@ -1,23 +1,32 @@
 import React from 'react';
 import * as MdIcons from 'react-icons/md';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import moment from 'moment';
 
 EducationsCardItem.propTypes = {
-  
+  education: PropTypes.object
 };
 
+EducationsCardItem.defaultProps = {
+  education: {}
+}
+
 function EducationsCardItem(props) {
+  const { education } = props;
+
   return (
     <div className="educations-card__content__item">
       <div className="educations-card__content__item__icon">
         <MdIcons.MdSchool className="education-item-icon" />
       </div>
       <div className="educations-card__content__item__info">
-        <span>Bach Khoa University</span>
+        <span>{education.school}</span>
         <ul>
-          <li>8/2017 - 3/2022</li>
-          <li>Major: Information Technology</li>
-          <li>Achievements: Good - GPA 8.0</li>
+          <li>
+            {moment(education.from_date).format('DD/MM/YYYY')} - {moment(education.to_date).format('DD/MM/YYYY')}
+          </li>
+          <li>Major: {education.major}</li>
+          <li>Achievements: {education.achievements}</li>
         </ul>
       </div>
     </div>

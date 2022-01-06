@@ -1,6 +1,6 @@
 const helper = {
-  scrollToTop: () => {
-    return window.scrollTo({ top: 0, behavior: 'smooth' });
+  scrollToTop: (topPosition) => {
+    return window.scrollTo({ top: !topPosition ? 0 : topPosition, behavior: 'smooth' });
   },
 
   splitCommaString: (string, className) => {

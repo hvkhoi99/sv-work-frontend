@@ -7,8 +7,9 @@ import ListCandidates from 'features/Recruiter/Candidate/pages/ListCandidates';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import helper from 'utils/common';
+import RecruitmentDetailMenuOption from '../../components/RecruitmentDetailMenuOption';
 import RecruitmentDetail from '../RecruitmentDetail';
 import './DetailsRecruitment.scss';
 // import PropTypes from 'prop-types';
@@ -22,19 +23,23 @@ DetailsRecruitmentPage.defaultProps = {
 }
 
 function DetailsRecruitmentPage(props) {
-  const history = useHistory();
-  const { enqueueSnackbar } = useSnackbar();
   const user = useSelector((state) => state.user.current);
-  const [isActiveIndex, setIsActiveIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const { recruitmentId } = useParams();
+  const recruitmentDetailPath = `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}`;
+  const listCandidatesPath = `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates`;
+  const history = useHistory();
+  const location = history.location.pathname;
+  const [currentPath, setCurrentPath] = useState(location);
   const [recruitmentDetail, setRecruitmentDetail] = useState({});
   const [isClosing, setIsClosing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
-  const handleChangeOptionMenu = (index) => {
-    return setIsActiveIndex(index);
-  };
+  const options = [
+    { id: 0, name: "Recruitment Detail", path: recruitmentDetailPath },
+    { id: 1, name: "List Candidates", path: listCandidatesPath }
+  ]
 
   useEffect(() => {
     const fetchRecruitmentDetail = async () => {
@@ -58,8 +63,12 @@ function DetailsRecruitmentPage(props) {
   const handleToEditRecruitment = () => {
     history.push({
       pathname: `/recruiter/me/dashboard/available-jobs/${recruitmentId}/update`,
-      state: { ...recruitmentDetail }
+      state: { historyRecruitment: recruitmentDetail, isEditMode: true }
     })
+  };
+
+  const onChangeIndex = (option) => {
+    return setCurrentPath(option.path);
   };
 
   const handleCloseRecruitment = async (e) => {
@@ -153,29 +162,23 @@ function DetailsRecruitmentPage(props) {
               </div>
               <div className="details-recruitment__container__bottom">
                 <div className="details-recruitment__container__bottom__menu">
-                  <Link
-                    to="#"
-                    className={isActiveIndex === 0
+                  {options.map((option, index) => {
+                    const activeClassName = currentPath === option.path
                       ? "details-recruitment__container__bottom__menu__item recruitment-detail-link isActive"
                       : "details-recruitment__container__bottom__menu__item recruitment-detail-link"
-                    }
-                    onClick={() => handleChangeOptionMenu(0)}
-                  >Recruitment Detail</Link>
-                  <Link
-                    to="#"
-                    className={isActiveIndex === 1
-                      ? "details-recruitment__container__bottom__menu__item list-candidates-link isActive"
-                      : "details-recruitment__container__bottom__menu__item list-candidates-link"
-                    }
-                    onClick={() => handleChangeOptionMenu(1)}
-                  >List Candidates</Link>
+                    return <RecruitmentDetailMenuOption
+                      key={index}
+                      activeClassName={activeClassName}
+                      option={option}
+                      onChangeIndex={onChangeIndex}
+                    />
+                  })}
                 </div>
                 <div className="details-recruitment__container__bottom__description">
-                  {
-                    isActiveIndex === 0
-                      ? <RecruitmentDetail recruitmentDetail={recruitmentDetail} />
-                      : <ListCandidates />
-                  }
+                  {currentPath === recruitmentDetailPath
+                    ? <RecruitmentDetail recruitmentDetail={recruitmentDetail} />
+                    : currentPath === listCandidatesPath
+                      ? <ListCandidates recruitmentId={recruitmentId} /> : <></>}
                 </div>
               </div>
             </div>

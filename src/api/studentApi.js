@@ -53,6 +53,17 @@ const studentApi = {
   deleteRecruitment: (id) => {
     const url = `/student/recruiter/recruitment/${id}`;
     return axiosClient.delete(url);
+  },
+
+  getRecruitmentCandidates: (id, params) => {
+    const url = `/student/recruiter/recruitment/${id}/candidates?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
+  // Student -> Recruiter -> Candidate
+  getCandidateProfile: (id) => {
+    const url = `/student/recruiter/candidate/${id}`;
+    return axiosClient.get(url);
   }
 }
 

@@ -15,11 +15,16 @@
 
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
+  min-width: 15rem;
+
   margin: 0 0 2rem 0;
   border-radius: 1rem;
   cursor: pointer;
+  color: black;
 
   &:hover {
+    text-decoration: none;
+    color: black;
     background-color: rgba(0, 255, 0, 0.1);
     transition: all 0.15s ease-out;
   }
@@ -28,7 +33,7 @@
     display: flex;
     align-items: center;
     width: 88%;
-    padding: 1rem 1rem;
+    padding: 1rem 0.5rem;
 
     &__img {
       & > img {
@@ -47,6 +52,7 @@
       &__name {
         font-size: 1rem;
         font-weight: 600;
+        // word-wrap: break-word;
       }
 
       &__job-title {

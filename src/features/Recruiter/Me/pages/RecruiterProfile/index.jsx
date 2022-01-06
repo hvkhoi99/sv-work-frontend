@@ -1,6 +1,8 @@
 import LoadingUI from 'components/Loading';
+import PopupTextEditor from 'components/PopupTextEditor';
 import Images from 'constants/images';
 import React, { useEffect, useState } from 'react';
+import ReactHtmlParser from 'react-html-parser';
 import * as AiIcons from 'react-icons/ai';
 import * as GoIcons from 'react-icons/go';
 import * as HiIcons from 'react-icons/hi';
@@ -100,10 +102,11 @@ function RecruiterProfilePage(props) {
             </div>
             <div className="recruiter-profile__container__overall">
               <div className="recruiter-profile__container__overall__title">
-                <h3>Overall</h3>
+                <span>Overall</span>
                 <GoIcons.GoPrimitiveDot className="title-dot" />
+                <PopupTextEditor/>
               </div>
-              <p>{recruiter.description}</p>
+              <p>{ReactHtmlParser(recruiter.description)}</p>
             </div>
           </div>
         </div>

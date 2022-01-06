@@ -1,21 +1,30 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-// import PropTypes from 'prop-types';
+import helper from 'utils/common';
 import './LanguagesCard.scss';
 
 LanguagesCard.propTypes = {
-
+  languages: PropTypes.string
 };
 
+LanguagesCard.defaultProps = {
+  languages: ''
+}
+
 function LanguagesCard(props) {
+  const { languages } = props;
+
   return (
     <div className="languages-card">
       <div className="languages-card__title">
         <span>Languages</span>
       </div>
       <div className="languages-card__content">
-        <span className="languages-card__item">English</span>
-        <span className="languages-card__item">Japanese</span>
-        <span className="languages-card__item">Chinese</span>
+        {
+          languages !== null 
+          ? helper.splitCommaString(languages, "languages-card__content__item")
+          : <span className="card-nia">No Information Available.</span>
+        }
       </div>
     </div>
   );

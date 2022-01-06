@@ -1,12 +1,19 @@
 import React from 'react';
 import * as FaIcons from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 CertificatesCardItem.propTypes = {
-
+  certificate: PropTypes.object
 };
 
+CertificatesCardItem.defaultProps = {
+  certificate: {}
+}
+
 function CertificatesCardItem(props) {
+  const { certificate} = props;
+
   return (
     <div className="certificates-card__content__item">
       <div className="certificates-card__content__item__icon">
@@ -18,17 +25,12 @@ function CertificatesCardItem(props) {
             to="#"
             className="certificates-card__content__item__info__title__link"
           >
-            TOEIC Certificate with score issued (2019)
+            {certificate.title}
             {/* <FaIcons.FaEye className="certificates-card__content__item__info__title__link__icon" /> */}
           </Link>
         </div>
-        <span>California University</span>
-        <p>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-          Ipsum tempore velit obcaecati itaque cum, inventore consequatur,
-          sed deserunt voluptatum, non aspernatur dicta.
-          Adipisci aliquam consequuntur consectetur quos, maiores libero quia!
-        </p>
+        <span>{certificate.issuing_organization}</span>
+        <p>{certificate.description}</p>
       </div>
     </div>
   );

@@ -1,6 +1,8 @@
 import LoadingUI from 'components/Loading';
+import Paths from 'constants/paths';
+import RecruiterDashboardPage from 'features/Recruiter/Me/pages/RecruiterDashboard';
 import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import CreateRecruitmentForm from '../../components/CreateRecruitmentForm';
 import './CreateRecruitment.scss';
 
@@ -9,11 +11,10 @@ CreateRecruitmentPage.propTypes = {
 
 function CreateRecruitmentPage(props) {
   const history = useHistory();
-  const historyRecruitment = history.location.state;
+  const { historyRecruitment, isEditMode, isCreateMode } = history.location.state;
+  // const isHistoryObject = typeof historyRecruitment === 'object' && historyRecruitment !== null;
   const [isLoading, setIsLoading] = useState(true);
-  const { update } = useParams();
-  const isEditMode = update === "update";
-  let recruitment = !isEditMode ? {
+  let recruitment = isCreateMode ? {
     title: '',
     is_full_time: '',
     job_category: '',
@@ -26,10 +27,10 @@ function CreateRecruitmentPage(props) {
     max_salary: '',
     location: '',
     hashtags: ''
-  } : {
+  } : isEditMode ? {
     ...historyRecruitment,
     is_full_time: historyRecruitment.is_full_time ? "Full Time" : "Part Time",
-  };
+  } : {};
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -40,21 +41,24 @@ function CreateRecruitmentPage(props) {
     }
   }, [])
 
+
   return (
     <>
       {
-        isLoading
-          ? <div className="loading-ui">
-            < LoadingUI />
-          </div >
-          : <div className="create-recruitment">
-            <div className="create-recruitment__container">
-              <CreateRecruitmentForm
-                recruitment={recruitment}
-                isEditMode={isEditMode}
-              />
+        isEditMode !== true && isCreateMode !== true
+          ? <Redirect to={`${Paths.recruiterDashboard}/available-jobs`} component={RecruiterDashboardPage} />
+          : isLoading
+            ? <div className="loading-ui">
+              < LoadingUI />
+            </div >
+            : <div className="create-recruitment">
+              <div className="create-recruitment__container">
+                <CreateRecruitmentForm
+                  recruitment={recruitment}
+                  isEditMode={isEditMode}
+                />
+              </div>
             </div>
-          </div>
       }
     </>
   );

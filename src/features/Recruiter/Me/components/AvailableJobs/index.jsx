@@ -9,6 +9,7 @@ import * as MdIcons from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
+import helper from 'utils/common';
 import AvailableJobsCard from '../AvailableJobsCard';
 import './AvailableJobs.scss';
 
@@ -36,6 +37,7 @@ function AvailableJobs(props) {
   const limit = 3;
 
   useEffect(() => {
+    helper.scrollToTop();
     const fetchAvailableJobs = async () => {
       try {
         const params = {

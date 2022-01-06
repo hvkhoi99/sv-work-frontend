@@ -53,6 +53,11 @@ const recruiterApi = {
   deleteRecruitment: (id) => {
     const url = `/recruiter/recruitment/${id}`;
     return axiosClient.delete(url);
+  },
+
+  getRecruitmentCandidates: (id, params) => {
+    const url = `/recruiter/recruitment/${id}/candidates?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
   }
 }
 

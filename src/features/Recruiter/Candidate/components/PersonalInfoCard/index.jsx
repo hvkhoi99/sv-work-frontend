@@ -3,14 +3,21 @@ import * as BsIcons from 'react-icons/bs';
 import * as FaIcons from 'react-icons/fa';
 import * as ImIcons from 'react-icons/im';
 import * as MdIcons from 'react-icons/md';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import './PersonalInfoCard.scss';
+import moment from 'moment';
 
 PersonalInfoCard.propTypes = {
-
+  personalInfo: PropTypes.object
 };
 
+PersonalInfoCard.defaultProps = {
+  personalInfo: {}
+}
+
 function PersonalInfoCard(props) {
+  const { personalInfo } = props;
+
   return (
     <div className="personal-info-card">
       <div className="personal-info-card__title">
@@ -22,13 +29,13 @@ function PersonalInfoCard(props) {
             <BsIcons.BsCalendarDate
               className="candidates-item-icon"
             />
-            <span>03/10/1999</span>
+            <span>{moment(personalInfo.date_of_birth).format("DD/MM/YYYY")}</span>
           </div>
           <div className="personal-info-card__content__top__sex">
             <FaIcons.FaUser
               className="candidates-item-icon"
             />
-            <span>Male</span>
+            <span>{personalInfo.gender ? "Male" : "Female"}</span>
           </div>
         </div>
         <div className="personal-info-card__content__center">
@@ -36,13 +43,13 @@ function PersonalInfoCard(props) {
             <MdIcons.MdEmail
               className="candidates-item-icon"
             />
-            <span>hvkhoi.99@gmail.com</span>
+            <span>{personalInfo.email}</span>
           </div>
           <div className="personal-info-card__content__center__phone">
             <FaIcons.FaPhoneAlt
               className="candidates-item-icon"
             />
-            <span>0702655787</span>
+            <span>{personalInfo.phone_number}</span>
           </div>
         </div>
         <div className="personal-info-card__content__bottom">
@@ -50,13 +57,13 @@ function PersonalInfoCard(props) {
             <ImIcons.ImLocation
               className="candidates-item-icon"
             />
-            <span>Danang, Vietnam</span>
+            <span>{personalInfo.address}</span>
           </div>
           <div className="personal-info-card__content__bottom__nationality">
             <FaIcons.FaPassport
               className="candidates-item-icon"
             />
-            <span>Vietnam</span>
+            <span>{personalInfo.nationality}</span>
           </div>
         </div>
       </div>
