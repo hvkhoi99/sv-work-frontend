@@ -17,16 +17,20 @@ import './Candidate.scss';
 
 CandidatePage.propTypes = {
   candidateId: PropTypes.number,
+  onApproveCandidate: PropTypes.func
 };
 
 CandidatePage.defaultProps = {
-  candidateId: 0
+  candidateId: 0,
+  onApproveCandidate: null
 }
 
 function CandidatePage(props) {
-  const { candidateId } = props;
+  const { candidateId, onApproveCandidate } = props;
   const [isLoading, setIsLoading] = useState(true);
   const [candidate, setCandidate] = useState({});
+  const [approveLoading, setApproveLoading] = useState(false);
+  const [rejectLoading, setRejectLoading] = useState(false);
   // const {candidateId} = useParams();
 
   useEffect(() => {
@@ -34,10 +38,8 @@ function CandidatePage(props) {
     const fetchCandidateProfile = async () => {
       try {
         const data = await studentApi.getCandidateProfile(candidateId);
-        console.log(data.data.data)
         setCandidate(data.data.data)
         setIsLoading(false);
-
       } catch (error) {
         console.log("Cannot fetch candidate's profile. " + error.message)
       }
@@ -45,6 +47,26 @@ function CandidatePage(props) {
 
     fetchCandidateProfile();
   }, [candidateId])
+
+  const handleApprove = (type) => {
+    switch (type) {
+      case "approve":
+        setApproveLoading(true);
+        setTimeout(() => {
+          setApproveLoading(false);
+        }, 2000)
+        break;
+      case "reject":
+        setRejectLoading(true);setTimeout(() => {
+          setRejectLoading(false);
+        }, 2000)
+        break;
+      default:
+        break;
+    }
+
+    onApproveCandidate(candidate);
+  }
 
   return (
     <>
@@ -65,8 +87,26 @@ function CandidatePage(props) {
                 {candidate.job_title}
               </span>
               <div className="candidate__above__btn-group">
-                <button className="btn btn-success btn-sm mr-4">Approve</button>
-                <button className="btn btn-secondary btn-sm">Reject</button>
+                <button
+                  type="button"
+                  className="btn btn-success btn-sm mr-4"
+                  disabled={approveLoading}
+                  style={approveLoading ? { cursor: "default" } : { cursor: "pointer" }}
+                  onClick={() => handleApprove("approve")}
+                >
+                  {approveLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                  Approve
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-secondary btn-sm"
+                  disabled={rejectLoading}
+                  style={rejectLoading ? { cursor: "default" } : { cursor: "pointer" }}
+                  onClick={() => handleApprove("reject")}
+                >
+                  {rejectLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                  Reject
+                </button>
               </div>
               <div className="candidate__above__overview">
                 <div className="candidate__above__overview__title">

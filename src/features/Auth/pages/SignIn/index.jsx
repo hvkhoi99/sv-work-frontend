@@ -66,7 +66,7 @@ function SignInPage(props) {
           email: values.email,
           password: values.password
         });
-  
+
         const actionResult = await dispatch(action);
         unwrapResult(actionResult);
         isRecruiterPath && localStorage.removeItem('isRecruiterPath');
@@ -217,7 +217,12 @@ function SignInPage(props) {
                       </Link>
                     </div>
                     <div className="form-group signin-button">
-                      <button disabled={isSubmitting} className="btn btn-success btn-sm" type="submit">
+                      <button
+                        type="submit"
+                        disabled={isSubmitting}
+                        style={isSubmitting ? { cursor: "default" } : { cursor: "pointer" }}
+                        className="btn btn-success btn-sm"
+                      >
                         {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
                         Sign in
                       </button>
@@ -232,9 +237,10 @@ function SignInPage(props) {
 
                     <div className="form-group button">
                       <button
-                        disabled={isSpinner && true}
-                        className="btn btn-sm google"
                         type="button"
+                        disabled={isSpinner}
+                        style={isSpinner ? { cursor: "default" } : { cursor: "pointer" }}
+                        className="btn btn-sm google"
                         onClick={onGoogleLogin}
                       >
                         {isSpinner && <span className="spinner-border spinner-border-sm mr-2" />}

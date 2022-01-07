@@ -101,45 +101,50 @@ function AdminLoginPage(props) {
             </div>
           </form> */}
           <Formik
-              initialValues={{
-                email: '',
-                password: ''
-              }}
-              validationSchema={validationSchema}
-              onSubmit={onSignIn}
-            >
-              {formikProps => {
-                const { isSubmitting } = formikProps;
+            initialValues={{
+              email: '',
+              password: ''
+            }}
+            validationSchema={validationSchema}
+            onSubmit={onSignIn}
+          >
+            {formikProps => {
+              const { isSubmitting } = formikProps;
 
-                return (
-                  <Form>
-                    <FastField
-                      name="email"
-                      component={InputField}
+              return (
+                <Form>
+                  <FastField
+                    name="email"
+                    component={InputField}
 
-                      placeholder="Email"
-                    />
+                    placeholder="Email"
+                  />
 
-                    <FastField
-                      name="password"
-                      component={InputField}
+                  <FastField
+                    name="password"
+                    component={InputField}
 
-                      placeholder="Password*"
-                      type="password"
-                    />
+                    placeholder="Password*"
+                    type="password"
+                  />
 
-                    <div className="form-group signin-button">
-                      <button disabled={isSubmitting} className="btn btn-success btn-sm" type="submit">
-                        {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                        Sign in
-                      </button>
-                      {isError &&
-                        <span className="text-danger form-span">You have entered an invalid username or password</span>}
-                    </div>
-                  </Form>
-                );
-              }}
-            </Formik>
+                  <div className="form-group signin-button">
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      style={isSubmitting ? { cursor: "default" } : { cursor: "pointer" }}
+                      className="btn btn-success btn-sm"
+                    >
+                      {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                      Sign in
+                    </button>
+                    {isError &&
+                      <span className="text-danger form-span">You have entered an invalid username or password</span>}
+                  </div>
+                </Form>
+              );
+            }}
+          </Formik>
         </div>
       </div>
     );

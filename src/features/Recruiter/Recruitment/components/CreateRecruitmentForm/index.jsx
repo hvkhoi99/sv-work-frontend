@@ -325,6 +325,7 @@ function CreateRecruitmentForm(props) {
                   <FormGroup className="formGroup-btn-publish">
                     <Button
                       disabled={(isSubmitting && isBeautiful)}
+                      style={(isSubmitting && isBeautiful) ? { cursor: "default"} : { cursor: "pointer" }}
                       type="submit"
                       color={'success'}
                       onClick={handleClick}

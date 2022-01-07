@@ -38,7 +38,7 @@ function CandidatesCard(props) {
         : `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates?candidateId=${candidate.id}`
       }
       className="candidates-card"
-      onClick={() => handleActiveCard(index)}
+      onClick={() => handleActiveCard(index, candidate)}
     >
       <div className="candidates-card__left">
         <div className="candidates-card__left__img">

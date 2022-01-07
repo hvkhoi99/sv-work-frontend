@@ -64,6 +64,11 @@ const studentApi = {
   getCandidateProfile: (id) => {
     const url = `/student/recruiter/candidate/${id}`;
     return axiosClient.get(url);
+  },
+
+  approveCandidate: (recruitmentId, candidateId) => {
+    const url = `/student/recruiter/recruitment/${recruitmentId}/candidate/${candidateId}/approve`;
+    return axiosClient.put(url);
   }
 }
 
