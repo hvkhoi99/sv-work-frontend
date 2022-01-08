@@ -16,6 +16,7 @@ CandidatesCard.propTypes = {
   recruitmentId: PropTypes.string,
   candidate: PropTypes.object,
   page: PropTypes.number,
+  isClosed: PropTypes.bool,
 };
 
 CandidatesCard.defaultProps = {
@@ -24,18 +25,27 @@ CandidatesCard.defaultProps = {
   index: 0,
   recruitmentId: '',
   candidate: {},
-  page: 0
+  page: 0,
+  isClosed: false,
 }
 
 function CandidatesCard(props) {
-  const { activeClass, handleActiveCard, index, recruitmentId, candidate, page } = props;
+  const { activeClass, handleActiveCard, index, recruitmentId, candidate, page, isClosed } = props;
 
   return (
     <Link
       to={
         page > 0 
-        ? `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates?page=${page}&candidateId=${candidate.id}`
-        : `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates?candidateId=${candidate.id}`
+        ? (
+          !isClosed
+          ? `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates?page=${page}&candidateId=${candidate.id}`
+          : `${Paths.recruiterDashboard}/closed-recruitments/${recruitmentId}/list-candidates?page=${page}&candidateId=${candidate.id}`
+        )
+        : (
+          !isClosed
+          ? `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates?candidateId=${candidate.id}`
+          : `${Paths.recruiterDashboard}/closed-recruitments/${recruitmentId}/list-candidates?candidateId=${candidate.id}`
+        ) 
       }
       className="candidates-card"
       onClick={() => handleActiveCard(index, candidate)}

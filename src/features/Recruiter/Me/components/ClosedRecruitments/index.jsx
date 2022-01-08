@@ -52,7 +52,6 @@ function ClosedRecruitments(props) {
         setpageCount(Math.ceil(total / limit));
         setItems(data.data.data.data);
         setIsLoading(false);
-        return data.data.data;
       } catch (error) {
         console.log("Cannot get avilable jobs. Error: ", error.message);
       }

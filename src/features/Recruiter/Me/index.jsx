@@ -34,6 +34,8 @@ function RecruiterMeFeature(props) {
         <Route exact path={`${match.url}/dashboard/available-jobs/:recruitmentId/update`} component={CreateRecruitmentPage} />
         <Route exact path={`${match.url}/dashboard/closed-recruitments`} component={RecruiterDashboardPage} />
         <Route exact path={`${match.url}/dashboard/closed-recruitments/:recruitmentId`} component={DetailsRecruitmentPage} />
+        <Route exact path={`${match.url}/dashboard/closed-recruitments/:recruitmentId/list-candidates`} component={DetailsRecruitmentPage} />
+        <Route exact path={`${match.url}/dashboard/closed-recruitments/:recruitmentId/list-candidates/:candidateId`} component={DetailsRecruitmentPage} />
         <Route exact path={`${match.url}/account`} component={RecruiterAccountPage} />
         <Route path="*" component={NotFoundPage} />
       </Switch>

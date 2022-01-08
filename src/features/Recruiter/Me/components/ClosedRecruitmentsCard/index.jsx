@@ -19,7 +19,7 @@ ClosedRecruitmentsCard.defaultProps = {
 }
 
 function ClosedRecruitmentsCard(props) {
-  const { recruitment, onViewRecruitment, onDelete} = props;
+  const { recruitment, onViewRecruitment, onDelete } = props;
   const [isDeleting, setIsDeleting] = useState(false);
 
   const handleViewRecruitment = (e, recruitment) => {

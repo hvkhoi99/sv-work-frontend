@@ -17,16 +17,18 @@ import './Candidate.scss';
 
 CandidatePage.propTypes = {
   candidateId: PropTypes.number,
-  onApproveCandidate: PropTypes.func
+  onApproveCandidate: PropTypes.func,
+  isClosed: PropTypes.bool,
 };
 
 CandidatePage.defaultProps = {
   candidateId: 0,
-  onApproveCandidate: null
+  onApproveCandidate: null,
+  isClosed: false,
 }
 
 function CandidatePage(props) {
-  const { candidateId, onApproveCandidate } = props;
+  const { candidateId, onApproveCandidate, isClosed } = props;
   const [isLoading, setIsLoading] = useState(true);
   const [candidate, setCandidate] = useState({});
   const [approveLoading, setApproveLoading] = useState(false);
@@ -57,7 +59,7 @@ function CandidatePage(props) {
         }, 2000)
         break;
       case "reject":
-        setRejectLoading(true);setTimeout(() => {
+        setRejectLoading(true); setTimeout(() => {
           setRejectLoading(false);
         }, 2000)
         break;
@@ -86,28 +88,35 @@ function CandidatePage(props) {
               <span className="candidate__above__candidate-job-title">
                 {candidate.job_title}
               </span>
-              <div className="candidate__above__btn-group">
-                <button
-                  type="button"
-                  className="btn btn-success btn-sm mr-4"
-                  disabled={approveLoading}
-                  style={approveLoading ? { cursor: "default" } : { cursor: "pointer" }}
-                  onClick={() => handleApprove("approve")}
-                >
-                  {approveLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                  Approve
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-secondary btn-sm"
-                  disabled={rejectLoading}
-                  style={rejectLoading ? { cursor: "default" } : { cursor: "pointer" }}
-                  onClick={() => handleApprove("reject")}
-                >
-                  {rejectLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                  Reject
-                </button>
-              </div>
+              {
+                !isClosed 
+                ? <div className="candidate__above__btn-group">
+                  <button
+                    type="button"
+                    className="btn btn-success btn-sm mr-4"
+                    disabled={approveLoading}
+                    style={approveLoading ? { cursor: "default" } : { cursor: "pointer" }}
+                    onClick={() => handleApprove("approve")}
+                  >
+                    {approveLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                    Approve
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-secondary btn-sm"
+                    disabled={rejectLoading}
+                    style={rejectLoading ? { cursor: "default" } : { cursor: "pointer" }}
+                    onClick={() => handleApprove("reject")}
+                  >
+                    {rejectLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                    Reject
+                  </button>
+                </div>
+                : <div style={{
+                  borderBottom: "1px solid lightgrey",
+                  width: "100%",
+                }} />
+              }
               <div className="candidate__above__overview">
                 <div className="candidate__above__overview__title">
                   <span>Overview</span>

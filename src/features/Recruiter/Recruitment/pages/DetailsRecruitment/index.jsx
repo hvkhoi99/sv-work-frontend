@@ -24,17 +24,22 @@ DetailsRecruitmentPage.defaultProps = {
 
 function DetailsRecruitmentPage(props) {
   const user = useSelector((state) => state.user.current);
-  const [isLoading, setIsLoading] = useState(true);
-  const { recruitmentId } = useParams();
-  const recruitmentDetailPath = `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}`;
-  const listCandidatesPath = `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates`;
   const history = useHistory();
   const location = history.location.pathname;
   const [currentPath, setCurrentPath] = useState(location);
-  const [recruitmentDetail, setRecruitmentDetail] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
   const [isClosing, setIsClosing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [recruitmentDetail, setRecruitmentDetail] = useState({});
   const { enqueueSnackbar } = useSnackbar();
+  
+  const { recruitmentId } = useParams();
+  const recruitmentDetailPath = !recruitmentDetail.is_closed 
+  ? `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}`
+  : `${Paths.recruiterDashboard}/closed-recruitments/${recruitmentId}`;
+  const listCandidatesPath = !recruitmentDetail.is_closed
+  ? `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates`
+  : `${Paths.recruiterDashboard}/closed-recruitments/${recruitmentId}/list-candidates`;
 
   const options = [
     { id: 0, name: "Recruitment Detail", path: recruitmentDetailPath },
@@ -178,7 +183,10 @@ function DetailsRecruitmentPage(props) {
                   {currentPath === recruitmentDetailPath
                     ? <RecruitmentDetail recruitmentDetail={recruitmentDetail} />
                     : currentPath === listCandidatesPath
-                      ? <ListCandidates recruitmentId={recruitmentId} /> : <></>}
+                      ? <ListCandidates 
+                      recruitmentId={recruitmentId} 
+                      isClosed={recruitmentDetail.is_closed}
+                      /> : <></>}
                 </div>
               </div>
             </div>

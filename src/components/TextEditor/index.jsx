@@ -9,18 +9,20 @@ TextEditor.propTypes = {
   title: PropTypes.string,
   close: PropTypes.func,
   onTextChange: PropTypes.func,
-  initData: PropTypes.string
+  initData: PropTypes.string,
+  isUpdating: PropTypes.bool,
 };
 
 TextEditor.defaultProps = {
   title: '',
   close: null,
   onTextChange: null,
-  initData: ''
+  initData: '',
+  isUpdating: false,
 }
 
 function TextEditor(props) {
-  const { title, close, onTextChange, initData } = props;
+  const { title, close, onTextChange, initData, isUpdating } = props;
   const [data, setData] = useState(initData)
 
   const handleChange = (e, editor) => {
@@ -28,8 +30,8 @@ function TextEditor(props) {
     setData(currentData);
   }
 
-  const handleDone = (data) => {
-    onTextChange(data);
+  const handleDone = async (data) => {
+    await onTextChange(data);
     close();
   }
 
@@ -48,7 +50,12 @@ function TextEditor(props) {
           type="button"
           className="btn btn-success btn-sm"
           onClick={() => handleDone(data)}
-        >Done</button>
+          disabled={isUpdating}
+          style={isUpdating ? { cursor: "default" } : { cursor: "pointer" }}
+        >
+          {isUpdating && <span className="spinner-border spinner-border-sm mr-1" /> }
+          Done
+        </button>
         <button
           type="button"
           className="btn btn-secondary btn-sm"

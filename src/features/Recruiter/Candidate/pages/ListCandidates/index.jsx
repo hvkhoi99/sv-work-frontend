@@ -13,37 +13,42 @@ import CandidatePage from '../Candidate';
 import * as MdIcons from 'react-icons/md';
 import './ListCandidates.scss';
 import { useSnackbar } from 'notistack';
-// import helper from 'utils/common';
+import helper from 'utils/common';
 
 ListCandidates.propTypes = {
-  recruitmentId: PropTypes.string
+  recruitmentId: PropTypes.string,
+  isClosed: PropTypes.bool,
 };
 
 ListCandidates.defaultProps = {
-  recruitmentId: ''
+  recruitmentId: '',
+  isClosed: false,
 }
 
 function ListCandidates(props) {
-  const { recruitmentId } = props;
+  const history = useHistory();
   const user = useSelector((state) => state.user.current);
-  const { enqueueSnackbar } = useSnackbar();
+  const [candidates, setCandidates] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isListCardLoading, setIsListCardLoading] = useState(true);
-  const [candidates, setCandidates] = useState([]);
-  const history = useHistory();
+  const [isReloadPage, setIsReloadPage] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
+
+  const { recruitmentId, isClosed } = props;
   const { search } = useLocation();
   const page = parseInt(queryString.parse(search).page);
+  let [currentPage, setCurrentPage] = useState(page > 0 ? page : 1);
+  const [lastPage, setLastPage] = useState(1);
+  const limit = 3;
+
   const currentCandidateId = parseInt(queryString.parse(search).candidateId);
   let [candidateId, setCandidateId] = useState(currentCandidateId);
   const indexOfCandidateId = candidateId > 0 ? candidates.findIndex((candidate) => candidate.id === candidateId) : null;
   const [activeIndex, setActiveIndex] = useState(indexOfCandidateId);
-  let [currentPage, setCurrentPage] = useState(page > 0 ? page : 1);
-  const [lastPage, setLastPage] = useState(1);
-  const [isReloadPage, setIsReloadPage] = useState(false);
-  const limit = 3;
 
   useEffect(() => {
-    // helper.scrollToTop();
+    setActiveIndex(-1);
+    setCandidateId("#");
     const fetchRecruitmentCandidates = async () => {
       try {
         const params = {
@@ -54,6 +59,7 @@ function ListCandidates(props) {
         const data = user.role_id === 2
           ? await recruiterApi.getRecruitmentCandidates(recruitmentId, params)
           : await studentApi.getRecruitmentCandidates(recruitmentId, params)
+        data.data.data.data.length === 0 && helper.scrollToTop();
         setCandidates(data.data.data.data);
         setLastPage(data.data.data.last_page);
         setIsListCardLoading(false);
@@ -72,6 +78,7 @@ function ListCandidates(props) {
   }
 
   const handleChangePageIndex = (e, state) => {
+    helper.scrollToTop(350);
     switch (state) {
       case 0:
         if (currentPage === 1) return;
@@ -79,7 +86,11 @@ function ListCandidates(props) {
         setIsListCardLoading(true);
         setActiveIndex(null);
         setCurrentPage(prevPage);
-        history.push(`${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates?page=${prevPage}`);
+        history.push(
+          !isClosed
+            ? `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates?page=${prevPage}`
+            : `${Paths.recruiterDashboard}/closed-recruitments/${recruitmentId}/list-candidates?page=${prevPage}`
+        );
         break;
       case 1:
         if (currentPage === lastPage) return;
@@ -87,23 +98,25 @@ function ListCandidates(props) {
         setIsListCardLoading(true);
         setActiveIndex(null);
         setCurrentPage(nextPage);
-        history.push(`${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates?page=${nextPage}`);
+        history.push(
+          !isClosed
+            ? `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates?page=${nextPage}`
+            : `${Paths.recruiterDashboard}/closed-recruitments/${recruitmentId}/list-candidates?page=${nextPage}`
+        );
         break;
       default: break;
     }
   }
 
   const onApproveCandidate = async (candidateCard) => {
-    // const newCandidates = candidates.filter((candidate) => {
-    //   return candidate.id !== candidateCard.id;
-    // })
-    // setCandidates(newCandidates);
+
     try {
       const data = await studentApi.approveCandidate(recruitmentId, candidateCard.id);
-      console.log({ data })
       if (data.data.status === 1) {
-        setActiveIndex(-1);
-        setCandidateId("#");
+        const newCandidates = candidates.filter((candidate) => {
+          return candidate.id !== candidateCard.id;
+        })
+        setCandidates(newCandidates);
         window.history.replaceState(
           null,
           "",
@@ -115,8 +128,8 @@ function ListCandidates(props) {
             )
             : `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates`
         )
-        enqueueSnackbar(`Candidate was successfully approved/rejected.`, 
-        { variant: "success"}
+        enqueueSnackbar(`Candidate was successfully approved/rejected.`,
+          { variant: "success" }
         );
         setIsReloadPage(!isReloadPage);
       } else {
@@ -154,6 +167,7 @@ function ListCandidates(props) {
                             recruitmentId={recruitmentId}
                             candidate={candidate}
                             page={page}
+                            isClosed={isClosed}
                           />
                         })}
                       </>
@@ -172,6 +186,7 @@ function ListCandidates(props) {
                       <CandidatePage
                         candidateId={candidateId}
                         onApproveCandidate={onApproveCandidate}
+                        isClosed={isClosed}
                       />
                     </div>
                     : <div className="list-candidates__container__intro">

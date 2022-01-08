@@ -48,6 +48,7 @@
       flex-direction: column;
       line-height: 1.7rem;
       margin-left: 1rem;
+      min-width: calc(100% - 6rem);
 
       &__name {
         font-size: 1rem;

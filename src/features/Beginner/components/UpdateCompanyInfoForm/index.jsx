@@ -7,15 +7,19 @@ import * as Yup from 'yup';
 import './UpdateCompanyInfoForm.scss';
 
 UpdateCompanyInfoForm.propTypes = {
-  initialValues: PropTypes.object
+  initialValues: PropTypes.object,
+  onSubmit: PropTypes.func,
+  close: PropTypes.func,
 };
 
 UpdateCompanyInfoForm.defaultProps = {
-  initialValues: {}
+  initialValues: {},
+  onSubmit: null,
+  close: null,
 }
 
 function UpdateCompanyInfoForm(props) {
-  const { initialValues } = props;
+  const { initialValues, onSubmit, close } = props;
   const phoneRegExp = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
   const validationSchema = Yup.object().shape({
@@ -50,16 +54,19 @@ function UpdateCompanyInfoForm(props) {
       .required("Company size is required")
   });
 
+  const onSubmitForm = async (values) => {
+    await onSubmit(values);
+    close();
+  }
+
   return (
     <Formik
       initialValues={initialValues}
       validationSchema={validationSchema}
-      onSubmit={props.onSubmit}
+      onSubmit={onSubmitForm}
     >
       {formikProps => {
         const { isSubmitting } = formikProps;
-        // const { values, errors, touched, isSubmitting } = formikProps;
-        // console.log({ values, errors, touched });
 
         return (
           <Form>
@@ -94,7 +101,6 @@ function UpdateCompanyInfoForm(props) {
               component={InputField}
 
               label="Location"
-              // moreClassName="width-100"
             />
 
             <div className="formGroup-industry-size">
@@ -128,11 +134,11 @@ function UpdateCompanyInfoForm(props) {
             />
 
             <FormGroup className="formGroup-button">
-              <Button 
-              type="submit" 
-              color={'success'} 
-              className="formGroup-button__btn-update"
-              disabled={isSubmitting}
+              <Button
+                type="submit"
+                color={'success'}
+                className="formGroup-button__btn-update"
+                disabled={isSubmitting}
               >
                 {isSubmitting && <Spinner children="" size="sm" />}
                 &nbsp;Update

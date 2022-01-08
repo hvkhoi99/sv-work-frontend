@@ -1,0 +1,39 @@
+.popup-update-profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  overflow-y: scroll;
+  max-height: 95vh;
+
+  &__title {
+    text-align: center;
+    width: 100%;
+
+    margin-bottom: .5rem;
+    border-bottom: 1px solid lightgrey;
+
+    & > label {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--success);
+    }
+  }
+}
+
+.edit-icon {
+  font-size: 1.5rem;
+  color: var(--success);
+  padding: 0.3rem;
+  background-color: #fff;
+  border-radius: 50%;
+  margin: 0 0.2rem 0 0;
+}
+
+.btn-edit {
+  border-radius: 2rem;
+  padding: 0.4rem 0.3rem;
+  font-weight: 600;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  font-size: 0.9rem;
+}

@@ -64,7 +64,10 @@ function RecruiterDashboardPage(props) {
   const onViewRecruitment = (recruitment) => {
     currentPath === availableJobsPath
       ? history.push(`${Paths.recruiterDashboard}/available-jobs/${recruitment.id}`)
-      : history.push(`${Paths.recruiterDashboard}/closed-recruitments/${recruitment.id}`)
+      : history.push({
+        pathname: `${Paths.recruiterDashboard}/closed-recruitments/${recruitment.id}`,
+        state: {isClosedRecruitmentsPath: true}
+      })
   }
 
   const handleCreateRecruitment = () => {

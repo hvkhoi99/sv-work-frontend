@@ -62,22 +62,29 @@ function RecruiterUpdateProfilePage(props) {
           ? await recruiterApi.createRecruiterProfile(params)
           : await studentApi.createRecruiterProfile(params);
         localStorage.setItem('user', JSON.stringify(data.data.data));
-        const result = dispatch(updateUser(data.data.data));
-        enqueueSnackbar("Your profile has been updated.", { variant: "success" });
+        dispatch(updateUser(data.data.data));
 
-        if (result.payload.r_profile !== null) {
+        if (data.data.status === 1) {
           localStorage.setItem('role_id', 2);
+          enqueueSnackbar("Your profile has been updated.", { variant: "success" });
           history.push("/recruiter");
+        } else {
+          enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
         }
       } else {
-        console.log({values});
+        console.log({ values });
         const data = user.role_id === 2
-        ? await recruiterApi.updateRecruiterProfile(values.user_id, params)
-        : await studentApi.updateRecruiterProfile(values.user_id, params);
-        localStorage.setItem('user', JSON.stringify(data.data.data));
-        dispatch(updateUser(data.data.data));
-        enqueueSnackbar("Your profile has been updated.", { variant: "success" });
-        history.push(`${Paths.recruiterDashboard}`);
+          ? await recruiterApi.updateRecruiterProfile(values.user_id, params)
+          : await studentApi.updateRecruiterProfile(values.user_id, params);
+        if (data.data.status === 1) {
+          localStorage.setItem('user', JSON.stringify(data.data.data));
+          dispatch(updateUser(data.data.data));
+          enqueueSnackbar("Your profile has been updated.", { variant: "success" });
+          history.push(`${Paths.recruiterDashboard}`);
+          return true;
+        } else {
+          enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        }
       }
 
     } catch (error) {
@@ -97,10 +104,6 @@ function RecruiterUpdateProfilePage(props) {
 
   return (
     <>
-      {/* {user.r_profile !== null
-        ? <Redirect to="/" />
-        : 
-      } */}
       {
         isLoading
           ? <div className="loading-ui">

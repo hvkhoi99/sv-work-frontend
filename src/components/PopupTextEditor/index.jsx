@@ -10,13 +10,15 @@ PopupTextEditor.propTypes = {
   onTextChange: PropTypes.func,
   initData: PropTypes.string,
   label: PropTypes.string,
+  isUpdating: PropTypes.bool,
 };
 
 PopupTextEditor.defaultProps = {
   // component: null
   onTextChange: null,
   initData: '',
-  label: ''
+  label: '',
+  isUpdating: false
 }
 
 const CustomButton = React.forwardRef(({ open, ...props }, ref) => (
@@ -39,7 +41,7 @@ const CustomButton = React.forwardRef(({ open, ...props }, ref) => (
 ));
 
 function PopupTextEditor(props) {
-  const { onTextChange, initData, label } = props;
+  const { onTextChange, initData, label, isUpdating } = props;
 
   return (
     <div className="popup-text-editor">
@@ -57,6 +59,7 @@ function PopupTextEditor(props) {
               close={close}
               onTextChange={onTextChange}
               initData={initData}
+              isUpdating={isUpdating}
             />
           )
         }
