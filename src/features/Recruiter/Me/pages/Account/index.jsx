@@ -1,8 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import userApi from 'api/userApi';
 import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import * as FaIcons from 'react-icons/fa';
 import * as HiIcons from 'react-icons/hi';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -15,9 +18,15 @@ RecruiterAccountPage.propTypes = {
 };
 
 function RecruiterAccountPage(props) {
+  const { enqueueSnackbar } = useSnackbar();
   const recruiter = useSelector((state) => state.user.current.r_profile);
   const [isChangeToPasswordForm, setIsChangeToPasswordForm] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  // const [showReal, setShowReal] = useState(false);
+  const [showCurrent, setShowCurrent] = useState(false);
+  const [showNew, setShowNew] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const schema = Yup.object().shape({
     currentPassword: Yup
@@ -41,10 +50,15 @@ function RecruiterAccountPage(props) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     reset
   } = useForm({ resolver: yupResolver(schema) });
-  // const onSubmit = async data => { console.log(data); };
+
+  const eyes = [
+    { id: 0, type: "currentPassword", name: "Current Password", errorMessage: errors.currentPassword, isOpen: showCurrent },
+    { id: 1, type: "newPassword", name: "New Password", errorMessage: errors.newPassword, isOpen: showNew },
+    { id: 2, type: "passwordConfirmation", name: "Confirm New Password", errorMessage: errors.passwordConfirmation, isOpen: showConfirm }
+  ]
 
 
   useEffect(() => {
@@ -63,15 +77,56 @@ function RecruiterAccountPage(props) {
     setIsChangeToPasswordForm(true);
   }
 
-  const onChangePassword = (values) => {
-    console.log({ values });
-    reset();
-    setIsChangeToPasswordForm(false);
+  const onChangePassword = async (values) => {
+    try {
+      const params = {
+        current_password: values.currentPassword,
+        password: values.newPassword,
+        password_confirmation: values.passwordConfirmation
+      }
+
+      const action = await userApi.changePassword(params);
+
+      if (action.data.status === 1) {
+        reset();
+        setIsChangeToPasswordForm(false);
+        enqueueSnackbar("Your recruitment has been created.", { variant: "success" });
+        return true;
+      } else {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return false;
+      }
+    } catch (error) {
+      setIsError(true);
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
+    }
   }
 
   const handleCancel = () => {
     reset();
     setIsChangeToPasswordForm(false);
+  }
+
+  // const handleShowReal = (e) => {
+  //   e.preventDefault();
+  //   setShowReal(!showReal);
+  // }
+
+  const handleShow = (eye) => {
+    switch (eye.id) {
+      case 0:
+        setShowCurrent(!eye.isOpen)
+        break;
+      case 1:
+        setShowNew(!eye.isOpen)
+        break;
+      case 2:
+        setShowConfirm(!eye.isOpen)
+        break;
+      default:
+        break;
+    }
   }
 
   return (
@@ -105,63 +160,104 @@ function RecruiterAccountPage(props) {
                 {isChangeToPasswordForm ? "Change Password" : "Account Settings"}
               </span>
               <div className="account__container__settings__form">
-                <form onSubmit={handleSubmit(onChangePassword)}>
-                  <div className={isChangeToPasswordForm ? "account-form disable-form" : "account-form"}>
+                <form
+                  className={isChangeToPasswordForm ? "disable-form" : ""}
+                >
+                  <div className={"account-form"}>
                     <div className="account-form__item">
                       <span>Email Address</span>
                       <input
                         className="form-control"
                         value={recruiter.contact_email}
                         disabled
+                        autoComplete="email"
                       />
                     </div>
                     <div className="account-form__item">
-                      <span className="password-span">Password</span>
+                      {/* <span className="password-span">Password</span>
                       <div className="account-form__item__password">
                         <input
                           className="form-control"
-                          value="****************"
+                          value={`askdnadskjasd`}
                           disabled
+                          type={showReal ? "text" : "password"}
+                          autoComplete="password"
                         />
+                        {
+                          showReal
+                            ? <FaIcons.FaRegEye
+                              onClick={handleShowReal}
+                              className="account-form__item__password__icon"
+                            />
+                            : <FaIcons.FaRegEyeSlash
+                              onClick={handleShowReal}
+                              className="account-form__item__password__icon"
+                            />
+                        }
+                      </div> */}
+                      <div className="account-form__item__link">
                         <Link
                           className="change-password-link"
-                          // to={`${Paths.recruiterAccount}/change-password`}
                           to="#"
                           onClick={handleOpenFormChange}
                         >Change Password</Link>
                       </div>
                     </div>
                   </div>
-                  <div className={isChangeToPasswordForm ? "change-password-form" : "change-password-form disable-form"}>
-                    <div className="form-group">
-                      <span className="span-type-password">Current Password</span>
-                      <input
-                        className="form-control"
-                        {...register("currentPassword")}
-                      />
-                      {errors.currentPassword && <span className="text-danger">{errors.currentPassword.message}</span>}
-                    </div>
-                    <div className="form-group">
-                      <span className="span-type-password">New Password</span>
-                      <input
-                        className="form-control"
-                        {...register("newPassword")}
-                      />
-                      {errors.newPassword && <span className="text-danger">{errors.newPassword.message}</span>}
-                    </div>
-                    <div className="form-group">
-                      <span className="span-type-password">Confirm New Password</span>
-                      <input
-                        className="form-control"
-                        {...register("passwordConfirmation")}
-                      />
-                      {errors.passwordConfirmation && <span className="text-danger">{errors.passwordConfirmation.message}</span>}
-
-                    </div>
+                </form>
+                <form
+                  className={isChangeToPasswordForm ? "" : "disable-form"}
+                  onSubmit={handleSubmit(onChangePassword)}
+                >
+                  <div className={"change-password-form"}>
+                    {
+                      eyes.map((eye, index) => {
+                        return <div
+                          key={index}
+                          className="change-password-form__content"
+                        >
+                          <span className="span-type-password">{eye.name}</span>
+                          <div className="change-password-form__content__input-group">
+                            <input
+                              type={eye.isOpen ? "text" : "password"}
+                              className="form-control"
+                              autoComplete={`${eye.type}`}
+                              {...register(`${eye.type}`)}
+                            />
+                            {
+                              eye.isOpen
+                                ? <FaIcons.FaRegEye
+                                  onClick={() => handleShow(eye)}
+                                  className="change-password-form__content__input-group__icon"
+                                />
+                                : <FaIcons.FaRegEyeSlash
+                                  onClick={() => handleShow(eye)}
+                                  className="change-password-form__content__input-group__icon"
+                                />
+                            }
+                          </div>
+                          {eye.errorMessage && <span className="text-danger">{eye.errorMessage.message}</span>}
+                        </div>
+                      })
+                    }
                     <div className="form-group form-button">
-                      <button className="btn btn-success btn-sm" type="submit">Save</button>
+                      <button
+                        className="btn btn-success btn-sm"
+                        type="submit"
+                      >
+                        {isSubmitting && <span className="spinner-border spinner-border-sm mr-1" />}
+                        Save
+                      </button>
                       <button className="btn btn-success btn-sm" type="button" onClick={handleCancel}>Cancel</button>
                     </div>
+                    {
+                      isError &&
+                      <span
+                        className="text-danger change-pass-error"
+                      >
+                        The current password you just entered is incorrect. Please try again.
+                      </span>
+                    }
                   </div>
                 </form>
               </div>

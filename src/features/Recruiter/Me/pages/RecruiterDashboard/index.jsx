@@ -66,14 +66,14 @@ function RecruiterDashboardPage(props) {
       ? history.push(`${Paths.recruiterDashboard}/available-jobs/${recruitment.id}`)
       : history.push({
         pathname: `${Paths.recruiterDashboard}/closed-recruitments/${recruitment.id}`,
-        state: {isClosedRecruitmentsPath: true}
+        state: { isClosedRecruitmentsPath: true }
       })
   }
 
   const handleCreateRecruitment = () => {
     history.push({
       pathname: `${Paths.recruiterDashboard}/available-jobs/create`,
-      state: {isCreateMode: true}
+      state: { isCreateMode: true }
     });
   }
 
@@ -82,8 +82,11 @@ function RecruiterDashboardPage(props) {
   }
 
   const onDeleteRecruitment = () => {
-    console.log({ dashboardIndexData })
     dashboardIndexData.closedJobs > 0 && setDashboardIndexData({ ...dashboardIndexData, closedJobs: dashboardIndexData.closedJobs - 1 });
+  }
+
+  const handleToUpdateProfile = () => {
+    history.push(`${Paths.recruiterProfile}/update`);
   }
 
   return (
@@ -186,7 +189,7 @@ function RecruiterDashboardPage(props) {
       <PopupConfirm
         show={show}
         onShow={onShow}
-        pageUrl={`${Paths.recruiterProfile}/update`}
+        onOK={handleToUpdateProfile}
         contentConfirm={
           user.r_profile.tax_code !== ""
             ? "Your profile is pending approval. Do you want to update again?"

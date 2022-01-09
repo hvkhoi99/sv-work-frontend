@@ -111,7 +111,9 @@ function ListCandidates(props) {
   const onApproveCandidate = async (candidateCard) => {
 
     try {
-      const data = await studentApi.approveCandidate(recruitmentId, candidateCard.id);
+      const data = user.role_id === 2
+      ? await recruiterApi.approveCandidate(recruitmentId, candidateCard.id)
+      : await studentApi.approveCandidate(recruitmentId, candidateCard.id);
       if (data.data.status === 1) {
         const newCandidates = candidates.filter((candidate) => {
           return candidate.id !== candidateCard.id;

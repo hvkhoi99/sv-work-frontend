@@ -188,7 +188,7 @@
       width: 100%;
 
       & > input {
-        width: 65%;
+        // width: 65%;
         border-radius: 1rem;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 
@@ -196,6 +196,25 @@
           background-color: lightgrey;
         }
       }
+
+      &__icon {
+        font-size: 2.5rem;
+        padding: 0.5rem;
+        color: darkgrey;
+        cursor: pointer;
+        margin: 0 0 0 .5rem;
+
+        &:hover {
+          color: var(--success);
+          transition: all 0.15s ease-out;
+        }
+      }
+    }
+
+    &__link {
+      margin-top: 1rem;
+      width: 100%;
+      text-align: center;
     }
   }
 
@@ -210,15 +229,38 @@
 }
 
 .change-password-form {
-  & > div {
+  width: 100%;
+  &__content {
+    width: 100%;
+    margin: 0 0 1rem 0; 
+
     & > span {
       font-weight: 600;
     }
 
-    & > input {
-      // background-color: #fff;
-      border-radius: 2rem;
-      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    &__input-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      width: 100%;
+
+      & > input {
+        border-radius: 2rem;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      }
+
+      &__icon {
+        font-size: 2.5rem;
+        padding: 0.5rem;
+        color: darkgrey;
+        cursor: pointer;
+
+        &:hover {
+          color: var(--success);
+          transition: all 0.15s ease-out;
+        }
+      }
     }
   }
 
@@ -230,6 +272,8 @@
     // width: 50%;
 
     & > button {
+      display: flex;
+      align-items: center;
       border-radius: 2rem;
       box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
         rgba(0, 0, 0, 0.23) 0px 3px 6px;
@@ -262,4 +306,11 @@
 .text-danger {
   font-size: 0.9rem;
   font-weight: 400 !important;
+}
+
+.change-pass-error {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  margin-top: 1rem;
 }

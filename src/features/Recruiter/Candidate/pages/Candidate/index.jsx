@@ -1,3 +1,4 @@
+import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
 import LoadingChildUI from 'components/LoadingChild';
 import Images from 'constants/images';
@@ -5,6 +6,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import * as GoIcons from 'react-icons/go';
+import { useSelector } from 'react-redux';
 import helper from 'utils/common';
 import AnotherCVCard from '../../components/AnotherCVCard';
 import CertificatesCard from '../../components/CertificatesCard';
@@ -28,18 +30,20 @@ CandidatePage.defaultProps = {
 }
 
 function CandidatePage(props) {
+  const user = useSelector((state) => state.user.current);
   const { candidateId, onApproveCandidate, isClosed } = props;
   const [isLoading, setIsLoading] = useState(true);
   const [candidate, setCandidate] = useState({});
   const [approveLoading, setApproveLoading] = useState(false);
   const [rejectLoading, setRejectLoading] = useState(false);
-  // const {candidateId} = useParams();
 
   useEffect(() => {
     helper.scrollToTop(350);
     const fetchCandidateProfile = async () => {
       try {
-        const data = await studentApi.getCandidateProfile(candidateId);
+        const data = user.role_id === 2
+        ? await recruiterApi.getCandidateProfile(candidateId)
+        : await studentApi.getCandidateProfile(candidateId);
         setCandidate(data.data.data)
         setIsLoading(false);
       } catch (error) {
@@ -48,7 +52,7 @@ function CandidatePage(props) {
     }
 
     fetchCandidateProfile();
-  }, [candidateId])
+  }, [candidateId, user])
 
   const handleApprove = (type) => {
     switch (type) {
@@ -59,7 +63,8 @@ function CandidatePage(props) {
         }, 2000)
         break;
       case "reject":
-        setRejectLoading(true); setTimeout(() => {
+        setRejectLoading(true); 
+        setTimeout(() => {
           setRejectLoading(false);
         }, 2000)
         break;

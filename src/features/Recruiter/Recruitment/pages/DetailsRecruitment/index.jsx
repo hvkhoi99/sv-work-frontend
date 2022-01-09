@@ -1,6 +1,7 @@
 import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
 import LoadingUI from 'components/Loading';
+import PopupConfirm from 'components/PopupConfirm';
 import Images from 'constants/images';
 import Paths from 'constants/paths';
 import ListCandidates from 'features/Recruiter/Candidate/pages/ListCandidates';
@@ -23,23 +24,24 @@ DetailsRecruitmentPage.defaultProps = {
 }
 
 function DetailsRecruitmentPage(props) {
-  const user = useSelector((state) => state.user.current);
+  const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
+  const user = useSelector((state) => state.user.current);
   const location = history.location.pathname;
   const [currentPath, setCurrentPath] = useState(location);
   const [isLoading, setIsLoading] = useState(true);
   const [isClosing, setIsClosing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [recruitmentDetail, setRecruitmentDetail] = useState({});
-  const { enqueueSnackbar } = useSnackbar();
-  
+  const [show, setShow] = useState(false);
+
   const { recruitmentId } = useParams();
-  const recruitmentDetailPath = !recruitmentDetail.is_closed 
-  ? `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}`
-  : `${Paths.recruiterDashboard}/closed-recruitments/${recruitmentId}`;
+  const recruitmentDetailPath = !recruitmentDetail.is_closed
+    ? `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}`
+    : `${Paths.recruiterDashboard}/closed-recruitments/${recruitmentId}`;
   const listCandidatesPath = !recruitmentDetail.is_closed
-  ? `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates`
-  : `${Paths.recruiterDashboard}/closed-recruitments/${recruitmentId}/list-candidates`;
+    ? `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates`
+    : `${Paths.recruiterDashboard}/closed-recruitments/${recruitmentId}/list-candidates`;
 
   const options = [
     { id: 0, name: "Recruitment Detail", path: recruitmentDetailPath },
@@ -49,7 +51,9 @@ function DetailsRecruitmentPage(props) {
   useEffect(() => {
     const fetchRecruitmentDetail = async () => {
       try {
-        const data = await studentApi.getRecruimentDetail(recruitmentId);
+        const data = user.role_id === 2
+          ? await recruiterApi.getRecruimentDetail(recruitmentId)
+          : await studentApi.getRecruimentDetail(recruitmentId);
         setRecruitmentDetail(data.data.data)
         setIsLoading(false);
         return data.data;
@@ -59,7 +63,7 @@ function DetailsRecruitmentPage(props) {
     };
 
     fetchRecruitmentDetail();
-  }, [recruitmentId]);
+  }, [recruitmentId, user]);
 
   useEffect(() => {
     helper.scrollToTop();
@@ -76,8 +80,12 @@ function DetailsRecruitmentPage(props) {
     return setCurrentPath(option.path);
   };
 
-  const handleCloseRecruitment = async (e) => {
-    e.preventDefault();
+  const onShow = (value) => {
+    setShow(value);
+  }
+
+  const handleCloseRecruitment = async () => {
+    // e.preventDefault();
     setIsClosing(true);
 
     try {
@@ -97,12 +105,12 @@ function DetailsRecruitmentPage(props) {
     }
   }
 
-  const handleDelete = async (e, recruitment) => {
+  const handleDelete = async () => {
     setIsDeleting(true);
     try {
       user.role_id === 2
-        ? await recruiterApi.deleteRecruitment(recruitment.id)
-        : await studentApi.deleteRecruitment(recruitment.id);
+        ? await recruiterApi.deleteRecruitment(recruitmentDetail.id)
+        : await studentApi.deleteRecruitment(recruitmentDetail.id);
       enqueueSnackbar("Your recruitment has been deleted.", { variant: "success" });
       setIsDeleting(false);
       history.push(`${Paths.recruiterDashboard}/closed-recruitments`);
@@ -140,7 +148,7 @@ function DetailsRecruitmentPage(props) {
                     ? <button
                       type="button"
                       className="btn btn-sm btn-danger btn-close"
-                      onClick={(e) => handleDelete(e, recruitmentDetail)}
+                      onClick={() => onShow(true)}
                       disabled={isDeleting}
                     >
                       {isDeleting && <span className="spinner-border spinner-border-sm mr-2" />}
@@ -155,7 +163,8 @@ function DetailsRecruitmentPage(props) {
                       <button
                         type="button"
                         className="btn btn-sm btn-success btn-close"
-                        onClick={(e) => handleCloseRecruitment(e)}
+                        // onClick={(e) => handleCloseRecruitment(e)}
+                        onClick={() => onShow(true)}
                         disabled={recruitmentDetail.is_closed || isClosing}
                       >
                         {isClosing && <span className="spinner-border spinner-border-sm mr-2" />}
@@ -163,6 +172,7 @@ function DetailsRecruitmentPage(props) {
                       </button>
                     </>
                   }
+
                 </div>
               </div>
               <div className="details-recruitment__container__bottom">
@@ -183,15 +193,35 @@ function DetailsRecruitmentPage(props) {
                   {currentPath === recruitmentDetailPath
                     ? <RecruitmentDetail recruitmentDetail={recruitmentDetail} />
                     : currentPath === listCandidatesPath
-                      ? <ListCandidates 
-                      recruitmentId={recruitmentId} 
-                      isClosed={recruitmentDetail.is_closed}
+                      ? <ListCandidates
+                        recruitmentId={recruitmentId}
+                        isClosed={recruitmentDetail.is_closed}
                       /> : <></>}
                 </div>
               </div>
             </div>
           </div>
       }
+      <PopupConfirm
+        show={show}
+        onShow={onShow}
+        btnOKColor={
+          !recruitmentDetail.is_closed
+            ? "success"
+            : "danger"
+        }
+        titleConfirm={
+          !recruitmentDetail.is_closed
+            ? "Close Recruitment"
+            : "Delete Recruitment"
+        }
+        contentConfirm={
+          !recruitmentDetail.is_closed
+            ? "Are you sure you want to close this recruitment?"
+            : "Are you sure you want to delete this recruitment?"
+        }
+        onOK={!recruitmentDetail.is_closed ? handleCloseRecruitment : handleDelete}
+      />
     </>
   );
 }

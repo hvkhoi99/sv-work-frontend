@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
 import './PopupConfirm.scss';
 
 PopupConfirm.propTypes = {
@@ -9,7 +8,8 @@ PopupConfirm.propTypes = {
   onShow: PropTypes.func,
   titleConfirm: PropTypes.string,
   contentConfirm: PropTypes.string,
-  pageUrl: PropTypes.string,
+  onOK: PropTypes.func,
+  btnOKColor: PropTypes.string,
 };
 
 PopupConfirm.defaultProps = {
@@ -17,20 +17,23 @@ PopupConfirm.defaultProps = {
   onShow: null,
   titleConfirm: 'Ooops... Something went wrong!',
   contentConfirm: '...',
-  pageUrl: ''
+  onOK: null,
+  btnOKColor: 'success'
 }
 
 function PopupConfirm(props) {
-  const { show, onShow, titleConfirm, contentConfirm, pageUrl } = props;
-  const history = useHistory();
+  const { 
+    show, onShow, titleConfirm, contentConfirm,
+    onOK, btnOKColor
+  } = props;
 
   const handleClose = () => {
     onShow(false)
   }
 
   const handleOK = () => {
+    onOK();
     onShow(false);
-    history.push(pageUrl);
   };
 
   return (
@@ -41,8 +44,8 @@ function PopupConfirm(props) {
         </Modal.Header>
         <Modal.Body>{contentConfirm}</Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={handleOK}>
-            Okay, let's do it
+          <Button variant={btnOKColor} onClick={handleOK}>
+            Ok
           </Button>
           <Button variant="secondary" onClick={handleClose}>
             Close
