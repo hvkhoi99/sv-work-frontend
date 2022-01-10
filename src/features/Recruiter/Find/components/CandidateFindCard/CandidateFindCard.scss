@@ -1,0 +1,84 @@
+.candidate-find-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 2rem;
+  padding: 1rem 2rem;
+  margin: 0 2rem 3rem;
+  max-width: 15rem;
+
+  font-size: 0.9rem;
+  line-height: 1.7rem;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: lightblue;
+    transition: all 0.15s ease-out;
+  }
+
+  &:active {
+    background-color: #fff;
+  }
+
+  &__img {
+    & > img {
+      width: 5rem;
+      width: 5rem;
+      border-radius: 50%;
+      border: 2px solid var(--success);
+    }
+  }
+
+  &__name {
+    margin-top: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  &__career {
+    font-weight: 500;
+  }
+
+  &__address {
+    display: flex;
+    align-items: center;
+
+    &__icon {
+      color: darkgrey;
+      font-size: 1rem;
+    }
+
+    & > span {
+      margin-left: 0.2rem;
+      font-size: 0.8rem;
+      font-weight: 300;
+    }
+  }
+
+  &__skills {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 0.5rem 0;
+
+    &__name {
+      margin: 0 0.2rem;
+      padding: 0 0.5rem;
+      background-color: rgba(0, 214, 0, 0.3);
+      border-radius: 1rem;
+    }
+  }
+
+  &__btn-group {
+    margin-top: 0.5rem;
+
+    & > button {
+      border-radius: 2rem;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    }
+  }
+}

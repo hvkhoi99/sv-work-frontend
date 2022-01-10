@@ -15,7 +15,8 @@ SelectField.propTypes = {
   options: PropTypes.array,
   isMulti: PropTypes.bool,
   isOptionValue: PropTypes.bool,
-  isCreatableSelect: PropTypes.bool
+  isCreatableSelect: PropTypes.bool,
+  labelClassName: PropTypes.string,
 };
 
 SelectField.defaultProps = {
@@ -29,10 +30,14 @@ SelectField.defaultProps = {
   isMulti: false,
   isOptionValue: false,
   isCreatableSelect: false,
+  labelClassName: ''
 }
 
 function SelectField(props) {
-  const { field, form, label, placeholder, disabled, options, isMulti, isOptionValue, isCreatableSelect } = props;
+  const {
+    field, form, label, placeholder, disabled,
+    options, isMulti, isOptionValue, isCreatableSelect, labelClassName
+  } = props;
   const { name, value } = field;
   const { errors, touched } = form;
   const showError = errors[name] && touched[name];
@@ -40,11 +45,15 @@ function SelectField(props) {
   const selectedOption = options.find(option => option.label === value);
 
   const colourStyles = {
+    placeholder: (defaultStyles) => {
+      return {
+        ...defaultStyles,
+        color: 'lightgrey',
+      }
+    },
     control: (base, state) => ({
       ...base,
       borderRadius: '.5rem',
-      // border: showError
-      //   ? "1px solid #dc3545" : (state.isFocused ? "1px solid rgba(0, 0, 255, 0.4)" : "none"),
       borderColor: showError
         ? "#dc3545"
         : state.isFocused ? "rgba(0, 0, 255, 0.2)" : "#fff",
@@ -73,16 +82,14 @@ function SelectField(props) {
 
   return (
     <FormGroup>
-      {label && <Label style={{
-        fontWeight: "500"
-      }} for={name}>{label}</Label>}
+      {label && <Label style={{ fontWeight: '500' }} className={labelClassName} for={name}>{label}</Label>}
 
       {isCreatableSelect
         ? <CreatableSelect
           id={name}
           {...field}
           // value={isOptionValue && field.value}
-          
+
           onChange={handleSelectedOptionChange}
 
           isClearable={true}

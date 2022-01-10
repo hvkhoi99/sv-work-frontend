@@ -20,7 +20,7 @@ UpdateCompanyInfoForm.defaultProps = {
 
 function UpdateCompanyInfoForm(props) {
   const { initialValues, onSubmit, close } = props;
-  const phoneRegExp = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+  // const phoneRegExp = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
   const validationSchema = Yup.object().shape({
     company_name: Yup
@@ -30,9 +30,10 @@ function UpdateCompanyInfoForm(props) {
     phone_number: Yup
       .string()
       .required('Phone number is required')
-      .matches(phoneRegExp, 'Phone number is not valid'),
-    // .min(10, "Phone number is too short")
-    // .max(11, "Phone number is too long"),
+      // .matches(phoneRegExp, 'Phone number is not valid'),
+      .min(10, "Must be exactly 10 digits")
+      .max(10, "Must be exactly 10 digits")
+      .matches(/^[0-9]+$/, "Must be only digits"),
     contact_email: Yup
       .string()
       .email('Email is invalid')
