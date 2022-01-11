@@ -28,8 +28,13 @@
     }
 
     &:hover {
-      background-color: lightgrey;
+      color: white;
+      background-color: var(--success);
       transition: all 0.15s ease-out;
+    }
+
+    &:hover > &__sort-type {
+      color: white;
     }
 
     &:active {
@@ -54,17 +59,17 @@
 
     overflow: hidden;
     position: absolute;
-    -webkit-transition: max-height .15s ease-in-out .15s;
-    -moz-transition: max-height .15s ease-in-out .15s;
-    -o-transition: max-height .15s ease-in-out .15s;
-    -ms-transition: max-height .15s ease-in-out .15s;
-    transition: max-height .15s ease-in-out .15s;
+    -webkit-transition: max-height 0.15s ease-in-out 0.15s;
+    -moz-transition: max-height 0.15s ease-in-out 0.15s;
+    -o-transition: max-height 0.15s ease-in-out 0.15s;
+    -ms-transition: max-height 0.15s ease-in-out 0.15s;
+    transition: max-height 0.15s ease-in-out 0.15s;
 
     &__link {
       text-align: center;
       width: 100%;
       padding: 0.5rem 0;
-      
+
       color: black;
 
       &:hover {

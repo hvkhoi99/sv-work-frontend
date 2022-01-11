@@ -4,6 +4,7 @@ import RecruiterDashboardPage from 'features/Recruiter/Me/pages/RecruiterDashboa
 import React, { useEffect, useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
 import CreateRecruitmentForm from '../../components/CreateRecruitmentForm';
+import moment from 'moment';
 import './CreateRecruitment.scss';
 
 CreateRecruitmentPage.propTypes = {
@@ -30,6 +31,7 @@ function CreateRecruitmentPage(props) {
   } : isEditMode ? {
     ...historyRecruitment,
     is_full_time: historyRecruitment.is_full_time ? "Full Time" : "Part Time",
+    expiry_date: moment(new Date(historyRecruitment.expiry_date)).format("YYYY-MM-DD")
   } : {};
 
   useEffect(() => {

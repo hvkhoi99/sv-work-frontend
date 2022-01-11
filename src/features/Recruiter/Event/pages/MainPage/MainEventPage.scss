@@ -1,0 +1,131 @@
+.event-main {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  padding: 2rem 2rem;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    &__slider {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+      width: 85%;
+
+      border-radius: 1rem;
+
+      & > img {
+        width: 100%;
+        height: 20rem;
+
+        object-fit: cover;
+        border-radius: 1rem;
+        border: 1px solid var(--success);
+      }
+
+      &__btn-group {
+        display: flex;
+        justify-content: space-between;
+        width: 85%;
+        align-items: center;
+        position: absolute;
+
+        &__icon {
+          font-size: 3rem;
+          padding: 0.5rem;
+          border-radius: 50%;
+          background-color: rgba(0, 0, 0, 0.3);
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+          cursor: pointer;
+
+          &:hover {
+            background-color: var(--success);
+            transition: all 0.15s ease-out;
+            // color: #fff;
+          }
+
+          &:active {
+            background-color: rgba(0, 0, 0, 0.3);
+          }
+        }
+      }
+    }
+
+    &__search {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 70%;
+
+      background-color: #fff;
+      border-radius: .5rem;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+      position: absolute;
+      margin-top: 18rem;
+      height: 4rem;
+
+      & > form {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        width: 100%;
+        padding: 1rem 0 0 0;
+      }
+    }
+
+    &__btn-group {
+      margin-top: 5rem;
+
+      display: flex;
+      align-items: center;
+
+      & > button {
+        color: var(--success);
+        border: 1px solid var(--success);
+        border-radius: 1rem;
+        font-weight: 500;
+        margin: 0 4rem;
+
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+        &:hover {
+          color: #fff;
+          background-color: var(--success);
+        }
+      }
+    }
+
+    &__upcomming-events {
+      display: flex;
+      justify-content: center;
+      margin: 3rem 0;
+
+      &__title {
+        display: flex;
+        align-items: center;
+
+        & > span {
+          font-size: 1.4rem;
+          font-weight: 500;
+        }
+
+        &__dot {
+          width: .5rem;
+          height: .5rem;
+          border-radius: 50%;
+          background-color: var(--success);
+
+          margin: .4rem 0 0 .2rem;
+        }
+      }
+
+    }
+  }
+}

@@ -1,17 +1,32 @@
 import Images from 'constants/images';
+import PropTypes from 'prop-types';
 import React from 'react';
 import * as TiIcons from 'react-icons/ti';
 import helper from 'utils/common';
-// import PropTypes from 'prop-types';
 import './CandidateFindCard.scss';
 
 CandidateFindCard.propTypes = {
-
+  candidate: PropTypes.object,
+  onViewCandidate: PropTypes.func,
 };
 
+CandidateFindCard.defaultProps = {
+  candidate: {},
+  onViewCandidate: null
+}
+
 function CandidateFindCard(props) {
+  const {candidate, onViewCandidate} = props;
+
+  const handleViewCandidate = () => {
+    onViewCandidate(candidate.id);
+  }
+
   return (
-    <div className="candidate-find-card">
+    <div 
+    className="candidate-find-card"
+    onClick={handleViewCandidate}
+    >
       <div className="candidate-find-card__img">
         <img src={Images.tw} alt="candidate-avatar" />
       </div>

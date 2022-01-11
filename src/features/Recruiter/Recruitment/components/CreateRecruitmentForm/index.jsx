@@ -1,9 +1,9 @@
 import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
 import { JOB_TAGS_OPTIONS, JOB_TYPE_OPTIONS } from 'constants/global';
-import DatePickerField from 'custom-fields/DatePickerField';
 import InputField from 'custom-fields/InputField';
 import SelectField from 'custom-fields/SelectField';
+import TextFieldDate from 'custom-fields/TextFieldDate';
 import { FastField, Form, Formik } from 'formik';
 import moment from 'moment';
 import { useSnackbar } from 'notistack';
@@ -12,7 +12,7 @@ import React, { useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Button, FormGroup, Label, Spinner } from 'reactstrap';
+import { Button, FormGroup, Spinner } from 'reactstrap';
 import * as Yup from 'yup';
 import DivAreaText from '../DivAreaText';
 import './CreateRecruitmentForm.scss';
@@ -200,6 +200,7 @@ function CreateRecruitmentForm(props) {
 
                     label="Job Name"
                     placeholder=""
+                    labelClassName="input-field-label"
                   />
 
                   <FastField
@@ -208,6 +209,7 @@ function CreateRecruitmentForm(props) {
 
                     label="Type of Job"
                     placeholder=""
+                    labelClassName="input-field-label"
                     options={JOB_TYPE_OPTIONS}
                     isOptionValue={true}
                   />
@@ -230,7 +232,8 @@ function CreateRecruitmentForm(props) {
                     component={InputField}
 
                     label="Job Category"
-                    placeholder=""
+                    labelClassName="input-field-label"
+                    placeholder="Eg: Senior Web Backend"
                   />
 
                   <FastField
@@ -238,6 +241,7 @@ function CreateRecruitmentForm(props) {
                     component={InputField}
 
                     label="Position"
+                    labelClassName="input-field-label"
                     placeholder=""
                   />
 
@@ -249,6 +253,7 @@ function CreateRecruitmentForm(props) {
                     onTextChange={onBenefitsChange}
                     onRereshField={onRereshField}
                     isSubmit={isSubmit}
+                    labelClassName="input-field-label"
                   />
 
                   <DivAreaText
@@ -259,6 +264,7 @@ function CreateRecruitmentForm(props) {
                     onTextChange={onTextChange}
                     onRereshField={onRereshField}
                     isSubmit={isSubmit}
+                    labelClassName="input-field-label"
                   />
 
                   <DivAreaText
@@ -269,6 +275,7 @@ function CreateRecruitmentForm(props) {
                     onTextChange={onRequirementChange}
                     onRereshField={onRereshField}
                     isSubmit={isSubmit}
+                    labelClassName="input-field-label"
                   />
 
                   <div className="formGroup-salary">
@@ -277,6 +284,7 @@ function CreateRecruitmentForm(props) {
                       component={InputField}
 
                       label="Min Salary"
+                      labelClassName="input-field-label"
                     />
 
                     <span className="formGroup-salary__span">~</span>
@@ -286,10 +294,12 @@ function CreateRecruitmentForm(props) {
                       component={InputField}
 
                       label="Max Salary"
+                      labelClassName="input-field-label"
+                      placeholder=""
                     />
                   </div>
 
-                  <FormGroup>
+                  {/* <FormGroup>
                     <div className="formGroup-text-editor__title">
                       <Label style={{
                         fontWeight: "500"
@@ -300,15 +310,25 @@ function CreateRecruitmentForm(props) {
                       label="Expiry Date"
                       isSubmit={isSubmit}
                     />
-                  </FormGroup>
+                  </FormGroup> */}
+                  <FastField
+                    name="expiry_date"
+                    component={TextFieldDate}
 
+                    label="Expiry"
+                    type="date"
+                    placeholder=""
+                    moreClassName="text-field-date"
+                    labelClassName="input-field-label"
+                  />
 
                   <FastField
                     name="location"
                     component={InputField}
 
                     label="Location"
-                    placeholder=""
+                    labelClassName="input-field-label"
+                    placeholder="Eg: Danang, Vietnam"
                   />
 
                   <FastField
@@ -316,7 +336,8 @@ function CreateRecruitmentForm(props) {
                     component={SelectField}
 
                     label="Job Tags"
-                    placeholder=""
+                    labelClassName="input-field-label"
+                    placeholder="Eg: ReactJS"
                     options={JOB_TAGS_OPTIONS}
                     isMulti={true}
                     isCreatableSelect={true}

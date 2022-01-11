@@ -1,0 +1,184 @@
+.candidate-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+
+  width: 100%;
+  padding: 2rem 8rem;
+  // background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
+
+  background-image: url("../../../../../assets/img/background.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  &__above {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    &__img {
+      & > img {
+        width: 10rem;
+        height: 10rem;
+        border-radius: 50%;
+      }
+    }
+
+    &__candidate-name {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 0.5rem 0 0.2rem 0;
+    }
+
+    &__candidate-job-title {
+      margin: 0 0 1rem 0;
+    }
+
+    &__btn-group {
+      display: flex;
+      justify-content: center;
+
+      width: 100%;
+
+      & > button {
+        display: flex;
+        align-items: center;
+
+        border-radius: 2rem;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
+          rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        font-weight: 500;
+      }
+    }
+
+    &__overview {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      margin: 1.5rem 0 0 0;
+
+      &__title {
+        display: flex;
+        align-items: center;
+
+        margin: 0 0 1rem 0;
+
+        & > span {
+          font-size: 1.2rem;
+          font-weight: 600;
+        }
+
+        &__dot {
+          color: var(--success);
+          margin: 0.2rem 0 0 0;
+        }
+      }
+
+      &__description {
+        padding: 0 4rem;
+        font-weight: 300;
+        line-height: 1.5rem;
+      }
+    }
+  }
+
+  &__below {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    padding: 2rem 0 0;
+
+    &__left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      width: 42%;
+    }
+
+    &__right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      width: calc(100% - 4rem - 42%);
+    }
+  }
+
+  &__minions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 4rem 0 4rem 0;
+    background-color: transparent;
+    width: 100%;
+    height: auto;
+
+    & > img {
+      width: 50%;
+    }
+  }
+}
+
+.candidates-item-icon {
+  color: var(--success);
+  margin: 0 0.5rem 0 0;
+}
+
+.card-nia {
+  width: 100%;
+  text-align: center;
+}
+
+.personal-info-card {
+  width: 80%;
+  margin-bottom: 3rem;
+}
+
+.experiences-card {
+  width: 90%;
+  margin-bottom: 3rem;
+
+  &__content {
+    padding: 1rem 2rem;
+  }
+}
+
+.educations-card {
+  margin-bottom: 3rem;
+
+  &__content {
+    padding: 1rem 2rem;
+  }
+}
+
+.certificates-card {
+  &__content {
+    padding: 1rem 2rem;
+  }
+}
+
+.skills-card {
+  margin-bottom: 3rem;
+
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+.languages-card {
+  margin-bottom: 3rem;
+
+  &__content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}

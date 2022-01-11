@@ -16,6 +16,7 @@ DivAreaText.propTypes = {
 
   name: PropTypes.string,
   isSubmit: PropTypes.bool,
+  labelClassName: PropTypes.string
 };
 
 DivAreaText.defaultProps = {
@@ -27,10 +28,11 @@ DivAreaText.defaultProps = {
 
   name: '',
   isSubmit: false,
+  labelClassName: ''
 }
 
 function DivAreaText(props) {
-  const { textValue, onTextChange, onRereshField, label, name, isSubmit } = props;
+  const { textValue, onTextChange, onRereshField, label, name, isSubmit, labelClassName } = props;
   const isValid = textValue.length <= 0;
 
   const handleRefreshField = () => {
@@ -40,7 +42,7 @@ function DivAreaText(props) {
   return (
     <FormGroup className="formGroup-text-editor">
       <div className="formGroup-text-editor__title">
-        {label && <Label for={name}>{label}</Label>}
+        {label && <Label className={`${labelClassName}`} for={name}>{label}</Label>}
         <PopupTextEditor
           onTextChange={onTextChange}
           label={label}

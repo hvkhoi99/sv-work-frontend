@@ -1,10 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormFeedback, FormGroup, Input, Label } from 'reactstrap';
+import TextField from "@material-ui/core/TextField";
 import { ErrorMessage } from 'formik';
-import './InputField.scss';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormFeedback, FormGroup, Label } from 'reactstrap';
+import '../InputField/InputField.scss';
+import './TextFieldDate.scss';
 
-InputField.propTypes = {
+TextFieldDate.propTypes = {
   field: PropTypes.object,
   form: PropTypes.object,
 
@@ -12,15 +14,14 @@ InputField.propTypes = {
   label: PropTypes.string,
   placeholder: PropTypes.string,
   disabled: PropTypes.bool,
-  autoComplete: PropTypes.string,
   moreClassName: PropTypes.string,
   inputClassName: PropTypes.string,
 
-  newValue: PropTypes.string,
   labelClassName: PropTypes.string,
+  txtLabel: PropTypes.string,
 };
 
-InputField.defaultProps = {
+TextFieldDate.defaultProps = {
   field: {},
   form: {},
 
@@ -28,18 +29,16 @@ InputField.defaultProps = {
   label: '',
   placeholder: '',
   disabled: false,
-  autoComplete: '',
   moreClassName: '',
   inputClassName: '',
-  newValue: '',
   labelClassName: '',
+  txtLabel: ''
 }
 
-function InputField(props) {
-
+function TextFieldDate(props) {
   const {
     field, form,
-    type, label, placeholder, disabled, moreClassName, autoComplete, inputClassName, newValue, labelClassName,
+    type, label, placeholder, disabled, moreClassName, inputClassName, labelClassName, txtLabel, variant
   } = props;
 
   const { name } = field;
@@ -47,23 +46,30 @@ function InputField(props) {
   const showError = errors[name] && touched[name];
 
   return (
-    <FormGroup className={`${moreClassName}`}>
+    <FormGroup className={`field-container ${moreClassName}`}>
       {label && <Label className={`label ${labelClassName}`} for={name}>{label}</Label>}
-      <Input
+
+      <TextField
+        // fullWidth
         id={name}
         {...field}
-        value={field.value || newValue}
 
+        label={txtLabel}
         type={type}
         placeholder={placeholder}
         disabled={disabled}
-        invalid={showError}
-        className={`input-field ${inputClassName}`}
-        autoComplete={autoComplete}
+        error={showError}
+        className={`${inputClassName}`}
+        variant={variant}
+        helperText={showError && errors[name]}
+
+        InputLabelProps={{
+          shrink: true,
+        }}
       />
       <ErrorMessage name={name} component={FormFeedback} />
     </FormGroup>
   );
 }
 
-export default InputField;
+export default TextFieldDate;

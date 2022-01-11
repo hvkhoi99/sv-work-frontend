@@ -1,49 +1,52 @@
-import { GENDER, JOB_TAGS_OPTIONS } from 'constants/global';
-import SelectField from 'custom-fields/SelectField';
-import { FastField, Form, Formik } from 'formik';
+
 import React, { useState, useEffect } from 'react';
 import * as RiIcons from 'react-icons/ri';
-import { Button, FormGroup, Spinner } from 'reactstrap';
-import * as Yup from 'yup';
 import SortByItem from '../../components/SortByItem';
 import './FindCandidates.scss';
 import CandidateFindCard from '../../components/CandidateFindCard';
 import LoadingUI from 'components/Loading';
+import ReactPaginate from 'react-paginate';
+import * as MdIcons from 'react-icons/md';
+import SearchTypeForm from '../../components/SearchTypeForm';
+import { useHistory } from 'react-router-dom';
+import Paths from 'constants/paths';
 
 FindCadidatesPage.propTypes = {
 
 };
 
 function FindCadidatesPage(props) {
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
+  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-  const initialValues = {
-    career: '',
-    location: '',
-    language: '',
-    gender: '',
-    education: '',
-  };
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageCount, setPageCount] = useState(0)
 
-  const validationSchema = Yup.object().shape({
-    gender: Yup
-      .string()
-      .typeError('Type of Job is required')
-      .required('Type of Job is required'),
-  });
 
   useEffect(() => {
     const timer = setTimeout(() => {
+      setCurrentPage(1);
+      const total = items.length;
+      setPageCount(Math.ceil(total / 2));
       setIsLoading(false);
     }, 1000)
 
     return () => {
       clearTimeout(timer);
     }
-  }, []);
+  }, [items.length]);
+
+  const handlePageClick = () => {
+    console.log("prev/next page");
+  }
 
   const onSubmit = (values) => {
     console.log({ values });
+  };
+
+  const onViewCandidate = (candidateId) => {
+    history.push(`${Paths.recruiterFindCandidates}/7`);
   };
 
   return (
@@ -63,96 +66,51 @@ function FindCadidatesPage(props) {
                   </button>
                 </div>
                 <div className="find-candidates__container__above__search-type">
-                  <Formik
-                    enableReinitialize
-                    initialValues={initialValues}
-                    validationSchema={validationSchema}
-                    onSubmit={onSubmit}
-                  >
-                    {formikProps => {
-                      const { isSubmitting } = formikProps;
-
-                      return (
-                        <Form>
-                          <FastField
-                            name="career"
-                            component={SelectField}
-
-                            label="Career"
-                            placeholder="Eg: Designer"
-                            // options={GENDER}
-                            isCreatableSelect={true}
-                          />
-
-                          <FastField
-                            name="location"
-                            component={SelectField}
-
-                            label="Location"
-                            placeholder="Eg: Da Nang"
-                            // options={GENDER}
-                            isCreatableSelect={true}
-                          />
-
-                          <FastField
-                            name="language"
-                            component={SelectField}
-
-                            label="Language"
-                            placeholder="Eg: English"
-                            // options={GENDER}
-                            isCreatableSelect={true}
-                          />
-
-                          <FastField
-                            name="gender"
-                            component={SelectField}
-
-                            label="Gender"
-                            placeholder="Male"
-                            options={GENDER}
-                            // isCreatableSelect={true}
-                            isOptionValue={true}
-                          />
-                          <FastField
-                            name="education"
-                            component={SelectField}
-
-                            label="Education"
-                            placeholder="Eg: Bach Khoa"
-                            options={JOB_TAGS_OPTIONS}
-                            isCreatableSelect={true}
-                          />
-
-                          <FormGroup>
-                            <Button
-                              disabled={isSubmitting}
-                              style={isSubmitting ? { cursor: "default" } : { cursor: "pointer" }}
-                              type="submit"
-                              color={'success'}
-                              className="candidates-search-button"
-                            >
-                              {isSubmitting && <Spinner className="mr-2" children="" size="sm" />}
-                              {isSubmitting ? "Searching" : "Search"}
-                            </Button>
-                          </FormGroup>
-                        </Form>
-                      );
-                    }}
-                  </Formik>
+                  <SearchTypeForm onSubmit={onSubmit} />
                 </div>
                 <div className="find-candidates__container__above__sort">
                   <SortByItem />
                 </div>
               </div>
               <div className="find-candidates__container__below">
-                <CandidateFindCard />
-                <CandidateFindCard />
-                <CandidateFindCard />
-                <CandidateFindCard />
-                <CandidateFindCard />
-                <CandidateFindCard />
-                <CandidateFindCard />
+                {
+                  items.map((candidate, index) => {
+                    return <CandidateFindCard
+                      key={index}
+                      onViewCandidate={onViewCandidate}
+                    />
+                  })
+                }
+              </div>
+              <div className="find-candidate__container__pagination">
+                <ReactPaginate
+                  previousLabel={
+                    <MdIcons.MdArrowBackIosNew />
+                  }
+                  nextLabel={
+                    <MdIcons.MdArrowForwardIos />
+                  }
+
+                  // initialPage={1}
+                  // initialPage={currentPage}
+                  forcePage={currentPage - 1}
+                  breakLabel={"..."}
+                  pageCount={pageCount}
+                  marginPagesDisplayed={3}
+                  pageRangeDisplayed={3}
+                  onPageChange={handlePageClick}
+                  containerClassName={"pagination justify-content-center"}
+                  pageClassName={"page-item"}
+                  pageLinkClassName={"page-link"}
+                  previousClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
+                  previousLinkClassName={"page-link"}
+                  nextClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
+                  nextLinkClassName={"page-link"}
+                  breakClassName={"page-item"}
+                  breakLinkClassName={"page-link"}
+                  activeClassName={"active"}
+
+                />
               </div>
             </div>
           </div>
