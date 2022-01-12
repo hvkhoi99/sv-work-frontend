@@ -4,6 +4,11 @@
   width: 100%;
 
   padding: 2rem 2rem;
+  
+  background-image: url("../../../../../assets/img/background.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 
   &__container {
     display: flex;
@@ -64,7 +69,7 @@
       width: 70%;
 
       background-color: #fff;
-      border-radius: .5rem;
+      border-radius: 0.5rem;
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
       position: absolute;
@@ -104,7 +109,8 @@
 
     &__upcomming-events {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
       margin: 3rem 0;
 
       &__title {
@@ -112,20 +118,31 @@
         align-items: center;
 
         & > span {
-          font-size: 1.4rem;
-          font-weight: 500;
+          font-size: 1.5rem;
+          font-weight: 600;
         }
 
         &__dot {
-          width: .5rem;
-          height: .5rem;
+          width: 0.5rem;
+          height: 0.5rem;
           border-radius: 50%;
           background-color: var(--success);
 
-          margin: .4rem 0 0 .2rem;
+          margin: 0.4rem 0 0 0.2rem;
         }
       }
 
+      &__cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        margin: 3rem 0 0 0;
+
+        &__item {
+          margin: 0 3rem 4rem;
+        }
+      }
     }
   }
 }

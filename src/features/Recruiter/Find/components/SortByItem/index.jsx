@@ -13,7 +13,8 @@ function SortByItem(props) {
   const ref = useRef(null);
   const [show, setShow] = useState(false);
 
-  const handleShow = () => {
+  const handleShow = (e) => {
+    e.preventDefault();
     setShow(!show);
   }
 
@@ -33,7 +34,7 @@ function SortByItem(props) {
 
   return (
     <div ref={ref} className="sort-by-item">
-      <div className="sort-by-item__main" onClick={handleShow}>
+      <div className="sort-by-item__main" onClick={(e) => handleShow(e)}>
         <span
           className="sort-by-item__main__count-result"
         >
@@ -53,7 +54,7 @@ function SortByItem(props) {
               to="#"
               key={index}
               className="sort-by-item__dropdown__link"
-              onClick={handleShow}
+              onClick={(e) => handleShow(e)}
             >{option.label}</Link>
           })
         }

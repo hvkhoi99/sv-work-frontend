@@ -8,11 +8,11 @@ import './SearchFormEvent.scss';
 import * as RiIcons from 'react-icons/ri';
 
 SearchFormEvent.propTypes = {
-  onSubmit: PropTypes.func
+  onSubmit: PropTypes.func,
 };
 
 SearchFormEvent.defaultProps = {
-  onSubmit: null
+  onSubmit: null,
 }
 
 function SearchFormEvent(props) {

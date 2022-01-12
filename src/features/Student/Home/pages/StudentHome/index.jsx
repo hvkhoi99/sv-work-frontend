@@ -5,13 +5,19 @@ import { CITY_OPTIONS } from 'constants/global';
 import Images from 'constants/images';
 import RHFInputField from 'custom-fields/RHFInputField';
 import RHFSelectField from 'custom-fields/RHFSelectField';
+import EventCard from "features/Recruiter/Event/components/EventCard";
+import RecruitmentCard from "features/Recruiter/Me/components/RecruitmentCard";
 import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import TopRecruiterGroupCard from "../../components/TopRecruiterGroupCard";
 import './StudentHome.scss';
+import * as GoIcons from 'react-icons/go';
+import { useHistory } from "react-router-dom";
+import Paths from "constants/paths";
 
 function StudentHomePage(props) {
+  const history = useHistory();
   const options = CITY_OPTIONS;
   const [topRecruiters, setTopRecruiters] = useState([]);
 
@@ -85,6 +91,10 @@ function StudentHomePage(props) {
     if (e.code === 'Enter') e.preventDefault();
   };
 
+  const onViewDetailEvent = () => {
+    history.push(`${Paths.clientEvent}/1/detail`)
+  }
+
   return (
     <div className="home">
       <div className="home__container">
@@ -133,7 +143,10 @@ function StudentHomePage(props) {
           </div>
         </div>
         <div className="home__container__overview">
-          <div className="home__container__overview__title"><h1>Overview</h1></div>
+          <div className="home__container__overview__title">
+            <div className="home__container__overview__title__dot"></div>
+            <h1>Overview</h1>
+          </div>
           <div className="home__container__overview__main">
             <div
               data-aos="fade-right"
@@ -145,6 +158,54 @@ function StudentHomePage(props) {
               className="home__container__overview__main__img">
               <img src={Images.overview} alt="overview" />
             </div>
+          </div>
+        </div>
+
+        <div className="home__container__popular-jobs">
+          <div className="home__container__popular-jobs__title">
+            <h1>Popular Jobs</h1>
+            <div className="home__container__popular-jobs__title__dot"></div>
+          </div>
+          <div
+            data-aos="fade-zoom-in"
+            className="home__container__popular-jobs__main">
+            <RecruitmentCard />
+            <RecruitmentCard />
+            <RecruitmentCard />
+            <RecruitmentCard />
+          </div>
+        </div>
+
+        <div className="home__container__top-events">
+          <div className="home__container__top-events__left">
+            <div className="home__container__top-events__left__title">
+              <h1>Top Events</h1>
+              <div className="home__container__top-events__left__title__dot"></div>
+            </div>
+            <div className="home__container__top-events__left__description">
+              <p>"Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                Dolore alias atque eveniet odio beatae quidem asperiores dolorum excepturi
+                fuga eaque vitae laboriosam,
+                vero natus ratione facilis fugit quod similique deleniti!"
+              </p>
+            </div>
+            <div className="home__container__top-events__left__btn-group">
+              <button className="btn btn-success btn-sm">Post</button>
+            </div>
+          </div>
+          <div
+            data-aos="fade-zoom-in"
+            className="home__container__top-events__right">
+            {
+              [1, 2, 3, 4].map((item, index) => {
+                return <div
+                  className="home__container__top-events__right__item"
+                  key={index}
+                >
+                  <EventCard onViewDetailEvent={onViewDetailEvent}/>
+                </div>
+              })
+            }
           </div>
         </div>
 
@@ -164,6 +225,20 @@ function StudentHomePage(props) {
                 key={index}
               />
             })}
+          </div>
+        </div>
+
+        <div className="home__container__people-say">
+          <div className="home__container__people-say__title">
+            <h1 className="home__container__people-say__title__h1">
+              What People Say About Us
+              <GoIcons.GoPrimitiveDot className="home__container__people-say__title__h1__icon"/>
+            </h1>
+          </div>
+          <div
+            data-aos="fade-zoom-in"
+            className="home__container__people-say__img">
+            <img src={Images.aboutUsCard} alt="about-us" />
           </div>
         </div>
       </div>

@@ -1,32 +1,33 @@
-
-import React, { useState, useEffect } from 'react';
-import * as RiIcons from 'react-icons/ri';
-import SortByItem from '../../components/SortByItem';
-import './FindCandidates.scss';
-import CandidateFindCard from '../../components/CandidateFindCard';
 import LoadingUI from 'components/Loading';
-import ReactPaginate from 'react-paginate';
-import * as MdIcons from 'react-icons/md';
-import SearchTypeForm from '../../components/SearchTypeForm';
-import { useHistory } from 'react-router-dom';
 import Paths from 'constants/paths';
+import SortByItem from 'features/Recruiter/Find/components/SortByItem';
+import React, { useEffect, useState } from 'react';
+import * as MdIcons from 'react-icons/md';
+import ReactPaginate from 'react-paginate';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import helper from 'utils/common';
+import EventCard from '../../components/EventCard';
+import SearchFormEvent from '../../components/SearchFormEvent';
+// import PropTypes from 'prop-types';
+import './SearchEvent.scss';
 
-FindCadidatesPage.propTypes = {
+SearchEventPage.propTypes = {
 
 };
 
-function FindCadidatesPage(props) {
+function SearchEventPage(props) {
   const history = useHistory();
+  const user = useSelector((state) => state.user.current);
   const [isLoading, setIsLoading] = useState(true);
   const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageCount, setPageCount] = useState(0)
-
+  const [pageCount, setPageCount] = useState(0);
 
   useEffect(() => {
     helper.scrollToTop();
+
     const timer = setTimeout(() => {
       setCurrentPage(1);
       const total = items.length;
@@ -43,13 +44,13 @@ function FindCadidatesPage(props) {
     console.log("prev/next page");
   }
 
-  const onSubmit = (values) => {
-    console.log({ values });
-  };
-
-  const onViewCandidate = (candidateId) => {
-    history.push(`${Paths.recruiterFindCandidates}/7`);
-  };
+  const onViewDetailEvent = () => {
+    history.push(
+      user.role_id === 2
+        ? `${Paths.recruiterEvent}/1`
+        : `${Paths.clientEvent}/1`
+    );
+  }
 
   return (
     <>
@@ -58,33 +59,34 @@ function FindCadidatesPage(props) {
           ? <div className="loading-ui">
             <LoadingUI />
           </div>
-          : <div className="find-candidates">
-            <div className="find-candidates__container">
-              <div className="find-candidates__container__above">
-                <div className="find-candidates__container__above__search">
-                  <input type="text" placeholder="Name..." />
-                  <button className="btn btn-success btn-sm">
-                    <RiIcons.RiSearchLine className="search-icon" />
-                  </button>
+          : <div className="search-event">
+            <div className="search-event__container">
+              <div className="search-event__container__search-bar">
+                <SearchFormEvent />
+              </div>
+              <div className="search-event__container__sort-bar">
+                <SortByItem />
+              </div>
+              <div className="search-event__container__events">
+                <div className="search-event__container__events__title">
+                  <span>
+                    Results
+                  </span>
                 </div>
-                <div className="find-candidates__container__above__search-type">
-                  <SearchTypeForm onSubmit={onSubmit} />
-                </div>
-                <div className="find-candidates__container__above__sort">
-                  <SortByItem />
+                <div className="search-event__container__events__main">
+                  {
+                    items.map((item, index) => {
+                      return <div
+                        key={index}
+                        className="search-event__container__events__main__item"
+                      >
+                        <EventCard onViewDetailEvent={onViewDetailEvent} />
+                      </div>
+                    })
+                  }
                 </div>
               </div>
-              <div className="find-candidates__container__below">
-                {
-                  items.map((candidate, index) => {
-                    return <CandidateFindCard
-                      key={index}
-                      onViewCandidate={onViewCandidate}
-                    />
-                  })
-                }
-              </div>
-              <div className="find-candidate__container__pagination">
+              <div className="search-event__container__paginator">
                 <ReactPaginate
                   previousLabel={
                     <MdIcons.MdArrowBackIosNew />
@@ -98,8 +100,8 @@ function FindCadidatesPage(props) {
                   forcePage={currentPage - 1}
                   breakLabel={"..."}
                   pageCount={pageCount}
-                  marginPagesDisplayed={3}
-                  pageRangeDisplayed={3}
+                  marginPagesDisplayed={1}
+                  pageRangeDisplayed={2}
                   onPageChange={handlePageClick}
                   containerClassName={"pagination justify-content-center"}
                   pageClassName={"page-item"}
@@ -121,4 +123,4 @@ function FindCadidatesPage(props) {
   );
 }
 
-export default FindCadidatesPage;
+export default SearchEventPage;

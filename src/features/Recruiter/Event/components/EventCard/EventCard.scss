@@ -1,0 +1,93 @@
+.event-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 14rem;
+  // height: 16rem;
+
+  // margin: 0 1rem 4rem;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+    rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
+    rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+
+  cursor: pointer;
+
+  font-size: .9rem;
+
+  &:hover {
+    background-color: lightgrey;
+    transition: all 0.15s ease-out;
+  }
+
+  &:active {
+    background-color: #fff;
+  }
+
+  &__img {
+    width: 100%;
+    // border-bottom: 1px solid rgba(2, 156, 2, 0.2);
+
+    & > img {
+      object-fit: cover;
+      width: 100%;
+      height: 10rem;
+      border-radius: 1rem 1rem 0 0;
+    }
+  }
+
+  &__info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0.5rem 1rem;
+
+    &__left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 25%;
+      height: 100%;
+
+      &__month {
+        font-size: .8rem;
+        font-weight: 300;
+      }
+
+      &__day {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--success);
+      }
+    }
+
+    &__right {
+      display: flex;
+      flex-direction: column;
+      width: 80%;
+      padding: 0 0 0 .5rem;
+
+      &__title {
+        // font-size: 1rem;
+        font-weight: 600;
+      }
+
+      &__location, &__participants {
+        font-size: .8rem;
+        font-weight: 300;
+      }
+
+      &__participants {
+
+        &__count {
+          color: var(--success);
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}

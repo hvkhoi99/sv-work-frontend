@@ -5,6 +5,7 @@ import React from 'react';
 import { FormFeedback, FormGroup, Label } from 'reactstrap';
 import '../InputField/InputField.scss';
 import './TextFieldDate.scss';
+import { makeStyles } from "@material-ui/core/styles";
 
 TextFieldDate.propTypes = {
   field: PropTypes.object,
@@ -35,6 +36,16 @@ TextFieldDate.defaultProps = {
   txtLabel: ''
 }
 
+const useStyles = makeStyles(theme => ({
+  root: {
+    "& .MuiFormLabel-root": {
+      color: 'var(--success)',
+      fontWeight: '500',
+      fontSize: '1.1rem'
+    }
+  }
+}));
+
 function TextFieldDate(props) {
   const {
     field, form,
@@ -44,6 +55,8 @@ function TextFieldDate(props) {
   const { name } = field;
   const { errors, touched } = form;
   const showError = errors[name] && touched[name];
+
+  const classes = useStyles();
 
   return (
     <FormGroup className={`field-container ${moreClassName}`}>
@@ -59,7 +72,7 @@ function TextFieldDate(props) {
         placeholder={placeholder}
         disabled={disabled}
         error={showError}
-        className={`${inputClassName}`}
+        className={`${inputClassName} ${classes.root}`}
         variant={variant}
         helperText={showError && errors[name]}
 
