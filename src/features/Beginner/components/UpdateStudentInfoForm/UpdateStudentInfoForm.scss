@@ -1,0 +1,26 @@
+.first-last-name {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.phone-gender {
+  display: flex;
+  // justify-content: space-between;
+  width: 100%;
+}
+
+.update-student-form-btn-group {
+  display: flex;
+  justify-content: center;
+
+  & > button {
+    display: flex;
+    align-items: center;
+    border-radius: 2rem;
+    font-weight: 500;
+    
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
+    rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  }
+}

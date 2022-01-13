@@ -96,23 +96,40 @@ export function PrivateRouteStudent({ component: Component, ...rest }) {
 
 export function PrivateRouteFirstUpdateProfile({ component: Component, ...rest }) {
   const user = useSelector((state) => state.user.current);
-  const userRole = parseInt(localStorage.getItem('role_id'));
+  // const userRole = parseInt(localStorage.getItem('role_id'));
 
   return (
     <div>
       <Route
         {...rest}
         render={(props) => {
-          return userRole === 3 && user.s_profile === null
+          return user.role_id === 3
             ? (
-              <Component {...props} />
-              // window.location.pathname !== "/first-update/recruiter" 
-              // ? <Component {...props} />
-              // : <Redirect to='/' />
+              user.s_profile === null
+                ? (
+                  user.r_profile === null
+                    ? (
+                      <Component {...props} />
+                    )
+                    : (
+                      window.location.pathname !== "/first-update/recruiter"
+                        ? <Component {...props} />
+                        : <Redirect to='/first-update' />
+                    )
+                ) : (
+                  user.r_profile === null
+                    ? (
+                      window.location.pathname !== "/first-update/student"
+                        ? <Component {...props} />
+                        : <Redirect to='/first-update' />
+                    ) : <Redirect to='/' />
+                )
             )
-            : userRole === 2 && user.r_profile === null
+            : user.role_id === 2 && user.r_profile === null
               ? (
-                <Component {...props} />
+                window.location.pathname !== "/first-update/student"
+                  ? <Component {...props} />
+                  : <Redirect to='/first-update' />
               )
               : <Redirect to='/' />;
         }}

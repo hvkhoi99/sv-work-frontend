@@ -17,6 +17,7 @@ SelectField.propTypes = {
   isOptionValue: PropTypes.bool,
   isCreatableSelect: PropTypes.bool,
   labelClassName: PropTypes.string,
+  moreClassName: PropTypes.string,
 };
 
 SelectField.defaultProps = {
@@ -30,13 +31,14 @@ SelectField.defaultProps = {
   isMulti: false,
   isOptionValue: false,
   isCreatableSelect: false,
-  labelClassName: ''
+  labelClassName: '',
+  moreClassName: '',
 }
 
 function SelectField(props) {
   const {
     field, form, label, placeholder, disabled,
-    options, isMulti, isOptionValue, isCreatableSelect, labelClassName
+    options, isMulti, isOptionValue, isCreatableSelect, labelClassName, moreClassName
   } = props;
   const { name, value } = field;
   const { errors, touched } = form;
@@ -81,7 +83,7 @@ function SelectField(props) {
   }
 
   return (
-    <FormGroup>
+    <FormGroup className={`${moreClassName}`}>
       {label && <Label style={{ fontWeight: '500' }} className={labelClassName} for={name}>{label}</Label>}
 
       {isCreatableSelect

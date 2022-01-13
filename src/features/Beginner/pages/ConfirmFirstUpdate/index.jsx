@@ -24,13 +24,13 @@ function ConfirmFirstUpdatePage(props) {
   //   );
   // }, false);
 
-  useEffect(() => {
-    window.history.pushState(null, null, window.location.pathname);
-    window.addEventListener('popstate', handleBack);
-    return () => {
-      window.removeEventListener('popstate', handleBack);
-    };
-  });
+  // useEffect(() => {
+  //   window.history.pushState(null, null, window.location.pathname);
+  //   window.addEventListener('popstate', handleBack);
+  //   return () => {
+  //     window.removeEventListener('popstate', handleBack);
+  //   };
+  // });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -49,19 +49,16 @@ function ConfirmFirstUpdatePage(props) {
         history.push("/auth/sign-in");
         break;
       case 3:
-        localStorage.setItem("role_id", 3);
+        // localStorage.setItem("role_id", 3);
         history.push("/");
         break;
       default:
         break;
     }
-    // window.location.replace(
-    //   "/"
-    // );
   }
 
   const handleToUpdateProfilePage = (rolePath) => {
-    user.role_id === 3 && localStorage.setItem("role_id", 3);
+    // user.role_id === 3 && localStorage.setItem("role_id", 3);
     return history.push(`/first-update/${rolePath}`);
   }
 

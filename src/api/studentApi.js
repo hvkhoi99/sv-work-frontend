@@ -1,6 +1,16 @@
 import axiosClient from "./axiosClient";
 
 const studentApi = {
+  // Profile
+  createStudentProfile: (params) => {
+    const url = "/student/profile/store";
+    return axiosClient.post(url, params);
+  },
+
+  updateStudentProfile: (params) => {
+    const url = "/student/profile/update";
+    return axiosClient.put(url, params);
+  },
 
   // Student -> Recruiter
   getAvailableJobs: (params) => {

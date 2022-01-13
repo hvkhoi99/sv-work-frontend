@@ -22,6 +22,15 @@
       align-items: center;
       margin-bottom: 1rem;
 
+      &__dot {
+        margin: 0 0 6rem 0;
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        background-color: var(--success);
+        position: absolute;
+      }
+
       & > span {
         font-weight: 600;
       }

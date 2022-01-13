@@ -3,7 +3,6 @@ import studentApi from 'api/studentApi';
 import Footer from 'components/Footer';
 import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
-import Paths from 'constants/paths';
 import { updateUser } from 'features/Auth/userSlice';
 import UpdateCompanyInfoForm from 'features/Beginner/components/UpdateCompanyInfoForm';
 import { useSnackbar } from 'notistack';
@@ -72,7 +71,6 @@ function RecruiterUpdateProfilePage(props) {
           enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
         }
       } else {
-        console.log({ values });
         const data = user.role_id === 2
           ? await recruiterApi.updateRecruiterProfile(values.user_id, params)
           : await studentApi.updateRecruiterProfile(values.user_id, params);
@@ -80,15 +78,17 @@ function RecruiterUpdateProfilePage(props) {
           localStorage.setItem('user', JSON.stringify(data.data.data));
           dispatch(updateUser(data.data.data));
           enqueueSnackbar("Your profile has been updated.", { variant: "success" });
-          history.push(`${Paths.recruiterDashboard}`);
+          // history.push(`${Paths.recruiterDashboard}`);
           return true;
         } else {
           enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+          return false;
         }
       }
 
     } catch (error) {
       enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
     }
   }
 

@@ -68,6 +68,7 @@ function AdminLoginPage(props) {
         </div>
         <div className="login__formm">
           <div className="login__formm__title">
+            <div className="login__formm__title__dot"></div>
             <span>Sign in</span>
             <img src={Images.smDot} alt="smDot" />
           </div>

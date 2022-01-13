@@ -85,8 +85,12 @@ function Header(props) {
   }
 
   const handleMoveToRecruiter = () => {
-    localStorage.setItem("role_id", 2);
-    history.push("/recruiter");
+    if (user.r_profile !==null) {
+      localStorage.setItem("role_id", 2);
+      history.push("/recruiter");
+    } else {
+      history.push("/first-update");
+    }
   }
 
   const handleMoveToStudent = () => {
@@ -338,19 +342,19 @@ function Header(props) {
               </div>
               <ul>
                 <li>
-                  <Link to={Paths.clientDashboard} className="me-link">
+                  <Link to={Paths.clientDashboard} className="me-link" onClick={(e) => showMe(e)}>
                     <MdIcons.MdDashboard className="me-link__icon" />
                     <span>Dashboard</span>
                   </Link>
                 </li>
                 <li>
-                  <Link to={Paths.clientProfile} className="me-link">
+                  <Link to={Paths.clientProfile} className="me-link" onClick={(e) => showMe(e)}>
                     <RiIcons.RiProfileLine className="me-link__icon" />
                     <span>Profile</span>
                   </Link>
                 </li>
                 <li>
-                  <Link to={Paths.clientAccount} className="me-link">
+                  <Link to={Paths.clientAccount} className="me-link" onClick={(e) => showMe(e)}>
                     <AiIcons.AiFillSetting className="me-link__icon" />
                     <span>Account</span>
                   </Link>
