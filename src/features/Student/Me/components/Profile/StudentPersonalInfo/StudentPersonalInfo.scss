@@ -1,0 +1,124 @@
+.student-personal-info-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  font-size: 0.9rem;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 1.4rem;
+    border-bottom: 2px solid lightgrey;
+
+    &__title {
+      font-weight: 600;
+    }
+
+    &__icon {
+      color: var(--success);
+      margin: 0 0 0 .5rem;
+      cursor: pointer;
+    }
+  }
+
+  &__main {
+    display: flex;
+    justify-content: space-between;
+
+    padding: .5rem 0;
+    line-height: 2.5rem;
+
+    width: 100%;
+
+    &__left {
+
+      &__dob {
+        display: flex;
+        align-items: center;
+
+        // & > span {
+        //   font-weight: 300;
+        // }
+      }
+
+      &__gender {
+        display: flex;
+        align-items: center;
+
+        // & > span {
+        //   font-weight: 300;
+        // }
+      }
+    }
+
+    &__center {
+
+      &__phone {
+        display: flex;
+        align-items: center;
+
+        // & > span {
+        //   font-weight: 300;
+        // }
+      }
+
+      &__email {
+        display: flex;
+        align-items: center;
+
+        // & > span {
+        //   font-weight: 300;
+        // }
+      }
+    }
+
+    &__right {
+
+      &__address {
+        display: flex;
+        align-items: center;
+
+        // & > span {
+        //   font-weight: 300;
+        // }
+      }
+
+      &__nationality {
+        display: flex;
+        align-items: center;
+
+        // & > span {
+        //   font-weight: 300;
+        // }
+      }
+    }
+
+    &__more {
+      display: flex;
+      align-self: flex-start;
+      font-size: 2rem;
+      color: darkgrey;
+      cursor: pointer;
+      border-radius: 50%;
+
+      padding: .2rem;
+      
+      &:hover {
+        transition: all 0.15s ease-out;
+        color: var(--success);
+        background-color: lightgrey;
+      }
+
+      &:active {
+        background-color: #fff;
+      }
+    }
+  }
+
+  &__icon {
+    color: var(--success);
+    margin-right: .5rem;
+  }
+}

@@ -8,6 +8,7 @@
 
 .invalid-validation {
   border: 1px solid #dc3545;
+  position: relative;
 
   &:focus {
     border-color: #dc3545;

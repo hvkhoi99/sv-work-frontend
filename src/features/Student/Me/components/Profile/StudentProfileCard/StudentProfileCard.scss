@@ -1,0 +1,40 @@
+.student-profile-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  &__personal-info {
+    margin: 3rem 0 0 0;
+    width: 100%;
+  }
+
+  &__overview {
+    margin: 1rem 0 0 0;
+    width: 100%;
+  }
+
+  &__experiences {
+    margin: 1rem 0 0 0;
+    width: 100%;
+  }
+
+  &__educations {
+    margin: 2rem 0 0 0;
+    width: 100%;
+  }
+
+  &__skills {
+    margin: 2rem 0 0 0;
+    width: 100%;
+  }
+
+  &__certificates {
+    margin: 0.5rem 0 0 0;
+    width: 100%;
+  }
+
+  &__languages {
+    margin: 2rem 0 0 0;
+    width: 100%;
+  }
+}

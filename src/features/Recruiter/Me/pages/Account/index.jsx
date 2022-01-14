@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import * as FaIcons from 'react-icons/fa';
 import * as HiIcons from 'react-icons/hi';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import helper from 'utils/common';
 import * as Yup from 'yup';
 import './RecruiterAccount.scss';
@@ -18,8 +18,13 @@ RecruiterAccountPage.propTypes = {
 };
 
 function RecruiterAccountPage(props) {
+  const history = useHistory();
+  const currentPath = history.location.pathname;
+  const studentAccountPath = "/me/account";
+  const recruiterAccountPath = "/recruiter/me/account";
   const { enqueueSnackbar } = useSnackbar();
   const recruiter = useSelector((state) => state.user.current.r_profile);
+  const student = useSelector((state) => state.user.current.s_profile);
   const [isChangeToPasswordForm, setIsChangeToPasswordForm] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   // const [showReal, setShowReal] = useState(false);
@@ -60,7 +65,6 @@ function RecruiterAccountPage(props) {
     { id: 2, type: "passwordConfirmation", name: "Confirm New Password", errorMessage: errors.passwordConfirmation, isOpen: showConfirm }
   ]
 
-
   useEffect(() => {
     helper.scrollToTop();
 
@@ -90,7 +94,7 @@ function RecruiterAccountPage(props) {
       if (action.data.status === 1) {
         reset();
         setIsChangeToPasswordForm(false);
-        enqueueSnackbar("Your recruitment has been created.", { variant: "success" });
+        enqueueSnackbar("Your Password has been updated.", { variant: "success" });
         return true;
       } else {
         enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
@@ -149,10 +153,24 @@ function RecruiterAccountPage(props) {
               </div>
               <div className="account__container__profile__info">
                 <span className="account__container__profile__info__name">
-                  {recruiter.company_name}
-                  {recruiter.verify && <HiIcons.HiCheckCircle className="inforCard-icon" />}
+                  {
+                    currentPath === recruiterAccountPath
+                      ? recruiter.company_name
+                      : currentPath === studentAccountPath
+                        ? (student.first_name + ' ' + student.last_name)
+                        : "Error"
+                  }
+                  {currentPath === recruiterAccountPath && recruiter.verify && <HiIcons.HiCheckCircle className="inforCard-icon" />}
                 </span>
-                <span className="account__container__profile__info__industry">{recruiter.company_industry}</span>
+                <span className="account__container__profile__info__industry">
+                  {
+                    currentPath === recruiterAccountPath
+                      ? recruiter.company_industry
+                      : currentPath === studentAccountPath
+                        ? student.job_title
+                        : "Error"
+                  }
+                </span>
               </div>
             </div>
             <div className="account__container__settings">
@@ -168,7 +186,13 @@ function RecruiterAccountPage(props) {
                       <span>Email Address</span>
                       <input
                         className="form-control"
-                        value={recruiter.contact_email}
+                        value={
+                          currentPath === recruiterAccountPath
+                            ? recruiter.contact_email
+                            : currentPath === studentAccountPath
+                              ? student.email
+                              : "Error"
+                        }
                         disabled
                         autoComplete="email"
                       />

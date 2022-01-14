@@ -1,3 +1,4 @@
+import aboutUsCard from '../assets/img/aboutuscard.png';
 import admin from '../assets/img/admin.png';
 import aio from '../assets/img/aio.png';
 import apple from '../assets/img/apple.png';
@@ -13,6 +14,7 @@ import event1 from '../assets/img/event1.jpg';
 import eventcircle from '../assets/img/eventcircle.png';
 import fb from '../assets/img/fb.png';
 import fptSoftware from '../assets/img/fpt-software.jpg';
+import googleCV from '../assets/img/GoogleCV.jpg';
 import home from '../assets/img/home.png';
 import lamborghini from '../assets/img/lamborghini.jpg';
 import levis from '../assets/img/levis.png';
@@ -30,13 +32,12 @@ import teamwork from '../assets/img/teamwork.png';
 import threeMinions from '../assets/img/three-minions.png';
 import tw from '../assets/img/tw.png';
 import vinfast from '../assets/img/vinfast.png';
-import aboutUsCard from '../assets/img/aboutuscard.png';
 
 const Images = {
   home, notFound, emoji, minami, bgRight, background, fptSoftware, smDot, eventcircle,
   admin, teamwork, overview, ellipse, apple, coffeeTime, levis, tw, shopee, fb, vinfast,
   burger, lamborghini, student, recruiter, bmw, create, searchCard, recruitmentManageCard, aio,
-  threeMinions, ship, event1, aboutUsCard
+  threeMinions, ship, event1, aboutUsCard, googleCV
 }
 
 export default Images;

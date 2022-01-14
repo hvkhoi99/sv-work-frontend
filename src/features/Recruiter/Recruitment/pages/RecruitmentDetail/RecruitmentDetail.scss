@@ -30,6 +30,8 @@
         justify-content: center;
         width: 100%;
 
+        position: relative;
+
         &__icon {
           background-color: var(--success);
           width: 3rem;
@@ -161,6 +163,7 @@
     display: flex;
     justify-content: center;
     width: 100%;
+    position: relative;
 
     &__icon {
       background-color: var(--success);
@@ -200,6 +203,8 @@
     display: flex;
     justify-content: center;
     width: 100%;
+
+    position: relative;
 
     &__icon {
       background-color: var(--success);

@@ -1,0 +1,75 @@
+.student-resume-item-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  position: relative;
+
+  width: 10rem;
+  height: calc(10rem * 29.7 / 21);
+
+  border: 1px solid lightgrey;
+
+  &__background {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+
+    & > img {
+      width: 100%;
+      object-fit: cover;
+      vertical-align: middle;
+      transition: all 0.45s ease 0s;
+    }
+
+    &__overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+
+      width: 100%;
+      height: 100%;
+
+      color: rgba(255, 255, 255, 0.8);
+      background-color: rgba(0, 0, 0, 0.8);
+      opacity: 0;
+      transition: all 0.25s ease 0s;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:hover > img {
+      transform: scale(1.35);
+    }
+
+    &:hover &__overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  &__info {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    bottom: 0;
+    padding: 0.2rem 0;
+
+    &__job-title {
+      font-size: 1rem;
+      font-weight: 300;
+      color: #fff;
+    }
+  }
+}

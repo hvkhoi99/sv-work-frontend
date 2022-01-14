@@ -1,0 +1,77 @@
+.student-languages-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  font-size: 0.9rem;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 1.4rem;
+    border-bottom: 2px solid lightgrey;
+
+    &__title {
+      font-weight: 600;
+    }
+
+    &__icon {
+      color: var(--success);
+      margin: 0 0 0 0.5rem;
+      cursor: pointer;
+    }
+  }
+
+  &__main {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    padding: 1rem 0 0 0;
+
+    &__info {
+      display: flex;
+      // justify-content: center;
+      flex-wrap: wrap;
+
+      width: 100%;
+      padding: 0 5rem 0 0;
+
+      &__item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        color: var(--success);
+        font-weight: 600;
+
+        margin: 0 1rem 2rem 1rem;
+        padding: 0.5rem 1rem;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        border-radius: 1rem;
+      }
+    }
+
+    &__more {
+      display: flex;
+      align-self: flex-start;
+      font-size: 2rem;
+      color: darkgrey;
+      cursor: pointer;
+      border-radius: 50%;
+
+      padding: 0.2rem;
+
+      &:hover {
+        transition: all 0.15s ease-out;
+        color: var(--success);
+        background-color: lightgrey;
+      }
+
+      &:active {
+        background-color: #fff;
+      }
+    }
+  }
+}

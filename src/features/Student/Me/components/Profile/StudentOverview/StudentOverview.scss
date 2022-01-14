@@ -1,0 +1,56 @@
+.student-overview-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  font-size: 0.9rem;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    font-size: 1.4rem;
+    border-bottom: 2px solid lightgrey;
+
+    &__title {
+      font-weight: 600;
+    }
+
+    &__icon {
+      color: var(--success);
+      margin: 0 0 0 0.5rem;
+      cursor: pointer;
+    }
+  }
+
+  &__main {
+    display: flex;
+    padding: 1rem 0;
+    line-height: 1.5rem;
+
+    &__description {
+      padding: 0 5rem 0 0;
+    }
+
+    &__more {
+      display: flex;
+      align-self: flex-start;
+      font-size: 2rem;
+      color: darkgrey;
+      cursor: pointer;
+      border-radius: 50%;
+
+      padding: 0.2rem;
+
+      &:hover {
+        transition: all 0.15s ease-out;
+        color: var(--success);
+        background-color: lightgrey;
+      }
+
+      &:active {
+        background-color: #fff;
+      }
+    }
+  }
+}

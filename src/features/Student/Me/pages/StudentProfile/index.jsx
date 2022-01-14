@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
-import './StudentProfile.scss';
-import DashboardSelectOption from 'features/Recruiter/Me/components/DashboardSelectOption';
-import Paths from 'constants/paths';
-import Images from 'constants/images';
-import { useHistory } from 'react-router-dom';
-import * as MdIcons from 'react-icons/md';
-import * as FaIcons from 'react-icons/fa';
 import { Switch } from '@material-ui/core';
+import Images from 'constants/images';
+import Paths from 'constants/paths';
+import DashboardSelectOption from 'features/Recruiter/Me/components/DashboardSelectOption';
+import React, { useState } from 'react';
+import * as FaIcons from 'react-icons/fa';
+import * as MdIcons from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import StudentProfileCard from '../../components/Profile/StudentProfileCard';
+import StudentResumeCard from '../../components/Profile/StudentResumeCard';
+import './StudentProfile.scss';
 
 StudentProfilePage.propTypes = {
 
 };
 
 function StudentProfilePage(props) {
+  const user = useSelector((state) => state.user.current);
   const profilePath = `${Paths.clientProfile}/info`;
   const resumePath = `${Paths.clientProfile}/resume`;
   const history = useHistory();
   const location = history.location.pathname;
   const [currentPath, setCurrentPath] = useState(location);
+  const [checked, setChecked] = useState(user.s_profile.open_for_job);
 
   const options = [
     { id: 0, name: "Profile", path: profilePath },
@@ -27,6 +32,12 @@ function StudentProfilePage(props) {
   const onChangeIndex = (option) => {
     setCurrentPath(option.path);
   }
+
+  const onOpenJob = (e) => {
+    setChecked(e.target.checked);
+  }
+
+  console.log({checked})
 
   return (
     <div className="student-profile">
@@ -60,14 +71,17 @@ function StudentProfilePage(props) {
               </div>
               <div className="student-profile__container__right__base-info__left__info">
                 <span className="student-profile__container__right__base-info__left__info__name">
-                  Ho Van Khoi
+                  {user.s_profile.first_name} {user.s_profile.last_name}
                 </span>
                 <span className="student-profile__container__right__base-info__left__info__career">
-                  Senior full stack developer
+                  {user.s_profile.job_title}
                 </span>
                 <div className="student-profile__container__right__base-info__left__info__open-job">
                   <span>Open Job</span>
-                  <Switch />
+                  <Switch 
+                  checked={checked} 
+                  onChange={(e) => onOpenJob(e)}
+                  />
                 </div>
               </div>
             </div>
@@ -80,6 +94,14 @@ function StudentProfilePage(props) {
                 />
               </div>
             </div>
+          </div>
+          <div className="student-profile__container__right__more-info">
+            {currentPath === profilePath
+              ? <StudentProfileCard />
+              : currentPath === resumePath
+                ? <StudentResumeCard />
+                : <></>}
+
           </div>
         </div>
       </div>

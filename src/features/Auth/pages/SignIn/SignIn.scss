@@ -20,6 +20,7 @@
     &__ellipse {
       display: flex;
       justify-content: center;
+      position: relative;
 
       & > img {
         width: 3rem;

@@ -6,6 +6,8 @@
   width: 100%;
   font-size: 0.9rem;
 
+  position: relative;
+
   &__main {
     display: flex;
     justify-content: space-between;
@@ -48,7 +50,7 @@
     align-items: center;
 
     max-height: 0;
-    width: 80%;
+    width: 100%;
     margin: 3rem 0 0 0;
 
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px,
