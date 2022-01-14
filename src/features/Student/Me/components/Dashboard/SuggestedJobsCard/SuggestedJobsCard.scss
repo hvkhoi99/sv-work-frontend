@@ -1,0 +1,151 @@
+.suggested-jobs-card {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+
+  font-size: 0.8rem;
+  padding: 1rem;
+
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 1rem;
+
+  background-color: #fff;
+
+  cursor: pointer;
+
+  &__date {
+    text-align: right;
+    width: 100%;
+    color: var(--success);
+    font-weight: 500;
+
+    &__icon-heart {
+      margin-left: 0.5rem;
+      font-size: 1.2rem;
+    }
+  }
+
+  &__company-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    margin-top: 0.5rem;
+
+    &__avatar {
+      display: flex;
+      position: relative;
+
+      & > img {
+        width: 3.5rem;
+        height: 3.5rem;
+        border-radius: 50%;
+      }
+
+      &__verify {
+        display: flex;
+        justify-content: flex-end;
+        position: absolute;
+        width: 100%;
+
+        &__icon {
+          color: var(--success);
+          position: relative;
+          background-color: #fff;
+          width: 1rem;
+          height: 1rem;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: column;
+      padding: 0 0 0 1rem;
+      width: 100%;
+
+      &__job-name {
+        font-weight: 600;
+      }
+
+      &__company-name-size {
+        display: flex;
+        align-items: center;
+        width: 100%;
+
+        &__name {
+          word-break: break-all;
+          margin: 0 1rem 0 0;
+          color: var(--success);
+          font-weight: 500;
+        }
+
+        &__size {
+          display: flex;
+          align-items: center;
+
+          // & > span {
+          //   font-weight: 300;
+          // }
+
+          &__icon {
+            margin-right: 0.2rem;
+            font-size: 0.9rem;
+          }
+        }
+      }
+    }
+  }
+
+  &__salary-location {
+    margin: 1rem 0 0 0;
+
+    &__salary {
+      display: flex;
+      align-items: center;
+      width: 100%;
+
+      &__icon {
+        font-size: 1rem;
+        margin-right: 0.5rem;
+      }
+
+      // & > span {
+      //   font-weight: 300;
+      // }
+    }
+
+    &__location {
+      display: flex;
+      align-items: center;
+      width: 100%;
+
+      &__icon {
+        font-size: 1rem;
+        margin-right: 0.5rem;
+      }
+
+      // & > span {
+      //   font-weight: 300;
+      // }
+    }
+  }
+
+  &__btn-apply {
+    text-align: center;
+    width: 100%;
+    margin-top: 1rem;
+
+    & > button {
+      border-radius: 2rem;
+      width: 100%;
+
+      font-weight: 500;
+
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
+        rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    }
+  }
+}

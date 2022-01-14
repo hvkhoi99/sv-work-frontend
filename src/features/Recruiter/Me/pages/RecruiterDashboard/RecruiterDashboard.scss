@@ -71,14 +71,14 @@
                 font-size: 1.2rem;
                 font-weight: 600;
                 width: 100%;
-                word-wrap: break-word;
+                word-break: break-all;
               }
             }
 
             &__company-industry {
               color: darkgrey;
               width: 100%;
-              word-wrap: break-word;  
+              word-break: break-all;  
             }
           }
         }
