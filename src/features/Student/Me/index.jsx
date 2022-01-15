@@ -18,7 +18,11 @@ function StudentMeFeature(props) {
     <>
       <Header />
       <Switch>
-        <Route exact path={`${match.url}/dashboard`} component={StudentDashboardPage} />
+        <Redirect exact from={`${match.url}/dashboard`} to={`${match.url}/dashboard/applied-jobs`}/>
+        <Route exact path={`${match.url}/dashboard/applied-jobs`} component={StudentDashboardPage} />
+        <Route exact path={`${match.url}/dashboard/company-followed`} component={StudentDashboardPage} />
+        <Route exact path={`${match.url}/dashboard/saved-jobs`} component={StudentDashboardPage} />
+        <Route exact path={`${match.url}/dashboard/invited-jobs`} component={StudentDashboardPage} />
         <Redirect exact from={`${match.url}/profile`} to={`${match.url}/profile/info`} />
         <Route exact path={`${match.url}/profile/info`} component={StudentProfilePage} />
         <Route exact path={`${match.url}/profile/resume`} component={StudentProfilePage} />

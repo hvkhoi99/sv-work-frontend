@@ -2,8 +2,8 @@ import Images from 'constants/images';
 import PropTypes from 'prop-types';
 import React from 'react';
 import * as AiIcons from 'react-icons/ai';
-import * as BiIcons from 'react-icons/bi';
-import * as GrIcons from 'react-icons/gr';
+import * as HiIcons from 'react-icons/hi';
+import * as MdIcons from 'react-icons/md';
 import helper from 'utils/common';
 import './RecruitmentCard.scss';
 
@@ -38,11 +38,11 @@ function RecruitmentCard(props) {
           Senior Developer - Full Time
         </span>
         <div className="recruitment-card__center__location">
-          <GrIcons.GrLocation className="recruitment-card__center__location__icon" />
+          <MdIcons.MdLocationOn className="recruitment-card__center__location__icon" />
           <span>Hoa Vang, Da Nang</span>
         </div>
         <div className="recruitment-card__center__salary">
-          <BiIcons.BiDollar className="recruitment-card__center__salary__icon" />
+          <HiIcons.HiCurrencyDollar className="recruitment-card__center__salary__icon" />
           <span>1500 - 2000/month</span>
         </div>
         <div className="recruitment-card__center__applicants">

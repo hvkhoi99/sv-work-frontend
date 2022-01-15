@@ -1,0 +1,67 @@
+.student-paginator-view {
+  display: flex;
+  align-items: center;
+  flex-flow: column wrap;
+  width: 100%;
+
+  font-size: .9rem;
+
+  &__menu {
+    display: flex;
+    justify-content: space-between;
+
+    width: 100%;
+
+    &__item {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      min-width: 10rem;
+      padding: 1rem;
+      border-radius: 1rem;
+
+      color: black;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+      & > span {
+        font-weight: 500;
+        font-size: 1rem;
+      }
+
+      & > .student-paginator-view-menu-icon {
+        font-size: 1.5rem;
+        margin-right: .5rem;
+      }
+
+      &:hover {
+        transition: all 0.15s ease-out;
+        text-decoration: none;
+        color: black;
+        background-color: lightgreen;
+      }
+
+      &:active {
+        background-color: #fff;
+      }
+    }
+  }
+
+  &__page {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    padding: 4rem 0 0 0;
+  }
+}
+
+.active-student-menu-item {
+  background-color: var(--success);
+  color: #fff;
+
+  &:hover {
+    background-color: darkgreen;
+    color: #fff;
+  }
+}

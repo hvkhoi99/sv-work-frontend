@@ -14,6 +14,11 @@
 
   cursor: pointer;
 
+  &:hover {
+    transition: all 0.15s ease-out;
+    background-color: lightgrey;
+  }
+
   &__date {
     text-align: right;
     width: 100%;

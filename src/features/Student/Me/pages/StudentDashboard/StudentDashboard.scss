@@ -118,6 +118,14 @@
           }
         }
       }
+
+      &__right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: calc(100% - 4rem - 25%);
+
+      }
     }
   }
 }

@@ -1,0 +1,97 @@
+.company-followed-card {
+  display: flex;
+  justify-content: center;
+  
+  position: relative;
+
+  width: 100%;
+
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  border-radius: 1rem;
+  overflow: hidden;
+
+  font-size: 0.9rem;
+
+  cursor: pointer;
+
+  &__left {
+    width: 100%;
+    height: 10rem;
+    transition: all 0.45s ease 0s;
+  }
+
+  &__right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    width: 0;
+    background-color: var(--success);
+    top: 0;
+    right: 0;
+    transition: all 0.45s ease 0s;
+
+    &__overlay {
+      position: absolute;
+      left: 0;
+      top: 0;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      width: 100%;
+      height: 100%;
+      padding: 1rem;
+
+      background-color: rgba(0, 0, 0, 0.8);
+      opacity: 0;
+      transition: all 0.25s ease 0s;
+
+      cursor: default;
+
+      &__action {
+        display: flex;
+        flex-wrap: row nowrap;
+        justify-content: center;
+        align-items: center;
+
+        transition: all 0.35s ease 0s;
+        transform: translateX(1rem);
+        opacity: 0;
+
+        &__icon {
+          font-size: 3.5rem;
+          background-color: #fff;
+          border-radius: 50%;
+
+          padding: .3rem;
+          color: darkred;
+
+          cursor: pointer;
+
+          &:hover {
+            transition: all 0.15s ease-out;
+            background-color: lightgrey;
+          }
+        }
+      }
+    }
+  }
+
+  &:hover > &__left {
+    width: 80%;
+  }
+
+  &:hover > &__right {
+    width: 20%;
+
+    .overlay, .action {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+}

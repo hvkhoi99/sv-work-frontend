@@ -11,7 +11,7 @@
   cursor: pointer;
 
   &:hover {
-    background-color: lightgrey;
+    background-color: lightblue;
     transition: all 0.15s ease-out;
   }
 
@@ -79,8 +79,10 @@
       align-items: center;
 
       &__icon {
-        font-size: .9rem;
+        font-size: 1.1rem;
         margin: 0 0.3rem 0 0;
+        color: var(--success);
+
       }
 
       & > span {
@@ -93,8 +95,10 @@
       align-items: center;
 
       &__icon {
-        font-size: .9rem;
+        font-size: 1.1rem;
         margin: 0 0.3rem 0 0;
+        color: var(--success);
+
       }
 
       & > span {
@@ -116,11 +120,12 @@
       margin: 0.3rem 0 0 0;
 
       & > span {
-        background-color: rgba(16, 165, 16, 0.5);
+        background-color: lightgreen;
         padding: 0rem 0.5rem;
         border-radius: 2rem;
         font-weight: 400;
-        color: #fff;
+        // color: #fff;
+        font-weight: 500;
         font-size: .8rem;
       }
     }
