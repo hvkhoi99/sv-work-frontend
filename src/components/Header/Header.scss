@@ -220,7 +220,7 @@
         color: #fff;
         transition: all 0.2s ease-out;
       }
-      
+
       // &:active {
       //   background-color: #fff;
       //   color: #fff;
@@ -306,7 +306,7 @@
     &__me {
       display: none;
       min-width: 10rem;
-      max-width: 15rem;
+      max-width: 18rem;
       height: auto;
       background-color: #fff;
       box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -315,8 +315,10 @@
       &__user-infor {
         display: flex;
         justify-content: center;
+        flex-wrap: row nowrap;
         align-items: center;
-        width: 100%;
+        min-width: 13rem;
+        // max-width: 100%;
         min-height: 2rem;
         font-size: 0.9rem;
         background-color: transparent;
@@ -326,7 +328,7 @@
         &__name {
           font-weight: 600;
           max-width: 6rem;
-          word-break: break-all;  
+          word-break: break-all;
         }
       }
 

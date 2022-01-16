@@ -2,7 +2,6 @@ import Images from 'constants/images';
 import Paths from 'constants/paths';
 import React from 'react';
 import * as AiIcons from 'react-icons/ai';
-import * as BiIcons from 'react-icons/bi';
 import * as MdIcons from 'react-icons/md';
 import * as RiIcons from 'react-icons/ri';
 import { useSelector } from 'react-redux';
@@ -28,14 +27,14 @@ function StudentDashboardPage(props) {
       id: 0,
       name: "Applied Jobs",
       path: `${Paths.clientDashboard}/applied-jobs`,
-      icon: <BiIcons.BiNotification className="student-paginator-view-menu-icon" />,
+      icon: <RiIcons.RiCheckDoubleLine className="student-paginator-view-menu-icon" />,
       pageCard: <AppliedJobsPageCard />
     },
     {
       id: 1,
       name: "Company Followed",
       path: `${Paths.clientDashboard}/company-followed`,
-      icon: <RiIcons.RiCheckDoubleLine className="student-paginator-view-menu-icon" />,
+      icon: <RiIcons.RiUserFollowLine className="student-paginator-view-menu-icon" />,
       pageCard: <CompanyFollowedPageCard />
     },
     {
@@ -49,7 +48,7 @@ function StudentDashboardPage(props) {
       id: 3,
       name: "Invited Jobs",
       path: `${Paths.clientDashboard}/invited-jobs`,
-      icon: <MdIcons.MdOutlineDownloading className="student-paginator-view-menu-icon" />,
+      icon: <RiIcons.RiMailDownloadLine className="student-paginator-view-menu-icon" />,
       pageCard: <InvitedJobsPageCard />
     },
   ]

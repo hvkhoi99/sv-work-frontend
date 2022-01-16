@@ -85,7 +85,7 @@ function Header(props) {
   }
 
   const handleMoveToRecruiter = () => {
-    if (user.r_profile !==null) {
+    if (user.r_profile !== null) {
       localStorage.setItem("role_id", 2);
       history.push("/recruiter");
     } else {
@@ -216,20 +216,18 @@ function Header(props) {
             <div className={hiddenMe ? "notify-me__action__me" : "notify-me__action__me isVisible"}>
               <div className="notify-me__action__me__user-infor">
                 Signed in as&nbsp;
-                <span>
-                  <LinesEllipsis
-                    text={
-                      user.r_profile === null
-                        ? "Recruiter"
-                        : user.r_profile.company_name
-                    }
-                    maxLine='1'
-                    ellipsis='...'
-                    trimRight
-                    basedOn='letters'
-                    className="notify-me__action__me__user-infor__name"
-                  />
-                </span>
+                <LinesEllipsis
+                  text={
+                    user.r_profile === null
+                      ? "Recruiter"
+                      : user.r_profile.company_name
+                  }
+                  maxLine='1'
+                  ellipsis='...'
+                  trimRight
+                  basedOn='letters'
+                  className="notify-me__action__me__user-infor__name"
+                />
               </div>
               <ul>
                 <li>
@@ -325,20 +323,18 @@ function Header(props) {
             <div className={hiddenMe ? "notify-me__action__me" : "notify-me__action__me isVisible"}>
               <div className="notify-me__action__me__user-infor">
                 Signed in as&nbsp;
-                <span>
-                  <LinesEllipsis
-                    text={
-                      user.s_profile === null
-                        ? "Student"
-                        : user.s_profile.last_name
-                    }
-                    maxLine='1'
-                    ellipsis='...'
-                    trimRight
-                    basedOn='letters'
-                    className="notify-me__action__me__user-infor__name"
-                  />
-                </span>
+                <LinesEllipsis
+                  text={
+                    user.s_profile === null
+                      ? "Student"
+                      : user.s_profile.last_name
+                  }
+                  maxLine='1'
+                  ellipsis='...'
+                  trimRight
+                  basedOn='letters'
+                  className="notify-me__action__me__user-infor__name"
+                />
               </div>
               <ul>
                 <li>

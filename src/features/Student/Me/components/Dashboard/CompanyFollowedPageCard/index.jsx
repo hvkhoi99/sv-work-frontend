@@ -13,6 +13,12 @@ function CompanyFollowedPageCard(props) {
       <div className="applied-jobs-page-card__item">
         <CompanyFollowedCard />
       </div>
+      <div className="applied-jobs-page-card__item">
+        <CompanyFollowedCard />
+      </div>
+      <div className="applied-jobs-page-card__item">
+        <CompanyFollowedCard />
+      </div>
     </div>
   );
 }

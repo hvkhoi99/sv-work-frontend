@@ -1,4 +1,5 @@
 import React from 'react';
+import StudentSearchBar from '../../components/StudentSearchBar';
 import './FindJobs.scss';
 
 FindJobsPage.propTypes = {
@@ -8,7 +9,11 @@ FindJobsPage.propTypes = {
 function FindJobsPage(props) {
   return (
     <div className="find-jobs">
-      Find jobs page
+      <div className="find-jobs__container">
+        <div className="find-jobs__container__search-bar">
+          <StudentSearchBar />
+        </div>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,8 @@
-.applied-jobs-card {
+.saved-jobs-card {
   display: flex;
   justify-content: center;
+
+  position: relative;
 
   width: 100%;
 
@@ -11,15 +13,19 @@
 
   font-size: 0.9rem;
 
+  cursor: pointer;
+
   &__left {
+    width: 100%;
+    // height: 10rem;
+    transition: all 0.45s ease 0s;
+
     display: flex;
     align-items: center;
 
-    width: 80%;
     padding: 1rem 1.5rem;
 
     color: black;
-    transition: all 0.35s ease 0s;
 
     &:hover {
       text-decoration: none;
@@ -97,7 +103,7 @@
 
         &__item {
           margin: 0 1rem 0 0;
-          padding: 0rem 0.5rem;
+          padding: 0 0.5rem;
           background-color: lightgreen;
 
           border-radius: 2rem;
@@ -125,34 +131,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
     position: relative;
 
-    width: 20%;
-
-    cursor: pointer;
-
-    &__icon {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-
-      vertical-align: middle;
-      transition: all 0.45s ease 0s;
-
-      &__item {
-        font-size: 3rem;
-      }
-    }
+    width: 0;
+    background-color: var(--success);
+    top: 0;
+    right: 0;
+    transition: all 0.45s ease 0s;
 
     &__overlay {
       position: absolute;
-      top: 0;
       left: 0;
+      top: 0;
 
       display: flex;
-      flex-flow: column nowrap;
       justify-content: center;
       align-items: center;
 
@@ -164,55 +157,54 @@
       opacity: 0;
       transition: all 0.25s ease 0s;
 
+      cursor: default;
+
       &__action {
         display: flex;
         flex-wrap: row nowrap;
         justify-content: center;
+        align-items: center;
 
-        opacity: 0;
-        transform: translateY(1rem);
         transition: all 0.35s ease 0s;
+        transform: translateX(1rem);
+        opacity: 0;
 
-        & > button {
-          width: 100%;
-          font-weight: 600;
-          font-size: 1.2rem;
-          border-radius: 2rem;
+        &__icon {
+          font-size: 3.5rem;
+          background-color: #fff;
+          border-radius: 50%;
+
+          padding: 1rem;
+          color: darkred;
+
+          cursor: pointer;
+
+          &:hover {
+            transition: all 0.15s ease-out;
+            background-color: lightgrey;
+          }
         }
       }
-
-      &:hover > &__action {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
+  }
 
-    &:hover > &__icon {
-      transform: scale(1.35);
-    }
+  &:hover > &__left {
+    width: 80%;
+  }
 
-    &:hover > &__overlay {
+  &:hover > &__right {
+    width: 20%;
+
+    .overlay,
+    .action {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateX(0);
     }
   }
 }
 
-.applied-jobs-card-info-icon {
+.saved-jobs-card-info-icon {
   color: var(--success);
   margin: 0 0.2rem 0 0;
   font-size: 1.2rem;
-}
-
-.accepted {
-  background-color: lightgreen;
-  color: green;
-}
-.not-accepted {
-  background-color: lightcoral;
-  color:crimson;
-}
-.waiting {
-  background-color: rgb(255, 241, 161);
-  color: gold;
 }
