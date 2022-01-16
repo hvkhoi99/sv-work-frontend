@@ -53,6 +53,7 @@ function SearchFormEvent(props) {
                 // variant="standard"
                 // label="Event"
                 // labelClassName="input-field-label"
+                moreClassName="width-40"
               />
 
               <FastField

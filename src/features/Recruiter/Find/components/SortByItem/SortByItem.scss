@@ -67,6 +67,8 @@
     -ms-transition: max-height 0.15s ease-in-out 0.15s;
     transition: max-height 0.15s ease-in-out 0.15s;
 
+    z-index: 1;
+
     &__link {
       text-align: center;
       width: 100%;

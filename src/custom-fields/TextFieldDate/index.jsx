@@ -20,6 +20,8 @@ TextFieldDate.propTypes = {
 
   labelClassName: PropTypes.string,
   txtLabel: PropTypes.string,
+  lineHeight: PropTypes.string,
+  fontSize: PropTypes.string,
 };
 
 TextFieldDate.defaultProps = {
@@ -33,24 +35,28 @@ TextFieldDate.defaultProps = {
   moreClassName: '',
   inputClassName: '',
   labelClassName: '',
-  txtLabel: ''
+  txtLabel: '',
+  lineHeight: '1rem',
+  fontSize: '1.2rem',
 }
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    "& .MuiFormLabel-root": {
-      color: 'var(--success)',
-      fontWeight: '500',
-      fontSize: '1.1rem'
-    }
-  }
-}));
 
 function TextFieldDate(props) {
   const {
     field, form,
-    type, label, placeholder, disabled, moreClassName, inputClassName, labelClassName, txtLabel, variant
+    type, label, placeholder, disabled, moreClassName, inputClassName, labelClassName, txtLabel, variant,
+    lineHeight, fontSize,
   } = props;
+
+  const useStyles = makeStyles(theme => ({
+    root: {
+      "& .MuiFormLabel-root": {
+        color: 'var(--success)',
+        fontWeight: '600',
+        fontSize: `${fontSize}`,
+        lineHeight: `${lineHeight}`
+      }
+    }
+  }));
 
   const { name } = field;
   const { errors, touched } = form;
