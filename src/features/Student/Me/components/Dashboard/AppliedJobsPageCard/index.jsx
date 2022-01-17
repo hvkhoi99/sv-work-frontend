@@ -25,12 +25,6 @@ function AppliedJobsPageCard(props) {
   const [pageCount, setPageCount] = useState(0);
   const limit = 5;
 
-  // const dataArray = [
-  //   { id: 0, status: null },
-  //   { id: 1, status: true },
-  //   { id: 2, status: false },
-  // ]
-
   useEffect(() => {
     const fetchAppliedJobs = async () => {
       try {
@@ -64,6 +58,10 @@ function AppliedJobsPageCard(props) {
     helper.scrollToTop(350);
   };
 
+  const onViewJob = (id) => {
+    history.push(`/job/${id}`)
+  }
+
   return (
     <>
       {
@@ -78,7 +76,10 @@ function AppliedJobsPageCard(props) {
                   key={index}
                   className="applied-jobs-page-card__item"
                 >
-                  <AppliedJobsCard job={job} />
+                  <AppliedJobsCard 
+                  onViewJob={onViewJob}
+                  job={job} 
+                  />
                 </div>
               })
             }
