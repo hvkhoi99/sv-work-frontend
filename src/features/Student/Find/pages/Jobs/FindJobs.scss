@@ -7,6 +7,11 @@
 
   font-size: 0.9rem;
 
+  background-image: url("../../../../../assets/img/background.png");
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
   &__container {
     display: flex;
     flex-direction: column;
@@ -64,6 +69,25 @@
       &__select {
         width: 12rem;
       }
+    }
+
+    &__main-jobs {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-around;
+      
+      width: 100%;
+
+      &__item {
+        margin: 0 2rem 4rem;
+      }
+    }
+
+    &__pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
     }
   }
 }

@@ -16,8 +16,18 @@ RecruitmentCard.defaultProps = {
 }
 
 function RecruitmentCard(props) {
+  const handleViewJob = (e) => {
+    e.preventDefault();
+    console.log("view")
+  }
+
+  const handleApply = (e) => {
+    e.stopPropagation();
+    console.log("apply")
+  }
+
   return (
-    <div className="recruitment-card">
+    <div className="recruitment-card" onClick={handleViewJob}>
       <div className="recruitment-card__top">
         <div className="recruitment-card__top__left">
           <div className="recruitment-card__top__left__img">
@@ -51,6 +61,9 @@ function RecruitmentCard(props) {
         <div className="recruitment-card__center__hashtags">
           {helper.splitCommaString("abc,cde,  def  ")}
         </div>
+      </div>
+      <div className="recruitment-card__bottom">
+        <button type="button" className="btn btn-success btn-sm" onClick={handleApply}>Apply</button>
       </div>
     </div>
   );
