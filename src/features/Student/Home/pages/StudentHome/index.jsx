@@ -6,7 +6,7 @@ import Images from 'constants/images';
 import RHFInputField from 'custom-fields/RHFInputField';
 import RHFSelectField from 'custom-fields/RHFSelectField';
 import EventCard from "features/Recruiter/Event/components/EventCard";
-import RecruitmentCard from "features/Recruiter/Me/components/RecruitmentCard";
+import RecruitmentCard from "features/Recruiter/Recruitment/components/RecruitmentCard";
 import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -61,7 +61,6 @@ function StudentHomePage(props) {
       easing: 'ease-in-sine',
       delay: 100,
       // mirror: true
-
     });
   }, []);
 

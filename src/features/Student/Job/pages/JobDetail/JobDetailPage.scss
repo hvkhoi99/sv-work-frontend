@@ -1,0 +1,109 @@
+.job-detail-page {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 85vh;
+  font-size: .9rem;
+
+  padding: 2rem 6rem;
+
+  background-image: url("../../../../../assets/img/background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    height: auto;
+
+    &__top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      padding: 1rem 2rem;
+      border-radius: 1rem;
+
+      &__left {
+        display: flex;
+        align-items: center;
+
+        &__img {
+          & > img {
+            width: 10rem;
+            height: 10rem;
+            border-radius: 50%;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+          }
+        }
+
+        &__info {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          margin: 0 0 0 2rem;
+          line-height: 2rem;
+
+          & > h4 {
+            font-weight: 600;
+          }
+
+          & > span {
+            // font-weight: 400;
+            font-size: 1rem;
+          }
+
+          &__company-name {
+            font-weight: 600;
+          }
+        }
+      }
+
+      &__right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+
+        height: 100%;
+
+        & > button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #fff;
+          font-size: 1rem;
+          font-weight: 500;
+          min-width: 6rem;
+          border-radius: 0.5rem;
+          box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+            rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        }
+      }
+    }
+
+    &__bottom {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      width: 100%;
+      height: auto;
+
+      &__description {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        padding: 1rem 0 0 0;
+      }
+    }
+  }
+}

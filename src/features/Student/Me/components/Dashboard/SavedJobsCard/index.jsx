@@ -9,7 +9,7 @@ import helper from 'utils/common';
 import './SavedJobsCard.scss';
 
 SavedJobsCard.propTypes = {
-  
+
 };
 
 function SavedJobsCard(props) {

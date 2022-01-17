@@ -5,6 +5,7 @@ import * as FaIcons from 'react-icons/fa';
 import * as HiIcons from 'react-icons/hi';
 import * as RiIcons from 'react-icons/ri';
 import * as MdIcons from 'react-icons/md';
+import * as GrIcons from 'react-icons/gr';
 // import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import './CompanyFollowedCard.scss';
@@ -27,6 +28,12 @@ function CompanyFollowedCard(props) {
           <span className="company-followed-card__left__info__name">
             Twitter Tower
           </span>
+          <div className="company-followed-card__left__info__location">
+            <GrIcons.GrLocation
+              className="company-followed-card__left__info__location__icon"
+            />
+            <span>Da Nang, Viet Nam</span>
+          </div>
           <div className="company-followed-card__left__info__company-industry-size">
             <div className="company-followed-card__left__info__company-industry-size__industry">
               <AiIcons.AiFillSetting className="company-followed-card__left__info__icon" />

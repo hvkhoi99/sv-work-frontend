@@ -8,17 +8,21 @@ import helper from 'utils/common';
 import './RecruitmentCard.scss';
 
 RecruitmentCard.propTypes = {
-  recruitments: PropTypes.array
+  recruitments: PropTypes.array,
+  onViewJob: PropTypes.func,
 };
 
 RecruitmentCard.defaultProps = {
-  recruitments: []
+  recruitments: [],
+  onViewJob: null
 }
 
 function RecruitmentCard(props) {
+  const {onViewJob} = props;
+
   const handleViewJob = (e) => {
     e.preventDefault();
-    console.log("view")
+    onViewJob();
   }
 
   const handleApply = (e) => {

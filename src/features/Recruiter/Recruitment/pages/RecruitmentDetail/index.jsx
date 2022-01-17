@@ -1,6 +1,6 @@
 import LoadingChildUI from 'components/LoadingChild';
 import Images from 'constants/images';
-import RecruitmentCard from 'features/Recruiter/Me/components/RecruitmentCard';
+import RecruitmentCard from 'features/Recruiter/Recruitment/components/RecruitmentCard';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';

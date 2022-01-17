@@ -1,15 +1,14 @@
 import LoadingUI from 'components/Loading';
 import { GENDER } from 'constants/global';
 import SortByItem from 'features/Recruiter/Find/components/SortByItem';
-import RecruitmentCard from 'features/Recruiter/Me/components/RecruitmentCard';
+import RecruitmentCard from 'features/Recruiter/Recruitment/components/RecruitmentCard';
 import React, { useEffect, useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
 // import { useSelector } from 'react-redux';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import CreatableSelect from 'react-select/creatable';
 import helper from 'utils/common';
-// import Select from 'react-select';
 import JobTagsMainCard from '../../components/JobTagsMainCard';
 import StudentSearchBar from '../../components/StudentSearchBar';
 import './FindJobs.scss';
@@ -34,7 +33,7 @@ const colourStyles = {
 }
 
 function FindJobsPage(props) {
-  // const history = useHistory();
+  const history = useHistory();
   // const user = useSelector((state) => state.user.current);
   const [isLoading, setIsLoading] = useState(true);
   const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -90,6 +89,10 @@ function FindJobsPage(props) {
 
   const onActiveClass = (index) => {
     return setActiveIndex(index);
+  }
+
+  const onViewJob = () => {
+    history.push("/job/1");
   }
 
   const handleChangeSelectValue = (selectedOption, type) => {
@@ -154,34 +157,20 @@ function FindJobsPage(props) {
 
               </div>
               <div className="find-jobs__container__main-jobs">
-                <div className="find-jobs__container__main-jobs__item">
-                  <RecruitmentCard />
-                </div>
-                <div className="find-jobs__container__main-jobs__item">
-                  <RecruitmentCard />
-                </div>
-                <div className="find-jobs__container__main-jobs__item">
-                  <RecruitmentCard />
-                </div>
-                <div className="find-jobs__container__main-jobs__item">
-                  <RecruitmentCard />
-                </div>
-                <div className="find-jobs__container__main-jobs__item">
-                  <RecruitmentCard />
-                </div>
-                <div className="find-jobs__container__main-jobs__item">
-                  <RecruitmentCard />
-                </div>
-                <div className="find-jobs__container__main-jobs__item">
-                  <RecruitmentCard />
-                </div>
-                <div className="find-jobs__container__main-jobs__item">
-                  <RecruitmentCard />
-                </div>
-                <div className="find-jobs__container__main-jobs__item">
-                  <RecruitmentCard />
-                </div>
+                {
+                  items.map((item, index) => {
+                    return <div
+                      key={index}
+                      className="find-jobs__container__main-jobs__item"
+                    >
+                      <RecruitmentCard
+                        onViewJob={onViewJob}
+                      />
+                    </div>
+                  })
+                }
               </div>
+
               <div className="find-jobs__container__pagination">
                 <ReactPaginate
                   previousLabel={
