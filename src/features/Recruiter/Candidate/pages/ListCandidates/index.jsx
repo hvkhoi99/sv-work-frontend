@@ -37,7 +37,7 @@ function ListCandidates(props) {
   const { recruitmentId, isClosed } = props;
   const { search } = useLocation();
   const page = parseInt(queryString.parse(search).page);
-  let [currentPage, setCurrentPage] = useState(page > 0 ? page : 1);
+  let [currentPage, setCurrentPage] = useState(page > 1 ? page : 1);
   const [lastPage, setLastPage] = useState(1);
   const limit = 3;
 

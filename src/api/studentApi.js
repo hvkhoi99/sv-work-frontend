@@ -12,6 +12,12 @@ const studentApi = {
     return axiosClient.put(url, params);
   },
 
+  // Dashboard
+  getAppliedJobs: (params) => {
+    const url = `/student/dashboard/applied-jobs?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
   // Student -> Recruiter
   getAvailableJobs: (params) => {
     const url = `/student/recruiter/dashboard/available-recruitments?page=${params.page}&_limit=${params._limit}`;

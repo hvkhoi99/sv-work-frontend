@@ -26,7 +26,7 @@ function AvailableJobs(props) {
   const history = useHistory();
   const { search } = useLocation();
   const page = parseInt(queryString.parse(search).page);
-  const [currentPage, setCurrentPage] = useState(page > 0 ? page : 1);
+  const [currentPage, setCurrentPage] = useState(page > 1 ? page : 1);
   const [items, setItems] = useState([]);
   const [pageCount, setpageCount] = useState(0);
   const [isLoading, setIsLoading] = useState(true);

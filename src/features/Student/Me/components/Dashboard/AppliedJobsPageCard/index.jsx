@@ -5,39 +5,64 @@ import './AppliedJobsPageCard.scss';
 import LoadingChildUI from 'components/LoadingChild';
 import ReactPaginate from 'react-paginate';
 import * as MdIcons from 'react-icons/md';
+import studentApi from 'api/studentApi';
+import { useHistory, useLocation } from 'react-router-dom';
+import Paths from 'constants/paths';
+import queryString from 'query-string';
+import helper from 'utils/common';
 
 AppliedJobsPageCard.propTypes = {
 
 };
 
 function AppliedJobsPageCard(props) {
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
-  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-  const [currentPage, setCurrentPage] = useState(1);
+  const [appliedJobs, setAppliedJobs] = useState([]);
+  const { search } = useLocation();
+  const page = parseInt(queryString.parse(search).page);
+  const [currentPage, setCurrentPage] = useState(page > 1 ? page : 1);
   const [pageCount, setPageCount] = useState(0);
+  const limit = 5;
 
-  const dataArray = [
-    { id: 0, status: null },
-    { id: 1, status: true },
-    { id: 2, status: false },
-  ]
+  // const dataArray = [
+  //   { id: 0, status: null },
+  //   { id: 1, status: true },
+  //   { id: 2, status: false },
+  // ]
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setCurrentPage(1);
-      const total = items.length;
-      setPageCount(Math.ceil(total / 2));
-      setIsLoading(false);
-    }, 1000)
-
-    return () => {
-      clearTimeout(timer);
+    const fetchAppliedJobs = async () => {
+      try {
+        const params = {
+          page: currentPage,
+          _limit: limit
+        }
+        const data = await studentApi.getAppliedJobs(params);
+        // console.log({data})
+        if (data.data.status === 1) {
+          setAppliedJobs(data.data.data.data);
+          const total = data.data.data.total;
+          setPageCount(Math.ceil(total / limit));
+          setIsLoading(false);
+          return data.data;
+        } else {
+          return false;
+        }
+      } catch (error) {
+        console.log("Cannot fetch applied jobs. Error: " + error.message);
+      }
     }
-  }, [items.length]);
 
-  const handlePageClick = () => {
-    console.log("prev/next page");
-  }
+    fetchAppliedJobs();
+  }, [currentPage]);
+
+  const handlePageClick = async (data) => {
+    const newPage = data.selected + 1;
+    setCurrentPage(newPage);
+    history.push(`${Paths.clientDashboard}/applied-jobs?page=${newPage}`);
+    helper.scrollToTop(350);
+  };
 
   return (
     <>
@@ -48,12 +73,12 @@ function AppliedJobsPageCard(props) {
           </div>
           : <div className="applied-jobs-page-card">
             {
-              dataArray.map((data, index) => {
+              appliedJobs.map((job, index) => {
                 return <div
                   key={index}
                   className="applied-jobs-page-card__item"
                 >
-                  <AppliedJobsCard data={data} />
+                  <AppliedJobsCard job={job} />
                 </div>
               })
             }

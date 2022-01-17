@@ -65,10 +65,10 @@ function InvitedJobsCard(props) {
         </div> */}
         <div className="invited-jobs-card__right__overlay overlay">
           <div className="invited-jobs-card__right__overlay__action action">
-            <ImIcons.ImCancelCircle
+            <MdIcons.MdCheckCircleOutline
               className="invited-jobs-card__right__overlay__action__icon"
             />
-            <MdIcons.MdCheckCircleOutline
+            <ImIcons.ImCancelCircle
               className="invited-jobs-card__right__overlay__action__icon"
             />
           </div>

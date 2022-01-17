@@ -92,7 +92,7 @@ function FindJobsPage(props) {
   }
 
   const onViewJob = () => {
-    history.push("/job/1");
+    history.push("/recruitment/1");
   }
 
   const handleChangeSelectValue = (selectedOption, type) => {

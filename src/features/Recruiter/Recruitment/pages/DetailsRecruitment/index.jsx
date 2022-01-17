@@ -49,6 +49,8 @@ function DetailsRecruitmentPage(props) {
   ]
 
   useEffect(() => {
+    helper.scrollToTop();
+
     const fetchRecruitmentDetail = async () => {
       try {
         const data = user.role_id === 2
@@ -64,10 +66,6 @@ function DetailsRecruitmentPage(props) {
 
     fetchRecruitmentDetail();
   }, [recruitmentId, user]);
-
-  useEffect(() => {
-    helper.scrollToTop();
-  }, []);
 
   const handleToEditRecruitment = () => {
     history.push({

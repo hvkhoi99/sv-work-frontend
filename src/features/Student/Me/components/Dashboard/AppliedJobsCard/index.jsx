@@ -10,19 +10,19 @@ import helper from 'utils/common';
 import './AppliedJobsCard.scss';
 
 AppliedJobsCard.propTypes = {
-  data: PropTypes.object
+  job: PropTypes.object,
 };
 
 AppliedJobsCard.defaultProps = {
-  data: {}
+  job: {},
 }
 
 function AppliedJobsCard(props) {
-  const { data } = props;
+  const { job } = props;
 
   return (
     <div className="applied-jobs-card">
-      <Link to="#" className="applied-jobs-card__left">
+      <Link to={`/recruitment/${job.id}`} className="applied-jobs-card__left">
         <div className="applied-jobs-card__left__avatar">
           <img src={Images.tw} alt="company-avatar" />
           <div className="applied-jobs-card__left__avatar__check">
@@ -68,18 +68,18 @@ function AppliedJobsCard(props) {
       </Link>
       <div
         className={
-          `applied-jobs-card__right ${data.status
+          `applied-jobs-card__right ${job.status
             ? "applied-jobs-accepted"
-            : (data.status === false ? "not-accepted" : "waiting")}`
+            : (job.status === false ? "not-accepted" : "waiting")}`
         }
       >
         <div className="applied-jobs-card__right__icon">
 
           {
-            data.status
+            job.status
               ? <RiIcons.RiCheckboxCircleFill className="applied-jobs-card__right__icon__item" />
               : (
-                data.status === false
+                job.status === false
                   ? <RiIcons.RiCloseCircleFill className="applied-jobs-card__right__icon__item" />
                   : <RiIcons.RiErrorWarningFill className="applied-jobs-card__right__icon__item" />
               )

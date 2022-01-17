@@ -9,6 +9,7 @@ import RecruiterHomeFeature from 'features/Recruiter/Home';
 import StudentEventFeature from 'features/Student/Event';
 import StudentFindFeature from 'features/Student/Find';
 import StudentHomeFeature from 'features/Student/Home';
+import JobFeature from 'features/Student/Job';
 import StudentMeFeature from 'features/Student/Me';
 import { SnackbarProvider } from 'notistack';
 import { createRef, Suspense } from 'react';
@@ -40,6 +41,8 @@ function App() {
 
               <Route path="/event" component={StudentEventFeature} />
               <Route path="/find-jobs" component={StudentFindFeature} />
+              <Route path="/recruitment" component={JobFeature} />
+
               <PrivateRouteFirstUpdateProfile path="/first-update" component={BeginnerFeature} />
 
               <PrivateRouteStudent path="/me" component={StudentMeFeature} />

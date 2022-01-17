@@ -29,7 +29,7 @@ function ClosedRecruitments(props) {
   const [isLoading, setIsLoading] = useState(true);
   const { search } = useLocation();
   const page = parseInt(queryString.parse(search).page);
-  const [currentPage, setCurrentPage] = useState(page > 0 ? page : 1);
+  const [currentPage, setCurrentPage] = useState(page > 1 ? page : 1);
   const user = useSelector((state) => state.user.current);
   const [items, setItems] = useState([]);
   const [pageCount, setpageCount] = useState(0);

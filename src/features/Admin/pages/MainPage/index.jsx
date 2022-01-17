@@ -20,7 +20,7 @@ function AdminMainPage(props) {
   const history = useHistory();
   const { search } = useLocation();
   const page = parseInt(queryString.parse(search).page);
-  let [currentPage, setCurrentPage] = useState(page);
+  let [currentPage, setCurrentPage] = useState(page > 1 ? page : 1);
   const admin = useSelector((state) => state.admin);
   const match = useRouteMatch();
   const dispatch = useDispatch();

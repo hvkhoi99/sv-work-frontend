@@ -208,8 +208,10 @@
             background-color: lightcoral;
           }
 
-          &:last-child {
+          &:first-child {
             color: var(--success);
+            font-size: 4rem;
+            padding: 1rem;
 
             &:hover {
               background-color: lightgreen;
