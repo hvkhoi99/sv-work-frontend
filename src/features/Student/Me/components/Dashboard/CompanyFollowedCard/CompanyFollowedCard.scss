@@ -145,7 +145,7 @@
     position: relative;
 
     width: 0;
-    background-color: var(--success);
+    background-color: crimson;
     top: 0;
     right: 0;
     transition: all 0.45s ease 0s;
@@ -180,7 +180,7 @@
         opacity: 0;
 
         &__icon {
-          font-size: 3.5rem;
+          font-size: 4rem;
           background-color: #fff;
           border-radius: 50%;
 
@@ -191,7 +191,7 @@
 
           &:hover {
             transition: all 0.15s ease-out;
-            background-color: lightgrey;
+            background-color: lightcoral;
           }
         }
       }

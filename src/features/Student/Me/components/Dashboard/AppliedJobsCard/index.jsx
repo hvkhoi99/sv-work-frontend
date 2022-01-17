@@ -69,7 +69,7 @@ function AppliedJobsCard(props) {
       <div
         className={
           `applied-jobs-card__right ${data.status
-            ? "accepted"
+            ? "applied-jobs-accepted"
             : (data.status === false ? "not-accepted" : "waiting")}`
         }
       >

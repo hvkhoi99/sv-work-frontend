@@ -2,8 +2,8 @@
 import Images from 'constants/images';
 import React from 'react';
 import * as HiIcons from 'react-icons/hi';
+import * as ImIcons from 'react-icons/im';
 import * as MdIcons from 'react-icons/md';
-import * as RiIcons from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import helper from 'utils/common';
 import './InvitedJobsCard.scss';
@@ -60,8 +60,18 @@ function InvitedJobsCard(props) {
         </div>
       </Link>
       <div className="invited-jobs-card__right accepted" >
-        <div className="invited-jobs-card__right__icon">
+        {/* <div className="invited-jobs-card__right__icon">
           <RiIcons.RiCheckboxCircleFill className="invited-jobs-card__right__icon__item" />
+        </div> */}
+        <div className="invited-jobs-card__right__overlay overlay">
+          <div className="invited-jobs-card__right__overlay__action action">
+            <ImIcons.ImCancelCircle
+              className="invited-jobs-card__right__overlay__action__icon"
+            />
+            <MdIcons.MdCheckCircleOutline
+              className="invited-jobs-card__right__overlay__action__icon"
+            />
+          </div>
         </div>
       </div>
     </div>
