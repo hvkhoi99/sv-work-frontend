@@ -189,7 +189,7 @@ function DetailsRecruitmentPage(props) {
                 </div>
                 <div className="details-recruitment__container__bottom__description">
                   {currentPath === recruitmentDetailPath
-                    ? <RecruitmentDetail recruitmentDetail={recruitmentDetail} />
+                    ? <RecruitmentDetail recruitment={recruitmentDetail} />
                     : currentPath === listCandidatesPath
                       ? <ListCandidates
                         recruitmentId={recruitmentId}

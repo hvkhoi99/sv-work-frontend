@@ -11,15 +11,15 @@ import * as TiIcons from 'react-icons/ti';
 import './RecruitmentDetail.scss';
 
 RecruitmentDetail.propTypes = {
-  recruitmentDetail: PropTypes.object
+  recruitment: PropTypes.object
 };
 
 RecruitmentDetail.defaultProps = {
-  recruitmentDetail: {}
+  recruitment: {}
 }
 
 function RecruitmentDetail(props) {
-  const { recruitmentDetail } = props;
+  const { recruitment } = props;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ function RecruitmentDetail(props) {
                 <div className="benefits__content__left__attach">
                   <div className="benefits__content__left__attach__icon" />
                 </div>
-                {ReactHtmlParser(recruitmentDetail.benefits)}
+                {ReactHtmlParser(recruitment.benefits)}
               </div>
               <div className="benefits__content__right">
                 <div className="benefits__content__right__date">
@@ -58,7 +58,7 @@ function RecruitmentDetail(props) {
                     </span>
                     <span className="benefits__content__right__date__info__description">
                       {/* 28/04/2021 - 30/08/2021 */}
-                      {moment(recruitmentDetail.created_at).format('MM/DD/YYYY')} - {recruitmentDetail.expiry_date}
+                      {moment(recruitment.created_at).format('MM/DD/YYYY')} - {recruitment.expiry_date}
                     </span>
                   </div>
                 </div>
@@ -69,7 +69,7 @@ function RecruitmentDetail(props) {
                       Job Category
                     </span>
                     <span className="benefits__content__right__job-category__info__description">
-                      {recruitmentDetail.job_category}
+                      {recruitment.job_category}
                     </span>
                   </div>
                 </div>
@@ -80,7 +80,7 @@ function RecruitmentDetail(props) {
                       Type of Job
                     </span>
                     <span className="benefits__content__right__type__info__description">
-                      {recruitmentDetail.is_full_time ? "Full Time" : "Part Time"}
+                      {recruitment.is_full_time ? "Full Time" : "Part Time"}
                     </span>
                   </div>
                 </div>
@@ -93,7 +93,7 @@ function RecruitmentDetail(props) {
               <div className="job-description__attach__icon" />
             </div>
             <div className="job-description__content">
-              {ReactHtmlParser(recruitmentDetail.description)}
+              {ReactHtmlParser(recruitment.description)}
             </div>
           </div>
           <div className="recruitment-detail-item requirements">
@@ -102,7 +102,7 @@ function RecruitmentDetail(props) {
               <div className="requirements__attach__icon" />
             </div>
             <div className="requirements__content">
-              {ReactHtmlParser(recruitmentDetail.requirement)}
+              {ReactHtmlParser(recruitment.requirement)}
             </div>
           </div>
           <div className="work-location">
@@ -114,7 +114,7 @@ function RecruitmentDetail(props) {
               <div className="work-location__left__content">
                 <TiIcons.TiLocation className="work-location__left__content__icon" />
                 <span className="work-location__left__content__description">
-                  {recruitmentDetail.location}
+                  {recruitment.location}
                 </span>
               </div>
             </div>

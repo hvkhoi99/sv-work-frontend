@@ -1,6 +1,29 @@
 import axiosClient from "./axiosClient";
 
 const studentApi = {
+
+  // Job
+  getJobDetail: (id) => {
+    const url = `/student/job/${id}`;
+    return axiosClient.get(url);
+  },
+
+  saveJob: (id) => {
+    const url = `/student/recruitment/${id}/save`;
+    return axiosClient.put(url);
+  },
+
+  applyJob: (id) => {
+    const url = `/student/recruitment/${id}/apply`;
+    return axiosClient.put(url);
+  },
+
+  // Dashboard
+  getAppliedJobs: (params) => {
+    const url = `/student/dashboard/applied-jobs?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
   // Profile
   createStudentProfile: (params) => {
     const url = "/student/profile/store";
@@ -10,12 +33,6 @@ const studentApi = {
   updateStudentProfile: (params) => {
     const url = "/student/profile/update";
     return axiosClient.put(url, params);
-  },
-
-  // Dashboard
-  getAppliedJobs: (params) => {
-    const url = `/student/dashboard/applied-jobs?page=${params.page}&_limit=${params._limit}`;
-    return axiosClient.get(url);
   },
 
   // Student -> Recruiter
