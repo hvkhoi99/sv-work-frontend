@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import helper from 'utils/common';
 import './AppliedJobsCard.scss';
+import moment from 'moment';
 
 AppliedJobsCard.propTypes = {
   job: PropTypes.object,
@@ -25,32 +26,34 @@ function AppliedJobsCard(props) {
       <Link to={`/recruitment/${job.id}`} className="applied-jobs-card__left">
         <div className="applied-jobs-card__left__avatar">
           <img src={Images.tw} alt="company-avatar" />
-          <div className="applied-jobs-card__left__avatar__check">
+          {
+            job.company_info.verify && <div className="applied-jobs-card__left__avatar__check">
             <HiIcons.HiCheckCircle className="applied-jobs-card__left__avatar__check__icon" />
           </div>
+          }
         </div>
         <div className="applied-jobs-card__left__info">
           <span className="applied-jobs-card__left__info__job-name">
-            Intern Backend
+            {job.title}
           </span>
           <div className="applied-jobs-card__left__info__salary">
             <HiIcons.HiCurrencyDollar className="applied-jobs-card-info-icon" />
-            <span>$1000 - $2500</span>
+            <span>${job.min_salary} - ${job.max_salary}</span>
           </div>
           <div className="applied-jobs-card__left__info__company">
             <div className="applied-jobs-card__left__info__company__name">
               <MdIcons.MdLocationCity className="applied-jobs-card-info-icon" />
-              <span>Twitter Tower</span>
+              <span>{job.company_info.company_name}</span>
             </div>
             <div className="applied-jobs-card__left__info__company__location">
               <MdIcons.MdLocationOn className="applied-jobs-card-info-icon" />
-              <span>Da Nang, Viet Nam</span>
+              <span>{job.location}</span>
             </div>
           </div>
           <div className="applied-jobs-card__left__info__hashtags">
             {
               helper.splitCommaString(
-                "Full Time, PHP, Developer",
+                `${job.job_category}`,
                 "applied-jobs-card__left__info__hashtags__item"
               )
             }
@@ -58,10 +61,10 @@ function AppliedJobsCard(props) {
           <div className="applied-jobs-card__left__info__status">
             <span>Status:</span>
             <span className="applied-jobs-card__left__info__status__name">
-              Recruiting
+              {job.is_closed ? "Closed" : "Recruiting"}
             </span>
             <span className="applied-jobs-card__left__info__status__updated-at">
-              {`(Updated at 15/01/2022)`}
+              {`(Updated at ${moment(job.updated_at).format("MM/DD/YYYY")})`}
             </span>
           </div>
         </div>
