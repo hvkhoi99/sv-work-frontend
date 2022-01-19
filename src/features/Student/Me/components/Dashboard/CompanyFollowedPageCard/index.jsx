@@ -10,6 +10,7 @@ import queryString from 'query-string';
 import studentApi from 'api/studentApi';
 import Paths from 'constants/paths';
 import helper from 'utils/common';
+import {useSnackbar} from 'notistack';
 
 CompanyFollowedPageCard.propTypes = {
 
@@ -17,12 +18,15 @@ CompanyFollowedPageCard.propTypes = {
 
 function CompanyFollowedPageCard(props) {
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
   const [isLoading, setIsLoading] = useState(true);
   const [followedCompanies, setFollowedCompanies] = useState([]);
   const { search } = useLocation();
   const page = parseInt(queryString.parse(search).page);
   const [currentPage, setCurrentPage] = useState(page > 1 ? page : 1);
   const [pageCount, setPageCount] = useState(0);
+  const [isReloadPage, setIsReloadPage] = useState(false);
+  const [isUnFollowing, setUnFollowing] = useState(false);
   const limit = 5;
 
   useEffect(() => {
@@ -48,7 +52,7 @@ function CompanyFollowedPageCard(props) {
     }
 
     fetchAppliedJobs();
-  }, [currentPage]);
+  }, [currentPage, isReloadPage]);
 
   const handlePageClick = async (data) => {
     const newPage = data.selected + 1;
@@ -56,6 +60,32 @@ function CompanyFollowedPageCard(props) {
     history.push(`${Paths.clientDashboard}/followed-companies?page=${newPage}`);
     helper.scrollToTop(350);
   };
+
+  const onUnFollow = async (id) => {
+    setUnFollowing(true);
+    try {
+      const action = await studentApi.followCompany(id);
+      if (action.data.status === 1) {
+        setUnFollowing(false);
+        const newFollowedCompanies = followedCompanies.filter((item) => {
+          return item.id !== id;
+        });
+        setFollowedCompanies(newFollowedCompanies);
+        enqueueSnackbar(
+          `Successfully Un-Followed Company.`,
+          { variant: "success" }
+        );
+        setIsReloadPage(!isReloadPage);
+        return true;
+      } else {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return false;
+      }
+    } catch (error) {
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
+    }
+  }
 
   return (
     <>
@@ -71,7 +101,11 @@ function CompanyFollowedPageCard(props) {
                   key={index}
                   className="applied-jobs-page-card__item"
                 >
-                  <CompanyFollowedCard company={company} />
+                  <CompanyFollowedCard 
+                  company={company} 
+                  onUnFollow={onUnFollow}
+                  isUnFollowing={isUnFollowing}
+                  />
                 </div>
               })
             }

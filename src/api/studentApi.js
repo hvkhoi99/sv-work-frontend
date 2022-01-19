@@ -1,6 +1,11 @@
 import axiosClient from "./axiosClient";
 
 const studentApi = {
+  // Company
+  followCompany: (id) => {
+    const url = `/student/recruiter/${id}/follow`;
+    return axiosClient.post(url);
+  },
 
   // Job
   getJobDetail: (id) => {
@@ -31,6 +36,11 @@ const studentApi = {
 
   getSavedJobs: (params) => {
     const url = `/student/dashboard/saved-jobs?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
+  getInvitedJobs: (params) => {
+    const url = `/student/dashboard/invited-jobs?page=${params.page}&_limit=${params._limit}`;
     return axiosClient.get(url);
   },
 

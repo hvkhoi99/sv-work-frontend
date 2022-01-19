@@ -1,4 +1,5 @@
 import Images from 'constants/images';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 import * as HiIcons from 'react-icons/hi';
@@ -8,18 +9,25 @@ import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import helper from 'utils/common';
 import './AppliedJobsCard.scss';
-import moment from 'moment';
 
 AppliedJobsCard.propTypes = {
   job: PropTypes.object,
+  onUnApplyJob: PropTypes.func,
+  isCancelling: PropTypes.bool,
 };
 
 AppliedJobsCard.defaultProps = {
   job: {},
+  onUnApplyJob: null,
+  isCancelling: false
 }
 
 function AppliedJobsCard(props) {
-  const { job } = props;
+  const { job, onUnApplyJob, isCancelling } = props;
+
+  const handleUnApplyJob = () => {
+    onUnApplyJob(job.id);
+  }
 
   return (
     <div className="applied-jobs-card">
@@ -96,7 +104,16 @@ function AppliedJobsCard(props) {
         </div>
         <div className="applied-jobs-card__right__overlay">
           <div className="applied-jobs-card__right__overlay__action">
-            <Button outline size="sm" color="danger">Cancel</Button>
+            <Button
+              type="button"
+              outline size="sm" color="danger"
+              onClick={handleUnApplyJob}
+              disabled={isCancelling}
+              style={isCancelling ? { cursor: "default" } : { cursor: "pointer" }}
+            >
+              {isCancelling && <span className="spinner-border spinner-border-sm mr-2" />}
+              Cancel
+            </Button>
           </div>
         </div>
       </div>

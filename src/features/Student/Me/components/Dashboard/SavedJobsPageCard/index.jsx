@@ -8,6 +8,7 @@ import ReactPaginate from 'react-paginate';
 import { useHistory, useLocation } from 'react-router-dom';
 import helper from 'utils/common';
 import SavedJobsCard from '../SavedJobsCard';
+import {useSnackbar} from 'notistack';
 // import PropTypes from 'prop-types';
 import './SavedJobsPageCard.scss';
 
@@ -17,12 +18,15 @@ SavedJobsPageCard.propTypes = {
 
 function SavedJobsPageCard(props) {
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
   const [isLoading, setIsLoading] = useState(true);
-  const [savedJobs, setSavedJob] = useState([]);
+  const [savedJobs, setSavedJobs] = useState([]);
   const { search } = useLocation();
   const page = parseInt(queryString.parse(search).page);
   const [currentPage, setCurrentPage] = useState(page > 1 ? page : 1);
   const [pageCount, setPageCount] = useState(0);
+  const [isReloadPage, setIsReloadPage] = useState(false);
+  const [isUnSaving, setIsUnSaving] = useState(false);
   const limit = 5;
 
   useEffect(() => {
@@ -35,7 +39,7 @@ function SavedJobsPageCard(props) {
         const data = await studentApi.getSavedJobs(params);
         console.log({ data })
         if (data.data.status === 1) {
-          setSavedJob(data.data.data.data);
+          setSavedJobs(data.data.data.data);
           const total = data.data.data.total;
           setPageCount(Math.ceil(total / limit));
           setIsLoading(false);
@@ -49,7 +53,7 @@ function SavedJobsPageCard(props) {
     }
 
     fetchAppliedJobs();
-  }, [currentPage]);
+  }, [currentPage, isReloadPage]);
 
   const handlePageClick = async (data) => {
     const newPage = data.selected + 1;
@@ -58,8 +62,30 @@ function SavedJobsPageCard(props) {
     helper.scrollToTop(350);
   };
 
-  const onViewJob = (id) => {
-    history.push(`/job/${id}`)
+  const onUnSaveJob = async (id) => {
+    setIsUnSaving(true);
+    try {
+      const action = await studentApi.saveJob(id);
+      if (action.data.status === 1) {
+        setIsUnSaving(false);
+        const newSavedJobs = savedJobs.filter((item) => {
+          return item.id !== id;
+        })
+        setSavedJobs(newSavedJobs);
+        enqueueSnackbar(
+          `Successfully Un-Saved Job.`,
+          { variant: "success" }
+        );
+        setIsReloadPage(!isReloadPage);
+        return true;
+      } else {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return false;
+      }
+    } catch (error) {
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
+    }
   }
 
   return (
@@ -77,8 +103,9 @@ function SavedJobsPageCard(props) {
                   className="saved-jobs-page-card__item"
                 >
                   <SavedJobsCard
-                    onViewJob={onViewJob}
                     job={job}
+                    onUnSaveJob={onUnSaveJob}
+                    isUnSaving={isUnSaving}
                   />
                 </div>
               })

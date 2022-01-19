@@ -11,14 +11,22 @@ import moment from 'moment';
 
 SavedJobsCard.propTypes = {
   job: PropTypes.object,
+  onUnSaveJob: PropTypes.func,
+  isUnSaving: PropTypes.bool,
 };
 
 SavedJobsCard.defaultProps = {
   job: {},
+  onUnSaveJob: null,
+  isUnSaving: false
 }
 
 function SavedJobsCard(props) {
-  const { job } = props;
+  const { job, onUnSaveJob, isUnSaving } = props;
+
+  const handleUnSaveJob = () => {
+    onUnSaveJob(job.id);
+  }
 
   return (
     <div className="saved-jobs-card">
@@ -75,9 +83,17 @@ function SavedJobsCard(props) {
       <div className="saved-jobs-card__right">
         <div className="saved-jobs-card__right__overlay overlay">
           <div className="saved-jobs-card__right__overlay__action action">
-            <GiIcons.GiShatteredHeart
-              className="saved-jobs-card__right__overlay__action__icon"
-            />
+            {
+              isUnSaving
+                ? <span
+                  className="spinner-border spinner-border-lg 
+                  saved-jobs-card__right__overlay__action__spinner"
+                />
+                : <GiIcons.GiShatteredHeart
+                  className="saved-jobs-card__right__overlay__action__icon"
+                  onClick={handleUnSaveJob}
+                />
+            }
           </div>
         </div>
       </div>

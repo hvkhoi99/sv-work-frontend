@@ -11,15 +11,23 @@ import { Link } from 'react-router-dom';
 import './CompanyFollowedCard.scss';
 
 CompanyFollowedCard.propTypes = {
-  company: PropTypes.object
+  company: PropTypes.object,
+  onUnFollow: PropTypes.func,
+  isUnFollowing: PropTypes.bool
 };
 
 CompanyFollowedCard.defaultProps = {
-  company: {}
+  company: {},
+  onUnFollow: null,
+  isUnFollowing: false
 }
 
 function CompanyFollowedCard(props) {
-  const {company} = props;
+  const { company, onUnFollow, isUnFollowing } = props;
+
+  const handleUnFollow = () => {
+    onUnFollow(company.id);
+  }
 
   return (
     <div className="company-followed-card">
@@ -68,9 +76,17 @@ function CompanyFollowedCard(props) {
       <div className="company-followed-card__right">
         <div className="company-followed-card__right__overlay overlay">
           <div className="company-followed-card__right__overlay__action action">
-            <RiIcons.RiUserUnfollowLine
-              className="company-followed-card__right__overlay__action__icon"
-            />
+            {
+              isUnFollowing
+                ? <span
+                  className="spinner-border spinner-border-lg 
+                  company-followed-card__right__overlay__action__spinner"
+                />
+                : <RiIcons.RiUserUnfollowLine
+                  className="company-followed-card__right__overlay__action__icon"
+                  onClick={handleUnFollow}
+                />
+            }
           </div>
         </div>
       </div>
