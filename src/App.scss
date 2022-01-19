@@ -134,3 +134,14 @@
 .width-100 {
   width: 100%;
 }
+
+.color-closed {
+  color: red;
+}
+
+.no-available {
+  & > span {
+    // font-weight: 500;
+    font-size: 1.2rem;
+  }
+}

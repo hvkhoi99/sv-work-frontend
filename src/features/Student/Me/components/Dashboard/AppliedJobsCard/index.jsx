@@ -28,8 +28,8 @@ function AppliedJobsCard(props) {
           <img src={Images.tw} alt="company-avatar" />
           {
             job.company_info.verify && <div className="applied-jobs-card__left__avatar__check">
-            <HiIcons.HiCheckCircle className="applied-jobs-card__left__avatar__check__icon" />
-          </div>
+              <HiIcons.HiCheckCircle className="applied-jobs-card__left__avatar__check__icon" />
+            </div>
           }
         </div>
         <div className="applied-jobs-card__left__info">
@@ -60,7 +60,13 @@ function AppliedJobsCard(props) {
           </div>
           <div className="applied-jobs-card__left__info__status">
             <span>Status:</span>
-            <span className="applied-jobs-card__left__info__status__name">
+            <span
+              className={
+                job.is_closed
+                  ? "applied-jobs-card__left__info__status__name color-closed"
+                  : "applied-jobs-card__left__info__status__name"
+              }
+            >
               {job.is_closed ? "Closed" : "Recruiting"}
             </span>
             <span className="applied-jobs-card__left__info__status__updated-at">

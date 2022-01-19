@@ -30,7 +30,7 @@
     &:hover {
       text-decoration: none;
       color: black;
-      background-color: lightcyan;
+      // background-color: lightcyan;
     }
 
     &__avatar {
@@ -99,7 +99,7 @@
             padding: 0.2rem 0.5rem;
             background-color: lightgreen;
             border-radius: 2rem;
-            font-size: .8rem;
+            font-size: 0.8rem;
             font-weight: 500;
           }
         }
@@ -109,7 +109,7 @@
             padding: 0.2rem 0.5rem;
             background-color: lightgreen;
             border-radius: 2rem;
-            font-size: .8rem;
+            font-size: 0.8rem;
             font-weight: 500;
           }
         }
@@ -126,7 +126,7 @@
             padding: 0.2rem 0.5rem;
             background-color: lightgreen;
             border-radius: 2rem;
-            font-size: .8rem;
+            font-size: 0.8rem;
             font-weight: 500;
           }
         }
@@ -136,7 +136,7 @@
             padding: 0.2rem 0.5rem;
             background-color: lightgreen;
             border-radius: 2rem;
-            font-size: .8rem;
+            font-size: 0.8rem;
             font-weight: 500;
           }
         }
@@ -157,7 +157,7 @@
     position: relative;
 
     width: 0;
-    background-color: crimson;
+    background-color: red;
     top: 0;
     right: 0;
     transition: all 0.45s ease 0s;

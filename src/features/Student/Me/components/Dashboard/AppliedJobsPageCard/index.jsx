@@ -76,41 +76,47 @@ function AppliedJobsPageCard(props) {
                   key={index}
                   className="applied-jobs-page-card__item"
                 >
-                  <AppliedJobsCard 
-                  onViewJob={onViewJob}
-                  job={job} 
+                  <AppliedJobsCard
+                    onViewJob={onViewJob}
+                    job={job}
                   />
                 </div>
               })
             }
             <div className="find-jobs__container__pagination">
-              <ReactPaginate
-                previousLabel={
-                  <MdIcons.MdArrowBackIosNew />
-                }
-                nextLabel={
-                  <MdIcons.MdArrowForwardIos />
-                }
+              {
+                appliedJobs.length <= 0
+                  ? <div className="no-available">
+                    <span>No information was found!</span>
+                  </div>
+                  : <ReactPaginate
+                    previousLabel={
+                      <MdIcons.MdArrowBackIosNew />
+                    }
+                    nextLabel={
+                      <MdIcons.MdArrowForwardIos />
+                    }
 
-                // initialPage={1}
-                // initialPage={currentPage}
-                forcePage={currentPage - 1}
-                breakLabel={"..."}
-                pageCount={pageCount}
-                marginPagesDisplayed={1}
-                pageRangeDisplayed={2}
-                onPageChange={handlePageClick}
-                containerClassName={"pagination justify-content-center"}
-                pageClassName={"page-item"}
-                pageLinkClassName={"page-link"}
-                previousClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
-                previousLinkClassName={"page-link"}
-                nextClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
-                nextLinkClassName={"page-link"}
-                breakClassName={"page-item"}
-                breakLinkClassName={"page-link"}
-                activeClassName={"active"}
-              />
+                    // initialPage={1}
+                    // initialPage={currentPage}
+                    forcePage={currentPage - 1}
+                    breakLabel={"..."}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={1}
+                    pageRangeDisplayed={2}
+                    onPageChange={handlePageClick}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-item"}
+                    pageLinkClassName={"page-link"}
+                    previousClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    breakLinkClassName={"page-link"}
+                    activeClassName={"active"}
+                  />
+              }
             </div>
           </div>
       }

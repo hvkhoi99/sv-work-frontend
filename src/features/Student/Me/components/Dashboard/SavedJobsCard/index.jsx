@@ -1,60 +1,73 @@
 import Images from 'constants/images';
 import React from 'react';
 import * as GiIcons from 'react-icons/gi';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import * as HiIcons from 'react-icons/hi';
 import * as MdIcons from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import helper from 'utils/common';
 import './SavedJobsCard.scss';
+import moment from 'moment';
 
 SavedJobsCard.propTypes = {
-
+  job: PropTypes.object,
 };
 
+SavedJobsCard.defaultProps = {
+  job: {},
+}
+
 function SavedJobsCard(props) {
+  const { job } = props;
+
   return (
     <div className="saved-jobs-card">
-      <Link to="#" className="saved-jobs-card__left">
+      <Link to={`/recruitment/${job.id}`} className="saved-jobs-card__left">
         <div className="saved-jobs-card__left__avatar">
           <img src={Images.tw} alt="company-avatar" />
-          <div className="saved-jobs-card__left__avatar__check">
+          {job.company_info.verify && <div className="saved-jobs-card__left__avatar__check">
             <HiIcons.HiCheckCircle className="saved-jobs-card__left__avatar__check__icon" />
-          </div>
+          </div>}
         </div>
         <div className="saved-jobs-card__left__info">
           <span className="saved-jobs-card__left__info__job-name">
-            Intern Backend
+            {job.title}
           </span>
           <div className="saved-jobs-card__left__info__salary">
             <HiIcons.HiCurrencyDollar className="saved-jobs-card-info-icon" />
-            <span>$1000 - $2500</span>
+            <span>${job.min_salary} - ${job.max_salary}</span>
           </div>
           <div className="saved-jobs-card__left__info__company">
             <div className="saved-jobs-card__left__info__company__name">
               <MdIcons.MdLocationCity className="saved-jobs-card-info-icon" />
-              <span>Twitter Tower</span>
+              <span>{job.company_info.company_name}</span>
             </div>
             <div className="saved-jobs-card__left__info__company__location">
               <MdIcons.MdLocationOn className="saved-jobs-card-info-icon" />
-              <span>Da Nang, Viet Nam</span>
+              <span>{job.location}</span>
             </div>
           </div>
           <div className="saved-jobs-card__left__info__hashtags">
             {
               helper.splitCommaString(
-                "Full Time, PHP, Developer",
+                `${job.job_category}`,
                 "saved-jobs-card__left__info__hashtags__item"
               )
             }
           </div>
           <div className="saved-jobs-card__left__info__status">
             <span>Status:</span>
-            <span className="saved-jobs-card__left__info__status__name">
-              Recruiting
+            <span
+              className={
+                job.is_closed
+                  ? "saved-jobs-card__left__info__status__name color-closed"
+                  : "saved-jobs-card__left__info__status__name"
+              }
+            >
+              {job.is_closed ? "Closed" : "Recruiting"}
             </span>
             <span className="saved-jobs-card__left__info__status__updated-at">
-              {`(Updated at 15/01/2022)`}
+              {`(Updated at ${moment(job.updated_at).format("MM/DD/YYYY")})`}
             </span>
           </div>
         </div>

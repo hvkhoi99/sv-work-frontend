@@ -35,8 +35,8 @@ function StudentDashboardPage(props) {
     },
     {
       id: 1,
-      name: "Company Followed",
-      path: `${Paths.clientDashboard}/company-followed`,
+      name: "Followed Companies",
+      path: `${Paths.clientDashboard}/followed-companies`,
       icon: <RiIcons.RiUserFollowLine className="student-paginator-view-menu-icon" />,
       pageCard: <CompanyFollowedPageCard />
     },

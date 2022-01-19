@@ -24,6 +24,16 @@ const studentApi = {
     return axiosClient.get(url);
   },
 
+  getCompaniesFollowed: (params) => {
+    const url = `/student/dashboard/company-followed?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
+  getSavedJobs: (params) => {
+    const url = `/student/dashboard/saved-jobs?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
   // Profile
   createStudentProfile: (params) => {
     const url = "/student/profile/store";
