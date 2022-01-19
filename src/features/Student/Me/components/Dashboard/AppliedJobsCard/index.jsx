@@ -86,7 +86,7 @@ function AppliedJobsCard(props) {
       <div
         className={
           `applied-jobs-card__right ${job.status
-            ? "applied-jobs-accepted"
+            ? "accepted"
             : (job.status === false ? "not-accepted" : "waiting")}`
         }
       >
@@ -102,9 +102,12 @@ function AppliedJobsCard(props) {
               )
           }
         </div>
-        <div className="applied-jobs-card__right__overlay">
-          <div className="applied-jobs-card__right__overlay__action">
-            <Button
+        <div className="applied-jobs-card__right__overlay overlay">
+          <div className="applied-jobs-card__right__overlay__action action">
+            {
+              job.status
+              ? <span className="applied-jobs-card__right__overlay__action__approved">Approved</span>
+              : <Button
               type="button"
               outline size="sm" color="danger"
               onClick={handleUnApplyJob}
@@ -114,6 +117,7 @@ function AppliedJobsCard(props) {
               {isCancelling && <span className="spinner-border spinner-border-sm mr-2" />}
               Cancel
             </Button>
+            }
           </div>
         </div>
       </div>

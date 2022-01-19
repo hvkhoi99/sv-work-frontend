@@ -128,8 +128,7 @@
     position: relative;
 
     width: 20%;
-
-    cursor: pointer;
+    // cursor: pointer;
 
     &__icon {
       display: flex;
@@ -162,7 +161,7 @@
 
       background-color: rgba(0, 0, 0, 0.8);
       opacity: 0;
-      transition: all 0.25s ease 0s;
+      transition: all 0.45s ease 0s;
 
       &__action {
         display: flex;
@@ -172,6 +171,12 @@
         opacity: 0;
         transform: translateY(1rem);
         transition: all 0.35s ease 0s;
+
+        &__approved {
+          font-size: 1rem;
+          font-weight: 600;
+          color: var(--success);
+        }
 
         & > button {
           display: flex;
@@ -183,19 +188,27 @@
         }
       }
 
-      &:hover > &__action {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      // &:hover > &__action {
+      //   opacity: 1;
+      //   transform: translateY(0);
+      // }
     }
 
-    &:hover > &__icon {
-      transform: scale(1.35);
-    }
+    // &:hover > &__icon {
+    //   transform: scale(1.35);
+    // }
 
-    &:hover > &__overlay {
+    // &:hover > &__overlay {
+    //   opacity: 1;
+    //   transform: translateY(0);
+    // }
+  }
+
+  &:hover > &__right {
+    .overlay,
+    .action {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateX(0);
     }
   }
 }
@@ -205,17 +218,3 @@
   margin: 0 0.2rem 0 0;
   font-size: 1.2rem;
 }
-
-.applied-jobs-accepted {
-  background-color: lightgreen;
-  color: green;
-}
-.not-accepted {
-  background-color: lightcoral;
-  color:crimson;
-}
-.waiting {
-  background-color: rgb(255, 241, 161);
-  color: gold;
-}
-

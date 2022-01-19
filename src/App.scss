@@ -139,6 +139,19 @@
   color: red;
 }
 
+.accepted {
+  background-color: lightgreen;
+  color: green;
+}
+.not-accepted {
+  background-color: lightcoral;
+  color:crimson;
+}
+.waiting {
+  background-color: rgb(255, 241, 161);
+  color: gold;
+}
+
 .no-available {
   & > span {
     // font-weight: 500;

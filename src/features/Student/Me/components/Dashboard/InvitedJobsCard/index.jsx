@@ -8,17 +8,34 @@ import * as MdIcons from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import helper from 'utils/common';
 import './InvitedJobsCard.scss';
+import * as RiIcons from 'react-icons/ri';
 
 InvitedJobsCard.propTypes = {
   job: PropTypes.object,
+  onAcceptInvitedJob: PropTypes.func,
+  onRejectInvitedJob: PropTypes.func,
+  isAccepting: PropTypes.bool,
+  isRejecting: PropTypes.bool
 };
 
 InvitedJobsCard.defaultProps = {
-  job: {}
+  job: {},
+  onAcceptInvitedJob: null,
+  onRejectInvitedJob: null,
+  isAccepting: false,
+  isRejecting: false
 }
 
 function InvitedJobsCard(props) {
-  const { job } = props;
+  const { job, onAcceptInvitedJob, onRejectInvitedJob, isAccepting, isRejecting } = props;
+
+  const handleAcceptInvitedJob = () => {
+    onAcceptInvitedJob(job.id);
+  }
+
+  const handleRejectInvitedJob = () => {
+    onRejectInvitedJob(job.id);
+  }
 
   return (
     <div className="invited-jobs-card">
@@ -72,18 +89,58 @@ function InvitedJobsCard(props) {
           </div>
         </div>
       </Link>
-      <div className="invited-jobs-card__right accepted" >
-        {/* <div className="invited-jobs-card__right__icon">
-          <RiIcons.RiCheckboxCircleFill className="invited-jobs-card__right__icon__item" />
-        </div> */}
+      <div
+        className={
+          `invited-jobs-card__right 
+          ${job.status
+            ? "accepted"
+            : (job.status === false ? "not-accepted" : "waiting")
+          }`
+        }
+      >
+        <div className="invited-jobs-card__right__icon">
+          {
+            job.status
+              ? <RiIcons.RiCheckboxCircleFill className="invited-jobs-card__right__icon__item" />
+              : (
+                job.status === false
+                  ? <RiIcons.RiCloseCircleFill className="invited-jobs-card__right__icon__item" />
+                  : <RiIcons.RiErrorWarningFill className="invited-jobs-card__right__icon__item" />
+              )
+          }
+        </div>
         <div className="invited-jobs-card__right__overlay overlay">
           <div className="invited-jobs-card__right__overlay__action action">
-            <MdIcons.MdCheckCircleOutline
-              className="invited-jobs-card__right__overlay__action__icon"
-            />
-            <ImIcons.ImCancelCircle
-              className="invited-jobs-card__right__overlay__action__icon"
-            />
+            {
+              job.status
+                ? <span className="invited-jobs-card__right__overlay__action__accepted">
+                  Accepted
+                </span>
+                : <>
+                  {
+                    isAccepting
+                      ? <span
+                        className="spinner-border spinner-border-lg 
+                        invited-jobs-card__right__overlay__action__spinner"
+                      />
+                      : <MdIcons.MdCheckCircleOutline
+                        className="invited-jobs-card__right__overlay__action__icon"
+                        onClick={handleAcceptInvitedJob}
+                      />
+                  }
+                  {
+                    isRejecting
+                      ? <span
+                        className="spinner-border spinner-border-lg 
+                        invited-jobs-card__right__overlay__action__spinner"
+                      />
+                      : <ImIcons.ImCancelCircle
+                        className="invited-jobs-card__right__overlay__action__icon"
+                        onClick={handleRejectInvitedJob}
+                      />
+                  }
+                </>
+            }
           </div>
         </div>
       </div>

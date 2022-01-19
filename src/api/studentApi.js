@@ -23,6 +23,16 @@ const studentApi = {
     return axiosClient.put(url);
   },
 
+  acceptInvitedJob: (id) => {
+    const url = `/student/recruitment/${id}/accept-invited`;
+    return axiosClient.put(url);
+  },
+
+  rejectInvitedJob: (id) => {
+    const url = `/student/recruitment/${id}/reject-invited`;
+    return axiosClient.put(url);
+  },
+
   // Dashboard
   getAppliedJobs: (params) => {
     const url = `/student/dashboard/applied-jobs?page=${params.page}&_limit=${params._limit}`;
