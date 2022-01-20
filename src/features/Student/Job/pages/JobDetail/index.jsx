@@ -9,6 +9,9 @@ import { useParams } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 import helper from 'utils/common';
 import './JobDetailPage.scss';
+import * as BsIcons from 'react-icons/bs';
+import * as ImIcons from 'react-icons/im';
+import * as RiIcons from 'react-icons/ri';
 
 JobDetailPage.propTypes = {
 
@@ -23,6 +26,14 @@ function JobDetailPage(props) {
   const [isSaving, setIsSaving] = useState(false);
   const [applyText, setApplyText] = useState("Apply");
   const [saveText, setSaveText] = useState("Save");
+  const [applicationState, setApplicationState] = useState(null);
+  const [isAccepting, setIsAccepting] = useState(false);
+  const [isRejecting, setIsRejecting] = useState(false);
+  // const [stateData, setStateData] = useState({
+  //   applyText: "Apply",
+  //   saveText: "Save",
+  //   applicationState: null
+  // });
 
   useEffect(() => {
     helper.scrollToTop();
@@ -31,8 +42,14 @@ function JobDetailPage(props) {
       try {
         const data = await studentApi.getJobDetail(id);
         setRecruitment(data.data.data);
+        setApplicationState(data.data.data.application.state);
         setApplyText(data.data.data.application.is_applied ? "Applied" : "Apply");
         setSaveText(data.data.data.application.is_saved ? "Saved" : "Save");
+        // setStateData(state => ({
+        //   applicationState: data.data.data.application.state,
+        //   applyText: data.data.data.application.is_applied ? "Applied" : "Apply",
+        //   saveText: data.data.data.application.is_saved ? "Saved" : "Save"
+        // }))
         setIsLoading(false);
         return data.data;
       } catch (error) {
@@ -88,6 +105,153 @@ function JobDetailPage(props) {
     }
   }
 
+  const onAcceptInvitedJob = async (id) => {
+    setIsAccepting(true);
+    try {
+      const action = await studentApi.acceptInvitedJob(id);
+      if (action.data.status === 1) {
+        setIsAccepting(false);
+        setApplicationState(true);
+        enqueueSnackbar(
+          `Successfully accepted the job offer.`,
+          { variant: "success" }
+        );
+        return true;
+      } else {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return false;
+      }
+    } catch (error) {
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
+    }
+  }
+  const renderApplicationArea = (state) => {
+    switch (state) {
+      case true:
+        return (
+          <span style={{ color: 'var(--success)' }}>
+            <BsIcons.BsCheckCircle
+              style={{
+                color: 'var(--success)',
+                fontSize: '1.5rem',
+                margin: '0 .2rem'
+              }}
+            />
+            {"You have accepted the invitation to join this job."}
+          </span>
+        );
+      // break;
+      case false:
+        switch (recruitment.application.is_invited) {
+          case true:
+            return (
+              <span style={{ color: 'red' }}>
+                <ImIcons.ImCancelCircle
+                  style={{
+                    color: 'red',
+                    fontSize: '1.5rem',
+                    margin: '0 .2rem'
+                  }}
+                />
+                {
+                  "You have declined the invitation to join this job."
+                }
+              </span>
+            );
+          case false: {
+            return (
+              <span style={{ color: 'red' }}>
+                <ImIcons.ImCancelCircle
+                  style={{
+                    color: 'red',
+                    fontSize: '1.5rem',
+                    margin: '0 .2rem'
+                  }}
+                />
+                {
+                  "Your job application has been rejected by the recruiter."
+                }
+              </span>
+            );
+          }
+          default:
+            break;
+        }
+        break;
+      case null:
+        if (recruitment.application.is_invited) {
+          return (
+            <>
+              <span style={{ color: 'gold' }}>
+                <RiIcons.RiErrorWarningLine
+                  style={{
+                    color: 'gold',
+                    fontSize: '1.5rem',
+                    margin: '0 .2rem'
+                  }}
+                />
+                {
+                  "You are invited to this job from the recruiter."
+                }
+              </span>
+              <div className="job-detail-page__container__top__right__more-info__btn-group">
+                Press <button
+                  type="button"
+                  className="btn btn-success btn-sm"
+                  onClick={() => onAcceptInvitedJob(recruitment.id)}
+                  disabled={isAccepting}
+                  style={ isAccepting ? { cursor: "default" } : { cursor: "pointer" }}
+                >
+                  {
+                    isAccepting && <span className="spinner-border spinner-border-sm mr-2" />
+                  }
+                  Accept
+                </button> to "Accept" the offer,
+                Press <button
+                  type="button"
+                  className="btn btn-danger btn-sm"
+                  onClick={() => onRejectInvitedJob(recruitment.id)}
+                  disabled={isRejecting}
+                  style={isRejecting ? { cursor: "default" } : { cursor: "pointer" }}
+                >
+                  {
+                    isRejecting && <span className="spinner-border spinner-border-sm mr-2" />
+                  }
+                  Reject
+                </button> to "Decline".
+              </div>
+            </>
+          );
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  const onRejectInvitedJob = async (id) => {
+    setIsRejecting(true);
+    try {
+      const action = await studentApi.rejectInvitedJob(id);
+      if (action.data.status === 1) {
+        setIsRejecting(false);
+        setApplicationState(false);
+        enqueueSnackbar(
+          `Successfully declined the job offer.`,
+          { variant: "success" }
+        );
+        return true;
+      } else {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return false;
+      }
+    } catch (error) {
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
+    }
+  }
+
   return (
     <>
       {
@@ -114,20 +278,30 @@ function JobDetailPage(props) {
                     </span>
                     <span>{recruitment.location}</span>
                     <span>${recruitment.min_salary} - ${recruitment.max_salary}</span>
+                    <div className="job-detail-page__container__top__left__info__status">
+                      Status:<span style={
+                        recruitment.is_closed ? { color: 'red' } : { color: 'var(--success)' }
+                      }>{recruitment.is_closed ? "Closed" : "Recruiting"}</span>
+                    </div>
                   </div>
                 </div>
                 <div className="job-detail-page__container__top__right">
                   <>
-                    {!recruitment.application.state && <button
-                      type="button"
-                      className="btn btn-sm btn-success btn-apply"
-                      onClick={handleToApplyJob}
-                      disabled={isApplying}
-                      style={isApplying ? { cursor: "default" } : { cursor: "pointer" }}
-                    >
-                      {isApplying && <span className="spinner-border spinner-border-sm mr-2" />}
-                      {applyText}
-                    </button>}
+                    {
+                      (!recruitment.application.state &&
+                        !recruitment.is_closed &&
+                        !recruitment.application.is_invited
+                      ) && <button
+                        type="button"
+                        className="btn btn-sm btn-success btn-apply"
+                        onClick={handleToApplyJob}
+                        disabled={isApplying}
+                        style={isApplying ? { cursor: "default" } : { cursor: "pointer" }}
+                      >
+                        {isApplying && <span className="spinner-border spinner-border-sm mr-2" />}
+                        {applyText}
+                      </button>
+                    }
                     <button
                       type="button"
                       className="btn btn-sm btn-success btn-save"
@@ -139,6 +313,13 @@ function JobDetailPage(props) {
                       {isSaving && <span className="spinner-border spinner-border-sm mr-2" />}
                       {saveText}
                     </button>
+                    <div className="job-detail-page__container__top__right__more-info">
+                      <>
+                        {
+                          renderApplicationArea(applicationState)
+                        }
+                      </>
+                    </div>
                   </>
                 </div>
               </div>

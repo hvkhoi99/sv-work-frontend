@@ -84,6 +84,7 @@ function InvitedJobsPageCard(props) {
       return false;
     }
   }
+  
   const onRejectInvitedJob = async (id) => {
     setIsRejecting(true);
     try {

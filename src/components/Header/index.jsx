@@ -293,7 +293,7 @@ function Header(props) {
               onClick={handleMoveToRecruiter}
             >
               <FaIcons.FaBuilding className="menu-link-icon" />
-              Recruier
+              Recruiter
             </Link>
           </li>
         </ul>
