@@ -31,7 +31,7 @@ function CompanyFollowedCard(props) {
 
   return (
     <div className="company-followed-card">
-      <Link to="#" className="company-followed-card__left">
+      <Link to={`/company/${company.id}`} className="company-followed-card__left">
         <div className="company-followed-card__left__avatar">
           <img src={Images.tw} alt="company-avatar" />
           {company.verify && <div className="company-followed-card__left__avatar__check">

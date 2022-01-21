@@ -24,16 +24,17 @@ function JobDetailPage(props) {
   const { enqueueSnackbar } = useSnackbar();
   const [isApplying, setIsApplying] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [applyText, setApplyText] = useState("Apply");
-  const [saveText, setSaveText] = useState("Save");
-  const [applicationState, setApplicationState] = useState(null);
+  // const [applyText, setApplyText] = useState("Apply");
+  // const [saveText, setSaveText] = useState("Save Job");
+  // const [applicationState, setApplicationState] = useState(null);
   const [isAccepting, setIsAccepting] = useState(false);
   const [isRejecting, setIsRejecting] = useState(false);
-  // const [stateData, setStateData] = useState({
-  //   applyText: "Apply",
-  //   saveText: "Save",
-  //   applicationState: null
-  // });
+  const [stateData, setStateData] = useState({
+    applicationState: null,
+    isInvited: false,
+    isApplied: false,
+    isSaved: false
+  });
 
   useEffect(() => {
     helper.scrollToTop();
@@ -41,15 +42,19 @@ function JobDetailPage(props) {
     const fetchRecruitmentDetail = async () => {
       try {
         const data = await studentApi.getJobDetail(id);
+        // console.log(data.data.data);
         setRecruitment(data.data.data);
-        setApplicationState(data.data.data.application.state);
-        setApplyText(data.data.data.application.is_applied ? "Applied" : "Apply");
-        setSaveText(data.data.data.application.is_saved ? "Saved" : "Save");
-        // setStateData(state => ({
-        //   applicationState: data.data.data.application.state,
-        //   applyText: data.data.data.application.is_applied ? "Applied" : "Apply",
-        //   saveText: data.data.data.application.is_saved ? "Saved" : "Save"
-        // }))
+        if (data.data.data.application !== null) {
+          // setApplicationState(data.data.data.application.state);
+          // setApplyText(data.data.data.application.is_applied ? "Applied" : "Apply");
+          // setSaveText(data.data.data.application.is_saved ? "Saved Job" : "Save Job");
+          setStateData(state => ({
+            applicationState: data.data.data.application.state,
+            isInvited: data.data.data.application.is_invited,
+            isApplied: data.data.data.application.is_applied,
+            isSaved: data.data.data.application.is_saved,
+          }))
+        }
         setIsLoading(false);
         return data.data;
       } catch (error) {
@@ -66,7 +71,11 @@ function JobDetailPage(props) {
       const action = await studentApi.applyJob(id);
       if (action.data.status === 1) {
         setIsApplying(false);
-        setApplyText(action.data.data.is_applied ? "Applied" : "Apply");
+        // setApplyText(action.data.data.is_applied ? "Applied" : "Apply");
+        setStateData(state => ({
+          ...state,
+          isApplied: action.data.data.is_applied
+        }));
         enqueueSnackbar(
           `Successfully ${action.data.data.is_applied ? "Applied" : "Un-Apply"} job.`,
           { variant: "success" }
@@ -90,7 +99,11 @@ function JobDetailPage(props) {
       const action = await studentApi.saveJob(id);
       if (action.data.status === 1) {
         setIsSaving(false);
-        setSaveText(action.data.data.is_saved ? "Saved" : "Save");
+        // setSaveText(action.data.data.is_saved ? "Saved Job" : "Save Job");
+        setStateData(state => ({
+          ...state,
+          isSaved: action.data.data.is_saved
+        }));
         enqueueSnackbar(action.data.message, { variant: "success" });
         return true;
       } else {
@@ -111,7 +124,11 @@ function JobDetailPage(props) {
       const action = await studentApi.acceptInvitedJob(id);
       if (action.data.status === 1) {
         setIsAccepting(false);
-        setApplicationState(true);
+        // setApplicationState(true);
+        setStateData(state => ({
+          ...state,
+          applicationState: true
+        }));
         enqueueSnackbar(
           `Successfully accepted the job offer.`,
           { variant: "success" }
@@ -126,6 +143,33 @@ function JobDetailPage(props) {
       return false;
     }
   }
+
+  const onRejectInvitedJob = async (id) => {
+    setIsRejecting(true);
+    try {
+      const action = await studentApi.rejectInvitedJob(id);
+      if (action.data.status === 1) {
+        setIsRejecting(false);
+        // setApplicationState(false);
+        setStateData(state => ({
+          ...state,
+          applicationState: false
+        }));
+        enqueueSnackbar(
+          `Successfully declined the job offer.`,
+          { variant: "success" }
+        );
+        return true;
+      } else {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return false;
+      }
+    } catch (error) {
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
+    }
+  }
+
   const renderApplicationArea = (state) => {
     switch (state) {
       case true:
@@ -143,7 +187,7 @@ function JobDetailPage(props) {
         );
       // break;
       case false:
-        switch (recruitment.application.is_invited) {
+        switch (stateData.isInvited) {
           case true:
             return (
               <span style={{ color: 'red' }}>
@@ -180,7 +224,7 @@ function JobDetailPage(props) {
         }
         break;
       case null:
-        if (recruitment.application.is_invited) {
+        if (stateData.isInvited) {
           return (
             <>
               <span style={{ color: 'gold' }}>
@@ -201,7 +245,7 @@ function JobDetailPage(props) {
                   className="btn btn-success btn-sm"
                   onClick={() => onAcceptInvitedJob(recruitment.id)}
                   disabled={isAccepting}
-                  style={ isAccepting ? { cursor: "default" } : { cursor: "pointer" }}
+                  style={isAccepting ? { cursor: "default" } : { cursor: "pointer" }}
                 >
                   {
                     isAccepting && <span className="spinner-border spinner-border-sm mr-2" />
@@ -227,28 +271,6 @@ function JobDetailPage(props) {
         break;
       default:
         break;
-    }
-  }
-
-  const onRejectInvitedJob = async (id) => {
-    setIsRejecting(true);
-    try {
-      const action = await studentApi.rejectInvitedJob(id);
-      if (action.data.status === 1) {
-        setIsRejecting(false);
-        setApplicationState(false);
-        enqueueSnackbar(
-          `Successfully declined the job offer.`,
-          { variant: "success" }
-        );
-        return true;
-      } else {
-        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
-        return false;
-      }
-    } catch (error) {
-      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
-      return false;
     }
   }
 
@@ -288,9 +310,9 @@ function JobDetailPage(props) {
                 <div className="job-detail-page__container__top__right">
                   <>
                     {
-                      (!recruitment.application.state &&
+                      (!stateData.applicationState &&
                         !recruitment.is_closed &&
-                        !recruitment.application.is_invited
+                        !stateData.isInvited
                       ) && <button
                         type="button"
                         className="btn btn-sm btn-success btn-apply"
@@ -299,7 +321,7 @@ function JobDetailPage(props) {
                         style={isApplying ? { cursor: "default" } : { cursor: "pointer" }}
                       >
                         {isApplying && <span className="spinner-border spinner-border-sm mr-2" />}
-                        {applyText}
+                        {stateData.isApplied ? "Applied" : "Apply"}
                       </button>
                     }
                     <button
@@ -311,12 +333,12 @@ function JobDetailPage(props) {
                       style={isSaving ? { cursor: "default" } : { cursor: "pointer" }}
                     >
                       {isSaving && <span className="spinner-border spinner-border-sm mr-2" />}
-                      {saveText}
+                      {stateData.isSaved ? "Saved Job" : "Save Job"}
                     </button>
                     <div className="job-detail-page__container__top__right__more-info">
                       <>
                         {
-                          renderApplicationArea(applicationState)
+                          renderApplicationArea(stateData.applicationState)
                         }
                       </>
                     </div>

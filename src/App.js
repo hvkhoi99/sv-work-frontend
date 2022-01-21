@@ -6,6 +6,7 @@ import AuthFeature from 'features/Auth';
 import BeginnerFeature from 'features/Beginner';
 import RecruiterFeature from 'features/Recruiter';
 import RecruiterHomeFeature from 'features/Recruiter/Home';
+import CompanyFeature from 'features/Student/Company';
 import StudentEventFeature from 'features/Student/Event';
 import StudentFindFeature from 'features/Student/Find';
 import StudentHomeFeature from 'features/Student/Home';
@@ -42,6 +43,7 @@ function App() {
               <Route path="/event" component={StudentEventFeature} />
               <Route path="/find-jobs" component={StudentFindFeature} />
               <Route path="/recruitment" component={JobFeature} />
+              <Route path="/company" component={CompanyFeature} />
 
               <PrivateRouteFirstUpdateProfile path="/first-update" component={BeginnerFeature} />
 

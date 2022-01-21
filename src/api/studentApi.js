@@ -7,6 +7,11 @@ const studentApi = {
     return axiosClient.post(url);
   },
 
+  getCompanyInfo: (id) => {
+    const url = `/student/company/${id}`;
+    return axiosClient.get(url);
+  },
+
   // Job
   getJobDetail: (id) => {
     const url = `/student/job/${id}`;

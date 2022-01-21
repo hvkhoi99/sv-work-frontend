@@ -45,10 +45,14 @@
 
           & > img {
             width: 13rem;
-            border-radius: 50%;
-            z-index: 1;
-            // padding: 0 0 0 0;
+            height: 13rem;
             margin: 0 0 -2rem 0;
+            border-radius: 50%;
+
+            z-index: 1;
+            background-color: #fff;
+            border: 2px solid var(--success);
+            object-fit: cover;
           }
         }
 
