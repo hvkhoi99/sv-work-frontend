@@ -1,12 +1,12 @@
 import React from 'react';
 import * as AiIcons from 'react-icons/ai';
-import * as FiIcons from 'react-icons/fi';
 import helper from 'utils/common';
+import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
 // import PropTypes from 'prop-types';
 import './StudentLanguages.scss';
 
 StudentLanguagesCard.propTypes = {
-  
+
 };
 
 function StudentLanguagesCard(props) {
@@ -28,7 +28,7 @@ function StudentLanguagesCard(props) {
           }
         </div>
         <div className="student-languages-card__main__more">
-          <FiIcons.FiMoreHorizontal className="student-languages-card__main__more__icon" />
+          <StudentProfileMoreOptions />
         </div>
       </div>
     </div>

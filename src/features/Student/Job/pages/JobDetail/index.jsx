@@ -286,7 +286,11 @@ function JobDetailPage(props) {
               <div className="job-detail-page__container__top">
                 <div className="job-detail-page__container__top__left">
                   <div className="job-detail-page__container__top__left__img">
-                    <img src={Images.tw} alt="avatar" />
+                    <img src={
+                      recruitment.company_info.logo_image_link === (null || "" || undefined)
+                        ? Images.defaultAvatar
+                        : recruitment.company_info.logo_image_link
+                    } alt="company-avatar" />
                     <div className="job-detail-page__container__top__left__img__check">
                       <FaIcons.FaCheckCircle
                         className="job-detail-page__container__top__left__img__check__icon"

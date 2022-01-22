@@ -52,8 +52,6 @@ function StudentProfilePage(props) {
     setChecked(e.target.checked);
   }
 
-  console.log({ checked })
-
   return (
     <>
       {
@@ -85,7 +83,11 @@ function StudentProfilePage(props) {
                 <div className="student-profile__container__right__base-info">
                   <div className="student-profile__container__right__base-info__left">
                     <div className="student-profile__container__right__base-info__left__avatar">
-                      <img src={Images.tw} alt="avatar" />
+                      <img src={
+                        user.s_profile.avatar_link === (null || "" || undefined)
+                          ? Images.defaultAvatar
+                          : user.s_profile.avatar_link
+                      } alt="avatar" />
                       <div className="student-profile__container__right__base-info__left__avatar__icon">
                         <MdIcons.MdChangeCircle className="change-icon" />
                       </div>

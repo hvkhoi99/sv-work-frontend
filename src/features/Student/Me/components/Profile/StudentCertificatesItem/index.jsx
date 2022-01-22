@@ -1,7 +1,7 @@
 import React from 'react';
 import * as GiIcons from 'react-icons/gi';
-import * as FiIcons from 'react-icons/fi';
 import { Link } from 'react-router-dom';
+import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
 // import PropTypes from 'prop-types';
 
 StudentCertificatesItemCard.propTypes = {
@@ -33,7 +33,7 @@ function StudentCertificatesItemCard(props) {
         </div>
       </div>
       <div className="student-certificates-item-card__more">
-        <FiIcons.FiMoreHorizontal className="student-certificates-item-card__more__icon" />
+        <StudentProfileMoreOptions />
       </div>
     </div>
   );

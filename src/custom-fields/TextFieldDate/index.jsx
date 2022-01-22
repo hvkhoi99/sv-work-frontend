@@ -53,7 +53,7 @@ function TextFieldDate(props) {
         color: 'var(--success)',
         fontWeight: '600',
         fontSize: `${fontSize}`,
-        lineHeight: `${lineHeight}`
+        lineHeight: `${lineHeight}`,
       }
     }
   }));

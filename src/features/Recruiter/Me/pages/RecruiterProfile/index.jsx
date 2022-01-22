@@ -11,6 +11,7 @@ import * as AiIcons from 'react-icons/ai';
 import * as GoIcons from 'react-icons/go';
 import * as HiIcons from 'react-icons/hi';
 import * as TiIcons from 'react-icons/ti';
+import * as MdIcons from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import helper from 'utils/common';
 import PopupUpdateProfile from '../../components/PopupUpdateProfile';
@@ -116,7 +117,14 @@ function RecruiterProfilePage(props) {
             <div className="recruiter-profile__container__info">
               <div className="recruiter-profile__container__info__top">
                 <div className="recruiter-profile__container__info__top__left">
-                  <img src={Images.fb} alt="recruiter-avatar" />
+                  <img src={
+                    user.r_profile.logo_image_link === (null || "" || undefined)
+                      ? Images.defaultAvatar
+                      : user.r_profile.logo_image_link
+                  } alt="recruiter-avatar" />
+                  <div className="recruiter-profile__container__info__top__left__avatar">
+                    <MdIcons.MdChangeCircle className="recruiter-profile__container__info__top__left__avatar__icon" />
+                  </div>
                 </div>
                 <div className="recruiter-profile__container__info__top__right">
                   <span className="recruiter-profile__container__info__top__right__recruiter-name">

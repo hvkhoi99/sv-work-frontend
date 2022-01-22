@@ -44,6 +44,12 @@ function AdminLoginPage(props) {
 
   const onSignIn = async (values) => {
     try {
+      if (values.email !== "admin@gmail.com") {
+        setIsError(true);
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return;
+      }
+
       const action = login({
         email: values.email,
         password: values.password

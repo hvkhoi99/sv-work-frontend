@@ -1,8 +1,8 @@
 import React from 'react';
+import * as AiIcons from 'react-icons/ai';
+import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
 // import PropTypes from 'prop-types';
 import './StudentOverview.scss';
-import * as AiIcons from 'react-icons/ai';
-import * as FiIcons from 'react-icons/fi';
 
 StudentOverviewCard.propTypes = {
 
@@ -27,7 +27,7 @@ function StudentOverviewCard(props) {
           fugiat laudantium explicabo eum, nam est voluptate odio omnis.
         </div>
         <div className="student-overview-card__main__more">
-          <FiIcons.FiMoreHorizontal className="student-overview-card__main__more__icon"/>
+          <StudentProfileMoreOptions />
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import * as FaIcons from 'react-icons/fa';
-import * as FiIcons from 'react-icons/fi';
+import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
 
 StudentExperiencesItemCard.propTypes = {
 
@@ -32,7 +32,7 @@ function StudentExperiencesItemCard(props) {
         </div>
       </div>
       <div className="student-experiences-item-card__more">
-        <FiIcons.FiMoreHorizontal className="student-experiences-item-card__more__icon" />
+        <StudentProfileMoreOptions />
       </div>
     </div>
   );

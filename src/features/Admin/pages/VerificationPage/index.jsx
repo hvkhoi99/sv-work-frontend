@@ -70,11 +70,17 @@ function VerificationPage(props) {
               />
             )
           })}
-          <PaginationSimple 
-          handlePageClick={handlePageClick}
-          currentPage={currentPage}
-          lastPage={lastPage}
-          />
+          {
+            recruiters.length > 0
+              ? <PaginationSimple
+                handlePageClick={handlePageClick}
+                currentPage={currentPage}
+                lastPage={lastPage}
+              />
+              : <div className="no-available">
+                <span>There are currently no articles available</span>
+              </div>
+          }
         </div>
 
         <div className="verification__detail">

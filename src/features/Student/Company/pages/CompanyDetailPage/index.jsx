@@ -87,7 +87,11 @@ function CompanyDetailPage(props) {
             <div className="company-detail__container__info">
               <div className="company-detail__container__info__top">
                 <div className="company-detail__container__info__top__left">
-                  <img src={Images.fb} alt="recruiter-avatar" />
+                  <img src={
+                    company.logo_image_link === (null || "" || undefined)
+                    ? Images.defaultAvatar
+                    : company.logo_image_link
+                  } alt="company-avatar" />
                 </div>
                 <div className="company-detail__container__info__top__right">
                   <span className="company-detail__container__info__top__right__recruiter-name">

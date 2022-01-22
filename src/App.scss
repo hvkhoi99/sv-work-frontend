@@ -109,8 +109,6 @@
   width: 100%;
 }
 
-
-
 .width-20 {
   width: 20%;
 }
@@ -145,7 +143,7 @@
 }
 .not-accepted {
   background-color: lightcoral;
-  color:crimson;
+  color: crimson;
 }
 .waiting {
   background-color: rgb(255, 241, 161);
@@ -153,8 +151,14 @@
 }
 
 .no-available {
+  text-align: center;
+  width: 100%;
   & > span {
     // font-weight: 500;
     font-size: 1.2rem;
   }
+}
+
+.hidden {
+  display: none;
 }

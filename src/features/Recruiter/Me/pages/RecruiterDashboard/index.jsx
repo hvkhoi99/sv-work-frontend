@@ -101,19 +101,25 @@ function RecruiterDashboardPage(props) {
             <div className="recruiter-dashboard__container__top">
               <div className="recruiter-dashboard__container__top__left">
                 <div className="recruiter-dashboard__container__top__left__inforCard">
-                  <img src={Images.fb} alt="apple" />
+                  <img src={
+                    user.r_profile.logo_image_link === (null || "" || undefined)
+                    ? Images.defaultAvatar
+                    : user.r_profile.logo_image_link
+                  } alt="recruiter-avatar" />
                   <div className="recruiter-dashboard__container__top__left__inforCard__description">
                     <div className="recruiter-dashboard__container__top__left__inforCard__description__title">
-                      <LinesEllipsis
+                      {/* <LinesEllipsis
                         text={
-                          user.r_profile.company_name
+                          // user.r_profile.company_name
+                          "asdkasdkja aksdkjasdkjask akjsdjashd"
                         }
                         maxLine='1'
                         ellipsis='...'
                         trimRight
                         basedOn='letters'
                         className="recruiter-dashboard__container__top__left__inforCard__description__title__company-name"
-                      />
+                      /> */}
+                      <span>{user.r_profile.company_name}</span>
                       {dashboardIndexData.profile.verify && <HiIcons.HiCheckCircle className="inforCard-icon" />}
                     </div>
                     <LinesEllipsis

@@ -52,7 +52,11 @@ function CandidatesCard(props) {
     >
       <div className="candidates-card__left">
         <div className="candidates-card__left__img">
-          <img src={Images.tw} alt="student-avatar" />
+          <img src={
+            candidate.avatar_link === (null || "" || undefined)
+            ? Images.defaultAvatar
+            : candidate.avatar_link
+        } alt="student-avatar" />
         </div>
         <div className="candidates-card__left__info">
           <LinesEllipsis

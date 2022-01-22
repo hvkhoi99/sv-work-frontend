@@ -37,7 +37,7 @@ function AppliedJobsPageCard(props) {
           _limit: limit
         }
         const data = await studentApi.getAppliedJobs(params);
-        // console.log({data})
+        console.log({data})
         if (data.data.status === 1) {
           setAppliedJobs(data.data.data.data);
           const total = data.data.data.total;

@@ -31,26 +31,5 @@
     &__description {
       padding: 0 5rem 0 0;
     }
-
-    &__more {
-      display: flex;
-      align-self: flex-start;
-      font-size: 2rem;
-      color: darkgrey;
-      cursor: pointer;
-      border-radius: 50%;
-
-      padding: 0.2rem;
-
-      &:hover {
-        transition: all 0.15s ease-out;
-        color: var(--success);
-        background-color: lightgrey;
-      }
-
-      &:active {
-        background-color: #fff;
-      }
-    }
   }
 }

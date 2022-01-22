@@ -18,7 +18,7 @@ RecruitmentCard.defaultProps = {
 }
 
 function RecruitmentCard(props) {
-  const {onViewJob} = props;
+  const { onViewJob } = props;
 
   const handleViewJob = (e) => {
     e.preventDefault();
@@ -35,7 +35,9 @@ function RecruitmentCard(props) {
       <div className="recruitment-card__top">
         <div className="recruitment-card__top__left">
           <div className="recruitment-card__top__left__img">
-            <img src={Images.tw} alt="avatar" />
+            <img src={
+              Images.defaultAvatar
+            } alt="company-avatar" />
           </div>
           <div className="recruitment-card__top__left__company-name">
 

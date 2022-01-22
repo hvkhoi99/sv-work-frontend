@@ -1,13 +1,12 @@
 import Images from 'constants/images';
+import moment from 'moment';
+import PropTypes from 'prop-types';
 import React from 'react';
 import * as GiIcons from 'react-icons/gi';
-import PropTypes from 'prop-types';
 import * as HiIcons from 'react-icons/hi';
 import * as MdIcons from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import helper from 'utils/common';
 import './SavedJobsCard.scss';
-import moment from 'moment';
 
 SavedJobsCard.propTypes = {
   job: PropTypes.object,
@@ -32,7 +31,11 @@ function SavedJobsCard(props) {
     <div className="saved-jobs-card">
       <Link to={`/recruitment/${job.id}`} className="saved-jobs-card__left">
         <div className="saved-jobs-card__left__avatar">
-          <img src={Images.tw} alt="company-avatar" />
+          <img src={
+            job.company_info.logo_image_link === (null || "" || undefined)
+              ? Images.defaultAvatar
+              : job.company_info.logo_image_link
+          } alt="company-avatar" />
           {job.company_info.verify && <div className="saved-jobs-card__left__avatar__check">
             <HiIcons.HiCheckCircle className="saved-jobs-card__left__avatar__check__icon" />
           </div>}
@@ -57,10 +60,16 @@ function SavedJobsCard(props) {
           </div>
           <div className="saved-jobs-card__left__info__hashtags">
             {
-              helper.splitCommaString(
-                `${job.job_category}`,
-                "saved-jobs-card__left__info__hashtags__item"
-              )
+              // helper.splitCommaString(
+              //   `${job.hashtags}`,
+              //   "saved-jobs-card__left__info__hashtags__item"
+              // )
+              job.hashtags.map((hashtag, index) => {
+                return <span
+                  key={index}
+                  className="saved-jobs-card__left__info__hashtags__item"
+                >{hashtag.label}</span>
+              })
             }
           </div>
           <div className="saved-jobs-card__left__info__status">

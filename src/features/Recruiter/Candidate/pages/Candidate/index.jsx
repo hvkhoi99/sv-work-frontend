@@ -85,7 +85,11 @@ function CandidatePage(props) {
           : <div className="candidate">
             <div className="candidate__above">
               <div className="candidate__above__img">
-                <img src={Images.tw} alt="candidate-avatar" />
+                <img src={
+                  candidate.avatar_link === (null || "" || undefined)
+                  ? Images.defaultAvatar
+                  : candidate.avatar_link
+                } alt="candidate-avatar" />
               </div>
               <span className="candidate__above__candidate-name">
                 {candidate.first_name} {candidate.last_name}

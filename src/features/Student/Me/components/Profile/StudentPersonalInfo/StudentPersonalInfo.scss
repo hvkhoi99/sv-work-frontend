@@ -15,25 +15,18 @@
     &__title {
       font-weight: 600;
     }
-
-    &__icon {
-      color: var(--success);
-      margin: 0 0 0 .5rem;
-      cursor: pointer;
-    }
   }
 
   &__main {
     display: flex;
     justify-content: space-between;
 
-    padding: .5rem 0;
+    padding: 0.5rem 0;
     line-height: 2.5rem;
 
     width: 100%;
 
     &__left {
-
       &__dob {
         display: flex;
         align-items: center;
@@ -54,7 +47,6 @@
     }
 
     &__center {
-
       &__phone {
         display: flex;
         align-items: center;
@@ -75,7 +67,6 @@
     }
 
     &__right {
-
       &__address {
         display: flex;
         align-items: center;
@@ -94,31 +85,10 @@
         // }
       }
     }
-
-    &__more {
-      display: flex;
-      align-self: flex-start;
-      font-size: 2rem;
-      color: darkgrey;
-      cursor: pointer;
-      border-radius: 50%;
-
-      padding: .2rem;
-      
-      &:hover {
-        transition: all 0.15s ease-out;
-        color: var(--success);
-        background-color: lightgrey;
-      }
-
-      &:active {
-        background-color: #fff;
-      }
-    }
   }
 
   &__icon {
     color: var(--success);
-    margin-right: .5rem;
+    margin-right: 0.5rem;
   }
 }

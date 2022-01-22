@@ -146,9 +146,17 @@ function RecruiterAccountPage(props) {
                 <div className="account__container__profile__img__avatar">
                   <img src={
                     currentPath === recruiterAccountPath
-                      ? Images.tw
-                      : student.avatar_link
-                  } alt="avatar" />
+                      ? (
+                        recruiter.logo_image_link === (null || "" || undefined)
+                        ? Images.defaultAvatar
+                        : recruiter.logo_image_link
+                      )
+                      : (
+                        student.avatar_link === (null || "" || undefined)
+                          ? Images.defaultAvatar
+                          : student.avatar_link
+                      )
+                  } alt="recruiter-avatar" />
                 </div>
                 <div className="account__container__profile__img__app">
                   <span className="account__container__profile__img__app__name">AIO</span>

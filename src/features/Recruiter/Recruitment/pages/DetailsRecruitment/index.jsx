@@ -130,7 +130,11 @@ function DetailsRecruitmentPage(props) {
               <div className="details-recruitment__container__top">
                 <div className="details-recruitment__container__top__left">
                   <div className="details-recruitment__container__top__left__img">
-                    <img src={Images.tw} alt="avatar" />
+                    <img src={
+                      user.r_profile.logo_image_link === (null || "" || undefined)
+                      ? Images.defaultAvatar
+                      : user.r_profile.logo_image_link
+                    } alt="company-avatar" />
                   </div>
                   <div className="details-recruitment__container__top__left__info">
                     <h4>{recruitmentDetail.title}</h4>

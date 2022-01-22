@@ -40,12 +40,38 @@
           align-items: center;
           width: 50%;
           height: auto;
+          position: relative;
 
           & > img {
             width: 11rem;
             height: 11rem;
             border-radius: 50%;
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            object-fit: cover;
+          }
+
+          &__avatar {
+            position: absolute;
+
+            &__icon {
+              margin: 9.5rem 0 0 6rem;
+
+              font-size: 2.5rem;
+              position: relative;
+              color: var(--success);
+              background-color: #fff;
+              border-radius: 50%;
+              cursor: pointer;
+
+              &:hover {
+                transform: scale(1.1);
+                transition: all 0.15s ease-out;
+              }
+
+              &:active {
+                transform: scale(1);
+              }
+            }
           }
         }
 

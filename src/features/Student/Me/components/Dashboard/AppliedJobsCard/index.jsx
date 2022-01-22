@@ -7,7 +7,6 @@ import * as MdIcons from 'react-icons/md';
 import * as RiIcons from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
-import helper from 'utils/common';
 import './AppliedJobsCard.scss';
 
 AppliedJobsCard.propTypes = {
@@ -33,7 +32,11 @@ function AppliedJobsCard(props) {
     <div className="applied-jobs-card">
       <Link to={`/recruitment/${job.id}`} className="applied-jobs-card__left">
         <div className="applied-jobs-card__left__avatar">
-          <img src={Images.tw} alt="company-avatar" />
+          <img src={
+            job.company_info.logo_image_link === (null || "" || undefined)
+            ? Images.defaultAvatar
+            : job.company_info.logo_image_link
+          } alt="company-avatar" />
           {
             job.company_info.verify && <div className="applied-jobs-card__left__avatar__check">
               <HiIcons.HiCheckCircle className="applied-jobs-card__left__avatar__check__icon" />
@@ -60,10 +63,16 @@ function AppliedJobsCard(props) {
           </div>
           <div className="applied-jobs-card__left__info__hashtags">
             {
-              helper.splitCommaString(
-                `${job.job_category}`,
-                "applied-jobs-card__left__info__hashtags__item"
-              )
+              // helper.splitCommaString(
+              //   `${job.hashtags}`,
+              //   "applied-jobs-card__left__info__hashtags__item"
+              // )
+              job.hashtags.map((hashtag, index) => {
+                return <span
+                  key={index}
+                  className="applied-jobs-card__left__info__hashtags__item"
+                >{hashtag.label}</span>
+              })
             }
           </div>
           <div className="applied-jobs-card__left__info__status">

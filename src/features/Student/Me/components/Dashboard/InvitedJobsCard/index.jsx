@@ -5,10 +5,9 @@ import React from 'react';
 import * as HiIcons from 'react-icons/hi';
 import * as ImIcons from 'react-icons/im';
 import * as MdIcons from 'react-icons/md';
-import { Link } from 'react-router-dom';
-import helper from 'utils/common';
-import './InvitedJobsCard.scss';
 import * as RiIcons from 'react-icons/ri';
+import { Link } from 'react-router-dom';
+import './InvitedJobsCard.scss';
 
 InvitedJobsCard.propTypes = {
   job: PropTypes.object,
@@ -41,7 +40,11 @@ function InvitedJobsCard(props) {
     <div className="invited-jobs-card">
       <Link to={`/recruitment/${job.id}`} className="invited-jobs-card__left">
         <div className="invited-jobs-card__left__avatar">
-          <img src={Images.tw} alt="company-avatar" />
+          <img src={
+            job.company_info.logo_image_link === (null || "" || undefined)
+            ? Images.defaultAvatar
+            : job.company_info.logo_image_link
+          } alt="company-avatar" />
           {job.company_info.verify && <div className="invited-jobs-card__left__avatar__check">
             <HiIcons.HiCheckCircle className="invited-jobs-card__left__avatar__check__icon" />
           </div>}
@@ -66,10 +69,16 @@ function InvitedJobsCard(props) {
           </div>
           <div className="invited-jobs-card__left__info__hashtags">
             {
-              helper.splitCommaString(
-                `${job.job_category}`,
-                "invited-jobs-card__left__info__hashtags__item"
-              )
+              // helper.splitCommaString(
+              //   `${job.hashtags}`,
+              //   "invited-jobs-card__left__info__hashtags__item"
+              // )
+              job.hashtags.map((hashtag, index) => {
+                return <span
+                  key={index}
+                  className="invited-jobs-card__left__info__hashtags__item"
+                >{hashtag.label}</span>
+              })
             }
           </div>
           <div className="invited-jobs-card__left__info__status">

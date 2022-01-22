@@ -32,12 +32,13 @@ import teamwork from '../assets/img/teamwork.png';
 import threeMinions from '../assets/img/three-minions.png';
 import tw from '../assets/img/tw.png';
 import vinfast from '../assets/img/vinfast.png';
+import defaultAvatar from '../assets/img/default-avatar.png';
 
 const Images = {
   home, notFound, emoji, minami, bgRight, background, fptSoftware, smDot, eventcircle,
   admin, teamwork, overview, ellipse, apple, coffeeTime, levis, tw, shopee, fb, vinfast,
   burger, lamborghini, student, recruiter, bmw, create, searchCard, recruitmentManageCard, aio,
-  threeMinions, ship, event1, aboutUsCard, googleCV
+  threeMinions, ship, event1, aboutUsCard, googleCV, defaultAvatar
 }
 
 export default Images;

@@ -62,12 +62,12 @@ const recruiterApi = {
 
   // Student -> Recruiter -> Candidate
   getCandidateProfile: (id) => {
-    const url = `/student/recruiter/candidate/${id}`;
+    const url = `/recruiter/candidate/${id}`;
     return axiosClient.get(url);
   },
 
   approveCandidate: (recruitmentId, candidateId) => {
-    const url = `/student/recruiter/recruitment/${recruitmentId}/candidate/${candidateId}/approve`;
+    const url = `/recruiter/recruitment/${recruitmentId}/candidate/${candidateId}/approve`;
     return axiosClient.put(url);
   }
 }
