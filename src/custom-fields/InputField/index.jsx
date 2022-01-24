@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { FormFeedback, FormGroup, Input, Label } from 'reactstrap';
 import { ErrorMessage } from 'formik';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { FormFeedback, FormGroup, Input, Label } from 'reactstrap';
 import './InputField.scss';
 
 InputField.propTypes = {
@@ -18,6 +18,8 @@ InputField.propTypes = {
 
   newValue: PropTypes.string,
   labelClassName: PropTypes.string,
+
+  isTextArea: PropTypes.bool,
 };
 
 InputField.defaultProps = {
@@ -33,13 +35,15 @@ InputField.defaultProps = {
   inputClassName: '',
   newValue: '',
   labelClassName: '',
+  isTextArea: false,
 }
 
 function InputField(props) {
 
   const {
     field, form,
-    type, label, placeholder, disabled, moreClassName, autoComplete, inputClassName, newValue, labelClassName,
+    type, label, placeholder, disabled, moreClassName, autoComplete,
+    inputClassName, newValue, labelClassName, isTextArea
   } = props;
 
   const { name } = field;
@@ -60,6 +64,7 @@ function InputField(props) {
         invalid={showError}
         className={`input-field ${inputClassName}`}
         autoComplete={autoComplete}
+        rows={isTextArea ? 10 : 1}
       />
       <ErrorMessage name={name} component={FormFeedback} />
     </FormGroup>

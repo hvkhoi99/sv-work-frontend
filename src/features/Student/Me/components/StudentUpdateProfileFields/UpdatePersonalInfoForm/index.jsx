@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import './UpdatePersonalInfoForm.scss';
+import PropTypes from 'prop-types';
 import { FastField, Form, Formik } from 'formik';
 import InputField from 'custom-fields/InputField';
 import SelectField from 'custom-fields/SelectField';
@@ -26,6 +26,16 @@ function UpdatePersonalInfoForm(props) {
   // const phoneRegExp = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
   const validationSchema = Yup.object().shape({
+    last_name: Yup
+      .string()
+      .typeError('Last Name is required')
+      .required('Last Name is required'),
+    // .min(5, "Last name must be at least 5 characters"),
+    
+    job_title: Yup
+      .string()
+      .typeError('Job Title is required')
+      .required("Job Title is required"),
     email: Yup
       .string()
       .email('Email is invalid')
@@ -79,12 +89,36 @@ function UpdatePersonalInfoForm(props) {
 
             return (
               <Form>
+                <div className="first-last-name">
+                  <FastField
+                    name="first_name"
+                    component={InputField}
+
+                    label="First Name"
+                    moreClassName="width-100 mr-4"
+                  />
+                  <FastField
+                    name="last_name"
+                    component={InputField}
+
+                    label="Last Name"
+                    moreClassName="width-100"
+                  />
+                </div>
+
+                <FastField
+                  name="job_title"
+                  component={InputField}
+
+                  label="Job Title"
+                />
+
                 <FastField
                   name="email"
                   component={InputField}
 
                   label="Email"
-                  labelClassName="input-field-label"
+                // labelClassName="input-field-label"
                 />
 
                 <div className="phone-gender">
@@ -94,7 +128,7 @@ function UpdatePersonalInfoForm(props) {
 
                     label="Phone Number"
                     moreClassName="width-50 mr-4"
-                    labelClassName="input-field-label"
+                  // labelClassName="input-field-label"
                   />
 
                   <FastField
@@ -105,7 +139,7 @@ function UpdatePersonalInfoForm(props) {
                     moreClassName="width-30"
                     options={GENDER}
                     isOptionValue={true}
-                    labelClassName="input-field-label"
+                  // labelClassName="input-field-label"
                   />
                 </div>
 
@@ -114,7 +148,7 @@ function UpdatePersonalInfoForm(props) {
                   component={InputField}
 
                   label="Address"
-                  labelClassName="input-field-label"
+                // labelClassName="input-field-label"
                 />
 
                 <FastField
@@ -125,7 +159,7 @@ function UpdatePersonalInfoForm(props) {
                   type="date"
                   moreClassName="text-field-date"
                   inputClassName="text-field-date-width"
-                  labelClassName="input-field-label"
+                // labelClassName="input-field-label"
                 />
 
                 <FastField
@@ -133,7 +167,7 @@ function UpdatePersonalInfoForm(props) {
                   component={InputField}
 
                   label="Nationality"
-                  labelClassName="input-field-label"
+                // labelClassName="input-field-label"
                 />
 
                 <FormGroup className="update-student-personal-form-btn-group">
@@ -145,13 +179,12 @@ function UpdatePersonalInfoForm(props) {
                     {isSubmitting && <Spinner children="" size="sm" />}
                     &nbsp;Update
                   </Button>
-                  
+
                   <Button
                     type="submit"
                     color="secondary"
                     onClick={close}
                   >
-                    {isSubmitting && <Spinner children="" size="sm" />}
                     &nbsp;Cancel
                   </Button>
                 </FormGroup>

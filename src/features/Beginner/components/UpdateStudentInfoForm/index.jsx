@@ -37,7 +37,7 @@ function UpdateStudentInfoForm(props) {
       .string()
       .typeError('Last name is required')
       .required('Last name is required'),
-      // .min(5, "Last name must be at least 5 characters"),
+    // .min(5, "Last name must be at least 5 characters"),
     date_of_birth: Yup
       .string()
       .typeError('Date of Birth is required')
@@ -58,7 +58,7 @@ function UpdateStudentInfoForm(props) {
       .string()
       .typeError('Nationality is required')
       .required('Nationality is required'),
-      // .min(5, "Nationality must be at least 10 characters"),
+    // .min(5, "Nationality must be at least 10 characters"),
     gender: Yup
       .string()
       .typeError('Gender is required')
@@ -86,20 +86,20 @@ function UpdateStudentInfoForm(props) {
         return (
           <Form>
             <div className="first-last-name">
-            <FastField
-              name="first_name"
-              component={InputField}
+              <FastField
+                name="first_name"
+                component={InputField}
 
-              label="First Name"
-              moreClassName="width-100 mr-4"
-            />
-            <FastField
-              name="last_name"
-              component={InputField}
+                label="First Name"
+                moreClassName="width-100 mr-4"
+              />
+              <FastField
+                name="last_name"
+                component={InputField}
 
-              label="Last Name"
-              moreClassName="width-100"
-            />
+                label="Last Name"
+                moreClassName="width-100"
+              />
             </div>
 
             <FastField

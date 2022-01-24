@@ -1,8 +1,8 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import './StudentExperiences.scss';
-import * as FiIcons from 'react-icons/fi';
 import StudentExperiencesItemCard from '../StudentExperiencesItem';
+import PopupUpdateStudentExperience from '../../PopupUpdateStudentProfile/PopupUpdateStudentExperience';
 
 StudentExperiencesCard.propTypes = {
   
@@ -15,7 +15,7 @@ function StudentExperiencesCard(props) {
         <span className="student-experiences-card__header__title">
           Experiences
         </span>
-        <FiIcons.FiPlusCircle className="student-experiences-card__header__icon" />
+        <PopupUpdateStudentExperience />
       </div>
       <div className="student-experiences-card__main">
         <div className="student-experiences-card__main__item">

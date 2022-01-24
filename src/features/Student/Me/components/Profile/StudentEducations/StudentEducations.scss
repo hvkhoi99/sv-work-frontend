@@ -16,24 +16,24 @@
       font-weight: 600;
     }
 
-    &__icon {
-      width: 1.4rem;
-      height: 1.4rem;
-      border-radius: 50%;
+    // &__icon {
+    //   width: 1.4rem;
+    //   height: 1.4rem;
+    //   border-radius: 50%;
 
-      color: var(--success);
-      margin: 0 0 0 0.5rem;
-      cursor: pointer;
+    //   color: var(--success);
+    //   margin: 0 0 0 0.5rem;
+    //   cursor: pointer;
 
-      &:hover {
-        transform: scale(1.2);
-        transition: all 0.15s ease-out;
-      }
+    //   &:hover {
+    //     transform: scale(1.2);
+    //     transition: all 0.15s ease-out;
+    //   }
 
-      &:active {
-        transform: scale(1);
-      }
-    }
+    //   &:active {
+    //     transform: scale(1);
+    //   }
+    // }
   }
 
   &__main {

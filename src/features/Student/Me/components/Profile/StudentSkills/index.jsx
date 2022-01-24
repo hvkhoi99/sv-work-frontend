@@ -1,7 +1,6 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
-import * as AiIcons from 'react-icons/ai';
 import helper from 'utils/common';
+import PopupUpdateStudentSkill from '../../PopupUpdateStudentProfile/PopupUpdateStudentSkills';
 import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
 import './StudentSkills.scss';
 
@@ -16,7 +15,8 @@ function StudentSkillsCard(props) {
         <span className="student-skills-card__header__title">
           Skills
         </span>
-        <AiIcons.AiOutlineEdit className="student-skills-card__header__icon" />
+        {/* <AiIcons.AiOutlineEdit className="student-skills-card__header__icon" /> */}
+        <PopupUpdateStudentSkill />
       </div>
       <div className="student-skills-card__main">
         <div className="student-skills-card__main__info">

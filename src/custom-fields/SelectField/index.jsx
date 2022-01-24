@@ -84,7 +84,7 @@ function SelectField(props) {
 
   return (
     <FormGroup className={`${moreClassName}`}>
-      {label && <Label style={{ fontWeight: '500' }} className={labelClassName} for={name}>{label}</Label>}
+      {label && <Label className={`label ${labelClassName}`} for={name}>{label}</Label>}
 
       {isCreatableSelect
         ? <CreatableSelect

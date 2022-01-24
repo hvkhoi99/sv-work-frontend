@@ -1,5 +1,5 @@
 import React from 'react';
-import * as FiIcons from 'react-icons/fi';
+import PopupUpdateStudentEducation from '../../PopupUpdateStudentProfile/PopupUpdateStudentEducation';
 import StudentEducationsItemCard from '../StudentEducationsItem';
 // import PropTypes from 'prop-types';
 import './StudentEducations.scss';
@@ -15,7 +15,8 @@ function StudentEducationsCard(props) {
         <span className="student-educations-card__header__title">
           Educations
         </span>
-        <FiIcons.FiPlusCircle className="student-educations-card__header__icon" />
+        {/* <FiIcons.FiPlusCircle className="student-educations-card__header__icon" /> */}
+        <PopupUpdateStudentEducation />
       </div>
       <div className="student-educations-card__main">
         <div className="student-educations-card__main__item">

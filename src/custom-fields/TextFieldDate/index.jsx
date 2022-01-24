@@ -43,8 +43,8 @@ TextFieldDate.defaultProps = {
 function TextFieldDate(props) {
   const {
     field, form,
-    type, label, placeholder, disabled, moreClassName, inputClassName, labelClassName, txtLabel, variant,
-    lineHeight, fontSize,
+    type, label, placeholder, disabled, moreClassName, inputClassName, 
+    labelClassName, txtLabel, variant, lineHeight, fontSize,
   } = props;
 
   const useStyles = makeStyles(theme => ({

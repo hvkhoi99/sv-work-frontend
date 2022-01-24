@@ -1,5 +1,6 @@
 import { Button } from 'components/Button';
 import NotificationCard from 'components/NotificationCard';
+import Images from 'constants/images';
 import Paths from 'constants/paths';
 import { logout } from 'features/Auth/userSlice';
 import React, { useEffect, useRef, useState } from 'react';
@@ -197,7 +198,12 @@ function Header(props) {
               <span className="notify-me__notify__count">4</span>
             </div>
             <div className="notify-me__notify" onClick={(e) => showMe(e)}>
-              <FaIcons.FaUserAstronaut className="notify-me__notify__icon" />
+              {/* <FaIcons.FaUserAstronaut className="notify-me__notify__icon" /> */}
+              <img src={
+                user.r_profile.logo_image_link === (null || "" || undefined)
+                ? Images.defaultAvatar
+                : user.r_profile.logo_image_link
+              } alt="recruiter-avatar"/>
             </div>
           </div>
           <div className="notify-me__action">
@@ -304,7 +310,12 @@ function Header(props) {
               <span className="notify-me__notify__count">4</span>
             </div>
             <div className="notify-me__notify" onClick={(e) => showMe(e)}>
-              <FaIcons.FaUserAstronaut className="notify-me__notify__icon" />
+              {/* <FaIcons.FaUserAstronaut className="notify-me__notify__icon" /> */}
+              <img src={
+                user.s_profile.avatar_link === (null || "" || undefined)
+                ? Images.defaultAvatar
+                : user.s_profile.avatar_link
+              } alt="student-avatar"/>
             </div>
           </div>
           <div className="notify-me__action">

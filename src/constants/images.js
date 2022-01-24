@@ -32,7 +32,7 @@ import teamwork from '../assets/img/teamwork.png';
 import threeMinions from '../assets/img/three-minions.png';
 import tw from '../assets/img/tw.png';
 import vinfast from '../assets/img/vinfast.png';
-import defaultAvatar from '../assets/img/default-avatar.png';
+import defaultAvatar from '../assets/img/default-avatar.jpg';
 
 const Images = {
   home, notFound, emoji, minami, bgRight, background, fptSoftware, smDot, eventcircle,

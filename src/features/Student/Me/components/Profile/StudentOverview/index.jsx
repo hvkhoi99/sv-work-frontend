@@ -1,21 +1,35 @@
-import React from 'react';
-import * as AiIcons from 'react-icons/ai';
+import React, {useState} from 'react';
+import PopupUpdateStudentOverview from '../../PopupUpdateStudentProfile/PopupUpdateStudentOverview';
 import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
 // import PropTypes from 'prop-types';
 import './StudentOverview.scss';
 
 StudentOverviewCard.propTypes = {
-
+  
 };
 
 function StudentOverviewCard(props) {
+  // const [overview, setOverview] = useState('');
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const onTextChange = (values) => {
+    console.log(values);
+    setIsUpdating(false);
+  }
+
   return (
     <div className="student-overview-card">
       <div className="student-overview-card__header">
         <span className="student-overview-card__header__title">
           Overview
         </span>
-        <AiIcons.AiOutlineEdit className="student-overview-card__header__icon" />
+        {/* <AiIcons.AiOutlineEdit className="student-overview-card__header__icon" /> */}
+        <PopupUpdateStudentOverview 
+          label="Update Student Overview"
+          initData={"abc"}
+          onTextChange={onTextChange}
+          isUpdating={isUpdating}
+        />
       </div>
       <div className="student-overview-card__main">
         <div className="student-overview-card__main__description">

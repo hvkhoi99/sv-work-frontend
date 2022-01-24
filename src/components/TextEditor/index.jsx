@@ -37,7 +37,10 @@ function TextEditor(props) {
 
   return (
     <div className="text-editor">
-      <Label>{title}</Label>
+      <div className="text-editor__header">
+        <Label>{title}</Label>
+        <div className="text-editor__header__dot"></div>
+      </div>
       <CKEditor
         editor={ClassicEditor}
         // config={{
@@ -53,7 +56,7 @@ function TextEditor(props) {
           disabled={isUpdating}
           style={isUpdating ? { cursor: "default" } : { cursor: "pointer" }}
         >
-          {isUpdating && <span className="spinner-border spinner-border-sm mr-1" /> }
+          {isUpdating && <span className="spinner-border spinner-border-sm mr-1" />}
           Done
         </button>
         <button

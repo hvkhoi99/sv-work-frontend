@@ -3,7 +3,7 @@ import * as BsIcons from 'react-icons/bs';
 import * as FaIcons from 'react-icons/fa';
 import * as ImIcons from 'react-icons/im';
 import * as MdIcons from 'react-icons/md';
-import PopupUpdateStudentProfile from '../../PopupUpdateStudentProfile';
+import PopupUpdateStudentProfile from '../../PopupUpdateStudentProfile/PopupUpdatePersonalInfo';
 import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
 // import PropTypes from 'prop-types';
 import './StudentPersonalInfo.scss';
@@ -14,6 +14,9 @@ StudentPersonalInfoCard.propTypes = {
 
 function StudentPersonalInfoCard(props) {
   const initialValues = {
+    first_name: '',
+    last_name: '',
+    job_title: '',
     email: '',
     date_of_birth: '',
     phone_number: '',

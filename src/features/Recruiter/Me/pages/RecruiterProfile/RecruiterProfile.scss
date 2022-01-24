@@ -46,8 +46,9 @@
             width: 11rem;
             height: 11rem;
             border-radius: 50%;
-            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
             object-fit: cover;
+
+            border: 2px solid var(--success);
           }
 
           &__avatar {

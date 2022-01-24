@@ -220,12 +220,24 @@
         color: #fff;
         transition: all 0.2s ease-out;
       }
+    }
 
-      // &:active {
-      //   background-color: #fff;
-      //   color: #fff;
-      //   transition: all 0.2s ease-out;
-      // }
+    & > img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: lightgrey;
+      position: sticky;
+      border-radius: 50%;
+      width: 2.5rem;
+      height: 2.5rem;
+      object-fit: cover;
+
+      &:hover {
+        background-color: var(--success);
+        color: #fff;
+        transition: all 0.2s ease-out;
+      }
     }
 
     &__count {
