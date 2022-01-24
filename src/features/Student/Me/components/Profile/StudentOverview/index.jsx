@@ -1,14 +1,20 @@
-import React, {useState} from 'react';
+import PropTypes from 'prop-types';
+import React, { useState } from 'react';
+import ReactHtmlParser from 'react-html-parser';
 import PopupUpdateStudentOverview from '../../PopupUpdateStudentProfile/PopupUpdateStudentOverview';
 import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
-// import PropTypes from 'prop-types';
 import './StudentOverview.scss';
 
 StudentOverviewCard.propTypes = {
-  
+  overView: PropTypes.string
 };
 
+StudentOverviewCard.defaultProps = {
+  overView: ''
+}
+
 function StudentOverviewCard(props) {
+  const { overView } = props;
   // const [overview, setOverview] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -24,25 +30,28 @@ function StudentOverviewCard(props) {
           Overview
         </span>
         {/* <AiIcons.AiOutlineEdit className="student-overview-card__header__icon" /> */}
-        <PopupUpdateStudentOverview 
-          label="Update Student Overview"
-          initData={"abc"}
-          onTextChange={onTextChange}
-          isUpdating={isUpdating}
-        />
+        {
+          overView === (null) &&
+          <PopupUpdateStudentOverview
+            label="Update Student Overview"
+            initData={overView}
+            onTextChange={onTextChange}
+            isUpdating={isUpdating}
+            typeIcon={"add"}
+          />
+        }
       </div>
       <div className="student-overview-card__main">
         <div className="student-overview-card__main__description">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          Repudiandae minima veritatis aut iste quos natus rerum dolorum accusamus sed ipsam nemo,
-          fugiat laudantium explicabo eum, nam est voluptate odio omnis.
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          Repudiandae minima veritatis aut iste quos natus rerum dolorum accusamus sed ipsam nemo,
-          fugiat laudantium explicabo eum, nam est voluptate odio omnis.
+          {
+            overView === (null && "")
+              ? <span>No Information Available.</span>
+              : ReactHtmlParser(overView)
+          }
         </div>
-        <div className="student-overview-card__main__more">
+        {overView !== (null && "") && <div className="student-overview-card__main__more">
           <StudentProfileMoreOptions />
-        </div>
+        </div>}
       </div>
     </div>
   );

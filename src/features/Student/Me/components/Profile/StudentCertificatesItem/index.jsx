@@ -1,14 +1,22 @@
+import PropTypes from 'prop-types';
 import React from 'react';
+import ReactHtmlParser from 'react-html-parser';
 import * as GiIcons from 'react-icons/gi';
-import { Link } from 'react-router-dom';
 import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
-// import PropTypes from 'prop-types';
 
 StudentCertificatesItemCard.propTypes = {
-
+  certificate: PropTypes.object
 };
 
+StudentCertificatesItemCard.defaultProps = {
+  certificate: {
+    id: 0
+  }
+}
+
 function StudentCertificatesItemCard(props) {
+  const { certificate } = props;
+
   return (
     <div className="student-certificates-item-card">
       <div className="student-certificates-item-card__main">
@@ -17,18 +25,17 @@ function StudentCertificatesItemCard(props) {
         </div>
         <div className="student-certificates-item-card__main__info">
           <div className="student-certificates-item-card__main__info__title">
-            <Link
-              to="#"
+            <a
+              href={certificate.image_link}
+              target="_blank" rel="noopener noreferrer"
               className="student-certificates-item-card__main__info__title__link"
             >
-              TOEIC Certificate with score 800 issued (2014)
-            </Link>
+              {certificate.title}
+            </a>
           </div>
-          <span>California University</span>
+          <span>{certificate.issuing_organization}</span>
           <div className="student-certificates-item-card__main__info__description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Qui magnam accusantium esse harum. Eaque, consectetur et dolore adipisci aliquid pariatur? Incidunt,
-            iusto blanditiis deserunt ipsam aspernatur animi temporibus voluptatibus repudiandae.
+            {ReactHtmlParser(certificate.description)}
           </div>
         </div>
       </div>

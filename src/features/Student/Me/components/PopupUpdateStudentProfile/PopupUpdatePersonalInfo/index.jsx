@@ -7,15 +7,17 @@ import UpdatePersonalInfoForm from '../../StudentUpdateProfileFields/UpdatePerso
 PopupUpdateStudentProfile.propTypes = {
   initialValues: PropTypes.object,
   onSubmit: PropTypes.func,
+  isUpdate: PropTypes.bool,
 };
 
 PopupUpdateStudentProfile.defaultProps = {
   initialValues: {},
   onSubmit: null,
+  isUpdate: false
 }
 
 function PopupUpdateStudentProfile(props) {
-  const { onSubmit, initialValues } = props;
+  const { onSubmit, initialValues, isUpdate } = props;
 
   return (
     <div className="popup-update-student-profile">
@@ -32,6 +34,7 @@ function PopupUpdateStudentProfile(props) {
               initialValues={initialValues}
               onSubmit={onSubmit}
               close={close}
+              isUpdate={isUpdate}
             />
           </>
         )}

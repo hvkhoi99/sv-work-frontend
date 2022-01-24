@@ -1,13 +1,20 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import * as FaIcons from 'react-icons/fa';
 import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
+import moment from 'moment';
 
 StudentExperiencesItemCard.propTypes = {
-
+  experience: PropTypes.object
 };
 
+StudentExperiencesItemCard.defaultProps = {
+  experience: {}
+}
+
 function StudentExperiencesItemCard(props) {
+  const { experience } = props;
+
   return (
     <div className="student-experiences-item-card">
       <div className="student-experiences-item-card__main">
@@ -16,18 +23,16 @@ function StudentExperiencesItemCard(props) {
         </div>
         <div className="student-experiences-item-card__main__info">
           <span className="student-experiences-item-card__main__info__title">
-            Mobile App Developer
+            {experience.position}
           </span>
           <span className="student-experiences-item-card__main__info__company">
-            Apple's Tower
+            {experience.company}
           </span>
           <span className="student-experiences-item-card__main__info__date">
-            6/2020 - 01/2022
+            {moment(new Date(experience.from_date)).format("MM/YYYY")} - {moment(new Date(experience.to_date)).format("MM/YYYY")}
           </span>
           <div className="student-experiences-item-card__main__info__description">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, iusto.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, iusto.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae, iusto.
+            {experience.description}
           </div>
         </div>
       </div>

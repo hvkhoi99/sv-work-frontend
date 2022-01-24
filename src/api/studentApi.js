@@ -1,6 +1,36 @@
 import axiosClient from "./axiosClient";
 
 const studentApi = {
+  // Certificates
+  getStudentCertificates: (params) => {
+    const url = `/student/certificate/index?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
+  // Languages
+  getStudentLanguages: () => {
+    const url = `/student/language/index`;
+    return axiosClient.get(url);
+  },
+
+  // Skills
+  getStudentSkills: () => {
+    const url = `/student/skill/index`;
+    return axiosClient.get(url);
+  },
+
+  // Educations
+  getStudentEducations: (params) => {
+    const url = `/student/education/index?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
+  // Experiences
+  getStudentExperiences: (params) => {
+    const url = `/student/experience/index?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
   // Company
   followCompany: (id) => {
     const url = `/student/recruiter/${id}/follow`;

@@ -200,7 +200,7 @@ function Header(props) {
             <div className="notify-me__notify" onClick={(e) => showMe(e)}>
               {/* <FaIcons.FaUserAstronaut className="notify-me__notify__icon" /> */}
               <img src={
-                user.r_profile.logo_image_link === (null || "" || undefined)
+                user.r_profile === (null || "" || undefined)
                 ? Images.defaultAvatar
                 : user.r_profile.logo_image_link
               } alt="recruiter-avatar"/>
@@ -310,12 +310,12 @@ function Header(props) {
               <span className="notify-me__notify__count">4</span>
             </div>
             <div className="notify-me__notify" onClick={(e) => showMe(e)}>
-              {/* <FaIcons.FaUserAstronaut className="notify-me__notify__icon" /> */}
-              <img src={
-                user.s_profile.avatar_link === (null || "" || undefined)
+              <FaIcons.FaUserAstronaut className="notify-me__notify__icon" />
+              {/* <img src={
+                user.s_profile === (null || "" || undefined)
                 ? Images.defaultAvatar
                 : user.s_profile.avatar_link
-              } alt="student-avatar"/>
+              } alt="student-avatar"/> */}
             </div>
           </div>
           <div className="notify-me__action">

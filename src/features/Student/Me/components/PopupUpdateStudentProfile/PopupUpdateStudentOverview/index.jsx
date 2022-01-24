@@ -9,22 +9,29 @@ PopupUpdateStudentOverview.propTypes = {
   initData: PropTypes.string,
   label: PropTypes.string,
   isUpdating: PropTypes.bool,
+  typeIcon: PropTypes.string,
 };
 
 PopupUpdateStudentOverview.defaultProps = {
   onTextChange: null,
   initData: '',
   label: '',
-  isUpdating: false
+  isUpdating: false,
+  typeIcon: ''
 }
 
-function PopupUpdateStudentOverview(props) {  
-  const { onTextChange, initData, label, isUpdating } = props;
+function PopupUpdateStudentOverview(props) {
+  const { onTextChange, initData, label, isUpdating, typeIcon } = props;
 
   return (
     <div className="popup-update-student-profile">
       <Popup
-        trigger={open => <StudentEditCustomButton typeIcon="edit" open={open} />}
+        trigger={
+          open => <StudentEditCustomButton
+            typeIcon={typeIcon}
+            open={open}
+          />
+        }
         position="center"
         modal
         nested

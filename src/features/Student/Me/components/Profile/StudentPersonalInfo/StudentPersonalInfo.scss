@@ -1,7 +1,7 @@
 .student-personal-info-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  // align-items: center;
   width: 100%;
   font-size: 0.9rem;
 
@@ -24,7 +24,7 @@
     padding: 0.5rem 0;
     line-height: 2.5rem;
 
-    width: 100%;
+    width: 80%;
 
     &__left {
       &__dob {

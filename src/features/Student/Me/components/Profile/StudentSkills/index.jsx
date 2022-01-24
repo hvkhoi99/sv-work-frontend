@@ -1,14 +1,22 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import helper from 'utils/common';
 import PopupUpdateStudentSkill from '../../PopupUpdateStudentProfile/PopupUpdateStudentSkills';
 import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
 import './StudentSkills.scss';
 
 StudentSkillsCard.propTypes = {
-
+  skills: PropTypes.array,
+  onCreateSkills: PropTypes.func
 };
 
+StudentSkillsCard.defaultProps = {
+  skills: [],
+  onCreateSkills: null
+}
+
 function StudentSkillsCard(props) {
+  const { skills, onCreateSkills } = props;
+
   return (
     <div className="student-skills-card">
       <div className="student-skills-card__header">
@@ -16,20 +24,37 @@ function StudentSkillsCard(props) {
           Skills
         </span>
         {/* <AiIcons.AiOutlineEdit className="student-skills-card__header__icon" /> */}
-        <PopupUpdateStudentSkill />
+        {
+          skills.length <= 0 &&
+          <PopupUpdateStudentSkill
+            initialValues={{
+              skills: ''
+            }}
+            onSubmit={onCreateSkills}
+            typeIcon={"add"}
+          />
+        }
       </div>
       <div className="student-skills-card__main">
         <div className="student-skills-card__main__info">
           {
-            helper.splitCommaString(
-              "PHP, UX/UI Design, ReactJs, PHP, UX/UI Design, ReactJs, PHP, UX/UI Design, ReactJs",
-              "student-skills-card__main__info__item"
-            )
+            // helper.splitCommaString(
+            //   "PHP, UX/UI Design, ReactJs, PHP, UX/UI Design, ReactJs, PHP, UX/UI Design, ReactJs",
+            //   "student-skills-card__main__info__item"
+            // )
+            skills.length <= 0
+              ? <span>No Information Available.</span>
+              : skills.map((skill, index) => {
+                return <span
+                  key={index}
+                  className="student-skills-card__main__info__item"
+                >{skill.label}</span>
+              })
           }
         </div>
-        <div className="student-skills-card__main__more">
+        {skills.length > 0 && <div className="student-skills-card__main__more">
           <StudentProfileMoreOptions />
-        </div>
+        </div>}
       </div>
     </div>
   );
