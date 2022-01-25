@@ -5,7 +5,7 @@ import * as BsIcons from 'react-icons/bs';
 import * as FaIcons from 'react-icons/fa';
 import * as ImIcons from 'react-icons/im';
 import * as MdIcons from 'react-icons/md';
-import PopupUpdateStudentProfile from '../../PopupUpdateStudentProfile/PopupUpdatePersonalInfo';
+import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
 import './StudentPersonalInfo.scss';
 
 StudentPersonalInfoCard.propTypes = {
@@ -29,15 +29,6 @@ function StudentPersonalInfoCard(props) {
         <span className="student-personal-info-card__header__title">
           Personal Information
         </span>
-        {/* <AiIcons.AiOutlineEdit className="student-personal-info-card__header__icon" /> */}
-        <PopupUpdateStudentProfile
-          initialValues={{
-            ...profile,
-            gender: profile.gender ? "Male" : "Female",
-            date_of_birth: moment(new Date(profile.date_of_birth)).format("YYYY-MM-DD")
-          }}
-          onSubmit={onEditStudentProfile}
-        />
       </div>
       <div className="student-personal-info-card__main">
         <div className="student-personal-info-card__main__left">
@@ -82,9 +73,17 @@ function StudentPersonalInfoCard(props) {
             <span>{profile.nationality}</span>
           </div>
         </div>
-        {/* <div className="student-personal-info-card__main__more">
-          <StudentProfileMoreOptions />
-        </div> */}
+        <div className="student-personal-info-card__main__more">
+          <StudentProfileMoreOptions
+            typePopup="personal-info"
+            initialValues={{
+              ...profile,
+              gender: profile.gender ? "Male" : "Female",
+              date_of_birth: moment(new Date(profile.date_of_birth)).format("YYYY-MM-DD")
+            }}
+            onSubmit={onEditStudentProfile}
+          />
+        </div>
       </div>
     </div >
   );

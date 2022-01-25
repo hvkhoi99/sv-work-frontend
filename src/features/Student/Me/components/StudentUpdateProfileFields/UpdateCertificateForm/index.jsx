@@ -74,7 +74,7 @@ function UpdateCertificateForm(props) {
                   name="title"
                   component={InputField}
 
-                  label="title"
+                  label="Title"
                 />
 
                 <FastField
@@ -100,10 +100,10 @@ function UpdateCertificateForm(props) {
                   component={TextFieldDate}
 
                   label="Link"
-                  // type="date"
                   moreClassName="text-field-date"
+                  labelClassName="input-field-label"
+                  // type="date"
                   // inputClassName="text-field-date-width"
-                // labelClassName="input-field-label"
                 />
 
                 <FormGroup className="update-student-personal-form-btn-group">
@@ -117,7 +117,7 @@ function UpdateCertificateForm(props) {
                   </Button>
 
                   <Button
-                    type="submit"
+                    type="button"
                     color="secondary"
                     onClick={close}
                   >

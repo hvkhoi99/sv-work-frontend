@@ -7,15 +7,17 @@ import './StudentEducations.scss';
 StudentEducationsCard.propTypes = {
   educations: PropTypes.array,
   onCreateEducation: PropTypes.func,
+  onEditEducation: PropTypes.func,
 };
 
 StudentEducationsCard.defaultProps = {
   educations: [],
-  onCreateEducation: null
+  onCreateEducation: null,
+  onEditEducation: null
 }
 
 function StudentEducationsCard(props) {
-  const { educations, onCreateEducation } = props;
+  const { educations, onCreateEducation, onEditEducation } = props;
 
   return (
     <div className="student-educations-card">
@@ -25,6 +27,13 @@ function StudentEducationsCard(props) {
         </span>
         {/* <FiIcons.FiPlusCircle className="student-educations-card__header__icon" /> */}
         <PopupUpdateStudentEducation
+          initialValues={{
+            school: '',
+            from_date: '',
+            to_date: '',
+            major: '',
+            achievements: ''
+          }}
           onSubmit={onCreateEducation}
           typeIcon="add"
         />
@@ -38,7 +47,10 @@ function StudentEducationsCard(props) {
                 key={index}
                 className="student-educations-card__main__item"
               >
-                <StudentEducationsItemCard education={education} />
+                <StudentEducationsItemCard
+                  education={education}
+                  onEditEducation={onEditEducation}
+                />
               </div>
             })
         }

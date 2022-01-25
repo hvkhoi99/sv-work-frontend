@@ -48,6 +48,11 @@ const studentApi = {
     return axiosClient.get(url);
   },
 
+  openJob: () => {
+    const url = "/student/profile/job";
+    return axiosClient.post(url);
+  },
+
   saveJob: (id) => {
     const url = `/student/recruitment/${id}/save`;
     return axiosClient.put(url);

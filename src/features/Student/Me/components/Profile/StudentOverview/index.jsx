@@ -6,16 +6,15 @@ import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
 import './StudentOverview.scss';
 
 StudentOverviewCard.propTypes = {
-  overView: PropTypes.string
+  overView: PropTypes.string,
 };
 
 StudentOverviewCard.defaultProps = {
-  overView: ''
+  overView: '',
 }
 
 function StudentOverviewCard(props) {
   const { overView } = props;
-  // const [overview, setOverview] = useState('');
   const [isUpdating, setIsUpdating] = useState(false);
 
   const onTextChange = (values) => {
@@ -29,12 +28,11 @@ function StudentOverviewCard(props) {
         <span className="student-overview-card__header__title">
           Overview
         </span>
-        {/* <AiIcons.AiOutlineEdit className="student-overview-card__header__icon" /> */}
         {
           overView === (null) &&
           <PopupUpdateStudentOverview
             label="Update Student Overview"
-            initData={overView}
+            initData=''
             onTextChange={onTextChange}
             isUpdating={isUpdating}
             typeIcon={"add"}
@@ -50,7 +48,13 @@ function StudentOverviewCard(props) {
           }
         </div>
         {overView !== (null && "") && <div className="student-overview-card__main__more">
-          <StudentProfileMoreOptions />
+          <StudentProfileMoreOptions 
+            label="Update Student Overview"
+            initData={overView}
+            onTextChange={onTextChange}
+            isUpdating={isUpdating}
+            typeIcon="overview"
+          />
         </div>}
       </div>
     </div>

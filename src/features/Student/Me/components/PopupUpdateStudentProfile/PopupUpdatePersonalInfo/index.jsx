@@ -8,21 +8,23 @@ PopupUpdateStudentProfile.propTypes = {
   initialValues: PropTypes.object,
   onSubmit: PropTypes.func,
   isUpdate: PropTypes.bool,
+  typeIcon: PropTypes.string,
 };
 
 PopupUpdateStudentProfile.defaultProps = {
   initialValues: {},
   onSubmit: null,
-  isUpdate: false
+  isUpdate: false,
+  typeIcon: ''
 }
 
 function PopupUpdateStudentProfile(props) {
-  const { onSubmit, initialValues, isUpdate } = props;
+  const { onSubmit, initialValues, isUpdate, typeIcon } = props;
 
   return (
     <div className="popup-update-student-profile">
       <Popup
-        trigger={open => <StudentEditCustomButton typeIcon="edit" open={open} />}
+        trigger={open => <StudentEditCustomButton typeIcon={typeIcon} open={open} />}
         position="center"
         modal
         nested

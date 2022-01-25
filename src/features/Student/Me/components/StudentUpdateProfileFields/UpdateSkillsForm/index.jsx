@@ -27,7 +27,7 @@ function UpdateSkillsForm(props) {
   const validationSchema = Yup.object().shape({
     skills: Yup
       .array()
-      .typeError('Skills is required')
+      // .typeError('Skills is required')
       .min(1, 'Skills is required')
       .required('Skills is required'),
   });
@@ -81,7 +81,7 @@ function UpdateSkillsForm(props) {
                   </Button>
 
                   <Button
-                    type="submit"
+                    type="button"
                     color="secondary"
                     onClick={close}
                   >

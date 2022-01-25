@@ -14,6 +14,12 @@ const renderIcon = (typeIcon) => {
       return (
         <AiIcons.AiOutlineEdit className="popup-update-student-profile-button__icon" />
       );
+    case "more-edit":
+      return (
+        <>
+          Edit
+        </>
+      );
     default:
       break;
   }

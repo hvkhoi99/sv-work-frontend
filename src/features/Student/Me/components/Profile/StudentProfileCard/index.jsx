@@ -67,6 +67,26 @@ function StudentProfileCard(props) {
     fetchStudentProfile();
   }, []);
 
+  const onEditStudentProfile = (values) => {
+    console.log({ values });
+  }
+
+  const onEditExperience = (values) => {
+    console.log({ values });
+  }
+
+  const onEditSkills = (values) => {
+    console.log({ values });
+  }
+
+  const onEditCertificate = (values) => {
+    console.log({ values });
+  }
+
+  const onEditLanguages = (values) => {
+    console.log({ values });
+  }
+
   return (
     <>
       {
@@ -76,25 +96,40 @@ function StudentProfileCard(props) {
           </div>
           : <div className="student-profile-card">
             <div className="student-profile-card__personal-info">
-              <StudentPersonalInfoCard profile={user.s_profile} />
+              <StudentPersonalInfoCard
+                profile={user.s_profile}
+                onEditStudentProfile={onEditStudentProfile}
+              />
             </div>
             <div className="student-profile-card__overview">
               <StudentOverviewCard overView={user.s_profile.over_view} />
             </div>
             <div className="student-profile-card__experiences">
-              <StudentExperiencesCard experiences={responseData.experiencesResponse} />
+              <StudentExperiencesCard
+                experiences={responseData.experiencesResponse}
+                onEditExperience={onEditExperience}
+              />
             </div>
             <div className="student-profile-card__educations">
               <StudentEducationsCard educations={responseData.educationsResponse} />
             </div>
             <div className="student-profile-card__skills">
-              <StudentSkillsCard skills={responseData.skillsResponse}/>
+              <StudentSkillsCard
+                skills={responseData.skillsResponse}
+                onEditSkills={onEditSkills}
+              />
             </div>
             <div className="student-profile-card__certificates">
-              <StudentCertificatesCard certificates={responseData.certificatesResponse}/>
+              <StudentCertificatesCard 
+              certificates={responseData.certificatesResponse} 
+              onEditCertificate={onEditCertificate}
+              />
             </div>
             <div className="student-profile-card__languages">
-              <StudentLanguagesCard languages={responseData.languagesResponse}/>
+              <StudentLanguagesCard 
+              languages={responseData.languagesResponse} 
+              onEditLanguages={onEditLanguages}
+              />
             </div>
           </div>
       }

@@ -133,7 +133,7 @@ function UpdateExperienceForm(props) {
                   </Button>
 
                   <Button
-                    type="submit"
+                    type="button"
                     color="secondary"
                     onClick={close}
                   >

@@ -8,15 +8,17 @@ import PopupUpdateStudentCertificate from '../../PopupUpdateStudentProfile/Popup
 StudentCertificatesCard.propTypes = {
   certificates: PropTypes.array,
   onCreateCertificate: PropTypes.func,
+  onEditCertificate: PropTypes.func,
 };
 
 StudentCertificatesCard.defaultProps = {
   certificates: [],
   onCreateCertificate: null,
+  onEditCertificate: null,
 }
 
 function StudentCertificatesCard(props) {
-  const { certificates, onCreateCertificate } = props;
+  const { certificates, onCreateCertificate, onEditCertificate } = props;
 
   return (
     <div className="student-certificates-card">
@@ -25,7 +27,7 @@ function StudentCertificatesCard(props) {
           Certificates
         </span>
         {/* <FiIcons.FiPlusCircle className="student-certificates-card__header__icon" /> */}
-        <PopupUpdateStudentCertificate 
+        <PopupUpdateStudentCertificate
           typeIcon="add"
           initialValues={{
             title: '',
@@ -40,11 +42,14 @@ function StudentCertificatesCard(props) {
         {
           certificates.length > 0
             ? certificates.map((certificate, index) => {
-              return <div 
-              key={index}
-              className="student-certificates-card__main__item"
+              return <div
+                key={index}
+                className="student-certificates-card__main__item"
               >
-                <StudentCertificatesItemCard certificate={certificate}/>
+                <StudentCertificatesItemCard
+                  certificate={certificate}
+                  onEditCertificate={onEditCertificate}
+                />
               </div>
             })
             : <span>No Information Available.</span>

@@ -6,16 +6,18 @@ import PopupUpdateStudentExperience from '../../PopupUpdateStudentProfile/PopupU
 
 StudentExperiencesCard.propTypes = {
   experiences: PropTypes.array,
-  onCreateExperience: PropTypes.func
+  onCreateExperience: PropTypes.func,
+  onEditExperience: PropTypes.func,
 };
 
 StudentExperiencesCard.defaultProps = {
   experiences: [],
-  onCreateExperience: null
+  onCreateExperience: null,
+  onEditExperience: null
 }
 
 function StudentExperiencesCard(props) {
-  const { experiences, onCreateExperience } = props;
+  const { experiences, onCreateExperience, onEditExperience } = props;
 
   return (
     <div className="student-experiences-card">
@@ -46,6 +48,7 @@ function StudentExperiencesCard(props) {
             >
               <StudentExperiencesItemCard
                 experience={experience}
+                onEditExperience={onEditExperience}
               />
             </div>
           })

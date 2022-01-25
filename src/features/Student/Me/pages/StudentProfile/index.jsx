@@ -1,12 +1,15 @@
 import { Switch } from '@material-ui/core';
+import studentApi from 'api/studentApi';
 import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
 import Paths from 'constants/paths';
+import { updateUser } from 'features/Auth/userSlice';
 import DashboardSelectOption from 'features/Recruiter/Me/components/DashboardSelectOption';
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import * as MdIcons from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import helper from 'utils/common';
 import StudentProfileCard from '../../components/Profile/StudentProfileCard';
@@ -18,6 +21,8 @@ StudentProfilePage.propTypes = {
 };
 
 function StudentProfilePage(props) {
+  const { enqueueSnackbar } = useSnackbar();
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
   const history = useHistory();
   const location = history.location.pathname;
@@ -48,8 +53,33 @@ function StudentProfilePage(props) {
     setCurrentPath(option.path);
   }
 
-  const onOpenJob = (e) => {
+  const onOpenJob = async (e) => {
     setChecked(e.target.checked);
+    try {
+      const action = await studentApi.openJob();
+      if (action.data.status === 1) {
+        enqueueSnackbar(
+          `Successfully ${action.data.data.open_for_job ? "Opened" : "Closed"} Job.`,
+          { variant: "success" }
+        );
+        const cpUser = {
+          ...user,
+          s_profile: {
+            ...user.s_profile,
+            open_for_job: action.data.data.open_for_job
+          }
+        };
+        dispatch(updateUser(cpUser));
+        localStorage.setItem('user', JSON.stringify(cpUser));
+      } else {
+        setChecked(false);
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      }
+    } catch (error) {
+      setChecked(false);
+      console.log("Cannot Open Job. Error " + error.message);
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+    }
   }
 
   return (

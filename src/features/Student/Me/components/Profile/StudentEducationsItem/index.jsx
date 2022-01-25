@@ -5,15 +5,17 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 
 StudentEducationsItemCard.propTypes = {
-  education: PropTypes.object
+  education: PropTypes.object,
+  onEditEducation: PropTypes.func
 };
 
 StudentEducationsItemCard.defaultProps = {
-  education: {}
+  education: {},
+  onEditEducation: null
 }
 
 function StudentEducationsItemCard(props) {
-  const { education } = props;
+  const { education, onEditEducation } = props;
 
   return (
     <div className="student-educations-item-card">
@@ -37,7 +39,15 @@ function StudentEducationsItemCard(props) {
         </div>
       </div>
       <div className="student-educations-item-card__more">
-        <StudentProfileMoreOptions />
+        <StudentProfileMoreOptions
+          typePopup="educations"
+          initialValues={{
+            ...education,
+            from_date: moment(new Date(education.from_date)).format("YYYY-MM-DD"),
+            to_date: moment(new Date(education.to_date)).format("YYYY-MM-DD")
+          }}
+          onSubmit={onEditEducation}
+        />
       </div>
     </div>
   );

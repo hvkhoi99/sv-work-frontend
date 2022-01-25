@@ -5,15 +5,17 @@ import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
 import moment from 'moment';
 
 StudentExperiencesItemCard.propTypes = {
-  experience: PropTypes.object
+  experience: PropTypes.object,
+  onEditExperience: PropTypes.func
 };
 
 StudentExperiencesItemCard.defaultProps = {
-  experience: {}
+  experience: {},
+  onEditExperience: null
 }
 
 function StudentExperiencesItemCard(props) {
-  const { experience } = props;
+  const { experience, onEditExperience } = props;
 
   return (
     <div className="student-experiences-item-card">
@@ -37,7 +39,15 @@ function StudentExperiencesItemCard(props) {
         </div>
       </div>
       <div className="student-experiences-item-card__more">
-        <StudentProfileMoreOptions />
+        <StudentProfileMoreOptions
+          typePopup="experiences"
+          initialValues={{
+            ...experience,
+            from_date: moment(new Date(experience.from_date)).format("YYYY-MM-DD"),
+            to_date: moment(new Date(experience.to_date)).format("YYYY-MM-DD")
+          }}
+          onSubmit={onEditExperience}
+        />
       </div>
     </div>
   );

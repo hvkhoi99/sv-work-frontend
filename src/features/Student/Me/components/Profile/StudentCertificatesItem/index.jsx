@@ -5,17 +5,19 @@ import * as GiIcons from 'react-icons/gi';
 import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
 
 StudentCertificatesItemCard.propTypes = {
-  certificate: PropTypes.object
+  certificate: PropTypes.object,
+  onEditCertificate: PropTypes.func
 };
 
 StudentCertificatesItemCard.defaultProps = {
   certificate: {
     id: 0
-  }
+  },
+  onEditCertificate: null,
 }
 
 function StudentCertificatesItemCard(props) {
-  const { certificate } = props;
+  const { certificate, onEditCertificate } = props;
 
   return (
     <div className="student-certificates-item-card">
@@ -40,7 +42,11 @@ function StudentCertificatesItemCard(props) {
         </div>
       </div>
       <div className="student-certificates-item-card__more">
-        <StudentProfileMoreOptions />
+        <StudentProfileMoreOptions
+          typePopup="certificates"
+          initialValues={certificate}
+          onSubmit={onEditCertificate}
+        />
       </div>
     </div>
   );

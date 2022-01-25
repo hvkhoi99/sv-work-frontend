@@ -25,7 +25,7 @@ function UpdateLanguagesForm(props) {
   // const phoneRegExp = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
   const validationSchema = Yup.object().shape({
-    languages: Yup
+    locales: Yup
       .array()
       .typeError('Languages is required')
       .min(1, 'Languages is required')
@@ -59,7 +59,7 @@ function UpdateLanguagesForm(props) {
             return (
               <Form>
                 <FastField
-                  name="languages"
+                  name="locales"
                   component={SelectField}
 
                   label="Languages"
@@ -81,7 +81,7 @@ function UpdateLanguagesForm(props) {
                   </Button>
 
                   <Button
-                    type="submit"
+                    type="button"
                     color="secondary"
                     onClick={close}
                   >

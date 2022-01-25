@@ -79,6 +79,7 @@ function UpdateEducationForm(props) {
                   component={InputField}
 
                   label="School"
+                  placeholder="Eg: Back Khoa"
                 />
 
                 <div className="from-to-date">
@@ -109,6 +110,7 @@ function UpdateEducationForm(props) {
                   component={InputField}
 
                   label="Major"
+                  placeholder="Eg: Software engineering"
                 />
 
                 <FastField
@@ -116,6 +118,7 @@ function UpdateEducationForm(props) {
                   component={InputField}
 
                   label="Achievement"
+                  placeholder="Eg: Good - GPA 8.0"
                 />
 
                 <FormGroup className="update-student-personal-form-btn-group">
@@ -129,7 +132,7 @@ function UpdateEducationForm(props) {
                   </Button>
 
                   <Button
-                    type="submit"
+                    type="button"
                     color="secondary"
                     onClick={close}
                   >

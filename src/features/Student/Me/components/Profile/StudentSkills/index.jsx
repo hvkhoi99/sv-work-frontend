@@ -6,16 +6,18 @@ import './StudentSkills.scss';
 
 StudentSkillsCard.propTypes = {
   skills: PropTypes.array,
-  onCreateSkills: PropTypes.func
+  onCreateSkills: PropTypes.func,
+  onEditSkills: PropTypes.func,
 };
 
 StudentSkillsCard.defaultProps = {
   skills: [],
-  onCreateSkills: null
+  onCreateSkills: null,
+  onEditSkills: null,
 }
 
 function StudentSkillsCard(props) {
-  const { skills, onCreateSkills } = props;
+  const { skills, onCreateSkills, onEditSkills } = props;
 
   return (
     <div className="student-skills-card">
@@ -53,7 +55,13 @@ function StudentSkillsCard(props) {
           }
         </div>
         {skills.length > 0 && <div className="student-skills-card__main__more">
-          <StudentProfileMoreOptions />
+          <StudentProfileMoreOptions
+            typePopup="skills"
+            initialValues={{
+              skills: skills
+            }}
+            onSubmit={onEditSkills}
+          />
         </div>}
       </div>
     </div>
