@@ -9,8 +9,11 @@ import StudentSkillsCard from '../StudentSkills';
 // import PropTypes from 'prop-types';
 import './StudentProfileCard.scss';
 import LoadingChildUI from 'components/LoadingChild';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import studentApi from 'api/studentApi';
+import moment from 'moment';
+import { useSnackbar } from 'notistack';
+import { updateUser } from 'features/Auth/userSlice';
 
 StudentProfileCard.propTypes = {
 
@@ -18,6 +21,8 @@ StudentProfileCard.propTypes = {
 
 function StudentProfileCard(props) {
   const [isLoading, setIsLoading] = useState(true);
+  const { enqueueSnackbar } = useSnackbar();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.current);
   const [responseData, setResponseData] = useState({
     experiencesResponse: [],
@@ -25,6 +30,9 @@ function StudentProfileCard(props) {
     skillsResponse: [],
     certificatesResponse: [],
     languagesResponse: [],
+  });
+  const [typeUpdating, setTypeUpdating] = useState({
+    isOverviewUpdating: false
   });
 
   useEffect(() => {
@@ -67,8 +75,80 @@ function StudentProfileCard(props) {
     fetchStudentProfile();
   }, []);
 
-  const onEditStudentProfile = (values) => {
-    console.log({ values });
+  const onEditStudentProfile = async (values) => {
+    try {
+      const params = {
+        email: values.email,
+        first_name: values.first_name,
+        last_name: values.last_name,
+        date_of_birth: moment(new Date(values.date_of_birth)).format("MM/DD/YYYY"),
+        phone_number: values.phone_number,
+        address: values.address,
+        nationality: values.nationality,
+        gender: (values.gender || "Male") ? true : false,
+        job_title: values.job_title,
+      };
+      console.log({ params });
+
+      const data = await studentApi.updateStudentProfile(values.user_id, params);
+      if (data.data.status === 1) {
+        localStorage.setItem('user', JSON.stringify(data.data.data));
+        dispatch(updateUser(data.data.data));
+        enqueueSnackbar("Your Personal Information has been updated.", { variant: "success" });
+        return true;
+      } else {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return false;
+      }
+    } catch (error) {
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
+    }
+  }
+
+  const updateStudentOverview = async (values) => {
+    setTypeUpdating(state => ({
+      ...state,
+      isOverviewUpdating: true
+    }));
+    try {
+      const params = {
+        over_view: values
+      };
+
+      const data = await studentApi.updateStudentOverview(params.user_id, params);
+      if (data.data.status === 1) {
+        enqueueSnackbar("Your profile has been updated.", { variant: "success" });
+        const cpUser = {
+          ...user,
+          s_profile: {
+            ...user.s_profile,
+            over_view: values
+          }
+        }
+        dispatch(updateUser(cpUser));
+        localStorage.setItem('user', JSON.stringify(cpUser));
+        setTypeUpdating(state => ({
+          ...state,
+          isOverviewUpdating: false
+        }));
+        return true;
+      } else {
+        setTypeUpdating(state => ({
+          ...state,
+          isOverviewUpdating: false
+        }));
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return false;
+      }
+    } catch (error) {
+      setTypeUpdating(state => ({
+        ...state,
+        isOverviewUpdating: false
+      }));
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
+    }
   }
 
   const onEditExperience = (values) => {
@@ -102,7 +182,11 @@ function StudentProfileCard(props) {
               />
             </div>
             <div className="student-profile-card__overview">
-              <StudentOverviewCard overView={user.s_profile.over_view} />
+              <StudentOverviewCard
+                overView={user.s_profile.over_view}
+                updateStudentOverview={updateStudentOverview}
+                isOverviewUpdating={typeUpdating.isOverviewUpdating}
+              />
             </div>
             <div className="student-profile-card__experiences">
               <StudentExperiencesCard
@@ -120,15 +204,15 @@ function StudentProfileCard(props) {
               />
             </div>
             <div className="student-profile-card__certificates">
-              <StudentCertificatesCard 
-              certificates={responseData.certificatesResponse} 
-              onEditCertificate={onEditCertificate}
+              <StudentCertificatesCard
+                certificates={responseData.certificatesResponse}
+                onEditCertificate={onEditCertificate}
               />
             </div>
             <div className="student-profile-card__languages">
-              <StudentLanguagesCard 
-              languages={responseData.languagesResponse} 
-              onEditLanguages={onEditLanguages}
+              <StudentLanguagesCard
+                languages={responseData.languagesResponse}
+                onEditLanguages={onEditLanguages}
               />
             </div>
           </div>

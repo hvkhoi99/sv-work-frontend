@@ -36,7 +36,7 @@ function StudentPersonalInfoCard(props) {
             <BsIcons.BsCalendarDate
               className="student-personal-info-card__icon"
             />
-            <span>{moment(new Date(profile.date_of_birth)).format("YYYY/MM/DD")}</span>
+            <span>{moment(new Date(profile.date_of_birth)).format("MM/DD/YYYY")}</span>
           </div>
           <div className="student-personal-info-card__main__left__gender">
             <FaIcons.FaUser

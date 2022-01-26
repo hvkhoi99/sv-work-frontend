@@ -320,6 +320,7 @@ function CreateRecruitmentForm(props) {
                     placeholder=""
                     moreClassName="text-field-date"
                     labelClassName="input-field-label"
+                    inputClassName="text-field-date-width"
                   />
 
                   <FastField

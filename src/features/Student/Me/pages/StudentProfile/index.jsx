@@ -72,11 +72,11 @@ function StudentProfilePage(props) {
         dispatch(updateUser(cpUser));
         localStorage.setItem('user', JSON.stringify(cpUser));
       } else {
-        setChecked(false);
+        setChecked(user.s_profile.open_for_job);
         enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
       }
     } catch (error) {
-      setChecked(false);
+      setChecked(user.s_profile.open_for_job);
       console.log("Cannot Open Job. Error " + error.message);
       enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
     }

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import PopupUpdateStudentOverview from '../../PopupUpdateStudentProfile/PopupUpdateStudentOverview';
 import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
@@ -7,20 +7,24 @@ import './StudentOverview.scss';
 
 StudentOverviewCard.propTypes = {
   overView: PropTypes.string,
+  updateStudentOverview: PropTypes.func,
+  isOverviewUpdating: PropTypes.bool,
 };
 
 StudentOverviewCard.defaultProps = {
   overView: '',
+  updateStudentOverview: null,
+  isOverviewUpdating: false
 }
 
 function StudentOverviewCard(props) {
-  const { overView } = props;
-  const [isUpdating, setIsUpdating] = useState(false);
+  const { overView, updateStudentOverview, isOverviewUpdating } = props;
 
   const onTextChange = (values) => {
-    console.log(values);
-    setIsUpdating(false);
+    updateStudentOverview(values);
   }
+
+  console.log({isOverviewUpdating});
 
   return (
     <div className="student-overview-card">
@@ -32,9 +36,9 @@ function StudentOverviewCard(props) {
           overView === (null) &&
           <PopupUpdateStudentOverview
             label="Update Student Overview"
-            initData=''
+            initData={''}
             onTextChange={onTextChange}
-            isUpdating={isUpdating}
+            isUpdating={isOverviewUpdating}
             typeIcon={"add"}
           />
         }
@@ -49,11 +53,11 @@ function StudentOverviewCard(props) {
         </div>
         {overView !== (null && "") && <div className="student-overview-card__main__more">
           <StudentProfileMoreOptions 
+            typePopup="overview"
             label="Update Student Overview"
-            initData={overView}
+            initData={overView === null ? "" : overView}
             onTextChange={onTextChange}
-            isUpdating={isUpdating}
-            typeIcon="overview"
+            isUpdating={isOverviewUpdating}
           />
         </div>}
       </div>

@@ -176,8 +176,8 @@ function UpdatePersonalInfoForm(props) {
                     color={'success'}
                     disabled={isSubmitting}
                   >
-                    {isSubmitting && <Spinner children="" size="sm" />}
-                    &nbsp;Update
+                    {isSubmitting && <Spinner children="" size="sm" className="mr-2"/>}
+                    Update
                   </Button>
 
                   <Button

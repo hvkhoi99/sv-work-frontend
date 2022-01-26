@@ -44,6 +44,7 @@ function PopupUpdateProfile(props) {
           <div className="popup-update-profile-container">
             <div className="popup-update-profile-container__title">
               <label>Update Company Info</label>
+              <div className="popup-update-profile-container__title__dot"></div>
             </div>
             <UpdateCompanyInfoForm
               initialValues={initialValues}

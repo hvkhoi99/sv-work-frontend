@@ -100,8 +100,13 @@ const studentApi = {
     return axiosClient.post(url, params);
   },
 
-  updateStudentProfile: (params) => {
-    const url = "/student/profile/update";
+  updateStudentProfile: (id, params) => {
+    const url = `/student/profile/update`;
+    return axiosClient.put(url, params);
+  },
+
+  updateStudentOverview: (id, params) => {
+    const url = `/student/profile/over-view/${id}`;
     return axiosClient.put(url, params);
   },
 
