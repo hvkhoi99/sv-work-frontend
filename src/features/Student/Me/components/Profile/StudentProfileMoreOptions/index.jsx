@@ -19,7 +19,9 @@ StudentProfileMoreOptions.propTypes = {
   label: PropTypes.string,
   initData: PropTypes.string,
   onTextChange: PropTypes.func,
+  onDelete: PropTypes.func,
   isUpdating: PropTypes.bool,
+  isDeleting: PropTypes.bool
 };
 
 StudentProfileMoreOptions.defaultProps = {
@@ -31,13 +33,15 @@ StudentProfileMoreOptions.defaultProps = {
   label: '',
   initData: '',
   onTextChange: null,
+  onDelete: null,
   isUpdating: false,
+  isDeleting: false,
 }
 
 function StudentProfileMoreOptions(props) {
   const {
     typePopup, initialValues, onSubmit,
-    label, initData, onTextChange, isUpdating
+    label, initData, onTextChange, isUpdating, onDelete, isDeleting
   } = props;
   const ref = useRef(null);
   const [isHidden, setIsHidden] = useState(true);
@@ -58,6 +62,11 @@ function StudentProfileMoreOptions(props) {
 
   const handleHidden = () => {
     setIsHidden(!isHidden);
+  }
+
+  const handleDelete = () => {
+    onDelete();
+    setIsHidden(true);
   }
 
   const renderPopup = (type) => {
@@ -137,11 +146,17 @@ function StudentProfileMoreOptions(props) {
             ? "student-profile-more-options__options hidden"
             : "student-profile-more-options__options"
         }
-        onClick={handleHidden}
       >
         <ul>
-          <li>{renderPopup(typePopup)}</li>
-          <li>Delete</li>
+          <li onClick={handleHidden}>{renderPopup(typePopup)}</li>
+          {
+            ["overview", "experiences", "educations", "skills", "certificates", "languages"]
+              .includes(typePopup) &&
+            <li onClick={handleDelete}>
+              {isDeleting && <span className="spinner-border spinner-border-sm mr-1"></span>}
+              Delete
+            </li>
+          }
         </ul>
       </div>
     </div>

@@ -6,16 +6,28 @@ import moment from 'moment';
 
 StudentEducationsItemCard.propTypes = {
   education: PropTypes.object,
-  onEditEducation: PropTypes.func
+  onEditEducation: PropTypes.func,
+  onDelete: PropTypes.func,
+  isEducationDeleting: PropTypes.bool,
 };
 
 StudentEducationsItemCard.defaultProps = {
   education: {},
-  onEditEducation: null
+  onEditEducation: null,
+  onDelete: null,
+  isEducationDeleting: false
 }
 
 function StudentEducationsItemCard(props) {
-  const { education, onEditEducation } = props;
+  const { education, onEditEducation, onDelete, isEducationDeleting } = props;
+
+  const handleEditEducation = (params) => {
+    onEditEducation(education.id, params)
+  }
+
+  const handleDelete = () => {
+    onDelete("education", education);
+  }
 
   return (
     <div className="student-educations-item-card">
@@ -46,7 +58,9 @@ function StudentEducationsItemCard(props) {
             from_date: moment(new Date(education.from_date)).format("YYYY-MM-DD"),
             to_date: moment(new Date(education.to_date)).format("YYYY-MM-DD")
           }}
-          onSubmit={onEditEducation}
+          onSubmit={handleEditEducation}
+          onDelete={handleDelete}
+          isDeleting={isEducationDeleting}
         />
       </div>
     </div>

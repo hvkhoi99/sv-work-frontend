@@ -25,10 +25,40 @@ const studentApi = {
     return axiosClient.get(url);
   },
 
+  createAnEducation: (params) => {
+    const url = "/student/education/store";
+    return axiosClient.post(url, params);
+  },
+
+  updateAnEducation: (id, params) => {
+    const url = `/student/education/${id}`;
+    return axiosClient.put(url, params);
+  },
+
+  deleteAnEducation: (id) => {
+    const url = `/student/education/${id}`;
+    return axiosClient.delete(url);
+  },
+
   // Experiences
   getStudentExperiences: (params) => {
     const url = `/student/experience/index?page=${params.page}&_limit=${params._limit}`;
     return axiosClient.get(url);
+  },
+
+  createAnExperience: (params) => {
+    const url = "/student/experience/store";
+    return axiosClient.post(url, params);
+  },
+
+  updateAnExperience: (id, params) => {
+    const url = `/student/experience/${id}`;
+    return axiosClient.put(url, params);
+  },
+
+  deleteAnExperience: (id) => {
+    const url = `/student/experience/${id}`;
+    return axiosClient.delete(url);
   },
 
   // Company

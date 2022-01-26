@@ -29,7 +29,7 @@ function PersonalInfoCard(props) {
             <BsIcons.BsCalendarDate
               className="candidates-item-icon"
             />
-            <span>{moment(personalInfo.date_of_birth).format("DD/MM/YYYY")}</span>
+            <span>{moment(personalInfo.date_of_birth).format("MM/DD/YYYY")}</span>
           </div>
           <div className="personal-info-card__content__top__sex">
             <FaIcons.FaUser

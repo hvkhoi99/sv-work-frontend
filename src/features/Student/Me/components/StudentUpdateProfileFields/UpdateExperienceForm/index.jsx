@@ -33,6 +33,7 @@ function UpdateExperienceForm(props) {
     company: Yup
       .string()
       .typeError('Company Name is required')
+      .min(5, "Description must be at least 5 characters")
       .required("Company Name is required"),
     from_date: Yup
       .string()
@@ -45,6 +46,7 @@ function UpdateExperienceForm(props) {
     description: Yup
       .string()
       .typeError('Description is required')
+      .min(5, "Description must be at least 5 characters")
       .required("Description is required"),
   });
 

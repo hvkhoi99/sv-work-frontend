@@ -127,7 +127,7 @@ function UpdateEducationForm(props) {
                     color={'success'}
                     disabled={isSubmitting}
                   >
-                    {isSubmitting && <Spinner children="" size="sm" />}
+                    {isSubmitting && <Spinner children="" size="sm" className="mr-2"/>}
                     &nbsp;Update
                   </Button>
 

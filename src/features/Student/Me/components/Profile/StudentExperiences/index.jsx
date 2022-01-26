@@ -6,18 +6,25 @@ import PopupUpdateStudentExperience from '../../PopupUpdateStudentProfile/PopupU
 
 StudentExperiencesCard.propTypes = {
   experiences: PropTypes.array,
-  onCreateExperience: PropTypes.func,
+  onCreateAnExperience: PropTypes.func,
   onEditExperience: PropTypes.func,
+  onDelete: PropTypes.func,
+  isExperienceDeleting: PropTypes.bool,
 };
 
 StudentExperiencesCard.defaultProps = {
   experiences: [],
-  onCreateExperience: null,
-  onEditExperience: null
+  onCreateAnExperience: null,
+  onEditExperience: null,
+  onDelete: null,
+  isExperienceDeleting: false,
 }
 
 function StudentExperiencesCard(props) {
-  const { experiences, onCreateExperience, onEditExperience } = props;
+  const {
+    experiences, onCreateAnExperience,
+    onEditExperience, onDelete, isExperienceDeleting
+  } = props;
 
   return (
     <div className="student-experiences-card">
@@ -25,7 +32,7 @@ function StudentExperiencesCard(props) {
         <span className="student-experiences-card__header__title">
           Experiences
         </span>
-        <PopupUpdateStudentExperience 
+        <PopupUpdateStudentExperience
           initialValues={{
             position: '',
             company: '',
@@ -33,25 +40,27 @@ function StudentExperiencesCard(props) {
             to_date: '',
             description: ''
           }}
-          onSubmit={onCreateExperience}
+          onSubmit={onCreateAnExperience}
           typeIcon="add"
         />
       </div>
       <div className="student-experiences-card__main">
         {
           experiences.length <= 0
-          ? <span>No Information Available.</span>
-          : experiences.map((experience, index) => {
-            return <div
-              key={index}
-              className="student-experiences-card__main__item"
-            >
-              <StudentExperiencesItemCard
-                experience={experience}
-                onEditExperience={onEditExperience}
-              />
-            </div>
-          })
+            ? <span>No Information Available.</span>
+            : experiences.map((experience, index) => {
+              return <div
+                key={index}
+                className="student-experiences-card__main__item"
+              >
+                <StudentExperiencesItemCard
+                  experience={experience}
+                  onEditExperience={onEditExperience}
+                  onDelete={onDelete}
+                  isExperienceDeleting={isExperienceDeleting}
+                />
+              </div>
+            })
         }
       </div>
     </div>

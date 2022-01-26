@@ -8,16 +8,23 @@ StudentEducationsCard.propTypes = {
   educations: PropTypes.array,
   onCreateEducation: PropTypes.func,
   onEditEducation: PropTypes.func,
+  onDelete: PropTypes.func,
+  isEducationDeleting: PropTypes.bool,
 };
 
 StudentEducationsCard.defaultProps = {
   educations: [],
   onCreateEducation: null,
-  onEditEducation: null
+  onEditEducation: null,
+  onDelete: null,
+  isEducationDeleting: false
 }
 
 function StudentEducationsCard(props) {
-  const { educations, onCreateEducation, onEditEducation } = props;
+  const {
+    educations, onCreateEducation, onEditEducation,
+    onDelete, isEducationDeleting
+  } = props;
 
   return (
     <div className="student-educations-card">
@@ -50,6 +57,8 @@ function StudentEducationsCard(props) {
                 <StudentEducationsItemCard
                   education={education}
                   onEditEducation={onEditEducation}
+                  onDelete={onDelete}
+                  isEducationDeleting={isEducationDeleting}
                 />
               </div>
             })

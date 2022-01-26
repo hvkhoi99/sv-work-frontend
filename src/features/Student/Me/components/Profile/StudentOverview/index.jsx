@@ -21,10 +21,12 @@ function StudentOverviewCard(props) {
   const { overView, updateStudentOverview, isOverviewUpdating } = props;
 
   const onTextChange = (values) => {
-    updateStudentOverview(values);
+    updateStudentOverview(false, values);
   }
 
-  console.log({isOverviewUpdating});
+  const onDeleteOverview = (values) => {
+    updateStudentOverview(true, values);
+  }
 
   return (
     <div className="student-overview-card">
@@ -57,6 +59,7 @@ function StudentOverviewCard(props) {
             label="Update Student Overview"
             initData={overView === null ? "" : overView}
             onTextChange={onTextChange}
+            onDelete={onDeleteOverview}
             isUpdating={isOverviewUpdating}
           />
         </div>}
