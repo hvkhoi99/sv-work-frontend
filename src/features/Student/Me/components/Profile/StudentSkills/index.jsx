@@ -8,16 +8,18 @@ StudentSkillsCard.propTypes = {
   skills: PropTypes.array,
   onCreateSkills: PropTypes.func,
   onEditSkills: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 StudentSkillsCard.defaultProps = {
   skills: [],
   onCreateSkills: null,
   onEditSkills: null,
+  onDelete: null,
 }
 
 function StudentSkillsCard(props) {
-  const { skills, onCreateSkills, onEditSkills } = props;
+  const { skills, onCreateSkills, onEditSkills, onDelete } = props;
 
   return (
     <div className="student-skills-card">
@@ -61,6 +63,7 @@ function StudentSkillsCard(props) {
               skills: skills
             }}
             onSubmit={onEditSkills}
+            onDelete={onDelete}
           />
         </div>}
       </div>

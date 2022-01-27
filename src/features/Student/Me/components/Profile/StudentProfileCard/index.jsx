@@ -27,9 +27,15 @@ function StudentProfileCard(props) {
   const [responseData, setResponseData] = useState({
     experiencesResponse: [],
     educationsResponse: [],
-    skillsResponse: [],
+    skillsResponse: {
+      id: 0,
+      skills: []
+    },
     certificatesResponse: [],
-    languagesResponse: [],
+    languagesResponse: {
+      id: 0,
+      locales: []
+    },
   });
   const [typeUpdating, setTypeUpdating] = useState({
     isOverviewUpdating: false,
@@ -309,16 +315,170 @@ function StudentProfileCard(props) {
   }
 
   // SKILLS
-  const onEditSkills = (values) => {
+  const onCreateSkills = async (values) => {
     console.log({ values });
+    try {
+      const params = { ...values };
+      // console.log({ params });
+      const action = await studentApi.createStudentSkills(params);
+
+      if (action.data.status === 1) {
+        // const newSkills = responseData.skillsResponse.skills;
+        // newSkills.splice(0, 0, action.data.data.skills);
+        setResponseData(state => ({
+          ...state,
+          skillsResponse: action.data.data
+        }));
+        enqueueSnackbar("Your Skills Information has been updated.", { variant: "success" });
+        return true;
+      } else {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return false;
+      }
+    } catch (error) {
+      console.log("Something went wrong. Please try again. Error " + error.message);
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
+    }
   }
 
-  const onEditCertificate = (values) => {
+  const onEditSkills = async (values) => {
     console.log({ values });
+    try {
+      const params = { ...values };
+      const action = await studentApi.updateStudentSkills(responseData.skillsResponse.id, params);
+
+      if (action.data.status === 1) {
+        setResponseData(state => ({
+          ...state,
+          skillsResponse: action.data.data
+        }));
+        enqueueSnackbar("Your Skills Information has been updated.", { variant: "success" });
+        return true;
+      } else {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return false;
+      }
+    } catch (error) {
+      console.log("Something went wrong. Please try again. Error " + error.message);
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
+    }
   }
 
-  const onEditLanguages = (values) => {
+  // CERTIFICATES
+  const onCreateCertificate = async (values) => {
+    try {
+      const params = {
+        ...values
+      };
+      console.log({ params });
+      const action = await studentApi.createStudentCertificate(params);
+
+      if (action.data.status === 1) {
+        const newCertificates = responseData.certificatesResponse;
+        newCertificates.splice(0, 0, action.data.data);
+        setResponseData(state => ({
+          ...state,
+          certificatesResponse: newCertificates
+        }));
+        enqueueSnackbar("Your Certificates Information has been updated.", { variant: "success" });
+        return true;
+      } else {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return false;
+      }
+    } catch (error) {
+      console.log("Something went wrong. Please try again. Error " + error.message);
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
+    }
+  }
+
+  const onEditCertificate = async (id, values) => {
     console.log({ values });
+    try {
+      const params = {
+        ...values
+      };
+      console.log({ params });
+      const action = await studentApi.updateStudentCertificate(id, params);
+
+      if (action.data.status === 1) {
+        const newCertificates = responseData.certificatesResponse;
+        const index = newCertificates.findIndex(x => x.id === id);
+
+        if (index > -1) {
+          newCertificates.splice(index, 1, action.data.data);
+          setResponseData(state => ({
+            ...state,
+            certificatesResponse: newCertificates
+          }));
+          enqueueSnackbar("Your Certificates Information has been updated.", { variant: "success" });
+          return true;
+        } else {
+          console.log("Cannot found item with id " + id);
+          enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+          return false;
+        }
+      } else {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return false;
+      }
+    } catch (error) {
+      console.log("Something went wrong. Please try again. Error " + error.message);
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
+    }
+  }
+
+  // LANGUAGES
+  const onCreateLanguages = async (values) => {
+    console.log({ values });
+    try {
+      const params = { ...values };
+      const action = await studentApi.createStudentLanguages(params);
+
+      if (action.data.status === 1) {
+        setResponseData(state => ({
+          ...state,
+          languagesResponse: action.data.data
+        }));
+        enqueueSnackbar("Your Languages Information has been updated.", { variant: "success" });
+        return true;
+      } else {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return false;
+      }
+    } catch (error) {
+      console.log("Something went wrong. Please try again. Error " + error.message);
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
+    }
+  }
+
+  const onEditLanguages = async (values) => {
+    console.log({ values });
+    try {
+      const params = { ...values };
+      const action = await studentApi.updateStudentLanguages(responseData.languagesResponse.id, params);
+
+      if (action.data.status === 1) {
+        setResponseData(state => ({
+          ...state,
+          languagesResponse: action.data.data
+        }));
+        enqueueSnackbar("Your Languages Information has been updated.", { variant: "success" });
+        return true;
+      } else {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return false;
+      }
+    } catch (error) {
+      console.log("Something went wrong. Please try again. Error " + error.message);
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
+    }
   }
 
   // DELETE
@@ -346,7 +506,7 @@ function StudentProfileCard(props) {
                 ...state,
                 isExperienceDeleting: false
               }));
-              enqueueSnackbar("Your Experiences Information has been updated.", { variant: "success" });
+              enqueueSnackbar("Your Experiences Information has been deleted.", { variant: "success" });
               return true;
             } else {
               console.log("Cannot found item with id " + item.id);
@@ -387,7 +547,7 @@ function StudentProfileCard(props) {
                 ...state,
                 isEducationDeleting: false
               }));
-              enqueueSnackbar("Your Experiences Information has been updated.", { variant: "success" });
+              enqueueSnackbar("Your Experiences Information has been deleted.", { variant: "success" });
               return true;
             } else {
               console.log("Cannot found item with id " + item.id);
@@ -407,7 +567,65 @@ function StudentProfileCard(props) {
             enqueueSnackbar("Something went wrong. Please try again.", { variant: "success" });
             return false;
           }
+        case "skills":
+          const actionSkills = await studentApi.deleteStudentSkills(responseData.skillsResponse.id);
 
+          if (actionSkills.data.status === 1) {
+            setResponseData(state => ({
+              ...state,
+              skillsResponse: {
+                id: 0,
+                skills: []
+              },
+            }));
+            enqueueSnackbar("Your Experiences Information has been deleted.", { variant: "success" });
+            return true;
+          } else {
+            enqueueSnackbar("Something went wrong. Please try again.", { variant: "success" });
+            return false;
+          }
+        case "certificate":
+          const actionCeti = await studentApi.deleteStudentCertificate(item.id);
+
+          if (actionCeti.data.status === 1) {
+            const newCertificates = responseData.certificatesResponse;
+            const index = newCertificates.findIndex(x => x.id === item.id);
+
+            if (index > -1) {
+              newCertificates.splice(index, 1);
+              setResponseData(state => ({
+                ...state,
+                certificatesResponse: newCertificates
+              }))
+              enqueueSnackbar("Your Certificates Information has been deleted.", { variant: "success" });
+              return true;
+            } else {
+              console.log("Cannot found item with id " + item.id);
+              enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+              return false;
+            }
+
+          } else {
+            enqueueSnackbar("Something went wrong. Please try again.", { variant: "success" });
+            return false;
+          }
+        case "languages":
+          const actionLanguages = await studentApi.deleteStudentLanguages(responseData.languagesResponse.id);
+
+          if (actionLanguages.data.status === 1) {
+            setResponseData(state => ({
+              ...state,
+              languagesResponse: {
+                id: 0,
+                locales: []
+              },
+            }));
+            enqueueSnackbar("Your Languages Information has been deleted.", { variant: "success" });
+            return true;
+          } else {
+            enqueueSnackbar("Something went wrong. Please try again.", { variant: "success" });
+            return false;
+          }
         default:
           break;
       }
@@ -459,20 +677,26 @@ function StudentProfileCard(props) {
             </div>
             <div className="student-profile-card__skills">
               <StudentSkillsCard
-                skills={responseData.skillsResponse}
+                skills={responseData.skillsResponse.skills}
+                onCreateSkills={onCreateSkills}
                 onEditSkills={onEditSkills}
+                onDelete={() => onDelete("skills", responseData.skillsResponse)}
               />
             </div>
             <div className="student-profile-card__certificates">
               <StudentCertificatesCard
                 certificates={responseData.certificatesResponse}
+                onCreateCertificate={onCreateCertificate}
                 onEditCertificate={onEditCertificate}
+                onDelete={onDelete}
               />
             </div>
             <div className="student-profile-card__languages">
               <StudentLanguagesCard
-                languages={responseData.languagesResponse}
+                languages={responseData.languagesResponse.locales}
+                onCreateLanguages={onCreateLanguages}
                 onEditLanguages={onEditLanguages}
+                onDelete={() => onDelete("languages", responseData.languagesResponse)}
               />
             </div>
           </div>

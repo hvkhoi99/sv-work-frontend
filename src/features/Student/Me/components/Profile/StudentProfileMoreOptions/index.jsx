@@ -60,10 +60,6 @@ function StudentProfileMoreOptions(props) {
     };
   }, [ref, isHidden]);
 
-  const handleHidden = () => {
-    setIsHidden(!isHidden);
-  }
-
   const handleDelete = () => {
     onDelete();
     setIsHidden(true);
@@ -138,7 +134,7 @@ function StudentProfileMoreOptions(props) {
     <div className="student-profile-more-options" ref={ref}>
       <FiIcons.FiMoreHorizontal
         className="student-profile-more-options__icon"
-        onClick={handleHidden}
+        onClick={() => setIsHidden(!isHidden)}
       />
       <div
         className={
@@ -148,7 +144,7 @@ function StudentProfileMoreOptions(props) {
         }
       >
         <ul>
-          <li onClick={handleHidden}>{renderPopup(typePopup)}</li>
+          <li>{renderPopup(typePopup)}</li>
           {
             ["overview", "experiences", "educations", "skills", "certificates", "languages"]
               .includes(typePopup) &&

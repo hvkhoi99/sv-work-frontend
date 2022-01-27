@@ -50,8 +50,9 @@ function UpdateExperienceForm(props) {
       .required("Description is required"),
   });
 
-  const onSubmitForm = async (values) => {
+  const onSubmitForm = async (values, actions) => {
     await onSubmit(values);
+    actions.setSubmitting(false);
     close();
   }
 

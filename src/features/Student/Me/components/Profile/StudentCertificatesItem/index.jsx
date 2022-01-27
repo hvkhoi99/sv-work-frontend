@@ -6,7 +6,8 @@ import StudentProfileMoreOptions from '../StudentProfileMoreOptions';
 
 StudentCertificatesItemCard.propTypes = {
   certificate: PropTypes.object,
-  onEditCertificate: PropTypes.func
+  onEditCertificate: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 StudentCertificatesItemCard.defaultProps = {
@@ -14,10 +15,19 @@ StudentCertificatesItemCard.defaultProps = {
     id: 0
   },
   onEditCertificate: null,
+  onDelete: null,
 }
 
 function StudentCertificatesItemCard(props) {
-  const { certificate, onEditCertificate } = props;
+  const { certificate, onEditCertificate, onDelete } = props;
+
+  const handleUpdateCertificate = (values) => {
+    onEditCertificate(certificate.id, values)
+  }
+
+  const handleDelete = () => {
+    onDelete("certificate", certificate);
+  }
 
   return (
     <div className="student-certificates-item-card">
@@ -45,7 +55,8 @@ function StudentCertificatesItemCard(props) {
         <StudentProfileMoreOptions
           typePopup="certificates"
           initialValues={certificate}
-          onSubmit={onEditCertificate}
+          onSubmit={handleUpdateCertificate}
+          onDelete={handleDelete}
         />
       </div>
     </div>

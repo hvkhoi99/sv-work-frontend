@@ -7,17 +7,19 @@ import './StudentLanguages.scss';
 StudentLanguagesCard.propTypes = {
   languages: PropTypes.array,
   onCreateLanguages: PropTypes.func,
-  onEditLanguages: PropTypes.func
+  onEditLanguages: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 StudentLanguagesCard.defaultProps = {
   languages: [],
   onCreateLanguages: null,
-  onEditLanguages: null
+  onEditLanguages: null,
+  onDelete: null,
 }
 
 function StudentLanguagesCard(props) {
-  const { languages, onCreateLanguages, onEditLanguages } = props;
+  const { languages, onCreateLanguages, onEditLanguages, onDelete } = props;
 
   return (
     <div className="student-languages-card">
@@ -58,6 +60,7 @@ function StudentLanguagesCard(props) {
               locales: languages
             }}
             onSubmit={onEditLanguages}
+            onDelete={onDelete}
           />
         </div>}
       </div>

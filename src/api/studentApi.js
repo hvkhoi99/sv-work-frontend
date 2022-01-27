@@ -7,16 +7,61 @@ const studentApi = {
     return axiosClient.get(url);
   },
 
+  createStudentCertificate: (params) => {
+    const url = "/student/certificate/store";
+    return axiosClient.post(url, params);
+  },
+
+  updateStudentCertificate: (id, params) => {
+    const url = `/student/certificate/${id}`;
+    return axiosClient.put(url, params);
+  },
+
+  deleteStudentCertificate: (id) => {
+    const url = `/student/certificate/${id}`;
+    return axiosClient.delete(url);
+  },
+
   // Languages
   getStudentLanguages: () => {
     const url = `/student/language/index`;
     return axiosClient.get(url);
   },
 
+  createStudentLanguages: (params) => {
+    const url = "/student/language/store";
+    return axiosClient.post(url, params);
+  },
+
+  updateStudentLanguages: (id, params) => {
+    const url = `/student/language/${id}`;
+    return axiosClient.put(url, params);
+  },
+
+  deleteStudentLanguages: (id) => {
+    const url = `/student/language/${id}`;
+    return axiosClient.delete(url);
+  },
+
   // Skills
   getStudentSkills: () => {
     const url = `/student/skill/index`;
     return axiosClient.get(url);
+  },
+
+  createStudentSkills: (params) => {
+    const url = "/student/skill/store";
+    return axiosClient.post(url, params);
+  },
+
+  updateStudentSkills: (id, params) => {
+    const url = `/student/skill/${id}`;
+    return axiosClient.put(url, params);
+  },
+
+  deleteStudentSkills: (id) => {
+    const url = `/student/skill/${id}`;
+    return axiosClient.delete(url);
   },
 
   // Educations

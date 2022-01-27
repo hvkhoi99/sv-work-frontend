@@ -29,22 +29,25 @@ function UpdateEducationForm(props) {
     school: Yup
       .string()
       .typeError('School is required')
+      .min(5, "School must be at least 5 characters")
       .required('School is required'),
-    from_date: Yup
+      from_date: Yup
       .string()
       .typeError('From Date is required')
       .required('From Date is required'),
-    to_date: Yup
+      to_date: Yup
       .string()
       .typeError('To Date is required')
       .required('To Date is required'),
-    major: Yup
+      major: Yup
       .string()
       .typeError('Major is required')
+      .min(5, "Major must be at least 5 characters")
       .required("Major is required"),
-    achievements: Yup
+      achievements: Yup
       .string()
       .typeError('Achievements is required')
+      .min(5, "Achievements must be at least 5 characters")
       .required("Achievements is required"),
   });
 

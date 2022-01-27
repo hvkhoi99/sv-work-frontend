@@ -4,6 +4,7 @@
   align-items: center;
   width: 100%;
   font-size: 0.9rem;
+  padding: 0 0 1rem 0;
 
   &__header {
     display: flex;
@@ -40,7 +41,7 @@
         color: var(--success);
         font-weight: 600;
 
-        margin: 0 1rem 2rem 1rem;
+        margin: 0 1rem 1rem 1rem;
         padding: .5rem 1rem;
         box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
         border-radius: 1rem;

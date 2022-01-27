@@ -9,16 +9,18 @@ StudentCertificatesCard.propTypes = {
   certificates: PropTypes.array,
   onCreateCertificate: PropTypes.func,
   onEditCertificate: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 StudentCertificatesCard.defaultProps = {
   certificates: [],
   onCreateCertificate: null,
   onEditCertificate: null,
+  onDelete: null,
 }
 
 function StudentCertificatesCard(props) {
-  const { certificates, onCreateCertificate, onEditCertificate } = props;
+  const { certificates, onCreateCertificate, onEditCertificate, onDelete } = props;
 
   return (
     <div className="student-certificates-card">
@@ -49,6 +51,7 @@ function StudentCertificatesCard(props) {
                 <StudentCertificatesItemCard
                   certificate={certificate}
                   onEditCertificate={onEditCertificate}
+                  onDelete={onDelete}
                 />
               </div>
             })
