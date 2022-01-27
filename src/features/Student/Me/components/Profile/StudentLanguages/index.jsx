@@ -61,6 +61,7 @@ function StudentLanguagesCard(props) {
             }}
             onSubmit={onEditLanguages}
             onDelete={onDelete}
+            
           />
         </div>}
       </div>
