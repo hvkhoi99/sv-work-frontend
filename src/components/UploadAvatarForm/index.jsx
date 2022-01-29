@@ -1,8 +1,11 @@
+import { Button, Fab } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import { Slider } from '@mui/material';
 import Images from 'constants/images';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import AvatarEditor from 'react-avatar-editor';
-import { Button } from 'reactstrap';
+import { Spinner } from 'reactstrap';
 import './UploadAvatarForm.scss';
 
 UploadAvatarForm.propTypes = {
@@ -10,6 +13,8 @@ UploadAvatarForm.propTypes = {
   onUpload: PropTypes.func,
   isUploading: PropTypes.bool,
   close: PropTypes.func,
+  currentAvatar: PropTypes.string,
+
 };
 
 UploadAvatarForm.defaultProps = {
@@ -17,19 +22,44 @@ UploadAvatarForm.defaultProps = {
   onUpload: null,
   isUploading: false,
   close: null,
+  currentAvatar: ""
 }
 
 function UploadAvatarForm(props) {
-  const { label, onUpload, isUploading, close } = props;
-  const [avatar, setAvatar] = useState(null);
+  const { label, onUpload, isUploading, close, currentAvatar } = props;
+  const [initData, setInitData] = useState({
+    currentAvatar,
+    scaleValue: 10
+  })
+  const [editor, setEditor] = useState(null);
 
-  const handleToUploadAvatar = () => {
-    onUpload();
-  }
+  const setEditorRef = (editor) => {
+    setEditor(editor);
+  };
+
+  const onCrop = async () => {
+    if (editor !== null) {
+      const url = editor.getImageScaledToCanvas().toDataURL();
+      await onUpload(url);
+      close();
+    }
+  };
+
+  const onScaleChange = (scaleChangeEvent) => {
+    const newScaleValue = parseFloat(scaleChangeEvent.target.value);
+    setInitData(state => ({
+      ...state,
+      scaleValue: newScaleValue
+    }));
+  };
 
   const onImageChange = (e) => {
+    console.log(e.target.files);
     if (e.target.files && e.target.files[0]) {
-      setAvatar(URL.createObjectURL(e.target.files[0]));
+      setInitData(state => ({
+        ...state,
+        currentAvatar: URL.createObjectURL(e.target.files[0])
+      }));
     }
   }
 
@@ -42,37 +72,79 @@ function UploadAvatarForm(props) {
         <div className="upload-avatar-form__header__dot" />
       </div>
       <div className="upload-avatar-form__main">
-        <div className="upload-avatar-form__main__choose-files">
-          <input type="file" onChange={onImageChange} />
-          {/* <img src={avatar !== null ? avatar : Images.fptSoftware} alt="preview avatar" /> */}
-          <AvatarEditor
-            image={avatar !== null ? avatar : Images.apple}
-            width={250}
-            height={250}
-            borderRadius={1000}
-            color={[255, 255, 255, 0.6]} // RGBA
-            scale={1.2}
-            rotate={0}
-          />
+        <div className="upload-avatar-form__main__editor">
+          {/* <input
+            type="file"
+            onChange={onImageChange}
+            className="upload-avatar-form__main__editor__choose-files"
+          /> */}
+          <label htmlFor="upload-photo" style={{
+            display: 'flex',
+            width: '100%'
+          }}>
+            <input
+              style={{ display: 'none' }}
+              id="upload-photo"
+              name="upload-photo"
+              type="file"
+              onChange={onImageChange}
+            />
+            <Fab
+              color="secondary"
+              size="small"
+              component="span"
+              aria-label="add"
+              variant="extended"
+
+            >
+              <AddIcon /> Upload photo
+            </Fab>
+          </label>
+
+          <div className="upload-avatar-form__main__editor__slider">
+            <span>Scale</span>
+            <Slider
+              id='avatar'
+              name='avatar'
+              value={initData.scaleValue}
+              onChange={onScaleChange}
+              // step={1}
+              min={1}
+              max={100}
+              valueLabelDisplay='auto'
+            />
+          </div>
         </div>
+        <AvatarEditor
+          ref={setEditorRef}
+          image={initData.currentAvatar !== "" ? initData.currentAvatar : Images.apple}
+          width={250}
+          height={250}
+          borderRadius={1000}
+          color={[0, 0, 0, 0.3]}
+          scale={initData.scaleValue * 0.1}
+          rotate={0}
+        />
       </div>
       <div className="upload-avatar-form__footer">
         <Button
           type="button"
-          color={'success'}
+          color={'primary'}
+          variant="contained"
           disabled={isUploading}
-          onClick={handleToUploadAvatar}
+          onClick={onCrop}
         >
-          {/* {isUploading && <Spinner children="" size="sm" />} */}
-          &nbsp;Upload
+          {isUploading && <Spinner children="" size="sm" className="mr-2" />}
+          Upload
         </Button>
 
         <Button
           type="button"
-          color="secondary"
+          variant="contained"
+          color="default"
           onClick={close}
         >
-          &nbsp;Cancel
+          Cancel
         </Button>
       </div>
     </div>

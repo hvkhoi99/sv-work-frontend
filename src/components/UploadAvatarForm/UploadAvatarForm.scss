@@ -4,14 +4,19 @@
   align-items: center;
   width: 100%;
 
+  padding: 0 0 1rem;
+
   &__header {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
+
+    border-bottom: 1px solid lightgrey;
 
     & > span {
       font-size: 1.2rem;
-      font-weight: 500;
+      font-weight: 600;
     }
 
     &__dot {
@@ -19,7 +24,7 @@
       height: 0.5rem;
       border-radius: 50%;
       background-color: var(--success);
-      margin: .2rem 0 0 .2rem;
+      margin: 0.2rem 0 0 0.2rem;
     }
   }
 
@@ -27,45 +32,58 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    padding: 1rem 0 0 0;
-    
-    &__choose-files {
-      background-color: blue;
+    padding: 1rem;
+
+    &__editor {
       display: flex;
-      justify-content: center;
-      // width: 100%;
+      flex-direction: column;
+      align-items: center;
+      // justify-content: space-between;
+      width: 100%;
+      padding: 0 1rem 0 0;
 
-      & > input {
+      &__slider {
         display: flex;
-        align-self: flex-start;
-        background-color: red;
+        flex-direction: column;
+        width: 100%;
+        padding: 1rem 0 0 0;
+
+        & > span {
+          font-weight: 500;
+          font-size: 1rem;
+          // color: var(--success);
+        }
       }
-
-      // & > img {
-      //   width: 10rem;
-      //   height: 10rem;
-      //   border-radius: 50%;
-      //   border: 1px solid lightgrey;
-      //   object-fit: cover;
-      // }
     }
-
   }
 
   &__footer {
     display: flex;
     justify-content: flex-end;
     width: 100%;
-    padding: 1rem 0 .5rem;
+    padding: 0 1rem;
 
     & > button {
-      padding: .4rem .8rem;
-      border-radius: .5rem;
-
+      padding: 0.4rem 0.8rem;
+      border-radius: 0.5rem;
     }
 
     & > button:last-child {
       margin-left: 1rem;
     }
+  }
+}
+
+.upload-avatar-name {
+  display: flex;
+  align-items: flex-end;
+  margin-left: 0.5rem;
+  width: 40%;
+  border-bottom: 1px solid lightgrey;
+
+  & > span {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 }

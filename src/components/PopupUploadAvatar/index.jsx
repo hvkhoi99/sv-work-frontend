@@ -13,12 +13,14 @@ PopupUploadAvatar.propTypes = {
   label: PropTypes.string,
   onUpload: PropTypes.func,
   isUploading: PropTypes.bool,
+  currentAvatar: PropTypes.string,
 };
 
 PopupUploadAvatar.defaultProps = {
   label: '',
   onUpload: null,
-  isUploading: false
+  isUploading: false,
+  currentAvatar: "",
 };
 
 const ChangeAvatarButton = React.forwardRef(({ open, ...props }, ref) => (
@@ -45,7 +47,7 @@ const ChangeAvatarButton = React.forwardRef(({ open, ...props }, ref) => (
 ));
 
 function PopupUploadAvatar(props) {
-  const { label, onUpload, isUploading } = props;
+  const { label, onUpload, isUploading, currentAvatar } = props;
 
   return (
     <>
@@ -63,6 +65,7 @@ function PopupUploadAvatar(props) {
               onUpload={onUpload}
               isUploading={isUploading}
               close={close}
+              currentAvatar={currentAvatar}
             />
           )
         }

@@ -32,6 +32,12 @@ function StudentProfilePage(props) {
   const resumePath = `${Paths.clientProfile}/resume`;
   const user = useSelector((state) => state.user.current);
   const [checked, setChecked] = useState(user.s_profile.open_for_job);
+  const [currentAvatar, setCurrentAvatar] = useState(
+    user.s_profile.avatar_link === (null || "" || undefined)
+      ? Images.defaultAvatar
+      : user.s_profile.avatar_link
+  );
+  const [isUploading, setIsUpdating] = useState(false);
 
   const options = [
     { id: 0, name: "Profile", path: profilePath },
@@ -83,8 +89,65 @@ function StudentProfilePage(props) {
     }
   }
 
-  const onUpload = () => {
-    console.log("Uploaded!");
+  // const dataURLtoFile = (dataUrl, fileName) => {
+  //   var arr = dataUrl.split(','),
+  //     mime = arr[0].match(/:(.*?);/)[1],
+  //     bstr = atob(arr[1]), n = bstr.length,
+  //     u8arr = new Uint8Array(n);
+  //   while (n--) {
+  //     u8arr[n] = bstr.charCodeAt(n);
+  //   }
+  //   return new File([u8arr], fileName, { type: mime });
+  // }
+  const DataURLtoFile = (dataurl, filename) => {
+    let arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  };
+
+  const onUpload = async (url) => {
+    try {
+      setIsUpdating(true);
+      const newFile = DataURLtoFile(url, "new-avatar.jpg");
+      const formData = new FormData();
+      formData.append(
+        "file",
+        newFile,
+        newFile.name
+      );
+      const action = await studentApi.changeStudentAvatar(formData);
+      if (action.data.status === 1) {
+        const cpUser = {
+          ...user,
+          s_profile: {
+            ...user.s_profile,
+            avatar_link: action.data.data.avatar_link
+          }
+        };
+        dispatch(updateUser(cpUser));
+        localStorage.setItem('user', JSON.stringify(cpUser));
+        setIsUpdating(false);
+        setCurrentAvatar(url);
+        enqueueSnackbar(
+          `Your avatar has been updated successfully.`,
+          { variant: "success" }
+        );
+      } else {
+        setIsUpdating(false);
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      }
+
+    } catch (error) {
+      setIsUpdating(false);
+      console.log("Cannot change your avatar. Error " + error.message);
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+    }
   }
 
   return (
@@ -119,16 +182,15 @@ function StudentProfilePage(props) {
                   <div className="student-profile__container__right__base-info__left">
                     <div className="student-profile__container__right__base-info__left__avatar">
                       <img src={
-                        user.s_profile.avatar_link === (null || "" || undefined)
-                          ? Images.defaultAvatar
-                          : user.s_profile.avatar_link
+                        currentAvatar
                       } alt="avatar" />
                       <div className="student-profile__container__right__base-info__left__avatar__icon">
                         {/* <MdIcons.MdChangeCircle className="change-icon" /> */}
-                        <PopupUploadAvatar 
+                        <PopupUploadAvatar
                           label="Upload Student Avatar"
                           onUpload={onUpload}
-                          isUploading={false}
+                          isUploading={isUploading}
+                          currentAvatar={currentAvatar}
                         />
                       </div>
                     </div>

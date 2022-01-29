@@ -185,6 +185,11 @@ const studentApi = {
     return axiosClient.put(url, params);
   },
 
+  changeStudentAvatar: (params) => {
+    const url = "/student/profile/avatar/change";
+    return axiosClient.post(url, params);
+  },
+
   // Student -> Recruiter
   getAvailableJobs: (params) => {
     const url = `/student/recruiter/dashboard/available-recruitments?page=${params.page}&_limit=${params._limit}`;
