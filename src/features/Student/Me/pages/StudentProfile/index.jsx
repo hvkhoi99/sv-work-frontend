@@ -1,6 +1,7 @@
 import { Switch } from '@material-ui/core';
 import studentApi from 'api/studentApi';
 import LoadingUI from 'components/Loading';
+import PopupUploadAvatar from 'components/PopupUploadAvatar';
 import Images from 'constants/images';
 import Paths from 'constants/paths';
 import { updateUser } from 'features/Auth/userSlice';
@@ -8,7 +9,7 @@ import DashboardSelectOption from 'features/Recruiter/Me/components/DashboardSel
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
-import * as MdIcons from 'react-icons/md';
+// import * as MdIcons from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import helper from 'utils/common';
@@ -82,6 +83,10 @@ function StudentProfilePage(props) {
     }
   }
 
+  const onUpload = () => {
+    console.log("Uploaded!");
+  }
+
   return (
     <>
       {
@@ -119,7 +124,12 @@ function StudentProfilePage(props) {
                           : user.s_profile.avatar_link
                       } alt="avatar" />
                       <div className="student-profile__container__right__base-info__left__avatar__icon">
-                        <MdIcons.MdChangeCircle className="change-icon" />
+                        {/* <MdIcons.MdChangeCircle className="change-icon" /> */}
+                        <PopupUploadAvatar 
+                          label="Upload Student Avatar"
+                          onUpload={onUpload}
+                          isUploading={false}
+                        />
                       </div>
                     </div>
                     <div className="student-profile__container__right__base-info__left__info">

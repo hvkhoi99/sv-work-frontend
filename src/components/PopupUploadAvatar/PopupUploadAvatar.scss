@@ -1,0 +1,17 @@
+.change-icon {
+  font-size: 2.2rem;
+  position: relative;
+  color: var(--success);
+  background-color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+    transition: all 0.15s ease-out;
+  }
+
+  &:active {
+    transform: scale(1);
+  }
+}
