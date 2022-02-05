@@ -84,7 +84,7 @@ function StudentDashboardPage(props) {
               <div className="student-dashboard__container__base-info">
                 <div className="student-dashboard__container__base-info__avatar">
                   <img src={
-                    user.s_profile.avatar_link === (null || "" || undefined)
+                    user.s_profile === null
                     ? Images.defaultAvatar
                     : user.s_profile.avatar_link
                   } alt="student-avatar" />

@@ -2,6 +2,7 @@ import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
 import LoadingChildUI from 'components/LoadingChild';
 import Images from 'constants/images';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import ReactHtmlParser from 'react-html-parser';
@@ -140,7 +141,7 @@ function CandidatePage(props) {
               <div className="candidate__below__left">
                 <PersonalInfoCard
                   personalInfo={{
-                    date_of_birth: candidate.date_of_birth,
+                    date_of_birth: moment(new Date(candidate.date_of_birth)).format("YYYY-MM-DD"),
                     gender: candidate.gender,
                     email: candidate.email,
                     phone_number: candidate.phone_number,

@@ -16,7 +16,7 @@ const override = css`
 function LoadingChildUI(props) {
   return (
     <div>
-      <FadeLoader css={override} height={15} width={5} radius={2} margin={2} color='#0DAB42' />
+      <FadeLoader css={override} height={15} width={5} radius={2} color='#0DAB42' />
     </div>
   );
 }

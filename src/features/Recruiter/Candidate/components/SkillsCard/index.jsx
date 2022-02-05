@@ -1,18 +1,17 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import './SkillsCard.scss';
-import helper from 'utils/common';
 
 SkillsCard.propTypes = {
-  skills: PropTypes.string
+  skills: PropTypes.array
 };
 
 SkillsCard.defaultProps = {
-  skills: ''
+  skills: []
 }
 
 function SkillsCard(props) {
-  const { skills} = props;
+  const { skills } = props;
 
   return (
     <div className="skills-card">
@@ -21,10 +20,16 @@ function SkillsCard(props) {
       </div>
       <div className="skills-card__content">
         {
-          skills !== null 
-          ? helper.splitCommaString(skills, "skills-card__content__item")
-          : <span className="card-nia">No Information Available.</span>
+          skills !== null
+            ? skills.map((skill, index) => {
+              return <span
+                key={index}
+                className="skills-card__content__item"
+              >{skill.label}</span>
+            })
+            : <span className="card-nia">No Information Available.</span>
         }
+
       </div>
     </div>
   );

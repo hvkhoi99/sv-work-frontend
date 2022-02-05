@@ -27,6 +27,11 @@ function Header(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector((state) => state.user.current);
+  // const [user] = useState({
+  //   ...currentUser,
+  //   s_profile: currentUser.s_profile ?? null,
+  //   r_profile: currentUser.r_profile ?? null
+  // });
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const [hiddenNoti, setHiddenNoti] = useState(true);
@@ -200,10 +205,10 @@ function Header(props) {
             <div className="notify-me__notify" onClick={(e) => showMe(e)}>
               {/* <FaIcons.FaUserAstronaut className="notify-me__notify__icon" /> */}
               <img src={
-                user.r_profile === (null || "" || undefined)
-                ? Images.defaultAvatar
-                : user.r_profile.logo_image_link
-              } alt="recruiter-avatar"/>
+                user.r_profile === null
+                  ? Images.defaultAvatar
+                  : user.r_profile.logo_image_link
+              } alt="recruiter-avatar" />
             </div>
           </div>
           <div className="notify-me__action">
@@ -310,12 +315,12 @@ function Header(props) {
               <span className="notify-me__notify__count">4</span>
             </div>
             <div className="notify-me__notify" onClick={(e) => showMe(e)}>
-              <FaIcons.FaUserAstronaut className="notify-me__notify__icon" />
-              {/* <img src={
-                user.s_profile === (null || "" || undefined)
-                ? Images.defaultAvatar
-                : user.s_profile.avatar_link
-              } alt="student-avatar"/> */}
+              {/* <FaIcons.FaUserAstronaut className="notify-me__notify__icon" /> */}
+              <img src={
+                user.s_profile === null
+                  ? Images.defaultAvatar
+                  : user.s_profile.avatar_link
+              } alt="student-avatar" />
             </div>
           </div>
           <div className="notify-me__action">

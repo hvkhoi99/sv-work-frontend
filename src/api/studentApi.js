@@ -222,6 +222,11 @@ const studentApi = {
     return axiosClient.put(url, params);
   },
 
+  changeRecruiterAvatar: (params) => {
+    const url = "/student/recruiter/profile/avatar/change";
+    return axiosClient.post(url, params);
+  },
+
   // Student -> Recruiter Recruitment
   getRecruimentDetail: (id) => {
     const url = `/student/recruiter/recruitment/${id}`;
@@ -251,6 +256,11 @@ const studentApi = {
   // Student -> Recruiter -> Candidate
   getCandidateProfile: (id) => {
     const url = `/student/recruiter/candidate/${id}`;
+    return axiosClient.get(url);
+  },
+
+  getJobsInvite: () => {
+    const url = "/student/recruiter/candidate/jobsInvite/list";
     return axiosClient.get(url);
   },
 

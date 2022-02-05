@@ -1,14 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import helper from 'utils/common';
 import './LanguagesCard.scss';
 
 LanguagesCard.propTypes = {
-  languages: PropTypes.string
+  languages: PropTypes.array
 };
 
 LanguagesCard.defaultProps = {
-  languages: ''
+  languages: []
 }
 
 function LanguagesCard(props) {
@@ -21,9 +20,14 @@ function LanguagesCard(props) {
       </div>
       <div className="languages-card__content">
         {
-          languages !== null 
-          ? helper.splitCommaString(languages, "languages-card__content__item")
-          : <span className="card-nia">No Information Available.</span>
+          languages !== null
+            ? languages.map((language, index) => {
+              return <span
+                key={index}
+                className="languages-card__content__item"
+              >{language.label}</span>
+            })
+            : <span className="card-nia">No Information Available.</span>
         }
       </div>
     </div>

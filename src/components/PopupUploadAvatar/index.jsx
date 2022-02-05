@@ -6,10 +6,6 @@ import Popup from 'reactjs-popup';
 import './PopupUploadAvatar.scss';
 
 PopupUploadAvatar.propTypes = {
-
-};
-
-PopupUploadAvatar.propTypes = {
   label: PropTypes.string,
   onUpload: PropTypes.func,
   isUploading: PropTypes.bool,
@@ -31,13 +27,11 @@ const ChangeAvatarButton = React.forwardRef(({ open, ...props }, ref) => (
       outline: 'none',
       position: 'relative',
       backgroundColor: 'transparent',
-      top: '2.8rem',
-      left: '2rem',
       borderRadius: '50%',
       overFlow: 'hidden',
 
     }}
-    className="button"
+    className="button-edit"
     ref={ref}
     {...props}
   >

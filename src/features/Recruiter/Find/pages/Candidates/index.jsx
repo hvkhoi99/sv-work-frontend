@@ -48,7 +48,7 @@ function FindCadidatesPage(props) {
   };
 
   const onViewCandidate = (candidateId) => {
-    history.push(`${Paths.recruiterFindCandidates}/7`);
+    history.push(`${Paths.recruiterCandidate}/1`);
   };
 
   return (

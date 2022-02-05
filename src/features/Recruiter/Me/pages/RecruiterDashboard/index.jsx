@@ -102,7 +102,7 @@ function RecruiterDashboardPage(props) {
               <div className="recruiter-dashboard__container__top__left">
                 <div className="recruiter-dashboard__container__top__left__inforCard">
                   <img src={
-                    user.r_profile.logo_image_link === (null || "" || undefined)
+                    user.r_profile === null
                     ? Images.defaultAvatar
                     : user.r_profile.logo_image_link
                   } alt="recruiter-avatar" />

@@ -3,7 +3,6 @@
   flex-direction: column;
   align-items: center;
 
-
   width: 100%;
   padding: 2rem 8rem;
   // background: linear-gradient(90deg, #FC466B 0%, #3F5EFB 100%);
@@ -12,6 +11,7 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  font-size: 0.9rem;
 
   &__above {
     display: flex;
@@ -24,6 +24,7 @@
         width: 10rem;
         height: 10rem;
         border-radius: 50%;
+        border: 1px solid lightgrey;
       }
     }
 
@@ -35,6 +36,35 @@
 
     &__candidate-job-title {
       margin: 0 0 1rem 0;
+      font-size: 1rem;
+    }
+
+    &__applied-recruitment {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      width: 100%;
+
+      & > span {
+        max-width: 30%;
+        word-break: break-all;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+
+      & > .recruitment-was-closed {
+        text-decoration: line-through;
+        color: darkgrey;
+      }
+
+      &__group-button {
+        margin-left: 1rem;
+        & > button {
+          padding: 0.3rem 0.5rem;
+          border-radius: 2rem;
+        }
+      }
     }
 
     &__btn-group {
@@ -57,29 +87,31 @@
     &__overview {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      // align-items: center;
 
       margin: 1.5rem 0 0 0;
+      width: 100%;
 
       &__title {
         display: flex;
         align-items: center;
 
-        margin: 0 0 1rem 0;
+        margin: 0 0 0.5rem 0;
+        border-bottom: 1px solid lightgrey;
 
         & > span {
-          font-size: 1.2rem;
+          font-size: 1.5rem;
           font-weight: 600;
         }
 
         &__dot {
           color: var(--success);
-          margin: 0.2rem 0 0 0;
+          margin: 0.5rem 0 0 0;
         }
       }
 
       &__description {
-        padding: 0 4rem;
+        padding: 0 2rem;
         font-weight: 300;
         line-height: 1.5rem;
       }
@@ -99,6 +131,31 @@
       align-items: center;
 
       width: 42%;
+
+      .personal-info-card {
+        width: 80%;
+        margin-bottom: 3rem;
+      }
+
+      .skills-card {
+        margin-bottom: 3rem;
+
+        &__content {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+      }
+
+      .languages-card {
+        margin-bottom: 3rem;
+
+        &__content {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+      }
     }
 
     &__right {
@@ -107,6 +164,29 @@
       align-items: center;
 
       width: calc(100% - 4rem - 42%);
+
+      .experiences-card {
+        width: 90%;
+        margin-bottom: 3rem;
+
+        &__content {
+          padding: 1rem 2rem;
+        }
+      }
+
+      .educations-card {
+        margin-bottom: 3rem;
+
+        &__content {
+          padding: 1rem 2rem;
+        }
+      }
+
+      .certificates-card {
+        &__content {
+          padding: 1rem 2rem;
+        }
+      }
     }
   }
 
@@ -133,52 +213,4 @@
 .card-nia {
   width: 100%;
   text-align: center;
-}
-
-.personal-info-card {
-  width: 80%;
-  margin-bottom: 3rem;
-}
-
-.experiences-card {
-  width: 90%;
-  margin-bottom: 3rem;
-
-  &__content {
-    padding: 1rem 2rem;
-  }
-}
-
-.educations-card {
-  margin-bottom: 3rem;
-
-  &__content {
-    padding: 1rem 2rem;
-  }
-}
-
-.certificates-card {
-  &__content {
-    padding: 1rem 2rem;
-  }
-}
-
-.skills-card {
-  margin-bottom: 3rem;
-
-  &__content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-}
-
-.languages-card {
-  margin-bottom: 3rem;
-
-  &__content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
 }

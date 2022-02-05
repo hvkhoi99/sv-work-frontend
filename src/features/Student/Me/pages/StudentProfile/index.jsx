@@ -33,11 +33,11 @@ function StudentProfilePage(props) {
   const user = useSelector((state) => state.user.current);
   const [checked, setChecked] = useState(user.s_profile.open_for_job);
   const [currentAvatar, setCurrentAvatar] = useState(
-    user.s_profile.avatar_link === (null || "" || undefined)
+    user.s_profile === null
       ? Images.defaultAvatar
       : user.s_profile.avatar_link
   );
-  const [isUploading, setIsUpdating] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
 
   const options = [
     { id: 0, name: "Profile", path: profilePath },
@@ -113,8 +113,8 @@ function StudentProfilePage(props) {
 
   const onUpload = async (url) => {
     try {
-      setIsUpdating(true);
-      const newFile = DataURLtoFile(url, "new-avatar.jpg");
+      setIsUploading(true);
+      const newFile = DataURLtoFile(url, "new-s-avatar.jpg");
       const formData = new FormData();
       formData.append(
         "file",
@@ -132,19 +132,19 @@ function StudentProfilePage(props) {
         };
         dispatch(updateUser(cpUser));
         localStorage.setItem('user', JSON.stringify(cpUser));
-        setIsUpdating(false);
+        setIsUploading(false);
         setCurrentAvatar(url);
         enqueueSnackbar(
           `Your avatar has been updated successfully.`,
           { variant: "success" }
         );
       } else {
-        setIsUpdating(false);
+        setIsUploading(false);
         enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
       }
 
     } catch (error) {
-      setIsUpdating(false);
+      setIsUploading(false);
       console.log("Cannot change your avatar. Error " + error.message);
       enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
     }

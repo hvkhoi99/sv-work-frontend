@@ -5,7 +5,7 @@ const Paths = {
     selectRole: "/auth/sign-up",
     // signup: "/auth/sign-up/:roleId",
 
-    // STUDENT
+    // RECRUITER
     clientHome: "/",
     clientEvent: "/event",
     clientFindJobs: "/find-jobs",
@@ -20,6 +20,7 @@ const Paths = {
     recruiterDashboard: "/recruiter/me/dashboard",
     recruiterProfile: "/recruiter/me/profile",
     recruiterAccount: "/recruiter/me/account",
+    recruiterCandidate: "/recruiter/candidate",
 
     // ADMIN
     adminDashboard: "/admin",

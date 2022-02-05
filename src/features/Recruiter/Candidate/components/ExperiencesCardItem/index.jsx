@@ -12,7 +12,7 @@ ExperiencesCardItem.defaultProps = {
 }
 
 function ExperiencesCardItem(props) {
-  const {experience} = props;
+  const { experience } = props;
 
   return (
     <div className="experiences-card__content__item">
@@ -23,7 +23,7 @@ function ExperiencesCardItem(props) {
         <span>{experience.company}</span>
         <ul>
           <li>
-          {moment(experience.from_date).format('MM/YYYY')} - {moment(experience.to_date).format('MM/YYYY')}
+            {moment(new Date(experience.from_date)).format('MM/YYYY')} - {moment(new Date(experience.to_date)).format('MM/YYYY')}
           </li>
           <li>{experience.position}</li>
           <li>{experience.description}</li>

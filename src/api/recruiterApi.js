@@ -34,6 +34,11 @@ const recruiterApi = {
     return axiosClient.put(url, params);
   },
 
+  changeRecruiterAvatar: (params) => {
+    const url = "/recruiter/profile/avatar/change";
+    return axiosClient.post(url, params);
+  },
+
   // Recruitment
   getRecruimentDetail: (id) => {
     const url = `/recruiter/recruitment/${id}`;
@@ -63,6 +68,11 @@ const recruiterApi = {
   // Student -> Recruiter -> Candidate
   getCandidateProfile: (id) => {
     const url = `/recruiter/candidate/${id}`;
+    return axiosClient.get(url);
+  },
+
+  getJobsInvite: () => {
+    const url = "/student/recruiter/candidate/jobsInvite/list";
     return axiosClient.get(url);
   },
 

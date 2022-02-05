@@ -131,7 +131,7 @@ function DetailsRecruitmentPage(props) {
                 <div className="details-recruitment__container__top__left">
                   <div className="details-recruitment__container__top__left__img">
                     <img src={
-                      user.r_profile.logo_image_link === (null || "" || undefined)
+                      user.r_profile === null
                       ? Images.defaultAvatar
                       : user.r_profile.logo_image_link
                     } alt="company-avatar" />

@@ -2,6 +2,7 @@ import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
 import LoadingUI from 'components/Loading';
 import PopupTextEditor from 'components/PopupTextEditor';
+import PopupUploadAvatar from 'components/PopupUploadAvatar';
 import Images from 'constants/images';
 import { updateUser } from 'features/Auth/userSlice';
 import { useSnackbar } from 'notistack';
@@ -11,7 +12,6 @@ import * as AiIcons from 'react-icons/ai';
 import * as GoIcons from 'react-icons/go';
 import * as HiIcons from 'react-icons/hi';
 import * as TiIcons from 'react-icons/ti';
-import * as MdIcons from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import helper from 'utils/common';
 import PopupUpdateProfile from '../../components/PopupUpdateProfile';
@@ -27,6 +27,13 @@ function RecruiterProfilePage(props) {
   const [isUpdating, setIsUpdating] = useState(false);
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+  
+  const [currentAvatar, setCurrentAvatar] = useState(
+    user.r_profile === null
+      ? Images.defaultAvatar
+      : user.r_profile.logo_image_link
+  );
+  const [isUploading, setIsUploading] = useState(false);
 
   useEffect(() => {
     helper.scrollToTop();
@@ -105,6 +112,60 @@ function RecruiterProfilePage(props) {
     }
   }
 
+  const DataURLtoFile = (dataurl, filename) => {
+    let arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  };
+
+  const onUpload = async (url) => {
+    try {
+      setIsUploading(true);
+      const newFile = DataURLtoFile(url, "new-r-avatar.jpg");
+      const formData = new FormData();
+      formData.append(
+        "file",
+        newFile,
+        newFile.name
+      );
+      const action = user.role_id === 2
+      ? await recruiterApi.changeRecruiterAvatar(formData)
+      : await studentApi.changeRecruiterAvatar(formData);
+      
+      if (action.data.status === 1) {
+        const cpUser = {
+          ...user,
+          r_profile: {
+            ...user.r_profile,
+            logo_image_link: action.data.data.logo_image_link
+          }
+        };
+        dispatch(updateUser(cpUser));
+        localStorage.setItem('user', JSON.stringify(cpUser));
+        setIsUploading(false);
+        setCurrentAvatar(url);
+        enqueueSnackbar(
+          `Your avatar has been updated successfully.`,
+          { variant: "success" }
+        );
+      } else {
+        setIsUploading(false);
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      }
+
+    } catch (error) {
+      setIsUploading(false);
+      console.log("Cannot change your avatar. Error " + error.message);
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+    }
+  }
+
   return (
     <>
       {isLoading
@@ -118,12 +179,18 @@ function RecruiterProfilePage(props) {
               <div className="recruiter-profile__container__info__top">
                 <div className="recruiter-profile__container__info__top__left">
                   <img src={
-                    user.r_profile.logo_image_link === (null || "" || undefined)
+                    user.r_profile === null
                       ? Images.defaultAvatar
                       : user.r_profile.logo_image_link
                   } alt="recruiter-avatar" />
                   <div className="recruiter-profile__container__info__top__left__avatar">
-                    <MdIcons.MdChangeCircle className="recruiter-profile__container__info__top__left__avatar__icon" />
+                    {/* <MdIcons.MdChangeCircle className="recruiter-profile__container__info__top__left__avatar__icon" /> */}
+                    <PopupUploadAvatar
+                      label="Upload Company Avatar"
+                      onUpload={onUpload}
+                      isUploading={isUploading}
+                      currentAvatar={currentAvatar}
+                    />
                   </div>
                 </div>
                 <div className="recruiter-profile__container__info__top__right">
@@ -170,12 +237,14 @@ function RecruiterProfilePage(props) {
                 <GoIcons.GoPrimitiveDot className="title-dot" />
                 <PopupTextEditor
                   label="Update Overall"
-                  initData={user.r_profile.description}
+                  initData={
+                    user.r_profile.description
+                  }
                   onTextChange={onUpdateOverall}
                   isUpdating={isUpdating}
                 />
               </div>
-              <div className="recruiter-profile__container__overall__content">{ReactHtmlParser(user.r_profile.description)}</div>
+              <div className="recruiter-profile__container__overall__content">{ReactHtmlParser(user.r_profile.description ?? "No Information Available")}</div>
             </div>
           </div>
         </div>

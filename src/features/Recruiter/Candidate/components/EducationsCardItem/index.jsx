@@ -23,7 +23,7 @@ function EducationsCardItem(props) {
         <span>{education.school}</span>
         <ul>
           <li>
-            {moment(education.from_date).format('MM/DD/YYYY')} - {moment(education.to_date).format('MM/DD/YYYY')}
+            {moment(new Date(education.from_date)).format('MM/DD/YYYY')} - {moment(new Date(education.to_date)).format('MM/DD/YYYY')}
           </li>
           <li>Major: {education.major}</li>
           <li>Achievements: {education.achievements}</li>

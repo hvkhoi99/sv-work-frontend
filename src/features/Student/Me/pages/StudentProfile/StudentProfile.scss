@@ -100,6 +100,11 @@
             &__icon {
               position: absolute;
 
+              & > .button-edit {
+                top: 2.8rem;
+                left: 2rem;
+                font-size: 2.2rem;
+              }
               // & > .change-icon {
               //   top: 2.8rem;
               //   left: 2rem;
