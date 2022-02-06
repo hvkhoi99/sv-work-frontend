@@ -1,10 +1,9 @@
-import { GENDER, JOB_TAGS_OPTIONS } from 'constants/global';
+import { CAREER_OPTIONS, GENDER, LANGUAGE_OPTIONS, LOCATION_OPTIONS, SCHOOL_OPTIONS } from 'constants/global';
 import SelectField from 'custom-fields/SelectField';
 import { FastField, Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, FormGroup, Spinner } from 'reactstrap';
-import * as Yup from 'yup';
+import { Button, Spinner } from 'reactstrap';
 
 SearchTypeForm.propTypes = {
   onSubmit: PropTypes.func
@@ -25,19 +24,19 @@ function SearchTypeForm(props) {
     education: '',
   };
 
-  const validationSchema = Yup.object().shape({
-    gender: Yup
-      .string()
-      .typeError('Type of Job is required')
-      .required('Type of Job is required'),
-  });
+  // const validationSchema = Yup.object().shape({
+  //   gender: Yup
+  //     .string()
+  //     .typeError('Type of Job is required')
+  //     .required('Type of Job is required'),
+  // });
 
   return (
     <>
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        validationSchema={validationSchema}
+        // validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
         {formikProps => {
@@ -45,68 +44,74 @@ function SearchTypeForm(props) {
 
           return (
             <Form>
-              <FastField
-                name="career"
-                component={SelectField}
+              <div className="search-type-form__above">
+                <FastField
+                  name="career"
+                  component={SelectField}
 
-                label="Career"
-                placeholder="Eg: Designer"
-                // options={GENDER}
-                isCreatableSelect={true}
-              />
+                  label="Career"
+                  placeholder="Eg: Designer"
+                  options={CAREER_OPTIONS}
+                  isCreatableSelect={true}
+                  moreClassName="width-20"
+                />
 
-              <FastField
-                name="location"
-                component={SelectField}
+                <FastField
+                  name="location"
+                  component={SelectField}
 
-                label="Location"
-                placeholder="Eg: Da Nang"
-                // options={GENDER}
-                isCreatableSelect={true}
-              />
+                  label="Location"
+                  placeholder="Eg: Da Nang"
+                  options={LOCATION_OPTIONS}
+                  isCreatableSelect={true}
+                  moreClassName="width-20"
+                />
 
-              <FastField
-                name="language"
-                component={SelectField}
+                <FastField
+                  name="language"
+                  component={SelectField}
 
-                label="Language"
-                placeholder="Eg: English"
-                // options={GENDER}
-                isCreatableSelect={true}
-              />
+                  label="Language"
+                  placeholder="Eg: English"
+                  options={LANGUAGE_OPTIONS}
+                  isCreatableSelect={true}
+                  moreClassName="width-20"
+                />
 
-              <FastField
-                name="gender"
-                component={SelectField}
+                <FastField
+                  name="gender"
+                  component={SelectField}
 
-                label="Gender"
-                placeholder="Male"
-                options={GENDER}
-                // isCreatableSelect={true}
-                isOptionValue={true}
-              />
-              <FastField
-                name="education"
-                component={SelectField}
+                  label="Gender"
+                  placeholder="Male"
+                  options={GENDER}
+                  // isCreatableSelect={true}
+                  isOptionValue={true}
+                  moreClassName="width-20"
+                />
+              </div>
 
-                label="Education"
-                placeholder="Eg: Bach Khoa"
-                options={JOB_TAGS_OPTIONS}
-                isCreatableSelect={true}
-              />
+              <div className="search-type-form__below">
+                <FastField
+                  name="education"
+                  component={SelectField}
 
-              <FormGroup>
+                  label="Education"
+                  placeholder="Eg: Bach Khoa"
+                  options={SCHOOL_OPTIONS}
+                  isCreatableSelect={true}
+                  moreClassName="width-20"
+                />
                 <Button
                   disabled={isSubmitting}
                   style={isSubmitting ? { cursor: "default" } : { cursor: "pointer" }}
                   type="submit"
                   color={'success'}
-                  className="candidates-search-button"
                 >
                   {isSubmitting && <Spinner className="mr-2" children="" size="sm" />}
                   {isSubmitting ? "Searching" : "Search"}
                 </Button>
-              </FormGroup>
+              </div>
             </Form>
           );
         }}

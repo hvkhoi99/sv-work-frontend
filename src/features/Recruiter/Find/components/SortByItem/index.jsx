@@ -12,10 +12,12 @@ SortByItem.propTypes = {
 function SortByItem(props) {
   const ref = useRef(null);
   const [show, setShow] = useState(false);
+  const [byName, setByName] = useState('Default');
 
-  const handleShow = (e) => {
+  const handleShow = (e, name) => {
     e.preventDefault();
     setShow(!show);
+    setByName(name);
   }
 
   useEffect(() => {
@@ -34,7 +36,7 @@ function SortByItem(props) {
 
   return (
     <div ref={ref} className="sort-by-item">
-      <div className="sort-by-item__main" onClick={(e) => handleShow(e)}>
+      <div className="sort-by-item__main" onClick={() => setShow(!show)}>
         <span
           className="sort-by-item__main__count-result"
         >
@@ -42,7 +44,7 @@ function SortByItem(props) {
         </span>
         <div className="sort-by-item__main__sort-type">
           <span className="sort-by-item__main__sort-type__name">
-            Sort: Default
+            Sort: {byName}
           </span>
           <BsIcons.BsFillCaretDownFill className="sort-by-item__main__sort-type__icon" />
         </div>
@@ -54,7 +56,7 @@ function SortByItem(props) {
               to="#"
               key={index}
               className="sort-by-item__dropdown__link"
-              onClick={(e) => handleShow(e)}
+              onClick={(e) => handleShow(e, option.label)}
             >{option.label}</Link>
           })
         }

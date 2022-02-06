@@ -65,20 +65,25 @@ const recruiterApi = {
     return axiosClient.get(url);
   },
 
-  // Student -> Recruiter -> Candidate
+  // Candidate
   getCandidateProfile: (id) => {
     const url = `/recruiter/candidate/${id}`;
     return axiosClient.get(url);
   },
 
   getJobsInvite: () => {
-    const url = "/student/recruiter/candidate/jobsInvite/list";
+    const url = "/recruiter/candidate/jobsInvite/list";
     return axiosClient.get(url);
   },
 
   approveCandidate: (recruitmentId, candidateId) => {
     const url = `/recruiter/recruitment/${recruitmentId}/candidate/${candidateId}/approve`;
     return axiosClient.put(url);
+  },
+
+  inviteCandidate: (candidateId, recruitmentId) => {
+    const url = `/recruiter/candidate/${candidateId}/recruitment/${recruitmentId}`;
+    return axiosClient.post(url);
   }
 }
 

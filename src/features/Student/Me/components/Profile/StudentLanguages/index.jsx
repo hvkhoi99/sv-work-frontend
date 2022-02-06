@@ -40,7 +40,7 @@ function StudentLanguagesCard(props) {
         <div className="student-languages-card__main__info">
           {
             // helper.splitCommaString(
-            //   "English, France, China, Japan",
+            //   "English, French, China, Japan",
             //   "student-languages-card__main__info__item"
             // )
             languages.length > 0

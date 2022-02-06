@@ -41,28 +41,55 @@
 
     &__applied-recruitment {
       display: flex;
-      justify-content: flex-end;
       align-items: center;
       width: 100%;
 
-      & > span {
-        max-width: 30%;
-        word-break: break-all;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-      }
-
-      & > .recruitment-was-closed {
-        text-decoration: line-through;
+      &__status {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: 100%;
+        margin: 0.2rem 0;
         color: darkgrey;
-      }
 
-      &__group-button {
-        margin-left: 1rem;
-        & > button {
-          padding: 0.3rem 0.5rem;
-          border-radius: 2rem;
+        &__dot {
+          width: 0.4rem;
+          height: 0.4rem;
+          border-radius: 50%;
+          background-color: darkgrey;
+        }
+
+        &__title {
+          max-width: 30%;
+          word-break: break-all;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          color: black;
+
+          margin-right: 0.5rem;
+          // font-weight: 300;
+        }
+
+        & > .recruitment-was-closed {
+          text-decoration: line-through;
+          color: darkgrey;
+        }
+
+        // &__is-closed {
+        //   font-weight: 300;
+        // }
+
+        // &__is-accepted {
+        //   font-weight: 300;
+        // }
+
+        &__group-button {
+          margin-left: 1rem;
+          & > button {
+            padding: 0.3rem 0.5rem;
+            border-radius: 2rem;
+          }
         }
       }
     }

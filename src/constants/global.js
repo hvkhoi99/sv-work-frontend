@@ -4,7 +4,7 @@ export const CITY_OPTIONS = [
   { value: 3, label: "Ho Chi Minh" },
   { value: 4, label: "Hai Phong" },
   { value: 5, label: "Ha Noi" },
-  { value: 6, label: "Hai Duong" },
+  { value: 6, label: "Can Tho" },
 ];
 
 export const JOB_TYPE_OPTIONS = [
@@ -33,12 +33,34 @@ export const GENDER = [
   { value: false, label: "Female" },
 ];
 
-export const skill = [
-  { Skill_ID: 1, Skill_Name: "Java" },
-  { Skill_ID: 2, Skill_Name: "ReactJS" },
-  { Skill_ID: 3, Skill_Name: "Photoshop" },
-  { Skill_ID: 4, Skill_Name: "ASP .Net" },
-  { Skill_ID: 5, Skill_Name: "Javascript" },
+export const CAREER_OPTIONS = [
+  { value: "Designer", label: "Designer" },
+  { value: "Data Analyst", label: "Data Analyst" },
+  { value: "Tester", label: "Tester" },
+  { value: "Developer", label: "Developer" },
+  { value: "Network Engineer", label: "Network Engineer" },
+];
+
+export const LOCATION_OPTIONS = [
+  { value: "Da Nang", label: "Da Nang" },
+  { value: "Ha Noi", label: "Ha Noi" },
+  { value: "Ho Chi Minh", label: "Ho Chi Minh" },
+  { value: "Hai Phong", label: "Hai Phong" },
+  { value: "Can Tho", label: "Can Tho" },
+];
+
+export const LANGUAGE_OPTIONS = [
+  { value: "English", label: "English" },
+  { value: "French", label: "French" },
+  { value: "Japanese", label: "Japanese" },
+  { value: "Chinese", label: "Chinese" },
+  { value: "Phillipinese", label: "Phillipinese" },
+];
+
+export const SCHOOL_OPTIONS = [
+  { value: "Bach Khoa", label: "Bach Khoa" },
+  { value: "FPT", label: "FPT" },
+  { value: "Duy Tan", label: "Duy Tan" }
 ];
 
 export const SORT_OPTIONS = [
@@ -60,37 +82,3 @@ export const SORT_OPTIONS_CANDIDATE = [
   { value: "name", label: "Name A-Z" },
   { value: "-name", label: "Name Z-A" },
 ];
-
-export function getUnique(arr, comp) {
-  const unique = arr
-    .map((e) => e[comp])
-
-    // store the keys of the unique objects
-    .map((e, i, final) => final.indexOf(e) === i && i)
-
-    // eliminate the dead keys & store unique objects
-    .filter((e) => arr[e])
-    .map((e) => arr[e]);
-
-  return unique;
-}
-
-export const toolbarConfig = {
-  // Optionally specify the groups to display (displayed in the order listed).
-  display: ['INLINE_STYLE_BUTTONS', 'BLOCK_TYPE_BUTTONS', 'LINK_BUTTONS', 'BLOCK_TYPE_DROPDOWN', 'HISTORY_BUTTONS'],
-  INLINE_STYLE_BUTTONS: [
-    { label: 'Bold', style: 'BOLD', className: 'custom-css-class' },
-    { label: 'Italic', style: 'ITALIC' },
-    { label: 'Underline', style: 'UNDERLINE' }
-  ],
-  BLOCK_TYPE_DROPDOWN: [
-    { label: 'Normal', style: 'unstyled' },
-    { label: 'Heading Large', style: 'header-one' },
-    { label: 'Heading Medium', style: 'header-two' },
-    { label: 'Heading Small', style: 'header-three' }
-  ],
-  BLOCK_TYPE_BUTTONS: [
-    { label: 'UL', style: 'unordered-list-item' },
-    { label: 'OL', style: 'ordered-list-item' }
-  ]
-};

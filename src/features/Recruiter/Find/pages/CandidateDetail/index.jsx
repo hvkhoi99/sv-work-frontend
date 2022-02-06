@@ -10,7 +10,7 @@ import LanguagesCard from 'features/Recruiter/Candidate/components/LanguagesCard
 import PersonalInfoCard from 'features/Recruiter/Candidate/components/PersonalInfoCard';
 import SkillsCard from 'features/Recruiter/Candidate/components/SkillsCard';
 import moment from 'moment';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import * as GoIcons from 'react-icons/go';
@@ -19,23 +19,28 @@ import { useParams } from 'react-router-dom';
 import helper from 'utils/common';
 import PopupInviteCandidate from '../../components/PopupInviteCandidate';
 import './CandidateDetail.scss';
+import { useSnackbar } from 'notistack';
 
 CandidateDetailPage.propTypes = {
-  onApproveCandidate: PropTypes.func,
+  // onApproveCandidate: PropTypes.func,
 };
 
 CandidateDetailPage.defaultProps = {
-  onApproveCandidate: null,
+  // onApproveCandidate: null,
 }
 
 function CandidateDetailPage(props) {
-  const { onApproveCandidate } = props;
+  // const { onApproveCandidate } = props;
   const { id } = useParams();
   const user = useSelector((state) => state.user.current);
   const [isLoading, setIsLoading] = useState(true);
-  const [candidate, setCandidate] = useState({});
-  const [approveLoading, setApproveLoading] = useState(false);
-  const [rejectLoading, setRejectLoading] = useState(false);
+  const [candidate, setCandidate] = useState({
+    applied_jobs: [],
+    invited_jobs: []
+  });
+  // const [approveLoading, setApproveLoading] = useState(false);
+  // const [rejectLoading, setRejectLoading] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     helper.scrollToTop();
@@ -44,8 +49,12 @@ function CandidateDetailPage(props) {
         const data = user.role_id === 2
           ? await recruiterApi.getCandidateProfile(id)
           : await studentApi.getCandidateProfile(id);
-        setCandidate(data.data.data);
-        setIsLoading(false);
+        if (data.data.status === 1) {
+          setCandidate(data.data.data);
+          setIsLoading(false);
+        } else {
+          console.log("Cannot fetch candidate's profile.");
+        }
       } catch (error) {
         console.log("Cannot fetch candidate's profile. " + error.message)
       }
@@ -54,29 +63,60 @@ function CandidateDetailPage(props) {
     fetchCandidateProfile();
   }, [user, id])
 
-  const handleApprove = (type) => {
-    switch (type) {
-      case "approve":
-        setApproveLoading(true);
-        setTimeout(() => {
-          setApproveLoading(false);
-        }, 2000)
-        break;
-      case "reject":
-        setRejectLoading(true);
-        setTimeout(() => {
-          setRejectLoading(false);
-        }, 2000)
-        break;
-      default:
-        break;
-    }
+  // const handleApprove = (type) => {
+  //   switch (type) {
+  //     case "approve":
+  //       setApproveLoading(true);
+  //       setTimeout(() => {
+  //         setApproveLoading(false);
+  //       }, 2000)
+  //       break;
+  //     case "reject":
+  //       setRejectLoading(true);
+  //       setTimeout(() => {
+  //         setRejectLoading(false);
+  //       }, 2000)
+  //       break;
+  //     default:
+  //       break;
+  //   }
 
-    onApproveCandidate(candidate);
-  }
+  //   onApproveCandidate(candidate);
+  // }
 
-  const onInvite = (values) => {
+  const onInvite = async (values) => {
     console.log(values);
+    try {
+      const action = user.role_id === 2
+        ? await recruiterApi.inviteCandidate(id, values.id)
+        : await studentApi.inviteCandidate(id, values.id);
+      console.log({ action });
+      const newInvitedJobs = candidate.invited_jobs;
+      const index = newInvitedJobs.findIndex(x => x.id === values.id);
+      if (action.data.status === 1) {
+        if (index > -1) {
+          newInvitedJobs.splice(index, 1);
+          setCandidate(state => ({
+            ...state,
+            invited_jobs: newInvitedJobs
+          }));
+        } else {
+          newInvitedJobs.splice(0, 0, action.data.data);
+          setCandidate(state => ({
+            ...state,
+            invited_jobs: newInvitedJobs
+          }));
+        }
+        enqueueSnackbar(action.data.message, { variant: "success" });
+        return true;
+      } else {
+        enqueueSnackbar(action.data.message, { variant: "error" });
+        return false;
+      }
+    } catch (error) {
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
+    }
   }
 
   return (
@@ -103,8 +143,8 @@ function CandidateDetailPage(props) {
               </span>
 
               <div className="candidate-detail__above__btn-group">
-                <PopupInviteCandidate 
-                onInvite={onInvite}
+                <PopupInviteCandidate
+                  onInvite={onInvite}
                 />
               </div>
               {
@@ -123,30 +163,151 @@ function CandidateDetailPage(props) {
                         className="candidate-detail__above__applied-recruitment"
                         key={index}
                       >
-                        <span className={job.is_closed ? "recruitment-was-closed" : ""}>{job.title}</span>
-                        {/* <span>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cum nam iste voluptatem reiciendis doloremque, est ut neque nesciunt quis quisquam. Suscipit doloremque consectetur cupiditate quidem itaque debitis cum, magni sapiente!</span> */}
-                        {!job.is_closed && <div className="candidate-detail__above__applied-recruitment__group-button" >
-                          <button
-                            type="button"
-                            className="btn btn-success btn-sm mr-2"
-                            disabled={approveLoading}
-                            style={approveLoading ? { cursor: "default" } : { cursor: "pointer" }}
-                            onClick={() => handleApprove("approve")}
-                          >
-                            {approveLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                            Approve
-                          </button>
-                          <button
-                            type="button"
-                            className="btn btn-secondary btn-sm"
-                            disabled={rejectLoading}
-                            style={rejectLoading ? { cursor: "default" } : { cursor: "pointer" }}
-                            onClick={() => handleApprove("reject")}
-                          >
-                            {rejectLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                            Reject
-                          </button>
-                        </div>}
+                        {
+                          // (job.is_closed || (job.application.state !== null)) &&
+                          <div className="candidate-detail__above__applied-recruitment__status">
+                            <span
+                              className={
+                                (job.is_closed || (job.application.state !== null))
+                                  ? "candidate-detail__above__applied-recruitment__status__title recruitment-was-closed"
+                                  : "candidate-detail__above__applied-recruitment__status__title"
+                              }
+                            >
+                              {index + 1}. {job.title}
+                            </span>
+                            <span
+                              className="candidate-detail__above__applied-recruitment__status__is-closed"
+                              style={job.is_closed ? { color: "red" } : { color: "var(--success)" }}
+                            >
+                              {job.is_closed ? "Closed" : "Recruiting"}
+                            </span>
+                            <div className="candidate-detail__above__applied-recruitment__status__dot" />
+                            <span
+                              className="candidate-detail__above__applied-recruitment__status__is-accepted"
+                              style={
+                                job.application.state
+                                  ? { color: 'var(--success)' }
+                                  : (
+                                    job.application.state === null
+                                      ? { color: 'gold' } : { color: 'var(--secondary)' }
+                                  )
+                              }
+                            >
+                              {
+                                job.application.state
+                                  ? "Accepted"
+                                  : (
+                                    job.application.state === null
+                                      ? "Waiting" : "Rejected"
+                                  )
+                              }
+                            </span>
+                          </div>
+                        }
+                        {/* {
+                          (!job.is_closed && (job.application.state === null)) &&
+                          <div className="candidate-detail__above__applied-recruitment__status">
+                            <span
+                              className="candidate-detail__above__applied-recruitment__status__name">
+                              {index + 1}. {job.title}
+                            </span>
+                            <div className="candidate-detail__above__applied-recruitment__status__group-button" >
+                              <button
+                                type="button"
+                                className="btn btn-success btn-sm mr-2"
+                                disabled={approveLoading}
+                                style={approveLoading ? { cursor: "default" } : { cursor: "pointer" }}
+                                onClick={() => handleApprove("approve")}
+                              >
+                                {approveLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                                Approve
+                              </button>
+                              <button
+                                type="button"
+                                className="btn btn-secondary btn-sm"
+                                disabled={rejectLoading}
+                                style={rejectLoading ? { cursor: "default" } : { cursor: "pointer" }}
+                                onClick={() => handleApprove("reject")}
+                              >
+                                {rejectLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                                Reject
+                              </button>
+                            </div>
+                          </div>
+                        } */}
+                      </div>
+                    })
+                  }
+                </>
+              }
+              {/* <div style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                width: '100%',
+                margin: '1.5rem 0 0 0'
+              }} >
+                <div style={{
+                  width: '20%',
+                  border: '1px dashed darkgray',
+                }} />
+              </div> */}
+              {
+                candidate.invited_jobs.length > 0 &&
+                <>
+                  <span style={{
+                    margin: '1.5rem 0 .5rem 0',
+                    textAlign: 'right',
+                    width: '100%',
+                    color: 'cornflowerblue',
+                    fontWeight: '500',
+                  }}>The jobs you have invited this candidate:</span>
+                  {
+                    candidate.invited_jobs.map((job, index) => {
+                      return <div
+                        className="candidate-detail__above__applied-recruitment"
+                        key={index}
+                      >
+                        {
+                          // (job.is_closed || (job.application.state !== null)) &&
+                          <div className="candidate-detail__above__applied-recruitment__status">
+                            <span
+                              className={
+                                (job.is_closed || (job.application.state !== null))
+                                  ? "candidate-detail__above__applied-recruitment__status__title recruitment-was-closed"
+                                  : "candidate-detail__above__applied-recruitment__status__title"
+                              }
+                            >
+                              {index + 1}. {job.title}
+                            </span>
+                            <span
+                              className="candidate-detail__above__applied-recruitment__status__is-closed"
+                              style={job.is_closed ? { color: "red" } : { color: "var(--success)" }}
+                            >
+                              {job.is_closed ? "Closed" : "Recruiting"}
+                            </span>
+                            <div className="candidate-detail__above__applied-recruitment__status__dot" />
+                            <span
+                              className="candidate-detail__above__applied-recruitment__status__is-accepted"
+                              style={
+                                job.application.state
+                                  ? { color: 'var(--success)' }
+                                  : (
+                                    job.application.state === null
+                                      ? { color: 'gold' } : { color: 'var(--secondary)' }
+                                  )
+                              }
+                            >
+                              {
+                                job.application.state
+                                  ? "Accepted"
+                                  : (
+                                    job.application.state === null
+                                      ? "Waiting" : "Denied"
+                                  )
+                              }
+                            </span>
+                          </div>
+                        }
                       </div>
                     })
                   }

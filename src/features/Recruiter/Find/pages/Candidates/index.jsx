@@ -8,7 +8,7 @@ import LoadingUI from 'components/Loading';
 import ReactPaginate from 'react-paginate';
 import * as MdIcons from 'react-icons/md';
 import SearchTypeForm from '../../components/SearchTypeForm';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Paths from 'constants/paths';
 import helper from 'utils/common';
 
@@ -63,9 +63,9 @@ function FindCadidatesPage(props) {
               <div className="find-candidates__container__above">
                 <div className="find-candidates__container__above__search">
                   <input type="text" placeholder="Name..." />
-                  <button className="btn btn-success btn-sm">
+                  <Link to="#" className="find-candidates__container__above__search__button">
                     <RiIcons.RiSearchLine className="search-icon" />
-                  </button>
+                  </Link>
                 </div>
                 <div className="find-candidates__container__above__search-type">
                   <SearchTypeForm onSubmit={onSubmit} />

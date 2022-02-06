@@ -40,8 +40,22 @@
           }
         }
 
-        & > button {
+        &__button {
           padding: 0.3rem 0.5rem;
+          background-color: var(--success);
+          text-decoration: none;
+          border-radius: .2rem;
+          color: #fff;
+
+          &:hover {
+            transition: all 0.15s ease-out;
+            background-color: darkgreen;
+            color: #fff;
+          }
+
+          &:active {
+            background-color: var(--success);
+          }
         }
       }
 
@@ -55,8 +69,35 @@
 
         & > form {
           display: flex;
-          justify-content: space-evenly;
-          align-items: flex-end;
+          flex-direction: column;
+          width: 100%;
+
+          & > .search-type-form {
+            width: 100%;
+
+            &__above {
+              width: 100%;
+
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+            }
+
+            &__below {
+              display: flex;
+              align-items: flex-end;
+              
+              width: 100%;
+
+              & > button {
+                display: flex;
+                align-items: center;
+                border-radius: 2rem;
+                margin: 0 0 .9rem 2rem;
+                box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+              }
+            }
+          }
         }
       }
 

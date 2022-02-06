@@ -4,11 +4,6 @@ import Popup from 'reactjs-popup';
 import InviteCandidateForm from '../InviteCandidateForm';
 
 PopupInviteCandidate.propTypes = {
-
-};
-
-
-PopupInviteCandidate.propTypes = {
   onInvite: PropTypes.func
 };
 
@@ -24,7 +19,7 @@ const InviteCandidateButton = React.forwardRef(({ open, ...props }, ref) => (
     {...props}
   >
     {/* Trigger - {props.open ? 'Opened' : 'Closed' */}
-    Invite
+    Invite - UnInvite
   </button>
 ));
 

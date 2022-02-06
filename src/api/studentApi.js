@@ -267,6 +267,11 @@ const studentApi = {
   approveCandidate: (recruitmentId, candidateId) => {
     const url = `/student/recruiter/recruitment/${recruitmentId}/candidate/${candidateId}/approve`;
     return axiosClient.put(url);
+  },
+
+  inviteCandidate: (candidateId, recruitmentId) => {
+    const url = `/student/recruiter/candidate/${candidateId}/recruitment/${recruitmentId}`;
+    return axiosClient.post(url);
   }
 }
 
