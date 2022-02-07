@@ -19,9 +19,9 @@ function SearchTypeForm(props) {
   const initialValues = {
     career: '',
     location: '',
-    language: '',
+    locales: '',
     gender: '',
-    education: '',
+    school: '',
   };
 
   // const validationSchema = Yup.object().shape({
@@ -68,7 +68,7 @@ function SearchTypeForm(props) {
                 />
 
                 <FastField
-                  name="language"
+                  name="locales"
                   component={SelectField}
 
                   label="Language"
@@ -93,7 +93,7 @@ function SearchTypeForm(props) {
 
               <div className="search-type-form__below">
                 <FastField
-                  name="education"
+                  name="school"
                   component={SelectField}
 
                   label="Education"

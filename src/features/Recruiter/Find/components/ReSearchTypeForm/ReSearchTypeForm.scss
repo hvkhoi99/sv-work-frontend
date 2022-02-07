@@ -1,0 +1,21 @@
+.re-search-candidates {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  width: 100%;
+  padding: 1rem 0rem 1.5rem;
+
+  &__select {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 12rem;
+
+    &__title {
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: var(--success);
+    }
+  }
+}

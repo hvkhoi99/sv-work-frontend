@@ -7,7 +7,7 @@ import CandidateFindCard from '../../components/CandidateFindCard';
 import LoadingUI from 'components/Loading';
 import ReactPaginate from 'react-paginate';
 import * as MdIcons from 'react-icons/md';
-import SearchTypeForm from '../../components/SearchTypeForm';
+import ReSearchTypeForm from '../../components/ReSearchTypeForm';
 import { Link, useHistory } from 'react-router-dom';
 import Paths from 'constants/paths';
 import helper from 'utils/common';
@@ -43,9 +43,9 @@ function FindCadidatesPage(props) {
     console.log("prev/next page");
   }
 
-  const onSubmit = (values) => {
-    console.log({ values });
-  };
+  // const onSubmit = (values) => {
+  //   console.log({ values });
+  // };
 
   const onViewCandidate = (candidateId) => {
     history.push(`${Paths.recruiterCandidate}/1`);
@@ -68,7 +68,7 @@ function FindCadidatesPage(props) {
                   </Link>
                 </div>
                 <div className="find-candidates__container__above__search-type">
-                  <SearchTypeForm onSubmit={onSubmit} />
+                  <ReSearchTypeForm />
                 </div>
                 <div className="find-candidates__container__above__sort">
                   <SortByItem />
