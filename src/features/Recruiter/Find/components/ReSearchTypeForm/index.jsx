@@ -64,7 +64,7 @@ function ReSearchTypeForm(props) {
               styles={colourStyles}
               isClearable={true}
               placeholder={item.defaultValue}
-              isDisabled={selectValue.name.length <= 0}
+              // isDisabled={selectValue.name.length <= 0}
             />
           </div>
         })

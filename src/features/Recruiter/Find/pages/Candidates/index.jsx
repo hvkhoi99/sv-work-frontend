@@ -107,19 +107,17 @@ function FindCadidatesPage(props) {
   }
 
   const handleSearchCandidateName = async () => {
-    if (selectValue.name.length > 0) {
-      setIsSearching(true);
-      setIsSearched(true);
-      await findCandidates(
-        selectValue.name,
-        selectValue.career,
-        selectValue.location,
-        selectValue.locales,
-        selectValue.gender,
-        selectValue.school
-      );
-      setIsSearching(false);
-    }
+    setIsSearching(true);
+    setIsSearched(true);
+    await findCandidates(
+      selectValue.name,
+      selectValue.career,
+      selectValue.location,
+      selectValue.locales,
+      selectValue.gender,
+      selectValue.school
+    );
+    setIsSearching(false);
   }
 
   const findCandidates = async (name, career, location, locales, gender, school) => {
@@ -128,7 +126,7 @@ function FindCadidatesPage(props) {
     try {
       const params = {
         page: 1, _limit: _limit,
-        name: name === null ? "" : name.value,
+        name,
         career: career === null ? "" : career.value,
         location: location === null ? "" : location.value,
         locales: locales === null ? "" : locales.value,
@@ -161,7 +159,7 @@ function FindCadidatesPage(props) {
       ...state,
       [type]: selectedOption
     }));
-    if ((selectValue.name.length > 0) && isSearched) {
+    // if ((selectValue.name.length > 0) && isSearched) {
       switch (type) {
         case "career":
           await findCandidates(
@@ -216,41 +214,41 @@ function FindCadidatesPage(props) {
         default:
           break;
       }
-    }
+    // }
   }
 
   // users.sort((a, b) => a.name.localeCompare(b.name))
-  const onSortCandidates = (option) => {
+  const onSortCandidates = async (option) => {
     switch (option.value) {
       case 0:
-        const newDefaultCandidates = candidates;
+        const newDefaultCandidates = [...candidates];
         newDefaultCandidates.sort((a, b) => (a.created_at < b.created_at) ? 1 : -1);
         setCandidates(newDefaultCandidates);
-        console.log(option.label, {newDefaultCandidates});
+        // console.log(option.label, {newDefaultCandidates});
         break;
       case 1:
-        const newNewestCandidates = candidates;
+        const newNewestCandidates = [...candidates];
         newNewestCandidates.sort((a, b) => (a.created_at < b.created_at) ? 1 : -1);
         setCandidates(newNewestCandidates);
-        console.log(option.label, {newNewestCandidates});
+        // console.log(option.label, {newNewestCandidates});
         break;
       case 2:
-        const newLastestCandidates = candidates;
+        const newLastestCandidates = [...candidates];
         newLastestCandidates.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1);
         setCandidates(newLastestCandidates);
-        console.log(option.label, {newLastestCandidates});
+        // console.log(option.label, {newLastestCandidates});
         break;
       case 3:
-        const newNameAZCandidates = candidates;
+        const newNameAZCandidates = [...candidates];
         newNameAZCandidates.sort((a, b) => (a.last_name > b.last_name) ? 1 : -1);
         setCandidates(newNameAZCandidates);
-        console.log(option.label, {newNameAZCandidates});
+        // console.log(option.label, {newNameAZCandidates});
         break;
       case 4:
-        const newNameZACandidates = candidates;
-        newNameZACandidates.sort((a, b) => (a.last_name > b.last_name) ? 1 : -1);
+        const newNameZACandidates = [...candidates];
+        newNameZACandidates.sort((a, b) => (a.last_name < b.last_name) ? 1 : -1);
         setCandidates(newNameZACandidates);
-        console.log(option.label, {newNameZACandidates});
+        // console.log(option.label, {newNameZACandidates});
         break;
       default:
         break;
