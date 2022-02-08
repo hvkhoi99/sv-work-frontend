@@ -1,24 +1,31 @@
 import { SORT_OPTIONS_CANDIDATE } from 'constants/global';
 import React, { useEffect, useRef, useState } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import * as BsIcons from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import './SortByItem.scss';
 
 SortByItem.propTypes = {
-
+  onSortCandidates: PropTypes.func
 };
 
+SortByItem.defaultProps = {
+  onSortCandidates: null
+}
+
 function SortByItem(props) {
+  const {onSortCandidates} = props;
   const ref = useRef(null);
   const [show, setShow] = useState(false);
   const [byName, setByName] = useState('Default');
 
-  const handleShow = (e, name) => {
+  const handleShow = (e, option) => {
     e.preventDefault();
     setShow(!show);
-    setByName(name);
+    setByName(option.label);
+    onSortCandidates(option);
   }
+
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -56,7 +63,7 @@ function SortByItem(props) {
               to="#"
               key={index}
               className="sort-by-item__dropdown__link"
-              onClick={(e) => handleShow(e, option.label)}
+              onClick={(e) => handleShow(e, option)}
             >{option.label}</Link>
           })
         }

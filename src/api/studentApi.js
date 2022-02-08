@@ -272,6 +272,16 @@ const studentApi = {
   inviteCandidate: (candidateId, recruitmentId) => {
     const url = `/student/recruiter/candidate/${candidateId}/recruitment/${recruitmentId}`;
     return axiosClient.post(url);
+  },
+
+  findCandidates: (params) => {
+    const url = "/student/recruiter/find/candidate";
+    return axiosClient.get(url, {params});
+  },
+
+  getCandidatesList: (params) => {
+    const url = `/student/recruiter/candidates/list?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
   }
 }
 

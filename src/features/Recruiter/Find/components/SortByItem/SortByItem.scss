@@ -32,7 +32,7 @@
     &:hover {
       color: white;
       background-color: var(--success);
-      transition: all 0.15s ease-out;
+      transition: all 0.1s ease-out;
     }
 
     &:hover > &__sort-type {
@@ -61,11 +61,11 @@
 
     overflow: hidden;
     position: absolute;
-    -webkit-transition: max-height 0.15s ease-in-out 0.15s;
-    -moz-transition: max-height 0.15s ease-in-out 0.15s;
-    -o-transition: max-height 0.15s ease-in-out 0.15s;
-    -ms-transition: max-height 0.15s ease-in-out 0.15s;
-    transition: max-height 0.15s ease-in-out 0.15s;
+    // -webkit-transition: max-height 0.15s ease-in-out 0.15s;
+    // -moz-transition: max-height 0.15s ease-in-out 0.15s;
+    // -o-transition: max-height 0.15s ease-in-out 0.15s;
+    // -ms-transition: max-height 0.15s ease-in-out 0.15s;
+    // transition: max-height 0.15s ease-in-out 0.15s;
 
     z-index: 1;
 

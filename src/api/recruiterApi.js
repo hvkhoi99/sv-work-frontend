@@ -84,6 +84,16 @@ const recruiterApi = {
   inviteCandidate: (candidateId, recruitmentId) => {
     const url = `/recruiter/candidate/${candidateId}/recruitment/${recruitmentId}`;
     return axiosClient.post(url);
+  },
+
+  findCandidates: (params) => {
+    const url = "/recruiter/find/candidate";
+    return axiosClient.get(url, {params});
+  },
+
+  getCandidatesList: (params) => {
+    const url = `/recruiter/candidates/list?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
   }
 }
 

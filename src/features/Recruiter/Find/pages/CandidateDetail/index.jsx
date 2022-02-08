@@ -22,15 +22,12 @@ import './CandidateDetail.scss';
 import { useSnackbar } from 'notistack';
 
 CandidateDetailPage.propTypes = {
-  // onApproveCandidate: PropTypes.func,
 };
 
 CandidateDetailPage.defaultProps = {
-  // onApproveCandidate: null,
 }
 
 function CandidateDetailPage(props) {
-  // const { onApproveCandidate } = props;
   const { id } = useParams();
   const user = useSelector((state) => state.user.current);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,8 +35,6 @@ function CandidateDetailPage(props) {
     applied_jobs: [],
     invited_jobs: []
   });
-  // const [approveLoading, setApproveLoading] = useState(false);
-  // const [rejectLoading, setRejectLoading] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {

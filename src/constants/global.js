@@ -74,11 +74,19 @@ export const SORT_OPTIONS = [
   { value: "-salary", label: "Salary Decrease" },
 ];
 
-export const SORT_OPTIONS_CANDIDATE = [
-  { value: "", label: "Default" },
+// export const SORT_OPTIONS_CANDIDATE = [
+//   { value: "", label: "Default" },
 
-  { value: "date", label: "Newest Date" },
-  { value: "-date", label: " Lastest Date" },
-  { value: "name", label: "Name A-Z" },
-  { value: "-name", label: "Name Z-A" },
+//   { value: "date", label: "Newest Date" },
+//   { value: "-date", label: " Lastest Date" },
+//   { value: "name", label: "Name A-Z" },
+//   { value: "-name", label: "Name Z-A" },
+// ];
+export const SORT_OPTIONS_CANDIDATE = [
+  { value: 0, label: "Default" },
+
+  { value: 1, label: "Newest Date" },
+  { value: 2, label: " Lastest Date" },
+  { value: 3, label: "Name A-Z" },
+  { value: 4, label: "Name Z-A" },
 ];
