@@ -11,15 +11,17 @@ import * as TiIcons from 'react-icons/ti';
 import './RecruitmentDetail.scss';
 
 RecruitmentDetail.propTypes = {
-  recruitment: PropTypes.object
+  recruitment: PropTypes.object,
+  isViewByStudent: PropTypes.bool,
 };
 
 RecruitmentDetail.defaultProps = {
-  recruitment: {}
+  recruitment: {},
+  isViewByStudent: false
 }
 
 function RecruitmentDetail(props) {
-  const { recruitment } = props;
+  const { recruitment, isViewByStudent } = props;
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -122,7 +124,7 @@ function RecruitmentDetail(props) {
               <img src={Images.ship} alt="ship" />
             </div>
           </div>
-          <div className="similar-job hidden">
+          {isViewByStudent && <div className="similar-job">
             <h3>Similar Job for you</h3>
             <div className="similar-job__content">
               <RecruitmentCard />
@@ -130,7 +132,7 @@ function RecruitmentDetail(props) {
               <RecruitmentCard />
               <RecruitmentCard />
             </div>
-          </div>
+          </div>}
         </>
       }
     </>

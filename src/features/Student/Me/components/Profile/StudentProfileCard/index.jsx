@@ -640,7 +640,7 @@ function StudentProfileCard(props) {
     <>
       {
         isLoading
-          ? <div className="loading-child-ui">
+          ? <div className="loading-child-ui" style={{margin: '5rem 0 0 0'}}>
             <LoadingChildUI />
           </div>
           : <div className="student-profile-card">

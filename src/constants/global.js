@@ -63,6 +63,21 @@ export const SCHOOL_OPTIONS = [
   { value: "Duy Tan", label: "Duy Tan" }
 ];
 
+export const EXTRA_OPTIONS = [
+  { value: "Intern", label: "Intern" },
+  { value: "Backend Fresher", label: "Backend Fresher" },
+  { value: "Junior", label: "Junior" },
+  { value: "Fullstack Senior", label: "Fullstack Senior" },
+  { value: "Project Manager", label: "Project Manager" },
+];
+
+export const SALARY_OPTIONS = [
+  { value: 500, label: "$250 - $500" },
+  { value: 1000, label: "$500 - $1000" },
+  { value: 1500, label: "$1000 - $1500" },
+  { value: 2000, label: "$1500 - $2000" }
+];
+
 export const SORT_OPTIONS = [
   { value: "", label: "Default" },
 
@@ -74,19 +89,19 @@ export const SORT_OPTIONS = [
   { value: "-salary", label: "Salary Decrease" },
 ];
 
-// export const SORT_OPTIONS_CANDIDATE = [
-//   { value: "", label: "Default" },
-
-//   { value: "date", label: "Newest Date" },
-//   { value: "-date", label: " Lastest Date" },
-//   { value: "name", label: "Name A-Z" },
-//   { value: "-name", label: "Name Z-A" },
-// ];
 export const SORT_OPTIONS_CANDIDATE = [
-  { value: 0, label: "Default" },
+  { value: "", label: "Default" },
 
-  { value: 1, label: "Newest Date" },
-  { value: 2, label: " Lastest Date" },
-  { value: 3, label: "Name A-Z" },
-  { value: 4, label: "Name Z-A" },
+  { value: "date", label: "Newest Date" },
+  { value: "-date", label: " Lastest Date" },
+  { value: "name", label: "Name A-Z" },
+  { value: "-name", label: "Name Z-A" },
 ];
+// export const SORT_OPTIONS_CANDIDATE = [
+//   { value: 0, label: "Default" },
+
+//   { value: 1, label: "Newest Date" },
+//   { value: 2, label: " Lastest Date" },
+//   { value: 3, label: "Name A-Z" },
+//   { value: 4, label: "Name Z-A" },
+// ];

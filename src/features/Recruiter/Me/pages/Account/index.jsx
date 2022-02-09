@@ -148,8 +148,8 @@ function RecruiterAccountPage(props) {
                     currentPath === recruiterAccountPath
                       ? (
                         recruiter.logo_image_link === (null || "" || undefined)
-                        ? Images.defaultAvatar
-                        : recruiter.logo_image_link
+                          ? Images.defaultAvatar
+                          : recruiter.logo_image_link
                       )
                       : (
                         student.avatar_link === (null || "" || undefined)
@@ -210,16 +210,16 @@ function RecruiterAccountPage(props) {
                       />
                     </div>
                     <div className="account-form__item">
-                      {/* <span className="password-span">Password</span>
+                      <span className="password-span">Password</span>
                       <div className="account-form__item__password">
                         <input
                           className="form-control"
-                          value={`askdnadskjasd`}
+                          value={`*********************`}
                           disabled
-                          type={showReal ? "text" : "password"}
+                          type={"password"}
                           autoComplete="password"
                         />
-                        {
+                        {/* {
                           showReal
                             ? <FaIcons.FaRegEye
                               onClick={handleShowReal}
@@ -229,14 +229,14 @@ function RecruiterAccountPage(props) {
                               onClick={handleShowReal}
                               className="account-form__item__password__icon"
                             />
-                        }
-                      </div> */}
-                      <div className="account-form__item__link">
-                        <Link
-                          className="change-password-link"
-                          to="#"
-                          onClick={handleOpenFormChange}
-                        >Change Password</Link>
+                        } */}
+                        <div className="account-form__item__password__link">
+                          <Link
+                            className="change-password-link"
+                            to="#"
+                            onClick={handleOpenFormChange}
+                          >Change Password</Link>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -245,7 +245,7 @@ function RecruiterAccountPage(props) {
                   className={isChangeToPasswordForm ? "" : "disable-form"}
                   onSubmit={handleSubmit(onChangePassword)}
                 >
-                  <div className={"change-password-form"}>
+                  <div className="change-password-form">
                     {
                       eyes.map((eye, index) => {
                         return <div
@@ -276,7 +276,7 @@ function RecruiterAccountPage(props) {
                         </div>
                       })
                     }
-                    <div className="form-group form-button">
+                    <div className="change-password-form__group-button">
                       <button
                         className="btn btn-success btn-sm"
                         type="submit"

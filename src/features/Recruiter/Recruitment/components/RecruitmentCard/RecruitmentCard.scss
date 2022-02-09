@@ -2,10 +2,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 15rem;
+  width: 14rem;
+  height: 17.5rem;
 
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   padding: 1rem;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   border-radius: 2rem;
   font-size: 0.8rem;
   cursor: pointer;
@@ -24,8 +25,8 @@
       // margin: 0 0 0 1rem;
       &__img {
         & > img {
-          width: 4rem;
-          height: 4rem;
+          width: 3rem;
+          height: 3rem;
           border-radius: 50%;
           object-fit: cover;
 
@@ -145,6 +146,7 @@
       font-weight: 600;
       padding: .5rem 1rem;
       border-radius: 2rem;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
   }
 }

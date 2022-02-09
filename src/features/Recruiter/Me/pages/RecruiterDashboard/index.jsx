@@ -7,7 +7,6 @@ import Paths from 'constants/paths';
 import React, { useEffect, useState } from 'react';
 import * as BsIcons from 'react-icons/bs';
 import * as HiIcons from 'react-icons/hi';
-import LinesEllipsis from 'react-lines-ellipsis';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import helper from 'utils/common';
@@ -108,30 +107,12 @@ function RecruiterDashboardPage(props) {
                   } alt="recruiter-avatar" />
                   <div className="recruiter-dashboard__container__top__left__inforCard__description">
                     <div className="recruiter-dashboard__container__top__left__inforCard__description__title">
-                      {/* <LinesEllipsis
-                        text={
-                          // user.r_profile.company_name
-                          "asdkasdkja aksdkjasdkjask akjsdjashd"
-                        }
-                        maxLine='1'
-                        ellipsis='...'
-                        trimRight
-                        basedOn='letters'
-                        className="recruiter-dashboard__container__top__left__inforCard__description__title__company-name"
-                      /> */}
                       <span>{user.r_profile.company_name}</span>
                       {dashboardIndexData.profile.verify && <HiIcons.HiCheckCircle className="inforCard-icon" />}
                     </div>
-                    <LinesEllipsis
-                      text={
-                        user.r_profile.company_industry
-                      }
-                      maxLine='1'
-                      ellipsis='...'
-                      trimRight
-                      basedOn='letters'
+                    <span
                       className="recruiter-dashboard__container__top__left__inforCard__description__company-industry"
-                    />
+                    >{user.r_profile.company_industry}</span>
                   </div>
                 </div>
               </div>

@@ -68,11 +68,11 @@
               width: 100%;
 
               // &__company-name {
-                // font-size: 1.2rem;
-                // font-weight: 600;
-                // max-width: 100%;
-                // word-break: break-all;
-                // white-space: nowrap;
+              // font-size: 1.2rem;
+              // font-weight: 600;
+              // max-width: 100%;
+              // word-break: break-all;
+              // white-space: nowrap;
               // }
               & > span {
                 text-overflow: ellipsis;
@@ -80,14 +80,16 @@
                 overflow: hidden;
                 font-size: 1.2rem;
                 font-weight: 600;
-                // width: 100%;
+                width: 90%;
               }
             }
 
             &__company-industry {
-              color: darkgrey;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
               width: 100%;
-              word-break: break-all;
+              color: darkgrey;
             }
           }
         }

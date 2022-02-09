@@ -194,7 +194,7 @@
       width: 100%;
 
       & > input {
-        // width: 65%;
+        width: 65%;
         border-radius: 1rem;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 
@@ -203,25 +203,26 @@
         }
       }
 
-      &__icon {
-        font-size: 2.5rem;
-        padding: 0.5rem;
-        color: darkgrey;
-        cursor: pointer;
-        margin: 0 0 0 .5rem;
+      // &__icon {
+      //   font-size: 2.5rem;
+      //   padding: 0.5rem;
+      //   color: darkgrey;
+      //   cursor: pointer;
+      //   margin: 0 0 0 .5rem;
 
-        &:hover {
-          color: var(--success);
-          transition: all 0.15s ease-out;
-        }
+      //   &:hover {
+      //     color: var(--success);
+      //     transition: all 0.15s ease-out;
+      //   }
+      // }
+
+      &__link {
+        // margin-top: 1rem;
+        // width: 100%;
+        text-align: center;
       }
     }
 
-    &__link {
-      margin-top: 1rem;
-      width: 100%;
-      text-align: center;
-    }
   }
 
   & > div > input {
@@ -276,24 +277,26 @@
       }
     }
   }
-
-  .form-button {
+  
+  &__group-button {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     margin: 2rem 0 0 0;
-    // width: 50%;
 
     & > button {
       display: flex;
+      justify-content: center;
       align-items: center;
       border-radius: 2rem;
       box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
         rgba(0, 0, 0, 0.23) 0px 3px 6px;
       font-weight: 600;
+      min-width: 6rem;
 
       &:last-child {
         background-color: black;
+        margin-left: 2rem;
 
         &:hover {
           background-color: rgb(58, 58, 58);

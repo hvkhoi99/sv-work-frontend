@@ -351,7 +351,10 @@ function JobDetailPage(props) {
               </div>
               <div className="job-detail-page__container__bottom">
                 <div className="job-detail-page__container__bottom__description">
-                  <RecruitmentDetail recruitment={recruitment} />
+                  <RecruitmentDetail 
+                  recruitment={recruitment} 
+                  isViewByStudent={true}
+                  />
                 </div>
               </div>
             </div>

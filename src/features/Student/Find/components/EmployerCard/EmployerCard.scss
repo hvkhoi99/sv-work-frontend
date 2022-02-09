@@ -1,0 +1,58 @@
+.employer-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 14rem;
+  height: 15rem;
+
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 1rem;
+  border-radius: 2rem;
+  font-size: 0.8rem;
+  line-height: 1.8rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: lightblue;
+    transition: all 0.15s ease-out;
+  }
+
+  &__avatar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    & > img {
+      width: 6rem;
+      height: 6rem;
+      border-radius: 50%;
+      border: 1px solid lightgrey;
+      object-fit: cover;
+    }
+  }
+
+  &__employer-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: .5rem 0 0 0;
+  }
+
+  &__location {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    // color: darkgrey;
+
+    &__name {
+      margin-left: .2rem;
+    }
+  }
+
+  &__jobs-available {
+    color: var(--success);
+    font-weight: 500;
+  }
+}

@@ -6,15 +6,23 @@ import { Link } from 'react-router-dom';
 import './SortByItem.scss';
 
 SortByItem.propTypes = {
-  onSortCandidates: PropTypes.func
+  candidatesLength: PropTypes.number,
+  name: PropTypes.string,
+  onSortCandidates: PropTypes.func,
+  isSearching: PropTypes.bool,
+  isLoadingChild: PropTypes.bool
 };
 
 SortByItem.defaultProps = {
-  onSortCandidates: null
+  candidatesLength: 0,
+  onSortCandidates: null,
+  name: '',
+  isSearching: false,
+  isLoadingChild: false,
 }
 
 function SortByItem(props) {
-  const {onSortCandidates} = props;
+  const { onSortCandidates, name, candidatesLength, isSearching, isLoadingChild } = props;
   const ref = useRef(null);
   const [show, setShow] = useState(false);
   const [byName, setByName] = useState('Default');
@@ -25,7 +33,6 @@ function SortByItem(props) {
     setByName(option.label);
     onSortCandidates(option);
   }
-
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -47,7 +54,9 @@ function SortByItem(props) {
         <span
           className="sort-by-item__main__count-result"
         >
-          15 results of...
+          {(isSearching || isLoadingChild) ? "..." : candidatesLength} {candidatesLength > 1
+            ? "results"
+            : "result"} of "<strong>{name}</strong>"
         </span>
         <div className="sort-by-item__main__sort-type">
           <span className="sort-by-item__main__sort-type__name">

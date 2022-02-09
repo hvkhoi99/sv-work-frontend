@@ -11,6 +11,7 @@ import ReactHtmlParser from 'react-html-parser';
 import * as AiIcons from 'react-icons/ai';
 import * as GoIcons from 'react-icons/go';
 import * as HiIcons from 'react-icons/hi';
+import * as MdIcons from 'react-icons/md';
 import * as TiIcons from 'react-icons/ti';
 import { useDispatch, useSelector } from 'react-redux';
 import helper from 'utils/common';
@@ -27,7 +28,7 @@ function RecruiterProfilePage(props) {
   const [isUpdating, setIsUpdating] = useState(false);
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
-  
+
   const [currentAvatar, setCurrentAvatar] = useState(
     user.r_profile === null
       ? Images.defaultAvatar
@@ -135,9 +136,9 @@ function RecruiterProfilePage(props) {
         newFile.name
       );
       const action = user.role_id === 2
-      ? await recruiterApi.changeRecruiterAvatar(formData)
-      : await studentApi.changeRecruiterAvatar(formData);
-      
+        ? await recruiterApi.changeRecruiterAvatar(formData)
+        : await studentApi.changeRecruiterAvatar(formData);
+
       if (action.data.status === 1) {
         const cpUser = {
           ...user,
@@ -201,9 +202,14 @@ function RecruiterProfilePage(props) {
                   <span className="recruiter-profile__container__info__top__right__recruiter-industry">
                     {user.r_profile.company_industry}
                   </span>
-                  <span className="recruiter-profile__container__info__top__right__recruiter-address">
-                    {user.r_profile.address}
-                  </span>
+                  <div className="recruiter-profile__container__info__top__right__recruiter-address">
+                    <MdIcons.MdLocationOn
+                      className="recruiter-profile__container__info__top__right__recruiter-address__icon"
+                    />
+                    <span>
+                      {user.r_profile.address}
+                    </span>
+                  </div>
                   <div className="recruiter-profile__container__info__top__right__btn-edit">
                     <PopupUpdateProfile
                       initialValues={user.r_profile}
