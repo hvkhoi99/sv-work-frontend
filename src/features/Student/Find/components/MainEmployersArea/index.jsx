@@ -1,4 +1,5 @@
-import React from 'react';
+import LoadingChildUI from 'components/LoadingChild';
+import React, { useState } from 'react';
 // import PropTypes from 'prop-types';
 import * as BsIcons from 'react-icons/bs';
 import { Link } from 'react-router-dom';
@@ -10,7 +11,21 @@ MainEmployersArea.propTypes = {
 };
 
 function MainEmployersArea(props) {
-  const items = [1, 2, 3, 4, 5, 6];
+  const [isLoading, setIsLoading] = useState(false);
+  const [items, setItems] = useState([1, 2, 3, 4, 5, 6]);
+
+  const handleSeeMore = () => {
+    setIsLoading(true);
+    const timer = setTimeout(() => {
+      const newItems = items.concat(...items);
+      setItems(newItems);
+      setIsLoading(false);
+    }, 2000);
+
+    return () => {
+      clearTimeout(timer);
+    }
+  }
 
   return (
     <div className="main-employers-area">
@@ -29,12 +44,18 @@ function MainEmployersArea(props) {
           })
         }
       </div>
-      <div className="main-employers-area__more">
-        <Link to="#" className="main-employers-area__more__link">
-          <BsIcons.BsChevronDoubleDown className="main-employers-area__more__link__icon" />
-          <span>See more</span>
-        </Link>
-      </div>
+      {
+        isLoading
+          ? <div className="loading-child-ui">
+            <LoadingChildUI />
+          </div>
+          : <div className="main-employers-area__more">
+            <Link to="#" className="main-employers-area__more__link" onClick={handleSeeMore}>
+              <BsIcons.BsChevronDoubleDown className="main-employers-area__more__link__icon" />
+              <span>See more</span>
+            </Link>
+          </div>
+      }
     </div>
   );
 }

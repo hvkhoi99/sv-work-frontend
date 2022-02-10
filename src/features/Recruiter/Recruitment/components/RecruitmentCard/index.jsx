@@ -8,17 +8,17 @@ import helper from 'utils/common';
 import './RecruitmentCard.scss';
 
 RecruitmentCard.propTypes = {
-  recruitments: PropTypes.array,
+  recruitment: PropTypes.object,
   onViewJob: PropTypes.func,
 };
 
 RecruitmentCard.defaultProps = {
-  recruitments: [],
+  recruitment: {},
   onViewJob: null
 }
 
 function RecruitmentCard(props) {
-  const { onViewJob } = props;
+  const { onViewJob, recruitment } = props;
 
   const handleViewJob = (e) => {
     e.preventDefault();
@@ -41,7 +41,7 @@ function RecruitmentCard(props) {
           </div>
           <div className="recruitment-card__top__left__company-name">
 
-            <span>Twitter</span>
+            <span>{recruitment.value}</span>
           </div>
         </div>
         <div className="recruitment-card__top__right">

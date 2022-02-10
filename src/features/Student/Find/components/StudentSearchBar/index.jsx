@@ -3,31 +3,27 @@ import { FastField, Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 import * as RiIcons from 'react-icons/ri';
-import { Button, FormGroup } from 'reactstrap';
+import { Button, FormGroup, Spinner } from 'reactstrap';
 import './StudentSearchBar.scss';
 
 StudentSearchBar.propTypes = {
+  initialValues: PropTypes.object,
   onSubmit: PropTypes.func
 };
 
 StudentSearchBar.defaultProps = {
+  initialValues: {},
   onSubmit: null
 }
 
 function StudentSearchBar(props) {
-  const { onSubmit } = props;
-
-  const initialValues = {
-    keyword: '',
-    location: ''
-  }
+  const { onSubmit, initialValues } = props;
 
   return (
     <div className="student-search-bar">
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        // validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
         {formikProps => {
@@ -36,7 +32,7 @@ function StudentSearchBar(props) {
           return (
             <Form>
 
-              <FastField 
+              <FastField
                 name='keyword'
                 component={TextFieldDate}
 
@@ -47,7 +43,7 @@ function StudentSearchBar(props) {
                 placeholder="Search for job titles, companies or keywords..."
               />
 
-              <FastField 
+              <FastField
                 name='location'
                 component={TextFieldDate}
 
@@ -58,7 +54,7 @@ function StudentSearchBar(props) {
                 placeholder="Eg: Da Nang..."
               />
 
-              <FormGroup>
+              <FormGroup className="student-search-bar__group-button">
                 <Button
                   disabled={isSubmitting}
                   style={isSubmitting ? { cursor: "default" } : { cursor: "pointer" }}
@@ -66,8 +62,11 @@ function StudentSearchBar(props) {
                   color={'success'}
                   className="candidates-search-button"
                 >
-                  {/* {isSubmitting && <Spinner className="mr-2" children="" size="sm" />} */}
-                  <RiIcons.RiSearchLine className="student-search-bar-icon" />
+                  {isSubmitting
+                    ? <Spinner children="" size="lg" />
+                    : <RiIcons.RiSearchLine className="student-search-bar-icon" />
+                  }
+
                 </Button>
               </FormGroup>
             </Form>

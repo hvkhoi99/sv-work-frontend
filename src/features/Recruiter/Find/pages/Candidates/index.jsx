@@ -3,6 +3,7 @@ import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
 // import LoadingUI from 'components/Loading';
 import LoadingChildUI from 'components/LoadingChild';
+import { SORT_OPTIONS_CANDIDATE } from 'constants/global';
 import Images from 'constants/images';
 import Paths from 'constants/paths';
 // import { useSnackbar } from 'notistack';
@@ -25,13 +26,12 @@ FindCadidatesPage.propTypes = {
 };
 
 function FindCadidatesPage(props) {
+  const [isLoading, setIsLoading] = useState(false);
   const user = useSelector((state) => state.user.current);
   const history = useHistory();
   const { search } = useLocation();
   const page = parseInt(queryString.parse(search).page);
   const { name, career, location, language, gender, education } = queryString.parse(search);
-
-  const [isLoading, setIsLoading] = useState(false);
   // const [isLoadingChild, setIsLoadingChild] = useState(false);
   const [isSearched, setIsSearched] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
@@ -156,7 +156,7 @@ function FindCadidatesPage(props) {
       career: career === null ? "" : career.value,
       location: location === null ? "" : location.value,
       locales: locales === null ? "" : locales.value,
-      gender: gender === null ? "" : gender.value,
+      gender: gender === null ? "" : gender.label,
       school: school === null ? "" : school.value
     }
 
@@ -327,6 +327,7 @@ function FindCadidatesPage(props) {
               <div className="find-candidates__container__above__sort">
                 <SortByItem
                   candidatesLength={candidates.length}
+                  options={SORT_OPTIONS_CANDIDATE}
                   name={nameOfSearch}
                   isSearching={isSearching}
                   isLoadingChild={isLoading}

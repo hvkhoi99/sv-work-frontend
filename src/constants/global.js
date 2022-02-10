@@ -12,6 +12,11 @@ export const JOB_TYPE_OPTIONS = [
   { value: true, label: "Full Time" }
 ];
 
+export const CLOSED_OPTIONS = [
+  { value: false, label: "Recruiting" },
+  { value: true, label: "Closed" }
+];
+
 export const JOB_CATEGORY_OPTIONS = [
   { value: 1, label: "Designer" },
   { value: 2, label: "Developer" },
@@ -65,10 +70,13 @@ export const SCHOOL_OPTIONS = [
 
 export const EXTRA_OPTIONS = [
   { value: "Intern", label: "Intern" },
-  { value: "Backend Fresher", label: "Backend Fresher" },
+  { value: "Fresher", label: "Fresher" },
   { value: "Junior", label: "Junior" },
-  { value: "Fullstack Senior", label: "Fullstack Senior" },
-  { value: "Project Manager", label: "Project Manager" },
+  { value: "Senior", label: "Senior" },
+  { value: "Frontend", label: "Frontend" },
+  { value: "Backend", label: "Backend" },
+  { value: "Full-Stack", label: "Full-Stack" },
+  { value: "Manager", label: "Manager" },
 ];
 
 export const SALARY_OPTIONS = [
@@ -105,3 +113,14 @@ export const SORT_OPTIONS_CANDIDATE = [
 //   { value: 3, label: "Name A-Z" },
 //   { value: 4, label: "Name Z-A" },
 // ];
+
+export const SORT_JOBS_OPTIONS = [
+  { value: "", label: "Default" },
+
+  { value: "date", label: "Newest Date" },
+  { value: "-date", label: " Lastest Date" },
+  { value: "name", label: "Name A-Z" },
+  { value: "-name", label: "Name Z-A" },
+  { value: "salary", label: "Salary Increase" },
+  { value: "-salary", label: "Salary Decrease" },
+];

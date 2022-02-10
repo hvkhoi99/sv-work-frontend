@@ -1,12 +1,12 @@
-import { SORT_OPTIONS_CANDIDATE } from 'constants/global';
-import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
+import React, { useEffect, useRef, useState } from 'react';
 import * as BsIcons from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import './SortByItem.scss';
 
 SortByItem.propTypes = {
   candidatesLength: PropTypes.number,
+  options: PropTypes.array,
   name: PropTypes.string,
   onSortCandidates: PropTypes.func,
   isSearching: PropTypes.bool,
@@ -15,6 +15,7 @@ SortByItem.propTypes = {
 
 SortByItem.defaultProps = {
   candidatesLength: 0,
+  options: [],
   onSortCandidates: null,
   name: '',
   isSearching: false,
@@ -22,7 +23,7 @@ SortByItem.defaultProps = {
 }
 
 function SortByItem(props) {
-  const { onSortCandidates, name, candidatesLength, isSearching, isLoadingChild } = props;
+  const { onSortCandidates, options, name, candidatesLength, isSearching, isLoadingChild } = props;
   const ref = useRef(null);
   const [show, setShow] = useState(false);
   const [byName, setByName] = useState('Default');
@@ -67,7 +68,8 @@ function SortByItem(props) {
       </div>
       <div className={show ? "sort-by-item__dropdown show-dropdown-menu" : "sort-by-item__dropdown"}>
         {
-          SORT_OPTIONS_CANDIDATE.map((option, index) => {
+          options.length > 0 &&
+          options.map((option, index) => {
             return <Link
               to="#"
               key={index}

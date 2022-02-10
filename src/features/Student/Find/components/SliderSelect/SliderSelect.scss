@@ -1,0 +1,124 @@
+.slider-select {
+  display: flex;
+  flex-direction: column;
+  width: 15rem;
+
+  position: relative;
+
+  &__select {
+    display: flex;
+    align-items: center;
+    width: 15rem;
+    height: 38px;
+    border: 1px solid var(--success);
+    border-radius: 0.5rem;
+    padding: 8px;
+    cursor: pointer;
+
+    &__container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      &__title {
+        display: flex;
+        align-items: center;
+
+        width: calc(100% - 1.9rem);
+        border-right: 1px solid lightgrey;
+
+        &__name {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          color: darkgrey;
+
+          width: 100%;
+
+          & > span {
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            width: calc(100% - 2rem);
+            color: black;
+
+            margin-left: .5rem;
+          }
+
+          &__close {
+            font-size: 1.3rem;
+            margin-right: 0.5rem;
+            color: var(--secondary);
+            cursor: pointer;
+
+            &:hover {
+              color: black;
+              transition: all 0.1s ease-out;
+            }
+          }
+        }
+
+        &__placehoder {
+          color: var(--secondary);
+        }
+      }
+
+      &__down-arrow {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        width: 1.9rem;
+        &__icon {
+          font-size: 1.5rem;
+          color: lightgrey;
+
+          &:hover {
+            color: darkgrey;
+            transition: all 0.1s ease-out;
+          }
+        }
+      }
+    }
+  }
+
+  &__slider {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    border-radius: .5rem;
+    background-color: #fff;
+
+    padding: 3rem .5rem 1rem;
+
+    position: absolute;
+    top: 2.8rem;
+    left: 0;
+
+    &__group-button {
+      display: flex;
+      justify-content: space-evenly;
+      margin: 1rem 0 0 0;
+
+      width: 100%;
+
+      & > button {
+        width: 40%;
+      }
+    }
+
+    &__salary {
+      text-align: center;
+      width: 100%;
+
+      margin-top: 1rem;
+      
+      &__min-max {
+        margin-left: .5rem;
+        font-weight: 600;
+        font-size: 1rem;
+      }
+    }
+  }
+}
