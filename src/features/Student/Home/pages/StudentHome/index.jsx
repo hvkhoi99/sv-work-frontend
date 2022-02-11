@@ -3,18 +3,17 @@ import Aos from "aos";
 import homeApi from 'api/homeApi';
 import { CITY_OPTIONS } from 'constants/global';
 import Images from 'constants/images';
+import Paths from "constants/paths";
 import RHFInputField from 'custom-fields/RHFInputField';
 import RHFSelectField from 'custom-fields/RHFSelectField';
 import EventCard from "features/Recruiter/Event/components/EventCard";
-import RecruitmentCard from "features/Recruiter/Recruitment/components/RecruitmentCard";
 import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
+import * as GoIcons from 'react-icons/go';
+import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import TopRecruiterGroupCard from "../../components/TopRecruiterGroupCard";
 import './StudentHome.scss';
-import * as GoIcons from 'react-icons/go';
-import { useHistory } from "react-router-dom";
-import Paths from "constants/paths";
 
 function StudentHomePage(props) {
   const history = useHistory();
@@ -160,7 +159,7 @@ function StudentHomePage(props) {
           </div>
         </div>
 
-        <div className="home__container__popular-jobs">
+        {/* <div className="home__container__popular-jobs">
           <div className="home__container__popular-jobs__title">
             <h1>Popular Jobs</h1>
             <div className="home__container__popular-jobs__title__dot"></div>
@@ -173,7 +172,7 @@ function StudentHomePage(props) {
             <RecruitmentCard />
             <RecruitmentCard />
           </div>
-        </div>
+        </div> */}
 
         <div className="home__container__top-events">
           <div className="home__container__top-events__left">

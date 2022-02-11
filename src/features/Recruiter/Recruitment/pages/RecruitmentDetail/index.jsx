@@ -1,6 +1,5 @@
 import LoadingChildUI from 'components/LoadingChild';
 import Images from 'constants/images';
-import RecruitmentCard from 'features/Recruiter/Recruitment/components/RecruitmentCard';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -126,12 +125,12 @@ function RecruitmentDetail(props) {
           </div>
           {isViewByStudent && <div className="similar-job">
             <h3>Similar Job for you</h3>
-            <div className="similar-job__content">
+            {/* <div className="similar-job__content">
               <RecruitmentCard />
               <RecruitmentCard />
               <RecruitmentCard />
               <RecruitmentCard />
-            </div>
+            </div> */}
           </div>}
         </>
       }

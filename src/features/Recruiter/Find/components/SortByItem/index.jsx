@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import './SortByItem.scss';
 
 SortByItem.propTypes = {
-  candidatesLength: PropTypes.number,
+  candidatesLength: PropTypes.string,
   options: PropTypes.array,
   name: PropTypes.string,
   onSortCandidates: PropTypes.func,
@@ -14,7 +14,7 @@ SortByItem.propTypes = {
 };
 
 SortByItem.defaultProps = {
-  candidatesLength: 0,
+  candidatesLength: '',
   options: [],
   onSortCandidates: null,
   name: '',

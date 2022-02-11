@@ -34,12 +34,13 @@ import tw from '../assets/img/tw.png';
 import vinfast from '../assets/img/vinfast.png';
 import defaultAvatar from '../assets/img/default-avatar.jpg';
 import notfoundcandidate from '../assets/img/notfoundcandidate.png';
+import defaultCompany from '../assets/img/default-company.png';
 
 const Images = {
   home, notFound, emoji, minami, bgRight, background, fptSoftware, smDot, eventcircle,
   admin, teamwork, overview, ellipse, apple, coffeeTime, levis, tw, shopee, fb, vinfast,
   burger, lamborghini, student, recruiter, bmw, create, searchCard, recruitmentManageCard, aio,
-  threeMinions, ship, event1, aboutUsCard, googleCV, defaultAvatar, notfoundcandidate
+  threeMinions, ship, event1, aboutUsCard, googleCV, defaultAvatar, notfoundcandidate, defaultCompany
 }
 
 export default Images;

@@ -1,12 +1,11 @@
-import LoadingChildUI from 'components/LoadingChild';
 import { CAREER_OPTIONS, CLOSED_OPTIONS, EXTRA_OPTIONS, JOB_TYPE_OPTIONS, SALARY_OPTIONS, SORT_JOBS_OPTIONS } from 'constants/global';
 import Paths from 'constants/paths';
 import SortByItem from 'features/Recruiter/Find/components/SortByItem';
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import CreatableSelect from 'react-select/creatable';
 import Select from 'react-select';
+import CreatableSelect from 'react-select/creatable';
 import helper from 'utils/common';
 import JobTagsMainCard from '../../components/JobTagsMainCard';
 import MainEmployersArea from '../../components/MainEmployersArea';
@@ -34,12 +33,12 @@ const colourStyles = {
 }
 
 function FindJobsPage(props) {
-  // const user = useSelector((state) => state.user.current);
   const history = useHistory();
   const { search } = useLocation();
   const { keyword, location, career, type, salary, closed, extra } = queryString.parse(search);
-  const [isLoading, setIsLoading] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [jobs, setJobs] = useState([]);
+  const [employers, setEmployers] = useState([]);
   const [initValue, setInitValue] = useState({
     keyword: keyword !== undefined ? keyword : "",
     location: location !== undefined ? location : "",
@@ -88,24 +87,8 @@ function FindJobsPage(props) {
   ];
 
   useEffect(() => {
-    setIsLoading(true);
     helper.scrollToTop();
-
-    const timer = setTimeout(() => {
-      // setCurrentPage(1);
-      // const total = items.length;
-      // setPageCount(Math.ceil(total / 2));
-      setIsLoading(false);
-    }, 1000)
-
-    return () => {
-      clearTimeout(timer);
-    }
   }, []);
-
-  // const handlePageClick = () => {
-  //   console.log("prev/next page");
-  // }
 
   const onSubmit = (values) => {
     console.log({ values })
@@ -211,8 +194,68 @@ function FindJobsPage(props) {
     }
   }
 
-  const onSortCandidates = async (option) => {
-    console.log({ option });
+  const onSortItems = async (option) => {
+    switch (option.value) {
+      case "":
+        const newDefaultJobs = [...jobs];
+        newDefaultJobs.sort((a, b) => (a.created_at < b.created_at) ? 1 : -1);
+        setJobs(newDefaultJobs);
+        const newDefaultEmployers = [...employers];
+        newDefaultEmployers.sort((a, b) => (a.created_at < b.created_at) ? 1 : -1);
+        setEmployers(newDefaultEmployers);
+        console.log({ option })
+        break;
+      case "date":
+        const newNewestJobs = [...jobs];
+        newNewestJobs.sort((a, b) => (a.created_at < b.created_at) ? 1 : -1);
+        setJobs(newNewestJobs);
+        const newNewestEmployers = [...employers];
+        newNewestEmployers.sort((a, b) => (a.created_at < b.created_at) ? 1 : -1);
+        setEmployers(newNewestEmployers);
+        console.log({ option })
+        break;
+      case "-date":
+        const newLastestJobs = [...jobs];
+        newLastestJobs.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1);
+        setJobs(newLastestJobs);
+        const newLastestEmployers = [...employers];
+        newLastestEmployers.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1);
+        setEmployers(newLastestEmployers);
+        console.log({ option })
+        break;
+      case "name":
+        const newNameAZJobs = [...jobs];
+        newNameAZJobs.sort((a, b) => (a.title.toUpperCase() > b.title.toUpperCase()) ? 1 : -1);
+        setJobs(newNameAZJobs);
+        const newNameAZEmployers = [...employers];
+        newNameAZEmployers.sort((a, b) => (a.company_name.toUpperCase() > b.company_name.toUpperCase()) ? 1 : -1);
+        setEmployers(newNameAZEmployers);
+        console.log({ option })
+        break;
+      case "-name":
+        const newNameZAJobs = [...jobs];
+        newNameZAJobs.sort((a, b) => (a.title.toUpperCase() < b.title.toUpperCase()) ? 1 : -1);
+        setJobs(newNameZAJobs);
+        const newNameZAEmployers = [...employers];
+        newNameZAEmployers.sort((a, b) => (a.company_name.toUpperCase() < b.company_name.toUpperCase()) ? 1 : -1);
+        setEmployers(newNameZAEmployers);
+        console.log({ option })
+        break;
+      case "salary":
+        const newSalaryIncreaseJobs = [...jobs];
+        newSalaryIncreaseJobs.sort((a, b) => (a.max_salary > b.max_salary) ? 1 : -1);
+        setJobs(newSalaryIncreaseJobs);
+        console.log({ option })
+        break;
+      case "-salary":
+        const newSalaryDecreaseJobs = [...jobs];
+        newSalaryDecreaseJobs.sort((a, b) => (a.max_salary < b.max_salary) ? 1 : -1);
+        setJobs(newSalaryDecreaseJobs);
+        console.log({ option })
+        break;
+      default:
+        break;
+    }
   }
 
   return (
@@ -234,29 +277,12 @@ function FindJobsPage(props) {
           </div>
           <div className="find-jobs__container__sort-bar">
             <SortByItem
-              // candidatesLength={candidates.length}
-              // name={nameOfSearch}
-              // isSearching={isSearching}
-              // isLoadingChild={isLoading}
+              name={initValue.keyword}
               options={SORT_JOBS_OPTIONS}
-              onSortCandidates={onSortCandidates}
+              onSortCandidates={onSortItems}
             />
           </div>
           <div className="find-jobs__container__filter-area">
-            {/* {
-                  filterItems.map((item, index) => {
-                    return <CreatableSelect
-                      key={index}
-                      value={item.value}
-                      onChange={(data) => handleChangeSelectValue(data, item.name)}
-                      options={item.options}
-                      className="find-jobs__container__filter-area__select"
-                      styles={colourStyles}
-                      isClearable={true}
-                      placeholder={item.defaultValue}
-                    />
-                  })
-                } */}
             <CreatableSelect
               value={filterItems[0].value}
               onChange={(data) => handleChangeSelectValue(data, filterItems[0].name)}
@@ -300,55 +326,27 @@ function FindJobsPage(props) {
             />
           </div>
           <span className="find-jobs__container__title">
-            All "keyword" Results
-          </span>
-          {
-            isLoading
-              ? <div className="loading-child-ui">
-                <LoadingChildUI />
-              </div>
-              : <>
-                <div className="find-jobs__container__main-jobs">
-                  <MainJobsArea />
-                </div>
-                <div className="find-jobs__container__main-employers">
-                  <MainEmployersArea />
-                </div>
-              </>
-          }
-
-          {/* <div className="find-jobs__container__pagination">
-                <ReactPaginate
-                  previousLabel={
-                    <MdIcons.MdArrowBackIosNew />
-                  }
-                  nextLabel={
-                    <MdIcons.MdArrowForwardIos />
-                  }
-
-                  // initialPage={1}
-                  // initialPage={currentPage}
-                  forcePage={currentPage - 1}
-                  breakLabel={"..."}
-                  pageCount={pageCount}
-                  marginPagesDisplayed={1}
-                  pageRangeDisplayed={2}
-                  onPageChange={handlePageClick}
-                  containerClassName={"pagination justify-content-center"}
-                  pageClassName={"page-item"}
-                  pageLinkClassName={"page-link"}
-                  previousClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
-                  previousLinkClassName={"page-link"}
-                  nextClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
-                  nextLinkClassName={"page-link"}
-                  breakClassName={"page-item"}
-                  breakLinkClassName={"page-link"}
-                  activeClassName={"active"}
-                />
-              </div> */}
+            All "{initValue.keyword}" Results
+          </span> <>
+            <div className="find-jobs__container__main-jobs">
+              <MainJobsArea
+                initialValues={initValue}
+                jobs={jobs}
+                setJobs={setJobs}
+              />
+            </div>
+            <div className="find-jobs__container__main-employers">
+              <MainEmployersArea
+                initialValues={initValue}
+                employers={employers}
+                setEmployers={setEmployers}
+                // onShow={onShow}
+              />
+            </div>
+          </>
         </div>
       </div>
-
+      
     </>
   );
 }

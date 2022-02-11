@@ -270,13 +270,13 @@ function FindCadidatesPage(props) {
         break;
       case "name":
         const newNameAZCandidates = [...candidates];
-        newNameAZCandidates.sort((a, b) => (a.last_name > b.last_name) ? 1 : -1);
+        newNameAZCandidates.sort((a, b) => (a.last_name.toUpperCase() > b.last_name.toUpperCase()) ? 1 : -1);
         setCandidates(newNameAZCandidates);
         // console.log(option.label, {newNameAZCandidates});
         break;
       case "-name":
         const newNameZACandidates = [...candidates];
-        newNameZACandidates.sort((a, b) => (a.last_name < b.last_name) ? 1 : -1);
+        newNameZACandidates.sort((a, b) => (a.last_name.toUpperCase() < b.last_name.toUpperCase()) ? 1 : -1);
         setCandidates(newNameZACandidates);
         // console.log(option.label, {newNameZACandidates});
         break;
@@ -326,7 +326,7 @@ function FindCadidatesPage(props) {
               </div>
               <div className="find-candidates__container__above__sort">
                 <SortByItem
-                  candidatesLength={candidates.length}
+                  candidatesLength={`${candidates.length}`}
                   options={SORT_OPTIONS_CANDIDATE}
                   name={nameOfSearch}
                   isSearching={isSearching}

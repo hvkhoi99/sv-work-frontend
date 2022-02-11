@@ -1,5 +1,6 @@
 import studentApi from 'api/studentApi';
 import LoadingUI from 'components/Loading';
+import PopupConfirm from 'components/PopupConfirm';
 import Images from 'constants/images';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
@@ -14,17 +15,22 @@ import { Button } from 'reactstrap';
 import helper from 'utils/common';
 // import PropTypes from 'prop-types';
 import './CompanyDetailPage.scss';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 CompanyDetailPage.propTypes = {
 
 };
 
 function CompanyDetailPage(props) {
+  const history = useHistory();
+  const user = useSelector((state) => state.user.current);
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const [company, setCompany] = useState({});
   const [followState, setFollowState] = useState(false);
   const [isFollowing, setIsFollowing] = useState(false);
+  const [show, setShow] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -53,25 +59,40 @@ function CompanyDetailPage(props) {
     fetchCompanyInfo();
   }, [id]);
 
+  const onShow = (value) => {
+    setShow(value);
+  }
+
+  const onUpdateStudentProfile = () => {
+    if ((user && Object.keys(user).length === 0)) {
+      history.push("/auth/sign-in");
+    } else {
+      history.push("/first-update/student");
+    }
+  }
 
   const onFollowCompany = async (values) => {
-    setIsFollowing(true);
-    try {
-      const data = await studentApi.followCompany(id);
-      if (data.data.status === 1) {
-        setIsFollowing(false);
-        setFollowState(data.data.data.is_followed);
-        enqueueSnackbar(`Successfully ${data.data.data.is_followed ? "Followed" : "Unfollowed"} this company.`, { variant: "success" });
-        return true;
-      } else {
+    if ((user && Object.keys(user).length === 0) || user.s_profile === null) {
+      onShow(true);
+    } else {
+      setIsFollowing(true);
+      try {
+        const data = await studentApi.followCompany(id);
+        if (data.data.status === 1) {
+          setIsFollowing(false);
+          setFollowState(data.data.data.is_followed);
+          enqueueSnackbar(`Successfully ${data.data.data.is_followed ? "Followed" : "Unfollowed"} this company.`, { variant: "success" });
+          return true;
+        } else {
+          setIsFollowing(false);
+          enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+          return false;
+        }
+      } catch (error) {
         setIsFollowing(false);
         enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
         return false;
       }
-    } catch (error) {
-      setIsFollowing(false);
-      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
-      return false;
     }
   }
 
@@ -89,8 +110,8 @@ function CompanyDetailPage(props) {
                 <div className="company-detail__container__info__top__left">
                   <img src={
                     company.logo_image_link === (null || "" || undefined)
-                    ? Images.defaultAvatar
-                    : company.logo_image_link
+                      ? Images.defaultAvatar
+                      : company.logo_image_link
                   } alt="company-avatar" />
                 </div>
                 <div className="company-detail__container__info__top__right">
@@ -113,7 +134,7 @@ function CompanyDetailPage(props) {
                       style={isFollowing ? { cursor: "default" } : { cursor: "pointer" }}
                       onClick={onFollowCompany}
                     >
-                      {isFollowing && <span className="spinner-border spinner-border-sm mr-1"/>}
+                      {isFollowing && <span className="spinner-border spinner-border-sm mr-1" />}
                       <RiIcons.RiChatFollowUpFill
                         className="company-detail__container__info__top__right__follow__button__icon"
                       />
@@ -157,6 +178,17 @@ function CompanyDetailPage(props) {
           </div>
         </div>
       }
+      <PopupConfirm
+        show={show}
+        onShow={onShow}
+        onOK={onUpdateStudentProfile}
+        // titleConfirm="Update Profile"
+        contentConfirm={
+          (user && Object.keys(user).length === 0)
+            ? "You need to LOGIN first and then you need to update your STUDENT PROFILE. Continue?"
+            : "You need to update your STUDENT PROFILE. Continue?"
+        }
+      />
     </>
   );
 }

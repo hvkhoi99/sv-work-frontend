@@ -1,23 +1,27 @@
 import studentApi from 'api/studentApi';
 import LoadingUI from 'components/Loading';
+import PopupConfirm from 'components/PopupConfirm';
 import Images from 'constants/images';
 import RecruitmentDetail from 'features/Recruiter/Recruitment/pages/RecruitmentDetail';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
+import * as BsIcons from 'react-icons/bs';
 import * as FaIcons from 'react-icons/fa';
+import * as ImIcons from 'react-icons/im';
+import * as RiIcons from 'react-icons/ri';
 import { useParams } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 import helper from 'utils/common';
 import './JobDetailPage.scss';
-import * as BsIcons from 'react-icons/bs';
-import * as ImIcons from 'react-icons/im';
-import * as RiIcons from 'react-icons/ri';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 JobDetailPage.propTypes = {
 
 };
 
 function JobDetailPage(props) {
+  const user = useSelector((state) => state.user.current);
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const [recruitment, setRecruitment] = useState({});
@@ -35,6 +39,8 @@ function JobDetailPage(props) {
     isApplied: false,
     isSaved: false
   });
+  const history = useHistory();
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     helper.scrollToTop();
@@ -65,108 +71,137 @@ function JobDetailPage(props) {
     fetchRecruitmentDetail();
   }, [id]);
 
+  const onShow = (value) => {
+    setShow(value);
+  }
+
+  const onUpdateStudentProfile = () => {
+    if ((user && Object.keys(user).length === 0)) {
+      history.push("/auth/sign-in");
+    } else {
+      history.push("/first-update/student");
+    }
+  }
+
   const handleToApplyJob = async () => {
-    setIsApplying(true);
-    try {
-      const action = await studentApi.applyJob(id);
-      if (action.data.status === 1) {
-        setIsApplying(false);
-        // setApplyText(action.data.data.is_applied ? "Applied" : "Apply");
-        setStateData(state => ({
-          ...state,
-          isApplied: action.data.data.is_applied
-        }));
-        enqueueSnackbar(
-          `Successfully ${action.data.data.is_applied ? "Applied" : "Un-Apply"} job.`,
-          { variant: "success" }
-        );
-        return true;
-      } else {
+    if ((user && Object.keys(user).length === 0) || user.s_profile === null) {
+      onShow(true);
+    } else {
+
+      setIsApplying(true);
+      try {
+        const action = await studentApi.applyJob(id);
+        if (action.data.status === 1) {
+          setIsApplying(false);
+          // setApplyText(action.data.data.is_applied ? "Applied" : "Apply");
+          setStateData(state => ({
+            ...state,
+            isApplied: action.data.data.is_applied
+          }));
+          enqueueSnackbar(
+            `Successfully ${action.data.data.is_applied ? "Applied" : "Un-Apply"} job.`,
+            { variant: "success" }
+          );
+          return true;
+        } else {
+          setIsApplying(false);
+          enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+          return false;
+        }
+      } catch (error) {
         setIsApplying(false);
         enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
         return false;
       }
-    } catch (error) {
-      setIsApplying(false);
-      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
-      return false;
     }
   }
 
   const handleToSaveJob = async () => {
-    setIsSaving(true);
-    try {
-      const action = await studentApi.saveJob(id);
-      if (action.data.status === 1) {
-        setIsSaving(false);
-        // setSaveText(action.data.data.is_saved ? "Saved Job" : "Save Job");
-        setStateData(state => ({
-          ...state,
-          isSaved: action.data.data.is_saved
-        }));
-        enqueueSnackbar(action.data.message, { variant: "success" });
-        return true;
-      } else {
+    if ((user && Object.keys(user).length === 0) || user.s_profile === null) {
+      onShow(true);
+    } else {
+      setIsSaving(true);
+      try {
+        const action = await studentApi.saveJob(id);
+        if (action.data.status === 1) {
+          setIsSaving(false);
+          // setSaveText(action.data.data.is_saved ? "Saved Job" : "Save Job");
+          setStateData(state => ({
+            ...state,
+            isSaved: action.data.data.is_saved
+          }));
+          enqueueSnackbar(action.data.message, { variant: "success" });
+          return true;
+        } else {
+          setIsSaving(false);
+          enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+          return false;
+        }
+      } catch (error) {
         setIsSaving(false);
         enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
         return false;
       }
-    } catch (error) {
-      setIsSaving(false);
-      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
-      return false;
     }
   }
 
   const onAcceptInvitedJob = async (id) => {
-    setIsAccepting(true);
-    try {
-      const action = await studentApi.acceptInvitedJob(id);
-      if (action.data.status === 1) {
-        setIsAccepting(false);
-        // setApplicationState(true);
-        setStateData(state => ({
-          ...state,
-          applicationState: true
-        }));
-        enqueueSnackbar(
-          `Successfully accepted the job offer.`,
-          { variant: "success" }
-        );
-        return true;
-      } else {
+    if ((user && Object.keys(user).length === 0) || user.s_profile === null) {
+      onShow(true);
+    } else {
+      setIsAccepting(true);
+      try {
+        const action = await studentApi.acceptInvitedJob(id);
+        if (action.data.status === 1) {
+          setIsAccepting(false);
+          // setApplicationState(true);
+          setStateData(state => ({
+            ...state,
+            applicationState: true
+          }));
+          enqueueSnackbar(
+            `Successfully accepted the job offer.`,
+            { variant: "success" }
+          );
+          return true;
+        } else {
+          enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+          return false;
+        }
+      } catch (error) {
         enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
         return false;
       }
-    } catch (error) {
-      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
-      return false;
     }
   }
 
   const onRejectInvitedJob = async (id) => {
-    setIsRejecting(true);
-    try {
-      const action = await studentApi.rejectInvitedJob(id);
-      if (action.data.status === 1) {
-        setIsRejecting(false);
-        // setApplicationState(false);
-        setStateData(state => ({
-          ...state,
-          applicationState: false
-        }));
-        enqueueSnackbar(
-          `Successfully declined the job offer.`,
-          { variant: "success" }
-        );
-        return true;
-      } else {
+    if ((user && Object.keys(user).length === 0) || user.s_profile === null) {
+      onShow(true);
+    } else {
+      setIsRejecting(true);
+      try {
+        const action = await studentApi.rejectInvitedJob(id);
+        if (action.data.status === 1) {
+          setIsRejecting(false);
+          // setApplicationState(false);
+          setStateData(state => ({
+            ...state,
+            applicationState: false
+          }));
+          enqueueSnackbar(
+            `Successfully declined the job offer.`,
+            { variant: "success" }
+          );
+          return true;
+        } else {
+          enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+          return false;
+        }
+      } catch (error) {
         enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
         return false;
       }
-    } catch (error) {
-      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
-      return false;
     }
   }
 
@@ -351,17 +386,28 @@ function JobDetailPage(props) {
               </div>
               <div className="job-detail-page__container__bottom">
                 <div className="job-detail-page__container__bottom__description">
-                  <RecruitmentDetail 
-                  recruitment={recruitment} 
-                  isViewByStudent={true}
+                  <RecruitmentDetail
+                    recruitment={recruitment}
+                    isViewByStudent={true}
                   />
                 </div>
               </div>
             </div>
           </div>
       }
-    </>
 
+      <PopupConfirm
+        show={show}
+        onShow={onShow}
+        onOK={onUpdateStudentProfile}
+        // titleConfirm="Update Profile"
+        contentConfirm={
+          (user && Object.keys(user).length === 0)
+          ? "You need to LOGIN first and then you need to update your STUDENT PROFILE. Continue?"
+          : "You need to update your STUDENT PROFILE. Continue?"
+        }
+      />
+    </>
   );
 }
 

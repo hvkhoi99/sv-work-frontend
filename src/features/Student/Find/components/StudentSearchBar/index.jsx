@@ -3,7 +3,7 @@ import { FastField, Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
 import * as RiIcons from 'react-icons/ri';
-import { Button, FormGroup, Spinner } from 'reactstrap';
+import { Button, FormGroup } from 'reactstrap';
 import './StudentSearchBar.scss';
 
 StudentSearchBar.propTypes = {
@@ -27,7 +27,7 @@ function StudentSearchBar(props) {
         onSubmit={onSubmit}
       >
         {formikProps => {
-          const { isSubmitting } = formikProps;
+          // const { isSubmitting } = formikProps;
 
           return (
             <Form>
@@ -56,16 +56,17 @@ function StudentSearchBar(props) {
 
               <FormGroup className="student-search-bar__group-button">
                 <Button
-                  disabled={isSubmitting}
-                  style={isSubmitting ? { cursor: "default" } : { cursor: "pointer" }}
+                  // disabled={isSubmitting}
+                  // style={isSubmitting ? { cursor: "default" } : { cursor: "pointer" }}
                   type="submit"
                   color={'success'}
                   className="candidates-search-button"
                 >
-                  {isSubmitting
+                  {/* {isSubmitting
                     ? <Spinner children="" size="lg" />
                     : <RiIcons.RiSearchLine className="student-search-bar-icon" />
-                  }
+                  } */}
+                  <RiIcons.RiSearchLine className="student-search-bar-icon" />
 
                 </Button>
               </FormGroup>

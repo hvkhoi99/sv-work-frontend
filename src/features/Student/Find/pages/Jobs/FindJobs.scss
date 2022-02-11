@@ -72,7 +72,7 @@
     }
 
     &__title {
-      margin: 1rem 2rem 2rem;
+      padding: 1rem 2rem 2rem;
       font-size: 1.2rem;
       font-weight: 600;
     }
@@ -80,13 +80,14 @@
     &__main-jobs {
       width: 100%;
       height: auto;
-      margin-bottom: 4rem;
+      margin-bottom: 2rem;
     }
     
     &__main-employers {
       width: 100%;
       height: auto;
       margin-bottom: 2rem;
+      
     }
 
     &__pagination {

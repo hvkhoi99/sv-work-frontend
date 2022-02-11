@@ -3,8 +3,36 @@
   height: auto;
 
   &__title {
-    margin: 0 2rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    padding: 0 2rem 1.5rem;
     font-size: 1rem;
+
+    &__show {
+      display: flex;
+      align-items: center;
+
+      &__icon {
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: .5rem;
+        color: var(--success);
+        border-radius: 50%;
+        cursor: pointer;
+
+        &:hover {
+          transition: all 0.15s ease-out;
+          background-color: lightgrey;
+        }
+
+        &:active {
+          background-color: #fff;
+        }
+      }
+    }
   }
 
   &__content {
@@ -14,6 +42,15 @@
     // width: 100%;
 
     &__item {
+      margin: 0 2.5rem 4rem;
+    }
+
+    &__item-loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 14rem;
+      height: 21rem;
       margin: 0 2.5rem 4rem;
     }
   }

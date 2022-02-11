@@ -1,6 +1,18 @@
 import axiosClient from "./axiosClient";
 
 const studentApi = {
+
+  // Search Jobs, Company
+  findJobs: (params) => {
+    const url = "/find/jobs";
+    return axiosClient.get(url, {params});
+  },
+
+  findEmployers: (params) => {
+    const url = "/find/employers";
+    return axiosClient.get(url, {params});
+  },
+
   // Certificates
   getStudentCertificates: (params) => {
     const url = `/student/certificate/index?page=${params.page}&_limit=${params._limit}`;
@@ -113,13 +125,13 @@ const studentApi = {
   },
 
   getCompanyInfo: (id) => {
-    const url = `/student/company/${id}`;
+    const url = `/company/${id}`;
     return axiosClient.get(url);
   },
 
   // Job
   getJobDetail: (id) => {
-    const url = `/student/job/${id}`;
+    const url = `/job/${id}`;
     return axiosClient.get(url);
   },
 
