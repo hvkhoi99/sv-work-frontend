@@ -1,4 +1,5 @@
 import React from 'react';
+import './EventCreatePage.scss';
 
 RecruiterCreateEventPage.propTypes = {
 
@@ -6,7 +7,7 @@ RecruiterCreateEventPage.propTypes = {
 
 function RecruiterCreateEventPage(props) {
   return (
-    <div className="event-create">
+    <div className="event-create-page">
       Create event page.
     </div>
   );

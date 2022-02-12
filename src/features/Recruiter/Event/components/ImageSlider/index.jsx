@@ -16,7 +16,6 @@ function ImageSlider(props) {
   const { sliderData } = props;
   const [current, setCurrent] = useState(0);
   const length = sliderData.length;
-  const isLoop = true;
 
   // useEffect(() => {
   //   while (isLoop) {
@@ -25,7 +24,16 @@ function ImageSlider(props) {
   //     }, 2000)
   //   }
   // }, [isLoop, current, length]);
-  
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrent(current === length - 1 ? 0 : current + 1);
+    }, 2000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [current, length]);
+
 
   const nextSlide = () => {
     setCurrent(current === length - 1 ? 0 : current + 1);

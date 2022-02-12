@@ -1,9 +1,204 @@
 .detail-event {
   display: flex;
   justify-content: center;
-  align-items: center;
-  font-size: 2rem;
-  font-weight: bold;
-  height: 85vh;
   width: 100%;
+
+  padding: 2rem 6rem;
+  font-size: 0.9rem;
+
+  background-image: url("../../../../../assets/img/background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: 100%;
+
+    &__top {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      height: 20rem;
+
+      & > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 1rem;
+        border: 1px solid lightgrey;
+      }
+    }
+
+    &__center {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      padding: 2rem 2rem 0;
+
+      &__left {
+        display: flex;
+        flex-direction: column;
+        width: 65%;
+
+        &__title {
+          color: var(--success);
+          font-size: 1.5rem;
+          font-weight: 600;
+          width: 100%;
+        }
+
+        &__by {
+          margin: 0.5rem 0;
+          width: 100%;
+        }
+
+        &__description {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          margin: 1.5rem 0 0 0;
+
+          &__title {
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: 600;
+          }
+
+          &__main {
+            margin: 0.5rem 0 0 0;
+
+            font-weight: 300;
+            line-height: 1.5rem;
+          }
+        }
+      }
+
+      &__right {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: calc(100% - 65% - 2rem);
+        margin: 0 0 0 2rem;
+
+        &__more-info {
+          width: 100%;
+          padding: 0 3rem;
+        }
+
+        &__share-with {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+          padding: 2rem 3rem 0;
+
+          &__title {
+            width: 100%;
+            font-size: 1.1rem;
+            font-weight: 600;
+          }
+
+          &__apps {
+            padding: 0.5rem 0 0 0;
+            width: 100%;
+
+            &__instagram {
+              border-radius: 0.4rem;
+              color: #fff;
+              background: radial-gradient(
+                  circle farthest-corner at 35% 90%,
+                  #fec564,
+                  transparent 50%
+                ),
+                radial-gradient(
+                  circle farthest-corner at 0 140%,
+                  #fec564,
+                  transparent 50%
+                ),
+                radial-gradient(
+                  ellipse farthest-corner at 0 -25%,
+                  #5258cf,
+                  transparent 50%
+                ),
+                radial-gradient(
+                  ellipse farthest-corner at 20% -50%,
+                  #5258cf,
+                  transparent 50%
+                ),
+                radial-gradient(
+                  ellipse farthest-corner at 100% 0,
+                  #893dc2,
+                  transparent 50%
+                ),
+                radial-gradient(
+                  ellipse farthest-corner at 60% -20%,
+                  #893dc2,
+                  transparent 50%
+                ),
+                radial-gradient(
+                  ellipse farthest-corner at 100% 100%,
+                  #d9317a,
+                  transparent
+                ),
+                linear-gradient(
+                  #6559ca,
+                  #bc318f 30%,
+                  #e33f5f 50%,
+                  #f77638 70%,
+                  #fec66d 100%
+                );
+            }
+
+            &__facebook {
+              // color: linear-gradient(to bottom, #1e5799 0%,#2989d8 50%,#207cca 51%,#7db9e8 100%);
+              color: #3b5998;
+              margin: 0 1rem;
+            }
+
+            &__twitter {
+              color: #36d8ff;
+              font-size: 1.7rem;
+              border-radius: 50%;
+              cursor: pointer;
+            }
+          }
+        }
+      }
+    }
+
+    &__top-event {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      padding: 2rem 2rem 0;
+
+      &__title {
+        width: 100%;
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+
+      &__event {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+        margin: 3rem 0 0 0;
+
+        &__item {
+          margin: 0 1rem 4rem;
+        }
+      }
+    }
+  }
+}
+
+.app-icon {
+  font-size: 1.5rem;
+  cursor: pointer;
 }

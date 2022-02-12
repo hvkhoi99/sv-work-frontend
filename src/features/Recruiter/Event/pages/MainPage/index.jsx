@@ -3,7 +3,6 @@ import Paths from 'constants/paths';
 import React, { useEffect, useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import helper from 'utils/common';
 import EventCard from '../../components/EventCard';
@@ -17,7 +16,7 @@ RecruiterMainEventPage.propTypes = {
 
 function RecruiterMainEventPage(props) {
   const history = useHistory();
-  const user = useSelector((state) => state.user.current);
+  const roleId = parseInt(localStorage.getItem('role_id'));
   const [isLoading, setIsLoading] = useState(true);
   const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -68,17 +67,33 @@ function RecruiterMainEventPage(props) {
 
   const onViewDetailEvent = () => {
     history.push(
-      user.role_id === 2
-        ? `${Paths.recruiterEvent}/1`
-        : `${Paths.clientEvent}/1`
+      roleId === 2
+        ? `${Paths.recruiterEvent}/1/detail`
+        : `${Paths.clientEvent}/1/detail`
     );
   }
 
   const onSubmit = (values) => {
     history.push(
-      user.role_id === 2
+      roleId === 2
         ? `${Paths.recruiterEvent}/search?event=${values.event}&in=${values.in}&when=${values.when}`
         : `${Paths.clientEvent}/search?event=${values.event}&in=${values.in}&when=${values.when}`
+    );
+  }
+
+  const onManageEvent = () => {
+    history.push(
+      roleId === 2
+        ? `${Paths.recruiterEvent}/dashboard`
+        : `${Paths.clientEvent}/dashboard`
+    );
+  }
+
+  const onCreateEvent = () => {
+    history.push(
+      roleId === 2
+        ? `${Paths.recruiterEvent}/create`
+        : `${Paths.clientEvent}/create`
     );
   }
 
@@ -100,8 +115,16 @@ function RecruiterMainEventPage(props) {
                 <SearchFormEvent onSubmit={onSubmit} />
               </div>
               <div className="event-main__container__btn-group">
-                <button className="btn">Manage Events</button>
-                <button className="btn">Create an Event</button>
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={onManageEvent}
+                >Manage Events</button>
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={onCreateEvent}
+                >Create an Event</button>
               </div>
               <div className="event-main__container__upcomming-events">
                 <div className="event-main__container__upcomming-events__title">
