@@ -46,6 +46,7 @@
             height: 11rem;
             border-radius: 50%;
             box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            object-fit: cover;
           }
         }
 
@@ -64,16 +65,33 @@
             justify-content: center;
             font-size: 1.4rem;
             font-weight: 600;
+            width: 100%;
+
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
           }
 
           &__recruiter-industry {
             font-size: 1rem;
             font-weight: 500;
+            width: 100%;
+
+            text-align: center;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
           }
 
           &__recruiter-address {
             font-size: 0.9rem;
             color: darkgrey;
+            width: 100%;
+
+            text-align: center;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
           }
 
           &__follow {
@@ -82,15 +100,15 @@
             &__button {
               display: flex;
               align-items: center;
-              padding: .5rem .5rem .5rem .4rem;
+              padding: 0.5rem 0.5rem 0.5rem 0.4rem;
               border-radius: 2rem;
               box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
               font-weight: 500;
 
               &__icon {
-                margin-right: .4rem;
+                margin-right: 0.4rem;
                 font-size: 1.8rem;
-                padding: .3rem;
+                padding: 0.3rem;
                 background-color: #fff;
                 color: var(--success);
                 border-radius: 50%;
@@ -108,6 +126,25 @@
         width: 75%;
         height: auto;
         margin: 4rem 0;
+
+        // & > div {
+        //   display: flex;
+
+        //   & > span {
+        //     background-color: rgb(175, 255, 175);
+        //     padding: 0.1rem 0.3rem;
+        //     border-radius: 2rem;
+        //     font-size: 0.9rem;
+        //     font-weight: 500;
+
+        //     max-width: 20rem;
+        //     text-align: center;
+        //     text-overflow: ellipsis;
+        //     white-space: nowrap;
+        //     overflow: hidden;
+
+        //   }
+        // }
       }
     }
 
@@ -144,15 +181,7 @@
 .bottom-icon {
   color: var(--success);
   font-size: 1.3rem;
-  margin: 0 0.7rem 0 0;
-}
-
-.bottom-span {
-  background-color: rgb(175, 255, 175);
-  padding: 0.1rem 0.3rem;
-  border-radius: 2rem;
-  font-size: 0.9rem;
-  font-weight: 500;
+  margin: 0 .5rem 0 0;
 }
 
 .title-dot {

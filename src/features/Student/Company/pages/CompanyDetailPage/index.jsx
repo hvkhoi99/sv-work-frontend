@@ -173,7 +173,7 @@ function CompanyDetailPage(props) {
                   isUpdating={isUpdating}
                 /> */}
               </div>
-              <div className="company-detail__container__overall__content">{ReactHtmlParser(company.description)}</div>
+              <div className="company-detail__container__overall__content">{ReactHtmlParser(company.description ?? "No Information Available")}</div>
             </div>
           </div>
         </div>

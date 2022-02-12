@@ -1,16 +1,15 @@
 import LoadingUI from 'components/Loading';
-import Images from 'constants/images';
 import Paths from 'constants/paths';
 import React, { useEffect, useState } from 'react';
-import * as FaIcons from 'react-icons/fa';
 import * as MdIcons from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import helper from 'utils/common';
 import EventCard from '../../components/EventCard';
+import ImageSlider from '../../components/ImageSlider';
 import SearchFormEvent from '../../components/SearchFormEvent';
 import './MainEventPage.scss';
-import { useSelector } from 'react-redux';
 
 RecruiterMainEventPage.propTypes = {
 
@@ -21,6 +20,29 @@ function RecruiterMainEventPage(props) {
   const user = useSelector((state) => state.user.current);
   const [isLoading, setIsLoading] = useState(true);
   const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  const sliderData = [
+    {
+      image:
+        'https://images.unsplash.com/photo-1546768292-fb12f6c92568?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+    },
+    {
+      image:
+        'https://images.unsplash.com/photo-1501446529957-6226bd447c46?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1489&q=80'
+    },
+    {
+      image:
+        'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80'
+    },
+    {
+      image:
+        'https://images.unsplash.com/photo-1475189778702-5ec9941484ae?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1351&q=80'
+    },
+    {
+      image:
+        'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80'
+    }
+  ];
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageCount, setPageCount] = useState(0);
@@ -70,11 +92,9 @@ function RecruiterMainEventPage(props) {
           : <div className="event-main">
             <div className="event-main__container">
               <div className="event-main__container__slider">
-                <img src={Images.event1} alt="event1" />
-                <div className="event-main__container__slider__btn-group">
-                  <FaIcons.FaChevronLeft className="event-main__container__slider__btn-group__icon" />
-                  <FaIcons.FaChevronRight className="event-main__container__slider__btn-group__icon" />
-                </div>
+                <ImageSlider
+                  sliderData={sliderData}
+                />
               </div>
               <div className="event-main__container__search">
                 <SearchFormEvent onSubmit={onSubmit} />

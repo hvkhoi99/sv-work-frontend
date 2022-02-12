@@ -2,6 +2,8 @@ import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
 import LoadingChildUI from 'components/LoadingChild';
 import Paths from 'constants/paths';
+import { useSnackbar } from 'notistack';
+import PropTypes from 'prop-types';
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import * as MdIcons from 'react-icons/md';
@@ -10,8 +12,6 @@ import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import ClosedRecruitmentsCard from '../ClosedRecruitmentsCard';
 import './ClosedRecruitments.scss';
-import PropTypes from 'prop-types';
-import { useSnackbar } from 'notistack';
 
 ClosedRecruitments.propTypes = {
   onViewRecruitment: PropTypes.func,
@@ -74,11 +74,11 @@ function ClosedRecruitments(props) {
       // })
       // setItems(newItems);
       user.role_id === 2
-      ? await recruiterApi.deleteRecruitment(recruitment.id)
-      : await studentApi.deleteRecruitment(recruitment.id);
-      enqueueSnackbar("Your recruitment has been deleted.", { variant: "success" });
-      onDeleteRecruitment()
+        ? await recruiterApi.deleteRecruitment(recruitment.id)
+        : await studentApi.deleteRecruitment(recruitment.id);
+      onDeleteRecruitment();
       setIsLoading(true);
+      enqueueSnackbar("Your recruitment has been deleted.", { variant: "success" });
     } catch (error) {
       enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
     }
@@ -134,6 +134,7 @@ function ClosedRecruitments(props) {
               />}
         </>
       }
+      
     </div>
   );
 }

@@ -2,6 +2,7 @@ import studentApi from 'api/studentApi';
 import LoadingUI from 'components/Loading';
 import PopupConfirm from 'components/PopupConfirm';
 import Images from 'constants/images';
+import Paths from 'constants/paths';
 import RecruitmentDetail from 'features/Recruiter/Recruitment/pages/RecruitmentDetail';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
@@ -9,12 +10,11 @@ import * as BsIcons from 'react-icons/bs';
 import * as FaIcons from 'react-icons/fa';
 import * as ImIcons from 'react-icons/im';
 import * as RiIcons from 'react-icons/ri';
-import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 // import PropTypes from 'prop-types';
 import helper from 'utils/common';
 import './JobDetailPage.scss';
-import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 JobDetailPage.propTypes = {
 
@@ -55,6 +55,7 @@ function JobDetailPage(props) {
           // setApplyText(data.data.data.application.is_applied ? "Applied" : "Apply");
           // setSaveText(data.data.data.application.is_saved ? "Saved Job" : "Save Job");
           setStateData(state => ({
+            ...state,
             applicationState: data.data.data.application.state,
             isInvited: data.data.data.application.is_invited,
             isApplied: data.data.data.application.is_applied,
@@ -79,12 +80,16 @@ function JobDetailPage(props) {
     if ((user && Object.keys(user).length === 0)) {
       history.push("/auth/sign-in");
     } else {
-      history.push("/first-update/student");
+      if (!user.s_profile.open_for_job) {
+        history.push(`${Paths.clientProfile}`);
+      } else {
+        history.push("/first-update/student");
+      }
     }
   }
 
   const handleToApplyJob = async () => {
-    if ((user && Object.keys(user).length === 0) || user.s_profile === null) {
+    if ((user && Object.keys(user).length === 0) || user.s_profile === null || !user.s_profile.open_for_job) {
       onShow(true);
     } else {
 
@@ -146,7 +151,7 @@ function JobDetailPage(props) {
   }
 
   const onAcceptInvitedJob = async (id) => {
-    if ((user && Object.keys(user).length === 0) || user.s_profile === null) {
+    if ((user && Object.keys(user).length === 0) || user.s_profile === null || !user.s_profile.open_for_job) {
       onShow(true);
     } else {
       setIsAccepting(true);
@@ -176,7 +181,7 @@ function JobDetailPage(props) {
   }
 
   const onRejectInvitedJob = async (id) => {
-    if ((user && Object.keys(user).length === 0) || user.s_profile === null) {
+    if ((user && Object.keys(user).length === 0) || user.s_profile === null || !user.s_profile.open_for_job) {
       onShow(true);
     } else {
       setIsRejecting(true);
@@ -309,6 +314,8 @@ function JobDetailPage(props) {
     }
   }
 
+  // console.log({recruitment})
+
   return (
     <>
       {
@@ -349,9 +356,9 @@ function JobDetailPage(props) {
                 <div className="job-detail-page__container__top__right">
                   <>
                     {
-                      (!stateData.applicationState &&
-                        !recruitment.is_closed &&
-                        !stateData.isInvited
+                      (
+                        (stateData.applicationState === null && !stateData.isInvited)
+                        && !recruitment.is_closed
                       ) && <button
                         type="button"
                         className="btn btn-sm btn-success btn-apply"
@@ -403,8 +410,12 @@ function JobDetailPage(props) {
         // titleConfirm="Update Profile"
         contentConfirm={
           (user && Object.keys(user).length === 0)
-          ? "You need to LOGIN first and then you need to update your STUDENT PROFILE. Continue?"
-          : "You need to update your STUDENT PROFILE. Continue?"
+            ? "You need to LOGIN first and then you need to update your STUDENT PROFILE. Continue?"
+            : (
+              !user.s_profile.open_for_job
+                ? "You need to enable OPEN JOB in your PROFILE page for this functionality to work."
+                : "You need to update your STUDENT PROFILE. Continue?"
+            )
         }
       />
     </>

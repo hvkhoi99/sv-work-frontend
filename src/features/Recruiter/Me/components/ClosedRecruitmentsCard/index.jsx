@@ -1,3 +1,4 @@
+import PopupConfirm from 'components/PopupConfirm';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import * as BiIcons from 'react-icons/bi';
@@ -16,20 +17,26 @@ ClosedRecruitmentsCard.defaultProps = {
   recruitment: '',
   onViewRecruitment: null,
   onDelete: null,
+  isDeleting: false,
 }
 
 function ClosedRecruitmentsCard(props) {
-  const { recruitment, onViewRecruitment, onDelete } = props;
+  const { recruitment, onViewRecruitment, onDelete} = props;
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showw, setShoww] = useState(false);
 
-  const handleViewRecruitment = (e, recruitment) => {
+  const handleViewRecruitment = (recruitment) => {
     return onViewRecruitment(recruitment);
   }
 
-  const handleDelete = (e, item) => {
+  const handleDelete = async () => {
     setIsDeleting(true);
-    onDelete(item);
-    // setIsDeleting(false);
+    await onDelete(recruitment);
+    setIsDeleting(false);
+  }
+
+  const onShoww = (value) => {
+    setShoww(value);
   }
 
   return (
@@ -68,12 +75,12 @@ function ClosedRecruitmentsCard(props) {
           <button
             type="button"
             className="btn btn-success btn-sm view"
-            onClick={(e) => handleViewRecruitment(e, recruitment)}
+            onClick={() => handleViewRecruitment(recruitment)}
           >View</button>
           <button
             type="button"
             className="btn btn-danger btn-sm delete"
-            onClick={(e) => handleDelete(e, recruitment)}
+            onClick={() => onShoww(true)}
             disabled={isDeleting}
           >
             {isDeleting && <span className="spinner-border spinner-border-sm mr-2" />}
@@ -81,6 +88,20 @@ function ClosedRecruitmentsCard(props) {
           </button>
         </div>
       </div>
+      <PopupConfirm
+        show={showw}
+        onShow={onShoww}
+        btnOKColor={
+          "danger"
+        }
+        titleConfirm={
+          "Delete Recruitment"
+        }
+        contentConfirm={
+          "Are you sure you want to delete this recruitment?"
+        }
+        onOK={handleDelete}
+      />
     </div>
   );
 }

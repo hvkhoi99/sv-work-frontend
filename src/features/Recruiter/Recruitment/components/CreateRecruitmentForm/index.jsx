@@ -1,6 +1,7 @@
 import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
 import { JOB_TAGS_OPTIONS, JOB_TYPE_OPTIONS } from 'constants/global';
+import Paths from 'constants/paths';
 import InputField from 'custom-fields/InputField';
 import SelectField from 'custom-fields/SelectField';
 import TextFieldDate from 'custom-fields/TextFieldDate';
@@ -164,7 +165,7 @@ function CreateRecruitmentForm(props) {
             : await studentApi.updateRecruitment(recruitment.id, params);
           enqueueSnackbar("Your recruitment has been updated.", { variant: "success" });
         }
-        history.goBack();
+        history.push(`${Paths.recruiterDashboard}`);
       } catch (error) {
         isBeautiful = false;
         console.log("Cannot create/update recruitment. Error" + error.message);

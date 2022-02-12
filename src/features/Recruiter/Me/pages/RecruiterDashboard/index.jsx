@@ -74,14 +74,15 @@ function RecruiterDashboardPage(props) {
       pathname: `${Paths.recruiterDashboard}/available-jobs/create`,
       state: { isCreateMode: true }
     });
+    
+  }
+  
+  const onDeleteRecruitment = () => {
+    dashboardIndexData.closedJobs > 0 && setDashboardIndexData({ ...dashboardIndexData, closedJobs: dashboardIndexData.closedJobs - 1 });
   }
 
   const onShow = (value) => {
     setShow(value);
-  }
-
-  const onDeleteRecruitment = () => {
-    dashboardIndexData.closedJobs > 0 && setDashboardIndexData({ ...dashboardIndexData, closedJobs: dashboardIndexData.closedJobs - 1 });
   }
 
   const handleToUpdateProfile = () => {
