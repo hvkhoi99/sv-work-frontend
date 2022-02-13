@@ -28,15 +28,15 @@ function StudentUpdateProfilePage(props) {
 
   const initialValues = !isUpdate
     ? {
-      email: '',
+      email: 'new.student@gmail.com',
       first_name: '',
-      last_name: '',
-      date_of_birth: '',
-      phone_number: '',
-      address: '',
-      nationality: '',
-      gender: '',
-      job_title: '',
+      last_name: 'Student Name',
+      date_of_birth: moment(new Date("02/14/2022")).format("YYYY-MM-DD"),
+      phone_number: '0702666777',
+      address: 'Da Nang, Viet Nam',
+      nationality: 'Viet Nam Que Tui',
+      gender: 'Male',
+      job_title: 'Developer',
     } : user.s_profile;
 
 
@@ -46,7 +46,7 @@ function StudentUpdateProfilePage(props) {
         email: values.email,
         first_name: values.first_name,
         last_name: values.last_name,
-        date_of_birth: moment(new Date(values.date_of_birth)).format("MM/DD/YYYY"),
+        date_of_birth: values.date_of_birth,
         phone_number: values.phone_number,
         address: values.address,
         nationality: values.nationality,

@@ -1,13 +1,13 @@
-import { unwrapResult } from '@reduxjs/toolkit';
+import userApi from 'api/userApi';
 import Footer from 'components/Footer';
 import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
+import Paths from 'constants/paths';
 import InputField from 'custom-fields/InputField';
-import { signup } from 'features/Auth/userSlice';
+// import { signup } from 'features/Auth/userSlice';
 import { FastField, Form, Formik } from 'formik';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import '../SignIn/SignIn.scss';
@@ -18,11 +18,11 @@ SignUpPage.propTypes = {
 
 function SignUpPage(props) {
   const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
+  // const [isError, setIsError] = useState(false);
   const history = useHistory();
-  const dispatch = useDispatch();
   const { roleId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
+  const [errorMessage, setErrorMessage] = useState('');
 
   const initialValues = {
     email: '',
@@ -68,19 +68,51 @@ function SignUpPage(props) {
 
   const onRegister = async (values) => {
     try {
-      const action = signup({
+      const params = {
         email: values.email,
         password: values.passwordConfirmation,
         role_id: parseInt(roleId, 10)
-      });
+      };
 
-      const actionResult = await dispatch(action);
-      unwrapResult(actionResult);
-      enqueueSnackbar("You have successfully registered an account.", { variant: "success" });
-      history.push("/auth/sign-in");
+      const action = await userApi.signup(params);
+
+      console.log({action});
+
+      if (action.data.status === 1) {
+        enqueueSnackbar(action.data.message, { variant: "success" });
+        history.push({
+          pathname: `${Paths.verifyEmail}`,
+          state: {
+            email: params.email,
+            code: action.data.code,
+            role: roleId
+          }
+        });
+        return true;
+      } else {
+        enqueueSnackbar(action.data.message, { variant: "error" });
+        setErrorMessage(action.data.message);
+        switch (action.data.code) {
+          case 400:
+            break;
+          case 409:
+            history.push({
+              pathname: `${Paths.verifyEmail}`,
+              state: {
+                email: params.email,
+                code: action.data.code,
+                role: roleId
+              }
+            });
+            break;
+          default:
+            break;
+        }
+        return false;
+      }
     } catch (error) {
-      setIsError(true);
       enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      return false;
     }
   };
 
@@ -188,8 +220,7 @@ function SignUpPage(props) {
                         {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
                         Sign Up
                       </button>
-                      {isError &&
-                        <span className="text-danger form-span">This email address is already being used</span>}
+                      <span className="text-danger form-span">{errorMessage}</span>
                     </div>
                     <div className="form-group signUp">
                       <span>Already have an account?</span>

@@ -206,7 +206,7 @@ function Header(props) {
               {/* <FaIcons.FaUserAstronaut className="notify-me__notify__icon" /> */}
               <img src={
                 user.r_profile === null
-                  ? Images.defaultAvatar
+                  ? Images.defaultCompany
                   : user.r_profile.logo_image_link
               } alt="recruiter-avatar" />
             </div>

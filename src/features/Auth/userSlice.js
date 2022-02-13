@@ -2,16 +2,16 @@ import userApi from 'api/userApi';
 
 const { createSlice, createAsyncThunk } = require('@reduxjs/toolkit');
 
-export const signup = createAsyncThunk(
-  'auth/sign-up/:roleId',
+// export const signup = createAsyncThunk(
+//   'auth/sign-up/:roleId',
 
-  async (payload) => {
-    const data = await userApi.signup(payload);
+//   async (payload) => {
+//     const data = await userApi.signup(payload);
 
-    return data.data;
-  }
+//     return data.data;
+//   }
 
-);
+// );
 
 export const login = createAsyncThunk(
   '/auth/sign-in',
@@ -37,7 +37,7 @@ export const loginGoogle = createAsyncThunk(
     localStorage.setItem('user', JSON.stringify(data.data));
     localStorage.setItem('role_id', JSON.stringify(data.data.role_id));
 
-    return data;
+    return data.data.data;
   }
 );
 

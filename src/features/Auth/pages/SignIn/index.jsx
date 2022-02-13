@@ -62,15 +62,14 @@ function SignInPage(props) {
       setIsError(true);
     } else {
       try {
-        const action = login({
+        const params = {
           email: values.email,
           password: values.password
-        });
+        };
 
-        const actionResult = await dispatch(action);
+        const actionResult = await dispatch(login(params));
         unwrapResult(actionResult);
         isRecruiterPath && localStorage.removeItem('isRecruiterPath');
-        // history.push(result.role_id === 3 ? "/student" : result.role_id === 2 ? "/recruiter" : "/error");
       } catch (error) {
         setIsError(true);
         enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });

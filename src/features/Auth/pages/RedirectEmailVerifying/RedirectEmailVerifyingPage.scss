@@ -1,0 +1,106 @@
+.redirect-email-verifying-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--success);
+  font-size: 0.9rem;
+
+  padding: 2rem;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    width: 50%;
+    height: 100%;
+    padding: 0 1rem 2rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+      rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    border-radius: 0.5rem;
+
+    &__image {
+      display: flex;
+      justify-content: center;
+
+      width: 100%;
+
+      & > img {
+        width: 15rem;
+        height: 15rem;
+        object-fit: contain;
+      }
+    }
+
+    &__description {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      width: 100%;
+
+      &__title {
+        text-align: center;
+        width: 100%;
+
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+
+      &__more-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+
+        padding: 1rem 0 0 0;
+        line-height: 2rem;
+
+        &__mail {
+          text-align: center;
+          & > span {
+            color: var(--success);
+            font-weight: 600;
+          }
+        }
+
+        &__verify {
+          text-align: center;
+        }
+      }
+    }
+
+    &__group-button {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      flex-flow: row wrap; 
+      width: 100%;
+
+      padding: 1rem 0 0 0;
+
+      & > button {
+        // min-width: 10rem;
+        font-weight: 500;
+      }
+
+      &__link {
+        text-align: center;
+        font-size: 2rem;
+        font-family: "Slackey", "cursive";
+        min-width: 5rem;
+        color: var(--success);
+        cursor: pointer;
+        transition: all 0.1s ease 0s;
+
+        &:hover {
+          color: green;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}

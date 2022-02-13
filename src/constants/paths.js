@@ -3,6 +3,7 @@ const Paths = {
     // USER
     signin: "/auth/sign-in",
     selectRole: "/auth/sign-up",
+    verifyEmail: "/auth/email/verify",
     // signup: "/auth/sign-up/:roleId",
 
     // RECRUITER

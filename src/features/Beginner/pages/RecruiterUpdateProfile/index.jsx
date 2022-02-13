@@ -35,13 +35,13 @@ function RecruiterUpdateProfilePage(props) {
 
   const initialValues = !isUpdate
     ? {
-      company_name: '',
-      phone_number: '',
-      contact_email: '',
-      address: '',
-      company_industry: '',
-      company_size: '',
-      tax_code: '',
+      company_name: 'New Company',
+      phone_number: '0702666777',
+      contact_email: 'new.company@gmail.com',
+      address: 'Da Nang, Viet Nam',
+      company_industry: 'Software Company',
+      company_size: '1000',
+      tax_code: '1100L',
     } : user.r_profile;
 
   const handleSubmit = async (values) => {
