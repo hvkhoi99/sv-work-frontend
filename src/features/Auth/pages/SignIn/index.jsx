@@ -1,16 +1,20 @@
 import { unwrapResult } from '@reduxjs/toolkit';
+import userApi from 'api/userApi';
 // import PropTypes from 'prop-types';
 import Footer from 'components/Footer';
 import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
 import InputField from 'custom-fields/InputField';
-import { login } from 'features/Auth/userSlice';
+import { login, logout, updateUser } from 'features/Auth/userSlice';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 import { FastField, Form, Formik } from 'formik';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
-import * as FcIcons from 'react-icons/fc';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { Button } from 'reactstrap';
 import * as Yup from 'yup';
 import './SignIn.scss';
 
@@ -21,10 +25,17 @@ SignInPage.propTypes = {
 function SignInPage(props) {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  const [isSpinner, setIsSpinner] = useState(false);
+  // const [isSpinner, setIsSpinner] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [isError, setIsError] = useState(false);
   const isRecruiterPath = localStorage.getItem('isRecruiterPath');
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [currentRole, setCurrentRole] = useState(null);
+  // const [isGoogleButtonClicked, setIsGoogleButtonClicked] = useState(false);
+  const listRole = [
+    { id: 3, avatar: Images.avatar, name: 'student-avatar' },
+    { id: 2, avatar: Images.defaultCompany, name: 'employer-avatar' },
+  ]
 
   const initialValues = {
     email: '',
@@ -39,14 +50,7 @@ function SignInPage(props) {
     password: Yup
       .string()
       .required('Password is required')
-  })
-
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   control,
-  //   formState: { errors, isSubmitting }
-  // } = useForm({ resolver: yupResolver(validationSchema) })
+  });
 
   useEffect(() => {
     let timer = setTimeout(() => {
@@ -55,6 +59,17 @@ function SignInPage(props) {
     return () => {
       clearTimeout(timer);
     };
+  }, []);
+
+  useEffect(() => {
+    const unregisterAuthObserver = firebase.auth().onAuthStateChanged(async (user) => {
+      setIsSignedIn(!!user);
+      if (!user) {
+        return;
+      }
+    });
+
+    return () => unregisterAuthObserver();
   }, []);
 
   const onSignIn = async (values) => {
@@ -77,19 +92,60 @@ function SignInPage(props) {
     }
   };
 
-  const onGoogleLogin = () => {
-    setIsSpinner(true);
-    let timer = setTimeout(() => {
-      setIsSpinner(false);
-    }, 2000);
-    return () => {
-      clearTimeout(timer);
-    };
+  const handleChooseRole = (id) => {
+    console.log(id)
+    setCurrentRole(id);
   }
 
-  // const checkKeyDown = (e) => {
-  //   if (e.code === 'Enter') e.preventDefault();
-  // };
+  const onLogoutGoogle = () => {
+    dispatch(logout());
+    firebase.auth().signOut();
+  }
+
+  const uiConfig = {
+    // Popup signin flow rather than redirect flow.
+    signInFlow: 'popup',
+    // Redirect to /signedIn after sign in is successful. Alternatively you can provide a callbacks.signInSuccess function.
+    // signInSuccessUrl: '/',
+    // We will display Google and Facebook as auth providers.
+    signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+    ],
+
+    callbacks: {
+      // Avoid redirects after sign-in.
+      signInSuccessWithAuthResult: async (values) => {
+        try {
+          const user = values.user;
+          if (!user) {
+            return;
+          }
+          const token = await user.getIdToken();
+          const params = {
+            role_id: currentRole,
+            social_token: token
+          };
+          // const actionResult = await dispatch(loginGoogle(params));
+          // unwrapResult(actionResult);
+          const data = await userApi.loginWithGoogle(params);
+          if (data.data.status === 1) {
+            localStorage.setItem('access_token', data.data.data.token);
+            localStorage.setItem('user', JSON.stringify(data.data.data));
+            localStorage.setItem('role_id', JSON.stringify(data.data.data.role_id));
+            isRecruiterPath && localStorage.removeItem('isRecruiterPath');
+            dispatch(updateUser(data.data.data));
+          } else {
+            enqueueSnackbar(data.data.message, { variant: "error" });
+            return;
+          }
+        } catch (error) {
+          console.log("Cannot login with Google account. " + error.message);
+          enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        }
+      },
+    },
+  };
 
   const currentUI = isLoading
     ? <LoadingUI />
@@ -107,68 +163,6 @@ function SignInPage(props) {
               <span>Sign in</span>
               <img src={Images.smDot} alt="smDot" />
             </div>
-            {/* <form onSubmit={handleSubmit(onSignIn)} onKeyDown={(e) => checkKeyDown(e)}>
-              <div className="form-group">
-                <RHFInputField
-                  register={register}
-                  inputName="email"
-                  control={control}
-                  scheme={errors.email}
-                  placeholder="Email"
-                  moreClassName="shadow-input radius"
-                />
-              </div>
-              <div className="form-group">
-                <RHFInputField
-                  register={register}
-                  inputName="password"
-                  control={control}
-                  scheme={errors.password}
-                  type="password"
-                  moreClassName="shadow-input radius"
-                  placeholder="Password"
-                />
-              </div>
-              <div className="form-group remember-forget">
-                <div className="remember-forget__left">
-                  <input type="checkbox" />
-                  <p>Remember</p>
-                </div>
-                <Link to="/auth/forget-password" className="remember-forget__link">
-                  Forget Password
-                </Link>
-              </div>
-              <div className="form-group signin-button">
-                <button disabled={isSubmitting} className="btn btn-success btn-sm" type="submit">
-                  {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                  Sign in
-                </button>
-                {isError &&
-                  <span className="text-danger form-span">You have entered an invalid username or password</span>}
-              </div>
-              <div className="form-group under-line">
-                <div className="under-line__line" />
-                <p>With</p>
-                <div className="under-line__line" />
-              </div>
-
-              <div className="form-group button">
-                <button
-                  disabled={isSpinner && true}
-                  className="btn btn-sm google"
-                  type="button"
-                  onClick={onGoogleLogin}
-                >
-                  {isSpinner && <span className="spinner-border spinner-border-sm mr-2" />}
-                  <FcIcons.FcGoogle className="google__icon" />
-                  Sign in with Google
-                </button>
-              </div>
-              <div className="form-group signUp">
-                <span>Don't have an account?</span>
-                <Link to="/auth/sign-up" className="signUp__link">Sign up</Link>
-              </div>
-            </form> */}
             <Formik
               initialValues={initialValues}
               validationSchema={validationSchema}
@@ -193,19 +187,6 @@ function SignInPage(props) {
                       placeholder="Password*"
                       type="password"
                     />
-
-                    {/* <FormGroup>
-                      <Button
-                        type="submit"
-                        color={'success'}
-                        className="formGroup-button__btn-update"
-                        disabled={isSubmitting}
-                      >
-                        {isSubmitting && <Spinner children="" size="sm" />}
-                        &nbsp;Sign in
-                      </Button>
-                    </FormGroup> */}
-
                     <div className="form-group remember-forget">
                       <div className="remember-forget__left">
                         <input type="checkbox" />
@@ -230,12 +211,12 @@ function SignInPage(props) {
                     </div>
                     <div className="form-group under-line">
                       <div className="under-line__line" />
-                      <p>With</p>
+                      <p>or With</p>
                       <div className="under-line__line" />
                     </div>
 
-                    <div className="form-group button">
-                      <button
+                    <div className="choose-role-to-login">
+                      {/* <button
                         type="button"
                         disabled={isSpinner}
                         style={isSpinner ? { cursor: "default" } : { cursor: "pointer" }}
@@ -245,7 +226,46 @@ function SignInPage(props) {
                         {isSpinner && <span className="spinner-border spinner-border-sm mr-2" />}
                         <FcIcons.FcGoogle className="google__icon" />
                         Sign in with Google
-                      </button>
+                      </button> */}
+                      {!isSignedIn && <div className="choose-role-to-login__select-role">
+                        <span>Sign in with Google as</span>
+                        {/* <span>Please select a role if you want to sign in with google.</span> */}
+                        <div className="choose-role-to-login__select-role__group-image">
+                          {
+                            listRole.map((role, index) => {
+                              const activeClass = currentRole === role.id ? "choosed-role" : "";
+                              return <div
+                                key={index}
+                                className={`choose-role-to-login__select-role__group-image__item ${activeClass}`}
+                                onClick={() => handleChooseRole(role.id)}
+                              >
+                                <img
+                                  src={role.avatar}
+                                  alt={role.name}
+                                />
+                              </div>
+                            })
+                          }
+                          {/* <img src={Images.avatar} alt="student-avatar" />
+                          <img src={Images.defaultCompany} alt="employer-avatar" /> */}
+                        </div>
+                      </div>}
+                      <div className="choose-role-to-login__group-button">
+                        {
+                          !isSignedIn
+                            ? <StyledFirebaseAuth
+                              uiConfig={uiConfig}
+                              firebaseAuth={firebase.auth()}
+                            />
+                            : <Button color="secondary" type="button" onClick={onLogoutGoogle}>
+                              Logout Google
+                            </Button>
+                        }
+                        {/* {
+                          (currentRole === null && !isSignedIn && isGoogleButtonClicked) &&
+                          <span>Please select a role if you want to sign in with google.</span>
+                        } */}
+                      </div>
                     </div>
                     <div className="form-group signUp">
                       <span>Don't have an account?</span>

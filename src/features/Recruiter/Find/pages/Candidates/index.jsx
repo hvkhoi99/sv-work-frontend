@@ -50,10 +50,10 @@ function FindCadidatesPage(props) {
       : null,
     gender: gender !== undefined && gender !== ""
       ? gender.toUpperCase() === "MALE"
-        ? { value: true, label: "Male" }
+        ? { value: 1, label: "Male" }
         : (
           gender.toUpperCase() === "FEMALE"
-            ? { value: false, label: "Female" }
+            ? { value: 0, label: "Female" }
             : ""
         )
       : null,

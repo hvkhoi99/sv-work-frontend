@@ -21,25 +21,24 @@ export const login = createAsyncThunk(
     localStorage.setItem('access_token', data.data.data.token);
     localStorage.setItem('user', JSON.stringify(data.data.data));
     localStorage.setItem('role_id', JSON.stringify(data.data.data.role_id));
-
-    return data.data.data;
-  }
-);
-
-export const loginGoogle = createAsyncThunk(
-  '/loginGoogle',
-
-  async (payload) => {
-    console.log("payload", payload)
-    const data = await userApi.loginGoogle(payload);
     
-    localStorage.setItem('access_token', data.data.token);
-    localStorage.setItem('user', JSON.stringify(data.data));
-    localStorage.setItem('role_id', JSON.stringify(data.data.role_id));
-
     return data.data.data;
   }
 );
+
+// export const loginGoogle = createAsyncThunk(
+//   '/loginGoogle',
+
+//   async (payload) => {
+//     const data = await userApi.loginWithGoogle(payload);
+//     localStorage.setItem('access_token', data.data.data.token);
+//     localStorage.setItem('user', JSON.stringify(data.data.data));
+//     localStorage.setItem('role_id', JSON.stringify(data.data.data.role_id));
+//     // console.log("payload", payload)
+//     // console.log({data})
+//     return data.data.data;
+//   }
+// );
 
 const userSlice = createSlice({
   name: 'user',
@@ -71,9 +70,9 @@ const userSlice = createSlice({
     [login.fulfilled]: (state, action) => {
       state.current = action.payload;
     },
-    [loginGoogle.fulfilled]: (state, action) => {
-      state.current = action.payload.data;
-    },
+    // [loginGoogle.fulfilled]: (state, action) => {
+    //   state.current = action.payload.data;
+    // },
   },
 });
 

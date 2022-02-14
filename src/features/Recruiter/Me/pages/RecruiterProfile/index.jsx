@@ -250,7 +250,7 @@ function RecruiterProfilePage(props) {
                   isUpdating={isUpdating}
                 />
               </div>
-              <div className="recruiter-profile__container__overall__content">{ReactHtmlParser(user.r_profile.description ?? "No Information Available")}</div>
+              <div className="recruiter-profile__container__overall__content">{ReactHtmlParser(user.r_profile.description ?? "No Information Available.")}</div>
             </div>
           </div>
         </div>

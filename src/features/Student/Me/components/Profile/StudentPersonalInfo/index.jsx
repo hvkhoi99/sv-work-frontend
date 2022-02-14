@@ -42,7 +42,7 @@ function StudentPersonalInfoCard(props) {
             <FaIcons.FaUser
               className="student-personal-info-card__icon"
             />
-            <span>{profile.gender ? "Male" : "Female"}</span>
+            <span>{profile.gender === false ? "Female" : "Male"}</span>
           </div>
         </div>
         <div className="student-personal-info-card__main__center">
@@ -50,7 +50,7 @@ function StudentPersonalInfoCard(props) {
             <FaIcons.FaPhoneAlt
               className="student-personal-info-card__icon"
             />
-            <span>{profile.phone_number}</span>
+            <span>{profile.phone_number ?? "N/A."}</span>
           </div>
           <div className="student-personal-info-card__main__center__email">
             <MdIcons.MdEmail
@@ -64,13 +64,13 @@ function StudentPersonalInfoCard(props) {
             <ImIcons.ImLocation
               className="student-personal-info-card__icon"
             />
-            <span>{profile.address}</span>
+            <span>{profile.address === "" ? "No Information Available." : profile.address}</span>
           </div>
           <div className="student-personal-info-card__main__right__nationality">
             <FaIcons.FaPassport
               className="student-personal-info-card__icon"
             />
-            <span>{profile.nationality}</span>
+            <span>{profile.nationality === "" ? "No Information Available." : profile.nationality}</span>
           </div>
         </div>
         <div className="student-personal-info-card__main__more">

@@ -20,6 +20,11 @@ const userApi = {
   resendVerificationEmail: (params) => {
     const url = "/email/resend";
     return axiosClient.post(url, params);
+  },
+
+  loginWithGoogle: (params) => {
+    const url = "/login-with-google";
+    return axiosClient.post(url, params);
   }
 };
 

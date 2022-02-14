@@ -41,7 +41,7 @@ function CandidateFindCard(props) {
       </span>
       <div className="candidate-find-card__address">
         <TiIcons.TiLocation className="candidate-find-card__address__icon" />
-        <span>{candidate.address}</span>
+        <span>{candidate.address === "" ? "No Information Available." : candidate.address}</span>
       </div>
       <div className="candidate-find-card__skills">
         {

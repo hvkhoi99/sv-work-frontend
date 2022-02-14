@@ -34,8 +34,8 @@ export const JOB_TAGS_OPTIONS = [
 ];
 
 export const GENDER = [
-  { value: true, label: "Male" },
-  { value: false, label: "Female" },
+  { value: 1, label: "Male" },
+  { value: 0, label: "Female" },
 ];
 
 export const CAREER_OPTIONS = [

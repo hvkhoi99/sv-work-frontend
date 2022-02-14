@@ -14,6 +14,7 @@ import LinesEllipsis from 'react-lines-ellipsis';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import './Header.scss';
+import firebase from 'firebase/compat/app';
 
 Header.propTypes = {
 
@@ -87,6 +88,9 @@ function Header(props) {
   const logOut = async () => {
     setHiddenMe(true);
     dispatch(logout());
+    if (user.signin_method === "google.com") {
+      firebase.auth().signOut()
+    }
     history.push("/auth/sign-in");
   }
 

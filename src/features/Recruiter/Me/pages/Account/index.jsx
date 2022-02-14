@@ -18,6 +18,7 @@ RecruiterAccountPage.propTypes = {
 };
 
 function RecruiterAccountPage(props) {
+  const user = useSelector((state) => state.user.current);
   const history = useHistory();
   const currentPath = history.location.pathname;
   const studentAccountPath = "/me/account";
@@ -169,7 +170,7 @@ function RecruiterAccountPage(props) {
                     currentPath === recruiterAccountPath
                       ? recruiter.company_name
                       : currentPath === studentAccountPath
-                        ? (student.first_name + ' ' + student.last_name)
+                        ? `${student.first_name ?? ""} ${student.last_name ?? ""}`
                         : "Error"
                   }
                   {currentPath === recruiterAccountPath && recruiter.verify && <HiIcons.HiCheckCircle className="inforCard-icon" />}
@@ -230,13 +231,14 @@ function RecruiterAccountPage(props) {
                               className="account-form__item__password__icon"
                             />
                         } */}
-                        <div className="account-form__item__password__link">
-                          <Link
-                            className="change-password-link"
-                            to="#"
-                            onClick={handleOpenFormChange}
-                          >Change Password</Link>
-                        </div>
+                        {user.signin_method !== "google.com" &&
+                          <div className="account-form__item__password__link">
+                            <Link
+                              className="change-password-link"
+                              to="#"
+                              onClick={handleOpenFormChange}
+                            >Change Password</Link>
+                          </div>}
                       </div>
                     </div>
                   </div>

@@ -12,6 +12,7 @@ import StudentFindFeature from 'features/Student/Find';
 import StudentHomeFeature from 'features/Student/Home';
 import JobFeature from 'features/Student/Job';
 import StudentMeFeature from 'features/Student/Me';
+import firebase from 'firebase/compat/app';
 import { SnackbarProvider } from 'notistack';
 import { createRef, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -19,6 +20,13 @@ import './App.scss';
 
 function App() {
   const notistackRef = createRef();
+
+  // Configure Firebase.
+  const config = {
+    apiKey: "AIzaSyAEaJSqwXBi9pu7Ue3JzSA9uupRhnxY-34",
+    authDomain: "sv-work-56ffe.firebaseapp.com",
+  };
+  firebase.initializeApp(config);
 
   return (
     <div className="App">
