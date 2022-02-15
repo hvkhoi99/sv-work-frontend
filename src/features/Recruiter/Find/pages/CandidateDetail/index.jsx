@@ -114,6 +114,8 @@ function CandidateDetailPage(props) {
     }
   }
 
+  console.log({candidate})
+
   return (
     <>
       {

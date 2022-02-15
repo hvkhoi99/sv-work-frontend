@@ -6,7 +6,6 @@ import InputField from 'custom-fields/InputField';
 import SelectField from 'custom-fields/SelectField';
 import TextFieldDate from 'custom-fields/TextFieldDate';
 import { FastField, Form, Formik } from 'formik';
-import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
@@ -150,7 +149,8 @@ function CreateRecruitmentForm(props) {
           requirement: requirement,
           min_salary: parseInt(values.min_salary),
           max_salary: parseInt(values.max_salary),
-          expiry_date: moment(new Date(values.expiry_date)).format("MM/DD/YYYY"),
+          // expiry_date: moment(new Date(values.expiry_date)).format("MM/DD/YYYY"),
+          expiry_date: values.expiry_date,
           is_closed: false,
           hashtags: values.hashtags
         };
@@ -159,13 +159,14 @@ function CreateRecruitmentForm(props) {
             ? await recruiterApi.createNewRecruitment(params)
             : await studentApi.createNewRecruitment(params);
           enqueueSnackbar("Your recruitment has been created.", { variant: "success" });
+          history.push(`${Paths.recruiterDashboard}`);
         } else {
           user.role_id === 2
-            ? await recruiterApi.updateRecruitment(recruitment.id, params)
-            : await studentApi.updateRecruitment(recruitment.id, params);
+          ? await recruiterApi.updateRecruitment(recruitment.id, params)
+          : await studentApi.updateRecruitment(recruitment.id, params);
           enqueueSnackbar("Your recruitment has been updated.", { variant: "success" });
+          history.push(`${Paths.recruiterDashboard}/available-jobs/${recruitment.id}`);
         }
-        history.push(`${Paths.recruiterDashboard}`);
       } catch (error) {
         isBeautiful = false;
         console.log("Cannot create/update recruitment. Error" + error.message);

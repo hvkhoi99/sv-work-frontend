@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import * as RiIcons from 'react-icons/ri';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
+import helper from 'utils/common';
 import './ConfirmFirstUpdate.scss';
 
 ConfirmFirstUpdatePage.propTypes = {
@@ -33,6 +34,7 @@ function ConfirmFirstUpdatePage(props) {
   // });
 
   useEffect(() => {
+    helper.scrollToTop();
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000)

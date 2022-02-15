@@ -212,7 +212,7 @@ function JobDetailPage(props) {
 
   const renderApplicationArea = (state) => {
     switch (state) {
-      case true:
+      case 1 || true:
         return (
           <span style={{ color: 'var(--success)' }}>
             <BsIcons.BsCheckCircle
@@ -226,9 +226,9 @@ function JobDetailPage(props) {
           </span>
         );
       // break;
-      case false:
+      case 0 || false:
         switch (stateData.isInvited) {
-          case true:
+          case 1 || true:
             return (
               <span style={{ color: 'red' }}>
                 <ImIcons.ImCancelCircle
@@ -243,7 +243,7 @@ function JobDetailPage(props) {
                 }
               </span>
             );
-          case false: {
+          case 0 || false: {
             return (
               <span style={{ color: 'red' }}>
                 <ImIcons.ImCancelCircle

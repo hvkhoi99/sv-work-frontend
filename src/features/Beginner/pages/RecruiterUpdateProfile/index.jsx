@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 import * as GoIcons from 'react-icons/go';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import helper from 'utils/common';
 import './RecruiterUpdateProfile.scss';
 // import PropTypes from 'prop-types';
 
@@ -93,6 +94,7 @@ function RecruiterUpdateProfilePage(props) {
   }
 
   useEffect(() => {
+    helper.scrollToTop();
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000)

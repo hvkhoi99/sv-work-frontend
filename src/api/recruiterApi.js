@@ -39,6 +39,11 @@ const recruiterApi = {
     return axiosClient.post(url, params);
   },
 
+  updateRecruiterDescription: (id, params) => {
+    const url = `/recruiter/profile/${id}/updateDescription`;
+    return axiosClient.put(url, params);
+  },
+
   // Recruitment
   getRecruimentDetail: (id) => {
     const url = `/recruiter/recruitment/${id}`;

@@ -8,8 +8,8 @@ export const CITY_OPTIONS = [
 ];
 
 export const JOB_TYPE_OPTIONS = [
-  { value: false, label: "Part Time" },
-  { value: true, label: "Full Time" }
+  { value: 0, label: "Part Time" },
+  { value: 1, label: "Full Time" }
 ];
 
 export const CLOSED_OPTIONS = [

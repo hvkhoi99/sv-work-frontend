@@ -1,3 +1,4 @@
+import { Button } from '@material-ui/core';
 import { unwrapResult } from '@reduxjs/toolkit';
 import userApi from 'api/userApi';
 // import PropTypes from 'prop-types';
@@ -6,6 +7,7 @@ import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
 import InputField from 'custom-fields/InputField';
 import { login, logout, updateUser } from 'features/Auth/userSlice';
+// import { login, logout, updateUser } from 'features/Auth/userSlice';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { FastField, Form, Formik } from 'formik';
@@ -14,9 +16,9 @@ import React, { useEffect, useState } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Button } from 'reactstrap';
 import * as Yup from 'yup';
 import './SignIn.scss';
+// import * as FaIcons from 'react-icons/fa';
 
 SignInPage.propTypes = {
 
@@ -25,13 +27,13 @@ SignInPage.propTypes = {
 function SignInPage(props) {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
-  // const [isSpinner, setIsSpinner] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const [isError, setIsError] = useState(false);
   const isRecruiterPath = localStorage.getItem('isRecruiterPath');
+  // const [isOpen, setIsOpen] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isSigningIn, setIsSigningIn] = useState(false);
   const [currentRole, setCurrentRole] = useState(null);
-  // const [isGoogleButtonClicked, setIsGoogleButtonClicked] = useState(false);
   const listRole = [
     { id: 3, avatar: Images.avatar, name: 'student-avatar' },
     { id: 2, avatar: Images.defaultCompany, name: 'employer-avatar' },
@@ -67,10 +69,44 @@ function SignInPage(props) {
       if (!user) {
         return;
       }
+      setIsSigningIn(true);
+      try {
+        // const user = values.user;
+        // if (!user) {
+        //   return;
+        // }
+        const token = await user.getIdToken();
+        const params = {
+          role_id: currentRole ?? 3,
+          social_token: token
+        };
+        console.log({ params });
+        const data = await userApi.loginWithGoogle(params);
+        if (data.data.status === 1) {
+          localStorage.setItem('access_token', data.data.data.token);
+          localStorage.setItem('user', JSON.stringify(data.data.data));
+          localStorage.setItem('role_id', JSON.stringify(data.data.data.role_id));
+          isRecruiterPath && localStorage.removeItem('isRecruiterPath');
+          dispatch(updateUser(data.data.data));
+        } else {
+          firebase.auth().signOut();
+          setIsSignedIn(false);
+          enqueueSnackbar(data.data.message, { variant: "error" });
+        }
+        setIsSigningIn(false);
+        return;
+      } catch (error) {
+        firebase.auth().signOut();
+        setIsSigningIn(false);
+        setIsSignedIn(false);
+        console.log("Cannot login with Google account. " + error.message);
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        return;
+      }
     });
 
     return () => unregisterAuthObserver();
-  }, []);
+  }, [currentRole, dispatch, isRecruiterPath, enqueueSnackbar]);
 
   const onSignIn = async (values) => {
     if (values.email === "admin@gmail.com") {
@@ -97,9 +133,9 @@ function SignInPage(props) {
     setCurrentRole(id);
   }
 
-  const onLogoutGoogle = () => {
+  const onLogoutGoogle = async () => {
+    await firebase.auth().signOut();
     dispatch(logout());
-    firebase.auth().signOut();
   }
 
   const uiConfig = {
@@ -112,38 +148,9 @@ function SignInPage(props) {
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       // firebase.auth.FacebookAuthProvider.PROVIDER_ID,
     ],
-
     callbacks: {
       // Avoid redirects after sign-in.
-      signInSuccessWithAuthResult: async (values) => {
-        try {
-          const user = values.user;
-          if (!user) {
-            return;
-          }
-          const token = await user.getIdToken();
-          const params = {
-            role_id: currentRole,
-            social_token: token
-          };
-          // const actionResult = await dispatch(loginGoogle(params));
-          // unwrapResult(actionResult);
-          const data = await userApi.loginWithGoogle(params);
-          if (data.data.status === 1) {
-            localStorage.setItem('access_token', data.data.data.token);
-            localStorage.setItem('user', JSON.stringify(data.data.data));
-            localStorage.setItem('role_id', JSON.stringify(data.data.data.role_id));
-            isRecruiterPath && localStorage.removeItem('isRecruiterPath');
-            dispatch(updateUser(data.data.data));
-          } else {
-            enqueueSnackbar(data.data.message, { variant: "error" });
-            return;
-          }
-        } catch (error) {
-          console.log("Cannot login with Google account. " + error.message);
-          enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
-        }
-      },
+      signInSuccessWithAuthResult: () => false,
     },
   };
 
@@ -180,13 +187,30 @@ function SignInPage(props) {
                       placeholder="Email"
                     />
 
-                    <FastField
-                      name="password"
-                      component={InputField}
+                    <div className="change-password-form">
+                      <FastField
+                        name="password"
+                        component={InputField}
 
-                      placeholder="Password*"
-                      type="password"
-                    />
+                        placeholder="Password*"
+                        // type={!isOpen ? "password" : ""}
+                        type={"password"}
+                        moreClassName="width-100"
+                        inputClassName="password-eye-padding"
+                      />
+                      {/* {
+                        isOpen
+                          ? <FaIcons.FaRegEye
+                            onClick={() => setIsOpen(!isOpen)}
+                            className="change-password-form__icon password-eye-open"
+                          /> : <FaIcons.FaRegEyeSlash
+                            onClick={() => setIsOpen(!isOpen)}
+                            className="change-password-form__icon"
+                          />
+
+                      } */}
+                    </div>
+
                     <div className="form-group remember-forget">
                       <div className="remember-forget__left">
                         <input type="checkbox" />
@@ -257,8 +281,21 @@ function SignInPage(props) {
                               uiConfig={uiConfig}
                               firebaseAuth={firebase.auth()}
                             />
-                            : <Button color="secondary" type="button" onClick={onLogoutGoogle}>
-                              Logout Google
+                            : <Button
+                              type="button"
+                              variant="contained"
+                              color="default"
+                              disabled={(isSignedIn && isSigningIn)}
+                              onClick={onLogoutGoogle}
+                            >
+                              {
+                                (isSignedIn && isSigningIn)
+                                  ? <>
+                                    <span className="spinner-border spinner-border-sm mr-2" />
+                                    Logged in with Google
+                                  </>
+                                  : "Logout Google"
+                              }
                             </Button>
                         }
                         {/* {

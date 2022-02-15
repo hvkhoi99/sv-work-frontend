@@ -47,6 +47,9 @@ function UpdateSkillsForm(props) {
         </span>
         <div className="update-personal-info-form__header__dot" />
       </div>
+      <div className="update-personal-info-form__more-info">
+        <span>Please choose from some of the available skills below or create new ones!</span>
+      </div>
       <div className="update-personal-info-form__main">
         <Formik
           initialValues={initialValues}

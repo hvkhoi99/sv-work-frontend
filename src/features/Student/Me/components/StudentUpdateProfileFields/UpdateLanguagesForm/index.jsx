@@ -1,10 +1,10 @@
-import { JOB_TAGS_OPTIONS } from 'constants/global';
+import { LANGUAGE_OPTIONS } from 'constants/global';
 import SelectField from 'custom-fields/SelectField';
 import { FastField, Form, Formik } from 'formik';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, FormGroup, Spinner } from 'reactstrap';
 import * as Yup from 'yup';
-import PropTypes from 'prop-types';
 
 UpdateLanguagesForm.propTypes = {
   initialValues: PropTypes.object,
@@ -47,6 +47,9 @@ function UpdateLanguagesForm(props) {
         </span>
         <div className="update-personal-info-form__header__dot" />
       </div>
+      <div className="update-personal-info-form__more-info">
+        <span>Please choose from some of the available languages below or create new ones!</span>
+      </div>
       <div className="update-personal-info-form__main">
         <Formik
           initialValues={initialValues}
@@ -65,7 +68,7 @@ function UpdateLanguagesForm(props) {
                   label="Languages"
                   labelClassName="input-field-label"
                   placeholder="Eg: ReactJS"
-                  options={JOB_TAGS_OPTIONS}
+                  options={LANGUAGE_OPTIONS}
                   isMulti={true}
                   isCreatableSelect={true}
                 />

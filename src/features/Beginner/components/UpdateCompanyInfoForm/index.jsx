@@ -25,11 +25,13 @@ function UpdateCompanyInfoForm(props) {
   const validationSchema = Yup.object().shape({
     company_name: Yup
       .string()
-      .required('Company name is required')
+      .required('Company Name is required')
+      .typeError('Company Name is required')
       .min(5, "Company name must be at least 5 characters"),
     phone_number: Yup
       .string()
-      .required('Phone number is required')
+      .required('Phone Number is required')
+      .typeError('Phone Number is required')
       // .matches(phoneRegExp, 'Phone number is not valid'),
       .min(10, "Must be exactly 10 digits")
       .max(10, "Must be exactly 10 digits")
@@ -37,22 +39,27 @@ function UpdateCompanyInfoForm(props) {
     contact_email: Yup
       .string()
       .email('Email is invalid')
-      .required('Email is required'),
+      .required('Email is required')
+      .typeError('Email is required'),
     address: Yup
       .string()
       .required('Location is required')
+      .typeError('Location is required')
       .min(10, "Location must be at least 10 characters"),
     company_industry: Yup
       .string()
-      .required('Company industry is required')
+      .required('Company Industry is required')
+      .typeError('Company Industry is required')
       .min(10, "Company industry must be at least 10 characters"),
     company_size: Yup
       .string()
-      .required("Company size is required")
+      .required("Company Size is required")
+      .typeError('Company Size is required')
       .matches(/^[0-9]+$/, "Must be only digits"),
     tax_code: Yup
       .string()
-      .required("Company size is required")
+      .required("Tax Code is required")
+      .typeError('Tax Code is required')
   });
 
   const onSubmitForm = async (values) => {

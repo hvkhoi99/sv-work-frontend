@@ -180,6 +180,7 @@
 
   & > button {
     display: flex;
+    justify-content: center;
     align-items: center;
     border-radius: 0.5rem;
     max-width: 8rem;
@@ -228,15 +229,15 @@
     // flex-flow: column wrap;
     justify-content: center;
     align-items: center;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
 
     width: 100%;
 
     & > span {
       text-align: center;
-      font-size: .9rem;
+      font-size: 0.9rem;
     }
-    
+
     &__group-image {
       display: flex;
       justify-content: center;
@@ -283,9 +284,14 @@
     align-items: center;
     width: 100%;
 
+    & > button {
+      display: flex;
+      align-items: center;
+    }
+
     & > span {
       text-align: center;
-      font-size: .9rem;
+      font-size: 0.9rem;
       color: red;
     }
   }
@@ -293,4 +299,60 @@
 
 .choosed-role {
   border: 3px solid var(--success);
+}
+
+.change-password-form {
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  position: relative;
+
+  &__icon {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.5rem;
+    padding: 0.25rem;
+
+    font-size: 1.8rem;
+    background-color: #fff;
+    color: darkgrey;
+    cursor: pointer;
+    transition: all 0.1s ease 0s;
+
+    border-radius: 50%;
+
+    &:hover {
+      background-color: lightgrey;
+      color: var(--success);
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(1);
+    }
+  }
+}
+
+.password-eye-padding {
+  padding: 0.5rem 3rem 0.5rem 0.8rem;
+}
+
+.password-eye-open {
+  color: var(--success);
+}
+
+.firebaseui-list-item {
+  & > button {
+    border-radius: .5rem !important;
+    // transition: all 0.2s ease 0s !important;
+    
+    &:hover {
+      background-color: var(--success) !important;
+    }
+    
+    &:hover > .firebaseui-idp-text {
+      color: #fff !important;
+    }
+  }
 }

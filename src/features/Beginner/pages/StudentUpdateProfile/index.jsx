@@ -11,6 +11,7 @@ import React, { useEffect, useState } from 'react';
 import * as GoIcons from 'react-icons/go';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
+import helper from 'utils/common';
 import '../RecruiterUpdateProfile/RecruiterUpdateProfile.scss';
 
 StudentUpdateProfilePage.propTypes = {
@@ -85,6 +86,7 @@ function StudentUpdateProfilePage(props) {
   }
 
   useEffect(() => {
+    helper.scrollToTop();
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 2000)

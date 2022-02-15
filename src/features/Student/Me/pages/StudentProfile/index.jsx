@@ -196,7 +196,7 @@ function StudentProfilePage(props) {
                     </div>
                     <div className="student-profile__container__right__base-info__left__info">
                       <span className="student-profile__container__right__base-info__left__info__name">
-                        {user.s_profile.first_name} {user.s_profile.last_name}
+                        {user.s_profile.first_name ?? ""} {user.s_profile.last_name}
                       </span>
                       <span className="student-profile__container__right__base-info__left__info__career">
                         {user.s_profile.job_title}

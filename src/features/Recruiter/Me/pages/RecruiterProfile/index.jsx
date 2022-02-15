@@ -80,21 +80,21 @@ function RecruiterProfilePage(props) {
   const onUpdateOverall = async (values) => {
     setIsUpdating(true);
     try {
-      const r_profile = user.r_profile;
+      // const r_profile = user.r_profile;
       const params = {
-        contact_email: r_profile.contact_email,
-        company_name: r_profile.company_name,
-        phone_number: r_profile.phone_number,
-        address: r_profile.address,
-        company_size: parseInt(r_profile.company_size),
-        company_industry: r_profile.company_industry,
-        tax_code: r_profile.tax_code,
+        // contact_email: r_profile.contact_email,
+        // company_name: r_profile.company_name,
+        // phone_number: r_profile.phone_number,
+        // address: r_profile.address,
+        // company_size: parseInt(r_profile.company_size),
+        // company_industry: r_profile.company_industry,
+        // tax_code: r_profile.tax_code,
         description: values
       }
 
       const data = user.role_id === 2
-        ? await recruiterApi.updateRecruiterProfile(user.id, params)
-        : await studentApi.updateRecruiterProfile(user.id, params);
+        ? await recruiterApi.updateRecruiterDescription(user.id, params)
+        : await studentApi.updateRecruiterDescription(user.id, params);
       if (data.data.status === 1) {
         setIsUpdating(false);
         localStorage.setItem('user', JSON.stringify(data.data.data));
@@ -207,7 +207,7 @@ function RecruiterProfilePage(props) {
                       className="recruiter-profile__container__info__top__right__recruiter-address__icon"
                     />
                     <span>
-                      {user.r_profile.address}
+                      {user.r_profile.address ?? "N/A"}
                     </span>
                   </div>
                   <div className="recruiter-profile__container__info__top__right__btn-edit">
@@ -221,19 +221,19 @@ function RecruiterProfilePage(props) {
               <div className="recruiter-profile__container__info__bottom">
                 <div className="recruiter-profile__container__info__bottom__industry">
                   <AiIcons.AiFillSetting className="bottom-icon" />
-                  <span className="bottom-span">{user.r_profile.company_industry}</span>
+                  <span className="bottom-span">{user.r_profile.company_industry ?? "N/A"}</span>
                 </div>
                 <div className="recruiter-profile__container__info__bottom__mail-contact">
                   <AiIcons.AiTwotoneMail className="bottom-icon" />
-                  <span className="bottom-span">{user.r_profile.contact_email}</span>
+                  <span className="bottom-span">{user.r_profile.contact_email ?? "N/A"}</span>
                 </div>
                 <div className="recruiter-profile__container__info__bottom__phone-number">
                   <AiIcons.AiTwotonePhone className="bottom-icon" />
-                  <span className="bottom-span">{user.r_profile.phone_number}</span>
+                  <span className="bottom-span">{user.r_profile.phone_number ?? "N/A"}</span>
                 </div>
                 <div className="recruiter-profile__container__info__bottom__company-size">
                   <TiIcons.TiGroup className="bottom-icon" />
-                  <span className="bottom-span">{user.r_profile.company_size}</span>
+                  <span className="bottom-span">{user.r_profile.company_size ?? "N/A"}</span>
                 </div>
               </div>
             </div>

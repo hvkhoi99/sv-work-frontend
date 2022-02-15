@@ -47,10 +47,10 @@ function FindJobsPage(props) {
       : null,
     type: type !== undefined && type !== ""
       ? type.toUpperCase() === "FULLTIME"
-        ? { value: true, label: "Full Time" }
+        ? { value: 1, label: "Full Time" }
         : (
           type.toUpperCase() === "PARTTIME"
-            ? { value: false, label: "Part Time" }
+            ? { value: 0, label: "Part Time" }
             : ""
         )
       : null,

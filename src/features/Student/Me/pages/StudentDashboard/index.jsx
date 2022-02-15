@@ -90,7 +90,7 @@ function StudentDashboardPage(props) {
                   } alt="student-avatar" />
                 </div>
                 <span className="student-dashboard__container__base-info__name">
-                  {user.s_profile.first_name + " " + user.s_profile.last_name}
+                  {(user.s_profile.first_name ?? "") + " " + user.s_profile.last_name}
                 </span>
                 <span className="student-dashboard__container__base-info__job-title">
                   {user.s_profile.job_title}

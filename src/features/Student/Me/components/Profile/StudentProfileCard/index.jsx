@@ -1,4 +1,9 @@
+import studentApi from 'api/studentApi';
+import LoadingChildUI from 'components/LoadingChild';
+import { updateUser } from 'features/Auth/userSlice';
+import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import StudentCertificatesCard from '../StudentCertificates';
 import StudentEducationsCard from '../StudentEducations';
 import StudentExperiencesCard from '../StudentExperiences';
@@ -8,12 +13,6 @@ import StudentPersonalInfoCard from '../StudentPersonalInfo';
 import StudentSkillsCard from '../StudentSkills';
 // import PropTypes from 'prop-types';
 import './StudentProfileCard.scss';
-import LoadingChildUI from 'components/LoadingChild';
-import { useDispatch, useSelector } from 'react-redux';
-import studentApi from 'api/studentApi';
-import moment from 'moment';
-import { useSnackbar } from 'notistack';
-import { updateUser } from 'features/Auth/userSlice';
 
 StudentProfileCard.propTypes = {
 
@@ -179,8 +178,10 @@ function StudentProfileCard(props) {
     try {
       const params = {
         ...values,
-        from_date: moment(new Date(values.from_date)).format("MM/DD/YYYY"),
-        to_date: moment(new Date(values.to_date)).format("MM/DD/YYYY"),
+        // from_date: moment(new Date(values.from_date)).format("MM/DD/YYYY"),
+        // to_date: moment(new Date(values.to_date)).format("MM/DD/YYYY"),
+        from_date: values.from_date,
+        to_date: values.to_date,
       };
       console.log({ params });
       const action = await studentApi.createAnExperience(params);
@@ -209,8 +210,10 @@ function StudentProfileCard(props) {
     try {
       const params = {
         ...values,
-        from_date: moment(new Date(values.from_date)).format("MM/DD/YYYY"),
-        to_date: moment(new Date(values.to_date)).format("MM/DD/YYYY"),
+        // from_date: moment(new Date(values.from_date)).format("MM/DD/YYYY"),
+        // to_date: moment(new Date(values.to_date)).format("MM/DD/YYYY"),
+        from_date: values.from_date,
+        to_date: values.to_date,
       };
       console.log({ params });
       const action = await studentApi.updateAnExperience(id, params);
@@ -249,8 +252,10 @@ function StudentProfileCard(props) {
     try {
       const params = {
         ...values,
-        from_date: moment(new Date(values.from_date)).format("MM/DD/YYYY"),
-        to_date: moment(new Date(values.to_date)).format("MM/DD/YYYY"),
+        // from_date: moment(new Date(values.from_date)).format("MM/DD/YYYY"),
+        // to_date: moment(new Date(values.to_date)).format("MM/DD/YYYY"),
+        from_date: values.from_date,
+        to_date: values.to_date,
       };
       console.log({ params });
       const action = await studentApi.createAnEducation(params);
@@ -279,8 +284,10 @@ function StudentProfileCard(props) {
     try {
       const params = {
         ...values,
-        from_date: moment(new Date(values.from_date)).format("MM/DD/YYYY"),
-        to_date: moment(new Date(values.to_date)).format("MM/DD/YYYY"),
+        // from_date: moment(new Date(values.from_date)).format("MM/DD/YYYY"),
+        // to_date: moment(new Date(values.to_date)).format("MM/DD/YYYY"),
+        from_date: values.from_date,
+        to_date: values.to_date,
       };
       console.log({ params });
       const action = await studentApi.updateAnEducation(id, params);

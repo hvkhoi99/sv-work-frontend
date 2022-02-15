@@ -112,8 +112,8 @@ function ListCandidates(props) {
 
     try {
       const data = user.role_id === 2
-      ? await recruiterApi.approveCandidate(recruitmentId, candidateCard.id)
-      : await studentApi.approveCandidate(recruitmentId, candidateCard.id);
+        ? await recruiterApi.approveCandidate(recruitmentId, candidateCard.id)
+        : await studentApi.approveCandidate(recruitmentId, candidateCard.id);
       if (data.data.status === 1) {
         const newCandidates = candidates.filter((candidate) => {
           return candidate.id !== candidateCard.id;
@@ -130,9 +130,7 @@ function ListCandidates(props) {
             )
             : `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates`
         )
-        enqueueSnackbar(`Candidate was successfully approved/rejected.`,
-          { variant: "success" }
-        );
+        enqueueSnackbar(data.data.message, { variant: "success" });
         setIsReloadPage(!isReloadPage);
       } else {
         enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });

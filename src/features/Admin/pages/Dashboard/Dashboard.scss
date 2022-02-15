@@ -5,7 +5,7 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 100vh;
+  min-height: 100vh;
 
   &__main {
     margin: 8rem 0 2rem 15rem;
@@ -35,7 +35,7 @@
           flex-direction: column;
 
           &__title {
-            font-weight: 600;
+            font-weight: 500;
           }
 
           &__count {
@@ -43,7 +43,7 @@
             justify-content: flex-start;
             font-size: 2rem;
             color: var(--success);
-            font-weight: 400;
+            font-weight: 600;
           }
         }
 
@@ -51,6 +51,21 @@
           border-radius: 50%;
           width: 4rem;
           height: 4rem;
+        }
+
+        &__right {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+          width: 3.5rem;
+          height: 3.5rem;
+          background-color: lightgreen;
+
+          &__icon {
+            font-size: 2rem;
+            color: var(--success);
+          }
         }
       }
 
@@ -63,6 +78,63 @@
         & > img {
           width: 1rem;
           height: 1rem;
+        }
+      }
+    }
+  }
+
+  &__chart {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    margin: 1rem 0 2rem;
+    padding: 2rem;
+    width: 100%;
+
+    &__top {
+      display: flex;
+      flex-flow: row wrap;
+      // align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: auto;
+
+      &__left {
+        display: flex;
+        flex-flow: column wrap;
+        align-items: center;
+        width: 60%;
+        min-height: 20rem;
+
+        padding: 1rem 1.5rem 1rem;
+        border-radius: 1rem;
+        border: 1px solid lightblue;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+        & > span {
+          font-weight: 500;
+          font-size: 1.1rem;
+          width: 100%;
+        }
+
+        &__chart {
+          width: 100%;
+          min-height: 15rem;
+          margin-top: 1rem;
+        }
+      }
+
+      &__right {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 40%;
+        padding: 0 4rem;
+
+        & > img {
+          width: 80%;
+          height: 80%;
+          object-fit: cover;
         }
       }
     }
@@ -84,20 +156,20 @@
   color: var(--success);
 }
 
-.red {
-  color: darkred;
-}
+// .red {
+//   color: darkred;
+// }
 
-.orange {
-  color: darkorange;
-}
+// .orange {
+//   color: darkorange;
+// }
 
-.yellow {
-  color: gold;
-}
+// .yellow {
+//   color: gold;
+// }
 
-.violet {
-  color: darkviolet;
-}
+// .violet {
+//   color: darkviolet;
+// }
 
 //

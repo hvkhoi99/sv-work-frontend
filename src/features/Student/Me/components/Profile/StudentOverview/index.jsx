@@ -48,7 +48,7 @@ function StudentOverviewCard(props) {
       <div className="student-overview-card__main">
         <div className="student-overview-card__main__description">
           {
-            overView === (null || "")
+            overView === null
               ? <span>No Information Available.</span>
               : ReactHtmlParser(overView)
           }

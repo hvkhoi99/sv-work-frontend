@@ -87,11 +87,11 @@ function Header(props) {
 
   const logOut = async () => {
     setHiddenMe(true);
-    dispatch(logout());
     if (user.signin_method === "google.com") {
-      firebase.auth().signOut()
+      await firebase.auth().signOut()
     }
-    history.push("/auth/sign-in");
+    dispatch(logout());
+    return history.push("/auth/sign-in");
   }
 
   const handleMoveToRecruiter = () => {
@@ -104,9 +104,12 @@ function Header(props) {
   }
 
   const handleMoveToStudent = () => {
-    localStorage.setItem("role_id", 3);
-    user.role_id === 2 && logOut();
-    user.role_id !== 2 && history.push("/")
+    if (user.role_id === 2) {
+      logOut();
+    } else {
+      localStorage.setItem("role_id", 3);
+      history.push("/")
+    }
   }
 
   const handleChangeRole = () => {

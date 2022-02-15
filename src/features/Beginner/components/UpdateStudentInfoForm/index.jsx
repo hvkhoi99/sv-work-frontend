@@ -35,8 +35,8 @@ function UpdateStudentInfoForm(props) {
       .required('Email is required'),
     last_name: Yup
       .string()
-      .typeError('Last name is required')
-      .required('Last name is required'),
+      .typeError('Last Name is required')
+      .required('Last Name is required'),
     // .min(5, "Last name must be at least 5 characters"),
     date_of_birth: Yup
       .string()
@@ -44,8 +44,8 @@ function UpdateStudentInfoForm(props) {
       .required('Date of Birth is required'),
     phone_number: Yup
       .string()
-      .typeError('Phone number is required')
-      .required('Phone number is required')
+      .typeError('Phone Number is required')
+      .required('Phone Number is required')
       .min(10, "Must be exactly 10 digits")
       .max(10, "Must be exactly 10 digits")
       .matches(/^[0-9]+$/, "Must be only digits"),
@@ -65,8 +65,8 @@ function UpdateStudentInfoForm(props) {
       .required("Gender is required"),
     job_title: Yup
       .string()
-      .typeError('Job title is required')
-      .required("Gender is required")
+      .typeError('Job Title is required')
+      .required("Job Title is required")
   });
 
   const onSubmitForm = async (values) => {

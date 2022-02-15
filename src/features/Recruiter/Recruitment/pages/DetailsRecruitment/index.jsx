@@ -5,6 +5,7 @@ import PopupConfirm from 'components/PopupConfirm';
 import Images from 'constants/images';
 import Paths from 'constants/paths';
 import ListCandidates from 'features/Recruiter/Candidate/pages/ListCandidates';
+import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -82,13 +83,14 @@ function DetailsRecruitmentPage(props) {
     setShow(value);
   }
 
+  // console.log({recruitmentDetail})
   const handleCloseRecruitment = async () => {
-    // e.preventDefault();
     setIsClosing(true);
 
     try {
       const params = {
         ...recruitmentDetail,
+        expiry_date: moment(new Date(recruitmentDetail.expiry_date)).format("YYYY-MM-DD"),
         is_closed: true
       }
       user.role_id === 2
