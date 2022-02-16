@@ -49,14 +49,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    // width: 100%;
+    width: 100%;
 
     &__name {
-      width: 100%;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
       text-align: center;
+    }
+
+    &__icon {
+      margin: 0 0.2rem 0 0;
     }
   }
 

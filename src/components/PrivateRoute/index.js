@@ -22,6 +22,8 @@ export function PrivateRouteAdminAuth({ component: Component, ...rest }) {
 }
 
 export function PrivateRouteAdmin({ component: Component, ...rest }) {
+  const user = useSelector((state) => state.user.current);
+  const roleId = user.role_id;
   const admin = useSelector((state) => state.admin);
   const adminRole = admin.current.role_id === 1;
 
@@ -33,7 +35,9 @@ export function PrivateRouteAdmin({ component: Component, ...rest }) {
           return adminRole ? (
             <Component {...props} />
           ) : (
-            <Redirect to='/admin/auth/admin-sign-in' />
+            (roleId === 2 || roleId === 3)
+            ? <Redirect to='/' />
+            : <Redirect to='/admin/auth/admin-sign-in' />
           );
         }}
       />

@@ -7,78 +7,49 @@ import * as IoIcons from 'react-icons/io';
 import * as RiIcons from 'react-icons/ri';
 import * as MdIcons from 'react-icons/md';
 import './Dashboard.scss';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-
-import { Bar } from "react-chartjs-2";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend
-);
+import { Chart, registerables } from 'chart.js';
+import TotalAccountChart from 'features/Admin/components/TotalAccountChart';
+import TotalJobChart from 'features/Admin/components/TotalJobChart';
+import TotalEventChart from 'features/Admin/components/TotalEventChart';
+Chart.register(...registerables);
 
 AdminDashboardPage.propTypes = {
-  data: PropTypes.object
+  data: PropTypes.object,
+  chartData: PropTypes.object
 };
 
 AdminDashboardPage.defaultProps = {
-  data: {}
+  data: {},
+  chartData: {}
 }
 
 function AdminDashboardPage(props) {
-  const { data } = props;
+  const { data, chartData } = props;
   const student = data.student ?? '';
   const recruiter = data.recruiter ?? '';
   const application = data.application ?? '';
   const event = data.event ?? '';
 
-  // const chartData = {
-  //   labels: [
-  //     'Red',
-  //     'Blue',
-  //     'Yellow'
-  //   ],
-  //   datasets: [{
-  //     label: 'My First Dataset',
-  //     data: [300, 50, 100],
-  //     backgroundColor: [
-  //       'rgb(255, 99, 132)',
-  //       'rgb(54, 162, 235)',
-  //       'rgb(255, 205, 86)'
-  //     ],
-  //     hoverOffset: 4
-  //   }]
+  console.log({ chartData })
+  // const initialDataChart = {
+  //   labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+  //   datasets: [
+  //     {
+  //       label: "Last week",
+  //       data: chartData.students_data.last_week,
+  //       fill: true,
+  //       backgroundColor: "rgba(75,192,192,0.2)",
+  //       borderColor: "rgba(75,192,192,1)",
+  //     },
+  //     {
+  //       label: "Current week",
+  //       data: chartData.students_data.current_week,
+  //       fill: true,
+  //       backgroundColor: "orange",
+  //       borderColor: "#742774",
+  //     }
+  //   ]
   // };
-
-  const chartData = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-    datasets: [
-      {
-        label: "First dataset",
-        data: [33, 53, 85, 41, 44, 65],
-        fill: true,
-        backgroundColor: "rgba(75,192,192,0.2)",
-        borderColor: "rgba(75,192,192,1)"
-      },
-      {
-        label: "Second dataset",
-        data: [33, 25, 35, 51, 54, 76],
-        fill: false,
-        borderColor: "#742774"
-      }
-    ]
-  };
 
   return (
     <div className="dashboard">
@@ -156,19 +127,34 @@ function AdminDashboardPage(props) {
         <div className="dashboard__chart">
           <div className="dashboard__chart__top">
             <div className="dashboard__chart__top__left">
-              <span>Student Details</span>
+              <span>Account</span>
               <div className="dashboard__chart__top__left__chart">
-                {/* <Line data={chartData} /> */}
-                <Bar
-                  data={chartData}
-                  width={100}
-                  height={50}
-                  options={{ maintainAspectRatio: false }}
+                <TotalAccountChart
+                  chartData={chartData.accounts}
                 />
               </div>
             </div>
             <div className="dashboard__chart__top__right">
               <img src={Images.admin} alt="admin dashboard" />
+            </div>
+          </div>
+
+          <div className="dashboard__chart__bottom">
+            <div className="dashboard__chart__bottom__left">
+              <span>Event</span>
+              <div className="dashboard__chart__bottom__left__chart">
+                <TotalEventChart
+
+                />
+              </div>
+            </div>
+            <div className="dashboard__chart__bottom__right">
+              <span>Job</span>
+              <div className="dashboard__chart__bottom__right__chart">
+                <TotalJobChart
+                  chartData={chartData.jobs}
+                />
+              </div>
             </div>
           </div>
         </div>

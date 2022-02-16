@@ -5,12 +5,10 @@
   height: auto;
   width: 100%;
 
-  // transition: all 0.45s ease 0s;
-
-  // background-image: url("../../../../../assets/img/eventcircle.png");
-  // background-position: center center;
-  // background-size: cover;
-  // background-repeat: no-repeat;
+  background-image: url("../../../../../assets/img/background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 
   &__container {
     width: 100%;
@@ -243,7 +241,7 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      padding: 2rem 0;
+      padding: 2rem 0 0;
       // background-image: url("../../../../../assets/img/dollar.png");
       // background-position: right center;
       // background-size: auto;
@@ -251,6 +249,7 @@
 
       &__title {
         display: flex;
+        justify-content: center;
         align-items: center;
         margin: 0 0 1rem 0;
 
@@ -268,6 +267,7 @@
         width: 100%;
         align-items: center;
         justify-content: center;
+        margin-top: 1rem;
       }
     }
 
@@ -285,12 +285,11 @@
         width: 40%;
 
         &__h1 {
-          
           font-size: 2.5rem;
           font-weight: 500;
-          
+
           &__icon {
-            margin: .3rem 0 0 0;
+            margin: 0.3rem 0 0 0;
             color: var(--success);
             font-size: 1.5rem;
           }
@@ -301,6 +300,13 @@
           height: 1rem;
           border-radius: 50%;
           background-color: var(--success);
+        }
+      }
+
+      &__img {
+        width: 60%;
+        & > img {
+          width: 100%;
         }
       }
     }
@@ -320,4 +326,15 @@
   padding: 0.3rem 1rem;
   border-radius: 0.5rem;
   border-width: 0;
+}
+
+.group-button-find-home {
+  
+  & > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.35rem;
+    cursor: pointer;
+  }
 }

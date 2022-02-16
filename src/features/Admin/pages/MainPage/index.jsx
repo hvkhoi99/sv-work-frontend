@@ -24,7 +24,43 @@ function AdminMainPage(props) {
   const admin = useSelector((state) => state.admin);
   const match = useRouteMatch();
   const dispatch = useDispatch();
-  const [dashboard, setDashboard] = useState({});
+  const [dashboard, setDashboard] = useState({
+    application: {
+      isUp: 0,
+      percent: 0,
+      total_application: 0
+    },
+    event: {
+      isUp: 0,
+      percent: 0,
+      total_event: 0
+    },
+    recruiter: {
+      isUp: 0,
+      percent: 0,
+      total_recruiter: 0
+    },
+    student: {
+      isUp: 0,
+      percent: 0,
+      total_student: 0
+    },
+  });
+  const [chartData, setChartData] = useState({
+    accounts: {
+      total_students: [],
+      total_recruiters: [],
+      total_users: []
+    },
+    jobs: {
+      total_recruitments: [],
+      total_applications: []
+    },
+    events: {
+      total_participants: [],
+      total_events: []
+    }
+  })
   var [isVerify, setIsVerify] = useState(false);
   const [recruiter, setRecruiter] = useState({});
   const [lastPage, setLastPage] = useState(1);
@@ -35,20 +71,21 @@ function AdminMainPage(props) {
   useEffect(() => {
     const fetchDashboard = async () => {
       try {
-        const result = await adminApi.getDashboard();
-        setDashboard(result.data.data);
+        const dashboardData = await adminApi.getDashboard();
+        const chartData = await adminApi.getChartData();
+        console.log({ chartData })
+        if (dashboardData.data.status === 1 || chartData.data.status === 1) {
+          setDashboard(dashboardData.data.data);
+          setChartData(chartData.data.data);
+        }
+        setIsLoading(false);
       } catch (error) {
+        setIsLoading(false);
         console.log("error dashboard: ", error.message);
       }
     }
 
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000)
-
     fetchDashboard();
-
-    return () => clearTimeout(timer);
   }, [])
 
   useEffect(() => {
@@ -137,7 +174,7 @@ function AdminMainPage(props) {
         <Route
           exact
           path={match.url}
-          component={() => <AdminDashboardPage data={dashboard} />}
+          component={() => <AdminDashboardPage data={dashboard} chartData={chartData}/>}
         />
         <Route
           path={`${match.url}/verification`}

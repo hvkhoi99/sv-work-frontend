@@ -28,7 +28,7 @@ function EmployerCard(props) {
       <div className="employer-card__location">
         <GrIcons.GrLocation className="employer-card__location__icon" />
         <span className="employer-card__location__name">
-          {employer.address}
+          {employer.address ?? "N/A"}
         </span>
       </div>
       <span className="employer-card__jobs-available">

@@ -59,7 +59,7 @@ function VerificationPage(props) {
       <div className="verification__main">
         <div className="verification__company">
           {recruiters.map((recruiter, index) => {
-            const className = activeIndex === index ? "company-card__item company-card__item--visited" : "company-card__item";
+            const className = activeIndex === index ? "company-card company-card--visited" : "company-card";
             return (
               <CompanyCard
                 key={index}

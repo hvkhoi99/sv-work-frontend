@@ -15,10 +15,14 @@ import * as yup from "yup";
 import TopRecruiterGroupCard from "../../components/TopRecruiterGroupCard";
 import './StudentHome.scss';
 
+import RecruitmentCard from 'features/Recruiter/Recruitment/components/RecruitmentCard';
+
 function StudentHomePage(props) {
   const history = useHistory();
   const options = CITY_OPTIONS;
   const [topRecruiters, setTopRecruiters] = useState([]);
+  const [topJobs, setTopJobs] = useState([]);
+  const [totalJobs, setTotalJobs] = useState(0);
 
   const listImg = [
     [{ src: Images.bmw }, { src: Images.fb }],
@@ -67,9 +71,17 @@ function StudentHomePage(props) {
     const fetchTopRecruiters = async () => {
       try {
         const result = await homeApi.getTopRecruiters();
-        setTopRecruiters(result.data.data);
+        const topJobs = await homeApi.getTopRecruitments();
+        const totalJobs = await homeApi.getTotalJobs();
+        if (result.data.status === 1 || topJobs.data.status === 1 || totalJobs.data.status === 1) {
+          setTopRecruiters(result.data.data);
+          setTopJobs(topJobs.data.data);
+          setTotalJobs(totalJobs.data.data);
+        }
+        return;
       } catch (error) {
         console.log("Cannot get top recruiters. Error: ", error.message);
+        return;
       }
     }
 
@@ -80,8 +92,11 @@ function StudentHomePage(props) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
         console.log("data: ", data);
+        history.push(
+          `${Paths.clientFindJobs}?keyword=${data.search}&location=${data.options}`
+        );
         resolve(true);
-      }, 2000)
+      }, 1000)
     })
   };
 
@@ -91,6 +106,50 @@ function StudentHomePage(props) {
 
   const onViewDetailEvent = () => {
     history.push(`${Paths.clientEvent}/1/detail`)
+  }
+
+  const renderStatusForApplyButton = (application) => {
+    if (application.state === null) {
+      if (application.is_invited) {
+        return "Accept";
+      } else {
+        if (application.is_applied) {
+          return "Applied";
+        } else {
+          return "Apply";
+        }
+      }
+    } else {
+      if (application.state === true) {
+        if (application.is_invited) {
+          return "Accepted";
+        } else {
+          if (application.is_applied) {
+            return "Accepted";
+          } else {
+            return "Apply";
+          }
+        }
+      } else {
+        if (application.is_invited) {
+          return "Rejected";
+        } else {
+          if (application.is_applied) {
+            return "Rejected";
+          } else {
+            return "Apply";
+          }
+        }
+      }
+    }
+  }
+
+  const onApplyJob = (jobId) => {
+    console.log({ jobId })
+  }
+
+  const onViewJob = (id) => {
+    history.push(`/recruitment/${id}`);
   }
 
   return (
@@ -104,7 +163,7 @@ function StudentHomePage(props) {
           </div>
           <div className="home__container__find__main">
             <div className="home__container__find__main__text">
-              <p>There are 123 developer jobs.</p>
+              <p>There are {totalJobs} developer jobs.</p>
               <h1>Find now!</h1>
             </div>
             <div className="home__container__find__main__form">
@@ -130,8 +189,17 @@ function StudentHomePage(props) {
                     isStyles={true}
                   />
                 </div>
-                <div>
-                  <button disabled={isSubmitting} className="btn-success btn-custom" type="submit">
+                <div className="group-button-find-home">
+                  <button
+                    disabled={isSubmitting}
+                    style={
+                      isSubmitting
+                        ? { cursor: "default", color: 'lightgreen' }
+                        : {}
+                    }
+                    className="btn-success btn-custom"
+                    type="submit"
+                  >
                     {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
                     <i className="fa fa-search" style={{ fontSize: '1.5rem' }} />
                   </button>
@@ -159,20 +227,32 @@ function StudentHomePage(props) {
           </div>
         </div>
 
-        {/* <div className="home__container__popular-jobs">
+        <div className="home__container__popular-jobs">
           <div className="home__container__popular-jobs__title">
-            <h1>Popular Jobs</h1>
+            <h1>Top Jobs</h1>
             <div className="home__container__popular-jobs__title__dot"></div>
           </div>
           <div
             data-aos="fade-zoom-in"
             className="home__container__popular-jobs__main">
-            <RecruitmentCard />
-            <RecruitmentCard />
-            <RecruitmentCard />
-            <RecruitmentCard />
+            {
+              topJobs.map((job, index) => {
+                return <div
+                  key={index}
+                  className="home__container__popular-jobs__main__item"
+                >
+                  <RecruitmentCard
+                    recruitment={job}
+                    applyText={renderStatusForApplyButton(job.application)}
+                    // isApplying={isApplying}
+                    onApplyJob={onApplyJob}
+                    onViewJob={onViewJob}
+                  />
+                </div>
+              })
+            }
           </div>
-        </div> */}
+        </div>
 
         <div className="home__container__top-events">
           <div className="home__container__top-events__left">
@@ -200,7 +280,7 @@ function StudentHomePage(props) {
                   className="home__container__top-events__right__item"
                   key={index}
                 >
-                  <EventCard onViewDetailEvent={onViewDetailEvent}/>
+                  <EventCard onViewDetailEvent={onViewDetailEvent} />
                 </div>
               })
             }
@@ -230,7 +310,7 @@ function StudentHomePage(props) {
           <div className="home__container__people-say__title">
             <h1 className="home__container__people-say__title__h1">
               What People Say About Us
-              <GoIcons.GoPrimitiveDot className="home__container__people-say__title__h1__icon"/>
+              <GoIcons.GoPrimitiveDot className="home__container__people-say__title__h1__icon" />
             </h1>
           </div>
           <div

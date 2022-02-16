@@ -1,53 +1,66 @@
 .company-card {
-  &__item {
+  display: flex;
+  align-items: center;
+  width: 18rem;
+  height: 8rem;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  padding: 1rem;
+  border-radius: 1rem;
+
+  & > img {
     display: flex;
-    flex-direction: row;
-
-    width: 100%;
-    height: 6rem;
-    padding: 1rem;
-    margin: 0 0 1.5rem 0;
-    border-radius: 1.2rem;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    background-color: #fff;
-
-    & > img {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-right: 1rem;
-      border: 0.2rem solid var(--success);
-      border-radius: 50%;
-      width: 4rem;
-      height: 4rem;
-    }
-
-    & > div {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    &:hover {
-      cursor: pointer;
-      transition: all 0.1s ease-out;
-      border-bottom: 4px solid var(--success);
-    }
-
-    &--visited {
-      background-color: rgb(151, 247, 151);
-    }
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+    border: 0.2rem solid var(--success);
+    border-radius: 50%;
+    width: 4.5rem;
+    height: 4.5rem;
   }
 
-  &__name {
-    color: black;
-    font-size: 1.1rem;
-    font-weight: 500;
+  & > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
-  &__industry {
-    // color: darkgrey;
-    font-size: 0.9rem;
+  &:hover {
+    cursor: pointer;
+    transition: all 0.1s ease-out;
+    border-bottom: 4px solid var(--success);
+  }
+
+  &--visited {
+    background-color: rgb(151, 247, 151);
+  }
+
+  &__right {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    width: 65%;
+    line-height: 1.8rem;
+
+    &__name {
+      color: black;
+      font-size: 1.1rem;
+      font-weight: 500;
+
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    &__industry {
+      // color: darkgrey;
+      font-size: 0.9rem;
+
+      width: 100%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
   }
 }
-

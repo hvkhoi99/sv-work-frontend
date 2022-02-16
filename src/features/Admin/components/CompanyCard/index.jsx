@@ -28,9 +28,9 @@ function CompanyCard(props) {
   return (
     <div className={className} onClick={() => handleCard(index, recruiter)}>
       <img src={Images.burger} alt="emoji" />
-      <div>
-        <span className="company-card__name">{recruiter.company_name}</span>
-        <span className="company-card__industry">{recruiter.company_industry}</span>
+      <div className="company-card__right">
+        <span className="company-card__right__name">{recruiter.company_name}</span>
+        <span className="company-card__right__industry">{recruiter.company_industry}</span>
       </div>
     </div>
   );

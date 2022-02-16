@@ -56,7 +56,7 @@ function StudentPersonalInfoCard(props) {
             <MdIcons.MdEmail
               className="student-personal-info-card__icon"
             />
-            <span>{profile.email}</span>
+            <span>{profile.email ?? "N/A"}</span>
           </div>
         </div>
         <div className="student-personal-info-card__main__right">
@@ -64,13 +64,13 @@ function StudentPersonalInfoCard(props) {
             <ImIcons.ImLocation
               className="student-personal-info-card__icon"
             />
-            <span>{profile.address === "" ? "No Information Available." : profile.address}</span>
+            <span>{profile.address ?? "N/A"}</span>
           </div>
           <div className="student-personal-info-card__main__right__nationality">
             <FaIcons.FaPassport
               className="student-personal-info-card__icon"
             />
-            <span>{profile.nationality === "" ? "No Information Available." : profile.nationality}</span>
+            <span>{profile.nationality ?? "N/A"}</span>
           </div>
         </div>
         <div className="student-personal-info-card__main__more">

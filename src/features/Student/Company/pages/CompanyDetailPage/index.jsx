@@ -17,6 +17,7 @@ import helper from 'utils/common';
 import './CompanyDetailPage.scss';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import * as MdIcons from 'react-icons/md';
 
 CompanyDetailPage.propTypes = {
 
@@ -116,15 +117,20 @@ function CompanyDetailPage(props) {
                 </div>
                 <div className="company-detail__container__info__top__right">
                   <span className="company-detail__container__info__top__right__recruiter-name">
-                    {company.company_name}
+                    {company.company_name ?? "N/A"}
                     {company.verify && <HiIcons.HiCheckCircle className="inforCard-icon" />}
                   </span>
                   <span className="company-detail__container__info__top__right__recruiter-industry">
-                    {company.company_industry}
+                    {company.company_industry ?? ""}
                   </span>
-                  <span className="company-detail__container__info__top__right__recruiter-address">
-                    {company.address}
-                  </span>
+                  <div className="company-detail__container__info__top__right__recruiter-address">
+                    <MdIcons.MdLocationOn
+                      className="company-detail__container__info__top__right__recruiter-address__icon"
+                    />
+                    <span>
+                      {company.address ?? "N/A"}
+                    </span>
+                  </div>
                   <div className="company-detail__container__info__top__right__follow">
                     <Button
                       type="button"
@@ -146,19 +152,19 @@ function CompanyDetailPage(props) {
               <div className="company-detail__container__info__bottom">
                 <div className="company-detail__container__info__bottom__industry">
                   <AiIcons.AiFillSetting className="bottom-icon" />
-                  <span className="bottom-span">{company.company_industry}</span>
+                  <span className="bottom-span">{company.company_industry ?? "N/A"}</span>
                 </div>
                 <div className="company-detail__container__info__bottom__mail-contact">
                   <AiIcons.AiTwotoneMail className="bottom-icon" />
-                  <span className="bottom-span">{company.contact_email}</span>
+                  <span className="bottom-span">{company.contact_email ?? "N/A"}</span>
                 </div>
                 <div className="company-detail__container__info__bottom__phone-number">
                   <AiIcons.AiTwotonePhone className="bottom-icon" />
-                  <span className="bottom-span">{company.phone_number}</span>
+                  <span className="bottom-span">{company.phone_number ?? "N/A"}</span>
                 </div>
                 <div className="company-detail__container__info__bottom__company-size">
                   <TiIcons.TiGroup className="bottom-icon" />
-                  <span className="bottom-span">{company.company_size}</span>
+                  <span className="bottom-span">{company.company_size ?? "N/A"}</span>
                 </div>
               </div>
             </div>

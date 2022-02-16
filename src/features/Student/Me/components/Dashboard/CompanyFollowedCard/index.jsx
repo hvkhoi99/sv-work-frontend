@@ -50,26 +50,26 @@ function CompanyFollowedCard(props) {
             <GrIcons.GrLocation
               className="company-followed-card__left__info__location__icon"
             />
-            <span>{company.address}</span>
+            <span>{company.address ?? "N/A"}</span>
           </div>
           <div className="company-followed-card__left__info__company-industry-size">
             <div className="company-followed-card__left__info__company-industry-size__industry">
               <AiIcons.AiFillSetting className="company-followed-card__left__info__icon" />
-              <span>{company.company_industry}</span>
+              <span>{company.company_industry ?? "N/A"}</span>
             </div>
             <div className="company-followed-card__left__info__company-industry-size__size">
               <FaIcons.FaUserFriends className="company-followed-card__left__info__icon" />
-              <span>{company.company_size}</span>
+              <span>{company.company_size ?? "N/A"}</span>
             </div>
           </div>
           <div className="company-followed-card__left__info__company-mail-phone">
             <div className="company-followed-card__left__info__company-mail-phone__mail">
               <AiIcons.AiTwotoneMail className="company-followed-card__left__info__icon" />
-              <span>{company.contact_email}</span>
+              <span>{company.contact_email ?? "N/A"}</span>
             </div>
             <div className="company-followed-card__left__info__company-mail-phone__phone">
               <MdIcons.MdPhone className="company-followed-card__left__info__icon" />
-              <span>{company.phone_number}</span>
+              <span>{company.phone_number ?? "N/A"}</span>
             </div>
           </div>
           <span className="company-followed-card__left__info__jobs-available">

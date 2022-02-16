@@ -124,7 +124,7 @@ function RecruitmentDetail(props) {
             </div>
           </div>
           {isViewByStudent && <div className="similar-job">
-            <h3>Similar Job for you</h3>
+            {/* <h3>Similar Job for you</h3> */}
             {/* <div className="similar-job__content">
               <RecruitmentCard />
               <RecruitmentCard />

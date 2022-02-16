@@ -66,7 +66,6 @@ function MainJobsArea(props) {
     fetchJobs();
   }, [initialValues.career, initialValues.closed, initialValues.extra, initialValues.keyword, initialValues.location, initialValues.salary, initialValues.type, setJobs]);
 
-
   const onViewJob = (id) => {
     history.push(`/recruitment/${id}`);
   }

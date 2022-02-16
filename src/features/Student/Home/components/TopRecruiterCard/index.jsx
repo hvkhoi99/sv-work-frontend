@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 // import { Button } from 'reactstrap';
 import './TopRecruiterCard.scss';
 
@@ -16,19 +17,19 @@ TopRecruiterCard.defaultProps = {
 }
 
 function TopRecruiterCard(props) {
-  const { recruiter, img, cardSize } = props;
+  const { recruiter, cardSize } = props;
+  const history = useHistory();
+  const handleToViewCompany = () => {
+    history.push(`/company/${recruiter.id}`);
+  }
 
   return (
     <div className="card-item">
-      <img className={cardSize.size} src={img.src} alt={recruiter.name} />
-      {/* <div className="card-item__overlay">
-        <h3 className="card-item__title">{recruiter.name}</h3>
-        <div className="card-item__actions">
-          <Button outline size="sm" color="light">
-            Visit
-          </Button>
-        </div>
-      </div> */}
+      <img
+        className={cardSize.size}
+        src={recruiter.logo_image_link} alt={recruiter.name}
+        onClick={handleToViewCompany}
+      />
     </div>
   );
 }

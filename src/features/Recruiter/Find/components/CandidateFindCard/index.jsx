@@ -34,14 +34,14 @@ function CandidateFindCard(props) {
         } alt="candidate-avatar" />
       </div>
       <span className="candidate-find-card__name">
-        {candidate.first_name} {candidate.last_name}
+        {candidate.first_name ?? ""} {candidate.last_name}
       </span>
       <span className="candidate-find-card__career">
-        {candidate.job_title}
+        {candidate.job_title ?? ""}
       </span>
       <div className="candidate-find-card__address">
         <TiIcons.TiLocation className="candidate-find-card__address__icon" />
-        <span>{candidate.address === "" ? "No Information Available." : candidate.address}</span>
+        <span>{candidate.address ?? "N/A"}</span>
       </div>
       <div className="candidate-find-card__skills">
         {
