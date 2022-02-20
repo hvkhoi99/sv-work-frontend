@@ -19,7 +19,7 @@ const InviteCandidateButton = React.forwardRef(({ open, ...props }, ref) => (
     {...props}
   >
     {/* Trigger - {props.open ? 'Opened' : 'Closed' */}
-    Invite/Un-invite
+    Invite
   </button>
 ));
 

@@ -18,4 +18,11 @@ export const SidebarData = [
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
   },
+  {
+    title: 'Notification',
+    path: "/admin/notification",
+    icon: <RiIcons.RiNotificationBadgeFill />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+  },
 ];

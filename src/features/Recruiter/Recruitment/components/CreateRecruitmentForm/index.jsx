@@ -37,17 +37,17 @@ function CreateRecruitmentForm(props) {
   const initialValues = isEditMode
     ? recruitment
     : {
-      title: '',
-      is_full_time: '',
-      job_category: '',
-      position: '',
+      title: 'New Recruitment',
+      is_full_time: 'Part Time',
+      job_category: 'Fresher Backend',
+      position: 'Fresher',
       expiry_date: '',
-      benefits: '',
-      description: '',
-      requirement: '',
+      benefits: 'benefits',
+      description: 'description',
+      requirement: 'requirement',
       min_salary: '',
       max_salary: '',
-      location: '',
+      location: 'Da Nang, Viet Nam',
       hashtags: ''
     };
 

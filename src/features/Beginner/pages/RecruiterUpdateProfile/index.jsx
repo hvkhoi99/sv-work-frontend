@@ -3,6 +3,7 @@ import studentApi from 'api/studentApi';
 import Footer from 'components/Footer';
 import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
+import Paths from 'constants/paths';
 import { updateUser } from 'features/Auth/userSlice';
 import UpdateCompanyInfoForm from 'features/Beginner/components/UpdateCompanyInfoForm';
 import { useSnackbar } from 'notistack';
@@ -45,6 +46,17 @@ function RecruiterUpdateProfilePage(props) {
       tax_code: '1100L',
     } : user.r_profile;
 
+  useEffect(() => {
+    helper.scrollToTop();
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000)
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
   const handleSubmit = async (values) => {
     try {
       const params = {
@@ -67,7 +79,7 @@ function RecruiterUpdateProfilePage(props) {
         if (data.data.status === 1) {
           localStorage.setItem('role_id', 2);
           enqueueSnackbar("Your profile has been updated.", { variant: "success" });
-          history.push("/recruiter");
+          history.push(`${Paths.recruiterProfile}`);
         } else {
           enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
         }
@@ -79,7 +91,7 @@ function RecruiterUpdateProfilePage(props) {
           localStorage.setItem('user', JSON.stringify(data.data.data));
           dispatch(updateUser(data.data.data));
           enqueueSnackbar("Your profile has been updated.", { variant: "success" });
-          // history.push(`${Paths.recruiterDashboard}`);
+          history.push(`${Paths.recruiterProfile}`);
           return true;
         } else {
           enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
@@ -92,17 +104,6 @@ function RecruiterUpdateProfilePage(props) {
       return false;
     }
   }
-
-  useEffect(() => {
-    helper.scrollToTop();
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000)
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
 
   return (
     <>

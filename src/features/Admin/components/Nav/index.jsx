@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import * as FaIcons from 'react-icons/fa';
 import * as RiIcons from 'react-icons/ri';
@@ -16,6 +16,21 @@ function AdminNav(props) {
   const [hiddenLogout, setHiddenLogout] = useState(true);
   // const [hiddenNotification, sethiddenNotification] = useState(true);
   const dispatch = useDispatch();
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        !hiddenLogout && setHiddenLogout(true);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref, hiddenLogout]);
 
   const showLogout = (e) => {
     e.preventDefault();
@@ -34,7 +49,7 @@ function AdminNav(props) {
   }
 
   return (
-    <div className="nav">
+    <div className="nav" ref={ref}>
       <div className="nav__icon">
         <div className="nav__icon__group">
           <Link className="nav__options" to='#' onClick={(e) => showNotification(e)}>

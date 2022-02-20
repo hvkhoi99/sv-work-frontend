@@ -130,6 +130,11 @@ const studentApi = {
   },
 
   // Job
+  getJobsByRecruiterId: (params, id) => {
+    const url = `/job/getJobsByRecruiterId/${id}`;
+    return axiosClient.get(url, {params});
+  },
+
   getJobDetail: (id) => {
     const url = `/job/${id}`;
     return axiosClient.get(url);
@@ -221,6 +226,11 @@ const studentApi = {
   // Student -> Recruiter Profile
   getRecruiterProfile: () => {
     const url = "/student/recruiter/profile/index";
+    return axiosClient.get(url);
+  },
+
+  checkVerified: () => {
+    const url = "/student/recruiter/profile/checkVerified";
     return axiosClient.get(url);
   },
 

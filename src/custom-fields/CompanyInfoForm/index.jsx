@@ -57,6 +57,7 @@ function CompanyInfoForm(props) {
 
         label="Tax Code"
         disabled={disabled}
+        labelClassName="tax-code"
       />
     </>
   );

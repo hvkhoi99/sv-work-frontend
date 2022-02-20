@@ -10,7 +10,7 @@ import * as GoIcons from 'react-icons/go';
 import * as HiIcons from 'react-icons/hi';
 import * as RiIcons from 'react-icons/ri';
 import * as TiIcons from 'react-icons/ti';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { Button } from 'reactstrap';
 import helper from 'utils/common';
 // import PropTypes from 'prop-types';
@@ -18,6 +18,10 @@ import './CompanyDetailPage.scss';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import * as MdIcons from 'react-icons/md';
+import RecruitmentCard from 'features/Recruiter/Recruitment/components/RecruitmentCard';
+import ReactPaginate from 'react-paginate';
+import queryString from 'query-string';
+import LoadingChildUI from 'components/LoadingChild';
 
 CompanyDetailPage.propTypes = {
 
@@ -33,6 +37,13 @@ function CompanyDetailPage(props) {
   const [isFollowing, setIsFollowing] = useState(false);
   const [show, setShow] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
+  const [jobs, setJobs] = useState([]);
+  const [isJobsLoading, setIsJobsLoading] = useState(true);
+  const _limit = 3;
+  const { search } = useLocation();
+  const page = parseInt(queryString.parse(search).page);
+  const [currentPage, setCurrentPage] = useState(page > 1 ? page : 1);
+  const [pageCount, setPageCount] = useState(0);
 
   useEffect(() => {
     helper.scrollToTop();
@@ -40,7 +51,6 @@ function CompanyDetailPage(props) {
     const fetchCompanyInfo = async () => {
       try {
         const data = await studentApi.getCompanyInfo(id);
-        console.log(data);
 
         if (data.data.status === 1) {
           setCompany(data.data.data);
@@ -59,6 +69,35 @@ function CompanyDetailPage(props) {
 
     fetchCompanyInfo();
   }, [id]);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const params = {
+          page: currentPage,
+          _limit
+        }
+        const data = await studentApi.getJobsByRecruiterId(params, id);
+
+        if (data.data.status === 1) {
+          setJobs(data.data.data.data);
+          const total = data.data.data.total;
+          setPageCount(Math.ceil(total / _limit));
+        } else {
+          setJobs([]);
+        }
+        setIsJobsLoading(false);
+        return;
+      } catch (error) {
+        setIsJobsLoading(false);
+        console.log("Cannot fetch jobs. Error:", error.message);
+        return;
+      }
+    }
+
+    fetchJobs();
+  }, [id, currentPage])
+
 
   const onShow = (value) => {
     setShow(value);
@@ -96,6 +135,17 @@ function CompanyDetailPage(props) {
       }
     }
   }
+
+  const onViewJob = (id) => {
+    history.push(`/recruitment/${id}`);
+  }
+
+  const handlePageClick = async (data) => {
+    const newPage = data.selected + 1;
+    setCurrentPage(newPage);
+    history.push(`/company/${id}/info?page=${newPage}`);
+    helper.scrollToTop(350);
+  };
 
   return (
     <>
@@ -180,6 +230,71 @@ function CompanyDetailPage(props) {
                 /> */}
               </div>
               <div className="company-detail__container__overall__content">{ReactHtmlParser(company.description ?? "No Information Available.")}</div>
+            </div>
+            <div className="company-detail__container__available-jobs">
+              <div className="company-detail__container__available-jobs__title">
+                <span>Available Jobs</span>
+                <GoIcons.GoPrimitiveDot className="title-dot" />
+              </div>
+              {
+                isJobsLoading
+                  ? <div className="loading-child-ui">
+                    <LoadingChildUI />
+                  </div>
+                  : <>
+                    {jobs.length > 0 && <div className="company-detail__container__available-jobs__content">
+                      {
+                        jobs.map((job, index) => {
+                          return <div
+                            key={index}
+                            className="company-detail__container__available-jobs__content__item"
+                          >
+                            <RecruitmentCard
+                              recruitment={job}
+                              onViewJob={onViewJob}
+                            />
+                          </div>
+                        })
+                      }
+                    </div>
+                    }
+                    <div className="find-jobs__container__pagination">
+                      {
+                        jobs.length <= 0
+                          ? <div className="no-available">
+                            <span>There are currently no jobs!</span>
+                          </div>
+                          : <ReactPaginate
+                            previousLabel={
+                              <MdIcons.MdArrowBackIosNew />
+                            }
+                            nextLabel={
+                              <MdIcons.MdArrowForwardIos />
+                            }
+
+                            // initialPage={1}
+                            // initialPage={currentPage}
+                            forcePage={currentPage - 1}
+                            breakLabel={"..."}
+                            pageCount={pageCount}
+                            marginPagesDisplayed={1}
+                            pageRangeDisplayed={2}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination justify-content-center"}
+                            pageClassName={"page-item"}
+                            pageLinkClassName={"page-link"}
+                            previousClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
+                            previousLinkClassName={"page-link"}
+                            nextClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
+                            nextLinkClassName={"page-link"}
+                            breakClassName={"page-item"}
+                            breakLinkClassName={"page-link"}
+                            activeClassName={"active"}
+                          />
+                      }
+                    </div>
+                  </>
+              }
             </div>
           </div>
         </div>

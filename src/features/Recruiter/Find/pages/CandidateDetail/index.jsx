@@ -316,7 +316,7 @@ function CandidateDetailPage(props) {
                   <GoIcons.GoPrimitiveDot className="candidate-detail__above__overview__title__dot" />
                 </div>
                 <div className="candidate-detail__above__overview__description">
-                  {ReactHtmlParser(candidate.over_view)}
+                  {ReactHtmlParser(candidate.over_view ?? "No Information Available.")}
                 </div>
               </div>
             </div>

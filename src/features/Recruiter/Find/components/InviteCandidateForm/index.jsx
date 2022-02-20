@@ -104,7 +104,7 @@ function InviteCandidateForm(props) {
                           disabled={isSubmitting}
                         >
                           {isSubmitting && <Spinner children="" size="sm" className="mr-2" />}
-                          Invite/Un-invite
+                          Invite
                         </Button>
 
                         <Button

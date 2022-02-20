@@ -11,6 +11,7 @@ import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Switch, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import AdminNotificationPage from '../AdminNotification';
 import AdminDashboardPage from '../Dashboard';
 import VerificationPage from '../VerificationPage';
 
@@ -192,6 +193,7 @@ function AdminMainPage(props) {
           }
         />
         <Route path={`${match.url}/company/:id`} component={VerificationPage} />
+        <Route path={`${match.url}/notification`} component={AdminNotificationPage} />
       </Switch>
     </>)
 

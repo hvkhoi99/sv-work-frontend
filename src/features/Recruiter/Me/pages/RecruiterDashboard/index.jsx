@@ -4,11 +4,13 @@ import LoadingUI from 'components/Loading';
 import PopupConfirm from 'components/PopupConfirm';
 import Images from 'constants/images';
 import Paths from 'constants/paths';
+import { updateUser } from 'features/Auth/userSlice';
 import React, { useEffect, useState } from 'react';
 import * as BsIcons from 'react-icons/bs';
 import * as HiIcons from 'react-icons/hi';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { Spinner } from 'reactstrap';
 import helper from 'utils/common';
 import AvailableJobs from '../../components/AvailableJobs';
 import ClosedRecruitments from '../../components/ClosedRecruitments';
@@ -29,6 +31,8 @@ function RecruiterDashboardPage(props) {
   const [currentPath, setCurrentPath] = useState(location);
   const [isLoading, setIsLoading] = useState(true);
   const [show, setShow] = useState(false);
+  const [isChecking, setIsChecking] = useState(false);
+  const dispatch = useDispatch();
 
   const options = [
     { id: 0, name: "Available Jobs", path: availableJobsPath },
@@ -69,14 +73,40 @@ function RecruiterDashboardPage(props) {
       })
   }
 
-  const handleCreateRecruitment = () => {
-    history.push({
-      pathname: `${Paths.recruiterDashboard}/available-jobs/create`,
-      state: { isCreateMode: true }
-    });
-    
+  const handleCreateRecruitment = async () => {
+    setIsChecking(true);
+    try {
+      const data = user.role_id === 2
+        ? await recruiterApi.checkVerified()
+        : await studentApi.checkVerified();
+      if (data.data.status === 1) {
+        const newUser = {
+          ...user,
+          r_profile: {
+            ...user.r_profile,
+            verify: data.data.data
+          }
+        }
+        dispatch(updateUser(newUser));
+        console.log({data, newUser})
+        if ((data.data.data === true) || (data.data.data === 1)) {
+          history.push({
+            pathname: `${Paths.recruiterDashboard}/available-jobs/create`,
+            state: { isCreateMode: true }
+          });
+        } else {
+          onShow(true);
+        }
+      }
+      setIsChecking(false);
+      return;
+    } catch (error) {
+      setIsChecking(false);
+      console.log("Cannot check verification account");
+      return;
+    }
   }
-  
+
   const onDeleteRecruitment = () => {
     dashboardIndexData.closedJobs > 0 && setDashboardIndexData({ ...dashboardIndexData, closedJobs: dashboardIndexData.closedJobs - 1 });
   }
@@ -103,8 +133,8 @@ function RecruiterDashboardPage(props) {
                 <div className="recruiter-dashboard__container__top__left__inforCard">
                   <img src={
                     user.r_profile === null
-                    ? Images.defaultAvatar
-                    : user.r_profile.logo_image_link
+                      ? Images.defaultAvatar
+                      : user.r_profile.logo_image_link
                   } alt="recruiter-avatar" />
                   <div className="recruiter-dashboard__container__top__left__inforCard__description">
                     <div className="recruiter-dashboard__container__top__left__inforCard__description__title">
@@ -132,14 +162,20 @@ function RecruiterDashboardPage(props) {
                 </div>
                 <div
                   className="recruiter-dashboard__container__top__right__card"
-                  onClick={dashboardIndexData.profile.verify ? handleCreateRecruitment : () => onShow(true)}
+                  onClick={isChecking ? null : handleCreateRecruitment}
                 >
-                  <div className="recruiter-dashboard__container__top__right__card__plus-icon">
-                    <BsIcons.BsFillPlusCircleFill className="plus-icon" />
-                  </div>
-                  <div className="recruiter-dashboard__container__top__right__card__create-span">
-                    <span>Create recruitment</span>
-                  </div>
+                  {
+                    isChecking
+                      ? <Spinner children="" size="lg" color="success" />
+                      : <>
+                        <div className="recruiter-dashboard__container__top__right__card__plus-icon">
+                          <BsIcons.BsFillPlusCircleFill className="plus-icon" />
+                        </div>
+                        <div className="recruiter-dashboard__container__top__right__card__create-span">
+                          <span>Create recruitment</span>
+                        </div>
+                      </>
+                  }
                 </div>
               </div>
             </div>

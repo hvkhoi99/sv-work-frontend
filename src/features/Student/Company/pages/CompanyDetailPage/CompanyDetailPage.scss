@@ -186,13 +186,54 @@
         font-size: 1rem;
       }
     }
+
+    &__available-jobs {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      margin: 1rem 0 0 0;
+
+      &__title {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        border-bottom: 1px solid lightgrey;
+
+        & > span {
+          font-size: 1.5rem;
+          font-weight: 600;
+        }
+      }
+
+      &__content {
+        width: 100%;
+        padding: 2rem 0;
+        font-size: 1rem;
+
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-evenly;
+        // width: 100%;
+
+        &__item {
+          margin: 0 2rem 3rem;
+        }
+      }
+
+      & > span {
+        padding: 1rem 2rem 0;
+        width: 100%;
+      }
+    }
   }
 }
 
 .bottom-icon {
   color: var(--success);
   font-size: 1.3rem;
-  margin: 0 .5rem 0 0;
+  margin: 0 0.5rem 0 0;
 }
 
 .title-dot {

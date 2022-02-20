@@ -1,12 +1,15 @@
+import AOS from 'aos';
+import PopupConfirm from 'components/PopupConfirm';
 import Images from 'constants/images';
+import Paths from 'constants/paths';
 import React, { useEffect, useState } from 'react';
 import * as GoIcons from 'react-icons/go';
-import './RecruiterHome.scss';
-import AOS from 'aos';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import Paths from 'constants/paths';
-import PopupConfirm from 'components/PopupConfirm';
-import { useSelector } from 'react-redux';
+import './RecruiterHome.scss';
+import recruiterApi from 'api/recruiterApi';
+import studentApi from 'api/studentApi';
+import { updateUser } from 'features/Auth/userSlice';
 
 RecruiterHomePage.propTypes = {
 
@@ -16,6 +19,9 @@ function RecruiterHomePage(props) {
   const user = useSelector((state) => state.user.current);
   const history = useHistory();
   const [show, setShow] = useState(false);
+
+  const [isChecking, setIsChecking] = useState(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     AOS.init({
@@ -35,14 +41,37 @@ function RecruiterHomePage(props) {
     history.push(`${Paths.recruiterProfile}/update`);
   }
 
-  const onCreateRecruitment = () => {
-    if (!user.r_profile.verify) {
-      onShow(true);
-    } else {
-      history.push({
-        pathname: `${Paths.recruiterDashboard}/available-jobs/create`,
-        state: { isCreateMode: true }
-      });
+  const handleCreateRecruitment = async () => {
+    setIsChecking(true);
+    try {
+      const data = user.role_id === 2
+        ? await recruiterApi.checkVerified()
+        : await studentApi.checkVerified();
+      if (data.data.status === 1) {
+        const newUser = {
+          ...user,
+          r_profile: {
+            ...user.r_profile,
+            verify: data.data.data
+          }
+        }
+        dispatch(updateUser(newUser));
+        console.log({ data, newUser })
+        if ((data.data.data === true) || (data.data.data === 1)) {
+          history.push({
+            pathname: `${Paths.recruiterDashboard}/available-jobs/create`,
+            state: { isCreateMode: true }
+          });
+        } else {
+          onShow(true);
+        }
+      }
+      setIsChecking(false);
+      return;
+    } catch (error) {
+      setIsChecking(false);
+      console.log("Cannot check verification account");
+      return;
     }
   }
 
@@ -74,8 +103,13 @@ function RecruiterHomePage(props) {
               <button
                 type="button"
                 className="btn btn-success btn-sm"
-                onClick={onCreateRecruitment}
-              >Create</button>
+                onClick={handleCreateRecruitment}
+                disabled={isChecking}
+                style={isChecking ? { cursor: "default" } : { cursor: "pointer" }}
+              >
+                {isChecking && <span className="spinner-border spinner-border-sm mr-1" />}
+                Create
+              </button>
             </div>
           </div>
         </div>
@@ -114,10 +148,10 @@ function RecruiterHomePage(props) {
             </div>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, expedita? Adipisci eum velit, aut eaque modi ea quibusdam doloribus doloremque, ducimus debitis culpa voluptate beatae id accusamus, praesentium molestiae. Hic.</p>
             <div className="recruiter-home__container__recruitment-management__top__button">
-              <button 
-              type="button"
-              className="btn btn-success btn-sm"
-              onClick={onMoveToManageRecruitment}
+              <button
+                type="button"
+                className="btn btn-success btn-sm"
+                onClick={onMoveToManageRecruitment}
               >Manage</button>
             </div>
           </div>

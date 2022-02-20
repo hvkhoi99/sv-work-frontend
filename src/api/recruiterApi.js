@@ -24,6 +24,11 @@ const recruiterApi = {
     return axiosClient.get(url);
   },
 
+  checkVerified: () => {
+    const url = "/recruiter/profile/checkVerified";
+    return axiosClient.get(url);
+  },
+
   createRecruiterProfile: (params) => {
     const url = "/recruiter/profile/store";
     return axiosClient.post(url, params);
