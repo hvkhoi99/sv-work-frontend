@@ -52,8 +52,6 @@ function RecruitmentCard(props) {
   //   }
   // }
 
-  console.log({recruitment})
-
   return (
     <div className="recruitment-card" onClick={handleViewJob}>
       <div className="recruitment-card__top">

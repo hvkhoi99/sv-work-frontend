@@ -1,5 +1,7 @@
 import LoadingUI from 'components/Loading';
 import NotFoundPage from 'components/NotFound';
+import Notifications from 'components/Notifications/Notifications';
+import ReactNotificationComponent from 'components/Notifications/ReactNotification';
 import { PrivateRouteFirstUpdateProfile, PrivateRouteRecruiter, PrivateRouteStudent, PrivateRouteUserAuth } from 'components/PrivateRoute';
 import AdminFeature from 'features/Admin';
 import AuthFeature from 'features/Auth';
@@ -13,23 +15,49 @@ import StudentHomeFeature from 'features/Student/Home';
 import JobFeature from 'features/Student/Job';
 import StudentMeFeature from 'features/Student/Me';
 import firebase from 'firebase/compat/app';
+import { onMessageListener } from 'init-fcm';
 import { SnackbarProvider } from 'notistack';
-import { createRef, Suspense } from 'react';
+import { createRef, Suspense, useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.scss';
 
 function App() {
   const notistackRef = createRef();
+  const [showNoti, setShowNoti] = useState(false);
+  const [notification, setNotification] = useState({ title: "", body: "" });
+
+  console.log({showNoti}, {notification});
+
+  onMessageListener()
+    .then((payload) => {
+      setShowNoti(true);
+      setNotification({
+        title: payload.notification.title,
+        body: payload.notification.body,
+      });
+      console.log(payload);
+    })
+    .catch((err) => console.log("failed: ", err));
 
   // Configure Firebase.
   const config = {
     apiKey: "AIzaSyAEaJSqwXBi9pu7Ue3JzSA9uupRhnxY-34",
     authDomain: "sv-work-56ffe.firebaseapp.com",
   };
-  firebase.initializeApp(config);
+
+  !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
 
   return (
     <div className="App">
+      {showNoti ? (
+        <ReactNotificationComponent
+          title={notification.title}
+          body={notification.body}
+        />
+      ) : (
+        <></>
+      )}
+      <Notifications />
       <Suspense fallback={LoadingUI}>
         <SnackbarProvider
           persist="true"

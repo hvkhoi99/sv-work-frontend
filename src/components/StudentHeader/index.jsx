@@ -1,0 +1,206 @@
+import NotificationCard from 'components/NotificationCard';
+import Images from 'constants/images';
+import Paths from 'constants/paths';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { useState } from 'react';
+import { useRef } from 'react';
+import { useEffect } from 'react';
+import * as AiIcons from 'react-icons/ai';
+import * as BsIcons from 'react-icons/bs';
+import * as FaIcons from 'react-icons/fa';
+import * as ImIcons from 'react-icons/im';
+import * as MdIcons from 'react-icons/md';
+import * as RiIcons from 'react-icons/ri';
+import LinesEllipsis from 'react-lines-ellipsis';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
+import { logout } from 'features/Auth/userSlice';
+import firebase from 'firebase/compat/app';
+
+StudentHeader.propTypes = {
+  closeMobileMenu: PropTypes.func,
+  handleClick: PropTypes.func,
+  click: PropTypes.bool,
+};
+
+StudentHeader.defaultProps = {
+  closeMobileMenu: null,
+  handleClick: null,
+  click: false,
+}
+
+function StudentHeader(props) {
+  const { 
+    closeMobileMenu, click, handleClick, 
+  } = props;
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.current);
+  const ref = useRef(null);
+  const history = useHistory();
+  const [hiddenNoti, setHiddenNoti] = useState(true);
+  const [hiddenMe, setHiddenMe] = useState(true);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        hiddenMe === false && setHiddenMe(true);
+        hiddenNoti === false && setHiddenNoti(true);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref, hiddenMe, hiddenNoti]);
+
+  const showNotification = (e) => {
+    e.preventDefault();
+    setHiddenNoti(!hiddenNoti);
+    setHiddenMe(true);
+  }
+
+  const showMe = (e) => {
+    setHiddenMe(!hiddenMe);
+    setHiddenNoti(true);
+  }
+
+  const handleMoveToRecruiter = () => {
+    if (user.r_profile !== null) {
+      localStorage.setItem("role_id", 2);
+      history.push("/recruiter");
+    } else {
+      history.push("/first-update");
+    }
+  }
+
+  const logOut = async () => {
+    setHiddenMe(true);
+    if (user.signin_method === "google.com") {
+      await firebase.auth().signOut()
+    }
+    dispatch(logout());
+    return history.push("/auth/sign-in");
+  }
+
+  return (
+    <>
+      <nav className='navbar'>
+        <div className='navbar-container'>
+          <Link to={Paths.clientHome} className='navbar-logo' onClick={closeMobileMenu}>
+            <span className='app-name'>AIO</span>
+          </Link>
+          <div className='menu-icon' onClick={handleClick}>
+            <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
+          </div>
+          <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+            <li className='nav-item'>
+              <Link to={Paths.clientEvent} className='nav-links' onClick={closeMobileMenu}>
+                <BsIcons.BsFillCalendar2EventFill className="menu-link-icon" />
+                Event
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link
+                to={Paths.clientFindJobs}
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                <ImIcons.ImSearch className="menu-link-icon" />
+                Jobs
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link
+                to='#'
+                className='nav-links'
+                onClick={handleMoveToRecruiter}
+              >
+                <FaIcons.FaBuilding className="menu-link-icon" />
+                Recruiter
+              </Link>
+            </li>
+          </ul>
+          <div ref={ref} className="notify-me">
+            <div className="notify-me__icon">
+              <div className="notify-me__notify" onClick={(e) => showNotification(e)}>
+                <RiIcons.RiNotification4Line className="notify-me__notify__icon" />
+                <span className="notify-me__notify__count">4</span>
+              </div>
+              <div className="notify-me__notify" onClick={(e) => showMe(e)}>
+                {/* <FaIcons.FaUserAstronaut className="notify-me__notify__icon" /> */}
+                <img src={
+                  user.s_profile === null
+                    ? Images.defaultAvatar
+                    : user.s_profile.avatar_link
+                } alt="student-avatar" />
+              </div>
+            </div>
+            <div className="notify-me__action">
+              <div className={hiddenNoti ? "notify-me__action__notification" : "notify-me__action__notification isVisible"}>
+                <div className="notify-me__action__notification__header">
+                  <span>Notification</span>
+                  <MdIcons.MdMoreHoriz className="notify-me__action__notification__header__icon" />
+                </div>
+                <ul>
+                  <NotificationCard />
+                  <NotificationCard />
+                  <NotificationCard />
+                  <NotificationCard />
+                </ul>
+              </div>
+              <div className={hiddenMe ? "notify-me__action__me" : "notify-me__action__me isVisible"}>
+                <div className="notify-me__action__me__user-infor">
+                  Signed in as&nbsp;
+                  <LinesEllipsis
+                    text={
+                      user.s_profile === null
+                        ? "Student"
+                        : user.s_profile.last_name
+                    }
+                    maxLine='1'
+                    ellipsis='...'
+                    trimRight
+                    basedOn='letters'
+                    className="notify-me__action__me__user-infor__name"
+                  />
+                </div>
+                <ul>
+                  <li>
+                    <Link to={Paths.clientDashboard} className="me-link" onClick={(e) => showMe(e)}>
+                      <MdIcons.MdDashboard className="me-link__icon" />
+                      <span>Dashboard</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={Paths.clientProfile} className="me-link" onClick={(e) => showMe(e)}>
+                      <RiIcons.RiProfileLine className="me-link__icon" />
+                      <span>Profile</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to={Paths.clientAccount} className="me-link" onClick={(e) => showMe(e)}>
+                      <AiIcons.AiFillSetting className="me-link__icon" />
+                      <span>Account</span>
+                    </Link>
+                  </li>
+                  <li onClick={logOut}>
+                    <Link to="#" className="me-link">
+                      <RiIcons.RiLogoutCircleRLine className="me-link__icon" />
+                      <span>Sign out</span>
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </>
+  );
+}
+
+export default StudentHeader;

@@ -164,6 +164,7 @@
       &__main {
         width: 100%;
         display: flex;
+        flex-flow: row wrap;
         justify-content: space-evenly;
         padding: 3rem 1rem;
       }
@@ -329,7 +330,6 @@
 }
 
 .group-button-find-home {
-  
   & > button {
     display: flex;
     align-items: center;
