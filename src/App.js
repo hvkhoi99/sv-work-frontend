@@ -1,8 +1,7 @@
 import LoadingUI from 'components/Loading';
 import NotFoundPage from 'components/NotFound';
-import Notifications from 'components/Notifications/Notifications';
-import ReactNotificationComponent from 'components/Notifications/ReactNotification';
 import { PrivateRouteFirstUpdateProfile, PrivateRouteRecruiter, PrivateRouteStudent, PrivateRouteUserAuth } from 'components/PrivateRoute';
+import ReactNotificationComponent from 'components/Notifications/ReactNotification';
 import AdminFeature from 'features/Admin';
 import AuthFeature from 'features/Auth';
 import BeginnerFeature from 'features/Beginner';
@@ -23,21 +22,10 @@ import './App.scss';
 
 function App() {
   const notistackRef = createRef();
+
   const [showNoti, setShowNoti] = useState(false);
   const [notification, setNotification] = useState({ title: "", body: "" });
-
-  console.log({showNoti}, {notification});
-
-  onMessageListener()
-    .then((payload) => {
-      setShowNoti(true);
-      setNotification({
-        title: payload.notification.title,
-        body: payload.notification.body,
-      });
-      console.log(payload);
-    })
-    .catch((err) => console.log("failed: ", err));
+  // const { enqueueSnackbar } = useSnackbar();
 
   // Configure Firebase.
   const config = {
@@ -47,17 +35,21 @@ function App() {
 
   !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
 
+  console.log({ showNoti }, { notification });
+
+  onMessageListener()
+    .then((payload) => {
+      setNotification({
+        title: payload.notification.title,
+        body: payload.notification.body,
+      });
+      setShowNoti(true);
+      console.log({ payload });
+    })
+    .catch((err) => console.log("failed: ", err));
+
   return (
     <div className="App">
-      {showNoti ? (
-        <ReactNotificationComponent
-          title={notification.title}
-          body={notification.body}
-        />
-      ) : (
-        <></>
-      )}
-      <Notifications />
       <Suspense fallback={LoadingUI}>
         <SnackbarProvider
           persist="true"
@@ -68,6 +60,14 @@ function App() {
           ref={notistackRef}
           autoHideDuration={2500}
           anchororigintopright={{ marginTop: '50px' }}>
+          {showNoti ? (
+            <ReactNotificationComponent
+              title={notification.title}
+              body={notification.body}
+            />
+          ) : (
+            <></>
+          )}
           <Router>
             <Switch>
               {/* <Redirect exact from="/" to="/home" /> */}

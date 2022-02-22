@@ -15,15 +15,8 @@ Header.defaultProps = {
 
 function Header(props) {
   const history = useHistory();
-  // const user = useSelector((state) => state.user.current);
-  // const [user] = useState({
-  //   ...currentUser,
-  //   s_profile: currentUser.s_profile ?? null,
-  //   r_profile: currentUser.r_profile ?? null
-  // });
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
-
   const roleId = parseInt(localStorage.getItem('role_id'), 10);
   let isRecruiterPath = localStorage.getItem('isRecruiterPath') === "true";
 
@@ -71,8 +64,10 @@ function Header(props) {
       click={click}
     />
   );
-
-  return <>{currentUI}</>;
+  
+  return <>
+  {currentUI}
+  </>;
 }
 
 export default Header;

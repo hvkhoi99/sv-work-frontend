@@ -12,22 +12,22 @@ import { Provider } from 'react-redux';
 import 'reactjs-popup/dist/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import 'react-toastify/dist/ReactToastify.css';
+// import 'react-toastify/dist/ReactToastify.min.css';
 
 TimeAgo.addDefaultLocale(en)
 TimeAgo.addLocale(ru)
 
-
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <SnackbarProvider
         transitionDuration={{ enter: 300, exit: 150 }}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}>
         <App />
       </SnackbarProvider>
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

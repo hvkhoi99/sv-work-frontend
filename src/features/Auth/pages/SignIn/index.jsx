@@ -1,16 +1,15 @@
 import { Button } from '@material-ui/core';
 import { unwrapResult } from '@reduxjs/toolkit';
 import userApi from 'api/userApi';
-// import PropTypes from 'prop-types';
 import Footer from 'components/Footer';
 import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
 import InputField from 'custom-fields/InputField';
 import { login, logout, updateUser } from 'features/Auth/userSlice';
-// import { login, logout, updateUser } from 'features/Auth/userSlice';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import { FastField, Form, Formik } from 'formik';
+import { getToken } from 'init-fcm';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
@@ -34,6 +33,10 @@ function SignInPage(props) {
   const [isSignedIn, setIsSignedIn] = useState(false);
   const [isSigningIn, setIsSigningIn] = useState(false);
   const [currentRole, setCurrentRole] = useState(null);
+
+  const [isTokenFound, setTokenFound] = useState(false);
+  const [firebaseToken, setFirebaseToken] = useState(null);
+
   const listRole = [
     { id: 3, avatar: Images.avatar, name: 'student-avatar' },
     { id: 2, avatar: Images.defaultCompany, name: 'employer-avatar' },
@@ -54,14 +57,25 @@ function SignInPage(props) {
       .required('Password is required')
   });
 
+  console.log("Token found", isTokenFound);
+
   useEffect(() => {
-    let timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+    let data;
+
+    async function tokenFunc() {
+      data = await getToken(setTokenFound);
+      if (data) {
+        console.log("Token is", data);
+        setFirebaseToken(data);
+      }
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+      return data;
+    }
+
+    tokenFunc();
+  }, [setTokenFound]);
 
   useEffect(() => {
     const unregisterAuthObserver = firebase.auth().onAuthStateChanged(async (user) => {
@@ -71,14 +85,11 @@ function SignInPage(props) {
       }
       setIsSigningIn(true);
       try {
-        // const user = values.user;
-        // if (!user) {
-        //   return;
-        // }
         const token = await user.getIdToken();
         const params = {
           role_id: currentRole ?? 3,
-          social_token: token
+          social_token: token,
+          device_token: firebaseToken
         };
         console.log({ params });
         const data = await userApi.loginWithGoogle(params);
@@ -106,7 +117,7 @@ function SignInPage(props) {
     });
 
     return () => unregisterAuthObserver();
-  }, [currentRole, dispatch, isRecruiterPath, enqueueSnackbar]);
+  }, [currentRole, dispatch, isRecruiterPath, enqueueSnackbar, firebaseToken]);
 
   const onSignIn = async (values) => {
     if (values.email === "admin@gmail.com") {
@@ -115,7 +126,8 @@ function SignInPage(props) {
       try {
         const params = {
           email: values.email,
-          password: values.password
+          password: values.password,
+          device_token: firebaseToken
         };
 
         const actionResult = await dispatch(login(params));

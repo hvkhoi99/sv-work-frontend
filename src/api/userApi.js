@@ -25,6 +25,16 @@ const userApi = {
   loginWithGoogle: (params) => {
     const url = "/login-with-google";
     return axiosClient.post(url, params);
+  },
+
+  updateDeviceToken: (params) => {
+    const url = "/update-device-token";
+    return axiosClient.post(url, params);
+  },
+
+  sendNotification: (params) => {
+    const url = "/send-notifications";
+    return axiosClient.post(url, params);
   }
 };
 

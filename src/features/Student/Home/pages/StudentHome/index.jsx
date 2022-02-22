@@ -16,6 +16,7 @@ import TopRecruiterGroupCard from "../../components/TopRecruiterGroupCard";
 import './StudentHome.scss';
 
 import RecruitmentCard from 'features/Recruiter/Recruitment/components/RecruitmentCard';
+import userApi from "api/userApi";
 
 function StudentHomePage(props) {
   const history = useHistory();
@@ -152,6 +153,20 @@ function StudentHomePage(props) {
     history.push(`/recruitment/${id}`);
   }
 
+  const handleSendNotifications = async () => {
+    try {
+      const params = {
+        title: "Test Notification",
+        body: "Test Notification"
+      }
+
+      const rs = await userApi.sendNotification(params);
+      console.log({rs})
+    } catch (error) {
+      console.log({error: error.message})
+    }
+  }
+
   return (
     <div className="home">
       <div className="home__container">
@@ -165,6 +180,11 @@ function StudentHomePage(props) {
             <div className="home__container__find__main__text">
               <p>There are {totalJobs} developer jobs.</p>
               <h1>Find now!</h1>
+              <button 
+              className="btn btn-success btn-sm"
+              type="button"
+              onClick={handleSendNotifications}
+              >Send Notifications</button>
             </div>
             <div className="home__container__find__main__form">
               <form onSubmit={handleSubmit(onFind)} onKeyDown={(e) => checkKeyDown(e)}>

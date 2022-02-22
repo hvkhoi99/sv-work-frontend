@@ -9,8 +9,8 @@ const firebaseConfig = {
   projectId: "sv-work-56ffe",
   storageBucket: "sv-work-56ffe.appspot.com",
   messagingSenderId: "601232019308",
-  appId: "1:601232019308:web:7da62bf236846f05f9ed49",
-  measurementId: "G-6R6Z8P1G1V"
+  appId: "1:601232019308:web:f41367ccc476485cf9ed49",
+  measurementId: "G-7PJZM2GDGV"
 };
 
 firebase.initializeApp(firebaseConfig);

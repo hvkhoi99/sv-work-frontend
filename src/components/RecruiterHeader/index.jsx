@@ -32,8 +32,8 @@ RecruiterHeader.defaultProps = {
 }
 
 function RecruiterHeader(props) {
-  const { 
-    closeMobileMenu, click, handleClick, 
+  const {
+    closeMobileMenu, click, handleClick,
   } = props;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.current);
@@ -77,7 +77,7 @@ function RecruiterHeader(props) {
     dispatch(logout());
     return history.push("/auth/sign-in");
   }
-  
+
   const handleMoveToStudent = () => {
     if (user.role_id === 2) {
       logOut();
@@ -172,26 +172,43 @@ function RecruiterHeader(props) {
                 <ul>
                   <li>
                     <Link to={Paths.recruiterDashboard} className="me-link" onClick={(e) => showMe(e)}>
-                      <MdIcons.MdDashboard className="me-link__icon" />
-                      <span>Dashboard</span>
+                      <div className="me-link__left">
+                        <MdIcons.MdDashboard className="me-link__left__icon" />
+                        <span>Dashboard</span>
+                      </div>
+                      <div className="me-link__right">
+                        <BsIcons.BsChevronRight className="me-link__right__icon"/>
+                      </div>
                     </Link>
                   </li>
                   <li>
                     <Link to={Paths.recruiterProfile} className="me-link" onClick={(e) => showMe(e)}>
-                      <RiIcons.RiProfileLine className="me-link__icon" />
-                      <span>Profile</span>
+                      <div className="me-link__left">
+                        <RiIcons.RiProfileLine className="me-link__left__icon" />
+                        <span>Profile</span>
+                      </div>
+                      <div className="me-link__right">
+                        <BsIcons.BsChevronRight className="me-link__right__icon"/>
+                      </div>
                     </Link>
                   </li>
                   <li>
                     <Link to={Paths.recruiterAccount} className="me-link" onClick={(e) => showMe(e)}>
-                      <AiIcons.AiFillSetting className="me-link__icon" />
-                      <span>Account</span>
+                      <div className="me-link__left">
+                        <AiIcons.AiFillSetting className="me-link__left__icon" />
+                        <span>Account</span>
+                      </div>
+                      <div className="me-link__right">
+                        <BsIcons.BsChevronRight className="me-link__right__icon"/>
+                      </div>
                     </Link>
                   </li>
                   <li onClick={logOut}>
                     <Link to="#" className="me-link">
-                      <RiIcons.RiLogoutCircleRLine className="me-link__icon" />
-                      <span>Sign out</span>
+                      <div className="me-link__left">
+                        <RiIcons.RiLogoutCircleRLine className="me-link__left__icon" />
+                        <span>Sign out</span>
+                      </div>
                     </Link>
                   </li>
                 </ul>
