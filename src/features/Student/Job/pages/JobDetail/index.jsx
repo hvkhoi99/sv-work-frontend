@@ -80,7 +80,7 @@ function JobDetailPage(props) {
     if ((user && Object.keys(user).length === 0)) {
       history.push("/auth/sign-in");
     } else {
-      if (!user.s_profile.open_for_job) {
+      if (user.s_profile && !user.s_profile.open_for_job) {
         history.push(`${Paths.clientProfile}`);
       } else {
         history.push("/first-update/student");
@@ -412,7 +412,7 @@ function JobDetailPage(props) {
           (user && Object.keys(user).length === 0)
             ? "You need to LOGIN first and then you need to update your STUDENT PROFILE. Continue?"
             : (
-              !user.s_profile.open_for_job
+              user.s_profile && !user.s_profile.open_for_job
                 ? "You need to enable OPEN JOB in your PROFILE page for this functionality to work."
                 : "You need to update your STUDENT PROFILE. Continue?"
             )

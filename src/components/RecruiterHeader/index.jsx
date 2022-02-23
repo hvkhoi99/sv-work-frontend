@@ -1,4 +1,3 @@
-import NotificationCard from 'components/NotificationCard';
 import Images from 'constants/images';
 import Paths from 'constants/paths';
 import PropTypes from 'prop-types';
@@ -18,6 +17,7 @@ import { useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { logout } from 'features/Auth/userSlice';
 import firebase from 'firebase/compat/app';
+import NotificationsContainer from 'components/Notifications/NotificationsContainer';
 
 RecruiterHeader.propTypes = {
   closeMobileMenu: PropTypes.func,
@@ -142,16 +142,8 @@ function RecruiterHeader(props) {
             </div>
             <div className="notify-me__action">
               <div className={hiddenNoti ? "notify-me__action__notification" : "notify-me__action__notification isVisible"}>
-                <div className="notify-me__action__notification__header">
-                  <span>Notification</span>
-                  <MdIcons.MdMoreHoriz className="notify-me__action__notification__header__icon" />
-                </div>
-                <ul>
-                  <NotificationCard />
-                  <NotificationCard />
-                  <NotificationCard />
-                  <NotificationCard />
-                </ul>
+                <NotificationsContainer
+                />
               </div>
               <div className={hiddenMe ? "notify-me__action__me" : "notify-me__action__me isVisible"}>
                 <div className="notify-me__action__me__user-infor">
@@ -177,7 +169,7 @@ function RecruiterHeader(props) {
                         <span>Dashboard</span>
                       </div>
                       <div className="me-link__right">
-                        <BsIcons.BsChevronRight className="me-link__right__icon"/>
+                        <BsIcons.BsChevronRight className="me-link__right__icon" />
                       </div>
                     </Link>
                   </li>
@@ -188,7 +180,7 @@ function RecruiterHeader(props) {
                         <span>Profile</span>
                       </div>
                       <div className="me-link__right">
-                        <BsIcons.BsChevronRight className="me-link__right__icon"/>
+                        <BsIcons.BsChevronRight className="me-link__right__icon" />
                       </div>
                     </Link>
                   </li>
@@ -199,7 +191,7 @@ function RecruiterHeader(props) {
                         <span>Account</span>
                       </div>
                       <div className="me-link__right">
-                        <BsIcons.BsChevronRight className="me-link__right__icon"/>
+                        <BsIcons.BsChevronRight className="me-link__right__icon" />
                       </div>
                     </Link>
                   </li>

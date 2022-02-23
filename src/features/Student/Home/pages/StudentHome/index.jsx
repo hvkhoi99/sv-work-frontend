@@ -7,6 +7,7 @@ import Paths from "constants/paths";
 import RHFInputField from 'custom-fields/RHFInputField';
 import RHFSelectField from 'custom-fields/RHFSelectField';
 import EventCard from "features/Recruiter/Event/components/EventCard";
+import RecruitmentCard from 'features/Recruiter/Recruitment/components/RecruitmentCard';
 import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import * as GoIcons from 'react-icons/go';
@@ -14,9 +15,6 @@ import { useHistory } from "react-router-dom";
 import * as yup from "yup";
 import TopRecruiterGroupCard from "../../components/TopRecruiterGroupCard";
 import './StudentHome.scss';
-
-import RecruitmentCard from 'features/Recruiter/Recruitment/components/RecruitmentCard';
-import userApi from "api/userApi";
 
 function StudentHomePage(props) {
   const history = useHistory();
@@ -153,19 +151,19 @@ function StudentHomePage(props) {
     history.push(`/recruitment/${id}`);
   }
 
-  const handleSendNotifications = async () => {
-    try {
-      const params = {
-        title: "Test Notification",
-        body: "Test Notification"
-      }
+  // const handleSendNotifications = async () => {
+  //   try {
+  //     const params = {
+  //       title: "Test Notification",
+  //       body: "Test Notification"
+  //     }
 
-      const rs = await userApi.sendNotification(params);
-      console.log({rs})
-    } catch (error) {
-      console.log({error: error.message})
-    }
-  }
+  //     await userApi.sendNotification(params);
+
+  //   } catch (error) {
+  //     console.log({error: error.message})
+  //   }
+  // }
 
   return (
     <div className="home">
@@ -180,11 +178,11 @@ function StudentHomePage(props) {
             <div className="home__container__find__main__text">
               <p>There are {totalJobs} developer jobs.</p>
               <h1>Find now!</h1>
-              <button 
+              {/* <button 
               className="btn btn-success btn-sm"
               type="button"
               onClick={handleSendNotifications}
-              >Send Notifications</button>
+              >Send Notifications</button> */}
             </div>
             <div className="home__container__find__main__form">
               <form onSubmit={handleSubmit(onFind)} onKeyDown={(e) => checkKeyDown(e)}>

@@ -1,11 +1,10 @@
-import NotificationCard from 'components/NotificationCard';
+import NotificationsContainer from 'components/Notifications/NotificationsContainer';
 import Images from 'constants/images';
 import Paths from 'constants/paths';
+import { logout } from 'features/Auth/userSlice';
+import firebase from 'firebase/compat/app';
 import PropTypes from 'prop-types';
-import React from 'react';
-import { useState } from 'react';
-import { useRef } from 'react';
-import { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as AiIcons from 'react-icons/ai';
 import * as BsIcons from 'react-icons/bs';
 import * as FaIcons from 'react-icons/fa';
@@ -13,11 +12,8 @@ import * as ImIcons from 'react-icons/im';
 import * as MdIcons from 'react-icons/md';
 import * as RiIcons from 'react-icons/ri';
 import LinesEllipsis from 'react-lines-ellipsis';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { logout } from 'features/Auth/userSlice';
-import firebase from 'firebase/compat/app';
 
 StudentHeader.propTypes = {
   closeMobileMenu: PropTypes.func,
@@ -140,17 +136,12 @@ function StudentHeader(props) {
               </div>
             </div>
             <div className="notify-me__action">
-              <div className={hiddenNoti ? "notify-me__action__notification" : "notify-me__action__notification isVisible"}>
-                <div className="notify-me__action__notification__header">
-                  <span>Notification</span>
-                  <MdIcons.MdMoreHoriz className="notify-me__action__notification__header__icon" />
-                </div>
-                <ul>
-                  <NotificationCard />
-                  <NotificationCard />
-                  <NotificationCard />
-                  <NotificationCard />
-                </ul>
+              <div className={hiddenNoti
+                ? "notify-me__action__notification"
+                : "notify-me__action__notification isVisible"}
+              >
+                <NotificationsContainer
+                />
               </div>
               <div className={hiddenMe ? "notify-me__action__me" : "notify-me__action__me isVisible"}>
                 <div className="notify-me__action__me__user-infor">

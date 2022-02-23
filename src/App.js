@@ -39,12 +39,14 @@ function App() {
 
   onMessageListener()
     .then((payload) => {
+      const newTitle = JSON.parse(payload.notification.title);
+      const newBody = JSON.parse(payload.notification.body);
       setNotification({
-        title: payload.notification.title,
-        body: payload.notification.body,
+        title: newTitle.title,
+        body: newBody.description
       });
       setShowNoti(true);
-      console.log({ payload });
+      console.log({ payload }, {newTitle: newTitle, newBody: newBody});
     })
     .catch((err) => console.log("failed: ", err));
 
