@@ -7,6 +7,7 @@ import ReactHtmlParser from 'react-html-parser';
 import * as BsIcons from 'react-icons/bs';
 import * as MdIcons from 'react-icons/md';
 import * as TiIcons from 'react-icons/ti';
+import RecruitmentCard from '../../components/RecruitmentCard';
 import './RecruitmentDetail.scss';
 
 RecruitmentDetail.propTypes = {
@@ -22,6 +23,31 @@ RecruitmentDetail.defaultProps = {
 function RecruitmentDetail(props) {
   const { recruitment, isViewByStudent } = props;
   const [isLoading, setIsLoading] = useState(true);
+  const exampleRecruitment = {
+    title: 'Example Recruitment',
+    min_salary: 0,
+    max_salary: 0,
+    location: 'Viet Nam',
+    hashtags: [],
+    application: {
+      id: 0,
+      is_applied: 0,
+      is_invited: 0,
+      is_saved: 0,
+      recruitment_id: 0,
+      state: null,
+      user_id: 0,
+    },
+    company_info: {
+      company_name: 'Company',
+      id: 0,
+      logo_image_link: Images.defaultAvatar,
+      verify: false
+    },
+    count_applications: 0,
+    expiry_date: "01/10/2022",
+    created_at: "01/10/2022",
+  }
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -124,13 +150,13 @@ function RecruitmentDetail(props) {
             </div>
           </div>
           {isViewByStudent && <div className="similar-job">
-            {/* <h3>Similar Job for you</h3> */}
-            {/* <div className="similar-job__content">
-              <RecruitmentCard />
-              <RecruitmentCard />
-              <RecruitmentCard />
-              <RecruitmentCard />
-            </div> */}
+            <h3>Top Jobs</h3>
+            <div className="similar-job__content">
+              <RecruitmentCard onViewJob={() => {console.log("View Job.")}} recruitment={exampleRecruitment} />
+              <RecruitmentCard onViewJob={() => {console.log("View Job.")}} recruitment={exampleRecruitment} />
+              <RecruitmentCard onViewJob={() => {console.log("View Job.")}} recruitment={exampleRecruitment} />
+              <RecruitmentCard onViewJob={() => {console.log("View Job.")}} recruitment={exampleRecruitment} />
+            </div>
           </div>}
         </>
       }

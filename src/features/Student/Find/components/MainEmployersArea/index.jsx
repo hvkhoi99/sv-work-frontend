@@ -50,7 +50,7 @@ function MainEmployersArea(props) {
         };
 
         const data = await studentApi.findEmployers(params);
-        console.log({ data })
+        // console.log({ data })
         if (data.data.status === 1) {
           setEmployers(data.data.data.data);
           setTotal(data.data.data.total);

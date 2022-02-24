@@ -1,10 +1,10 @@
-import React, { useEffect, useRef } from 'react';
 // import PropTypes from 'prop-types';
 import NotificationCard from 'components/Notifications/NotificationCard';
+import Images from 'constants/images';
+import React, { useEffect, useRef, useState } from 'react';
+import * as FiIcons from 'react-icons/fi';
 import * as MdIcons from 'react-icons/md';
 import './NotificationsContainer.scss';
-import { useState } from 'react';
-import * as FiIcons from 'react-icons/fi';
 
 NotificationsContainer.propTypes = {
 
@@ -14,6 +14,130 @@ function NotificationsContainer(props) {
   const [isAll, setIsAll] = useState(true);
   const [isShowMarkAllAsRead, setIsShowMarkAllAsRead] = useState(false);
   const ref = useRef(null);
+
+  const notifications = [
+    {
+      title: 'Employer creates 1 new job.',
+      body: {
+        job: {
+          id: 10,
+          title: 'New Job',
+          user_id: 3
+        },
+        company_info: {
+          id: 10,
+          company_name: 'Facebook',
+          logo_image_link: Images.defaultAvatar,
+          verify: true,
+          user_id: 3
+        }
+      },
+      type: "create-recruitment",
+      image: '',
+      updated_at: "2 minutes ago",
+      is_read: 0
+    },
+    {
+      title: 'Employer has updated the job.',
+      body: {
+        job: {
+          id: 10,
+          title: 'Update Job',
+          user_id: 3
+        },
+        company_info: {
+          id: 10,
+          company_name: 'Facebook',
+          logo_image_link: Images.defaultAvatar,
+          verify: true,
+          user_id: 3
+        }
+      },
+      type: "update-recruitment",
+      image: '',
+      updated_at: "2 minutes ago",
+      is_read: 0
+    },
+    {
+      title: 'Invited to the job.',
+      body: {
+        job: {
+          id: 10,
+          title: 'Invited Job',
+          user_id: 3
+        },
+        company_info: {
+          id: 10,
+          company_name: 'Twitter',
+          logo_image_link: Images.defaultCompany,
+          verify: true,
+          user_id: 3
+        }
+      },
+      type: "invited-job",
+      image: '',
+      updated_at: "2 minutes ago",
+      is_read: 0
+    },
+    {
+      title: 'Application rejected.',
+      body: {
+        job: {
+          id: 10,
+          title: 'Application Job',
+          user_id: 3
+        },
+        company_info: {
+          id: 10,
+          company_name: 'The Company C',
+          logo_image_link: Images.defaultCompany,
+          verify: true,
+          user_id: 3
+        }
+      },
+      type: "rejected-application",
+      image: '',
+      updated_at: "2 minutes ago",
+      is_read: 0
+    },
+    {
+      title: 'Application approved.',
+      body: {
+        job: {
+          id: 10,
+          title: 'Application Job',
+          user_id: 3
+        },
+        company_info: {
+          id: 10,
+          company_name: 'WhiteHouse',
+          logo_image_link: Images.defaultCompany,
+          verify: true,
+          user_id: 3
+        }
+      },
+      type: "approved-application",
+      image: '',
+      updated_at: "2 minutes ago",
+      is_read: 0
+    },
+    {
+      title: 'Employer updated avatar profile.',
+      body: {
+        company_info: {
+          id: 6,
+          company_name: 'Ho Van Khoi',
+          logo_image_link: Images.defaultCompany,
+          verify: true,
+          user_id: 3
+        }
+      },
+      type: "update-avatar",
+      image: '',
+      updated_at: "2 minutes ago",
+      is_read: 0
+    },
+  ];
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -94,11 +218,19 @@ function NotificationsContainer(props) {
           </span>
         </div>
         <ul>
-          <NotificationCard type="create-recruitment"/>
-          <NotificationCard type="invited-job"/>
+          {
+            notifications.map((notification, index) => {
+              return <NotificationCard
+                key={index}
+                notification={notification}
+              />
+            })
+          }
+          {/* <NotificationCard type="invited-job"/>
+          <NotificationCard type="rejected-application"/>
           <NotificationCard type="update-recruitment"/>
           <NotificationCard type="approved-application"/>
-          <NotificationCard type="update-avatar"/>
+          <NotificationCard type="update-avatar"/> */}
         </ul>
       </div>
     </div>

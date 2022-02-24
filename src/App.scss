@@ -170,3 +170,11 @@ textarea {
 // text-overflow: ellipsis;
 // white-space: nowrap;
 // overflow: hidden;
+
+.invisible-noti-options {
+  display: none;
+}
+
+.is-focus-noti-option {
+  display: block;
+}

@@ -144,6 +144,8 @@ function MainJobsArea(props) {
     console.log({jobId})
   }
 
+  // console.log({jobs})
+
   return (
     <>
       {
