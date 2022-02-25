@@ -17,7 +17,7 @@ function NotificationsContainer(props) {
 
   const notifications = [
     {
-      title: 'Employer creates 1 new job.',
+      title: 'Employer creates a new job.',
       body: {
         job: {
           id: 10,
