@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Aos from "aos";
 import homeApi from 'api/homeApi';
-import userApi from "api/userApi";
 import { CITY_OPTIONS } from 'constants/global';
 import Images from 'constants/images';
 import Paths from "constants/paths";
@@ -152,19 +151,19 @@ function StudentHomePage(props) {
     history.push(`/recruitment/${id}`);
   }
 
-  const handleSendNotifications = async () => {
-    try {
-      const params = {
-        title: "Test Notification",
-        body: "Test Notification"
-      }
+  // const handleSendNotifications = async () => {
+  //   try {
+  //     const params = {
+  //       title: "Test Notification",
+  //       body: "Test Notification"
+  //     }
 
-      await userApi.sendNotification(params);
+  //     await userApi.sendNotification(params);
 
-    } catch (error) {
-      console.log({error: error.message})
-    }
-  }
+  //   } catch (error) {
+  //     console.log({error: error.message})
+  //   }
+  // }
 
   return (
     <div className="home">
@@ -179,11 +178,11 @@ function StudentHomePage(props) {
             <div className="home__container__find__main__text">
               <p>There are {totalJobs} available jobs.</p>
               <h1>Find now!</h1>
-              <button 
+              {/* <button 
               className="btn btn-success btn-sm"
               type="button"
               onClick={handleSendNotifications}
-              >Send Notifications</button>
+              >Send Notifications</button> */}
             </div>
             <div className="home__container__find__main__form">
               <form onSubmit={handleSubmit(onFind)} onKeyDown={(e) => checkKeyDown(e)}>

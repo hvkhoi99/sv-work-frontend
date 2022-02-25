@@ -5,8 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { onMessageListener } from 'init-fcm';
 import './Header.scss';
-// import ReactNotificationComponent from 'components/Notifications/ReactNotification';
 import NotificationAlertCard from 'components/Notifications/NotificationAlertCard';
+import studentApi from 'api/studentApi';
 
 Header.propTypes = {
 
@@ -22,9 +22,34 @@ function Header(props) {
   const [button, setButton] = useState(true);
   const roleId = parseInt(localStorage.getItem('role_id'), 10);
   let isRecruiterPath = localStorage.getItem('isRecruiterPath') === "true";
+  // const [countUnread, setCountUnread] = useState(0);
 
   const [showNoti, setShowNoti] = useState(false);
-  const [notification, setNotification] = useState({ title: "", body: "" });
+  // const [notification, setNotification] = useState({ title: "", body: "" });
+  const [notification, setNotification] = useState(
+    {
+      title: '',
+      body: JSON.stringify({
+        job: {
+          id: 0,
+          title: '',
+          user_id: 0
+        },
+        company_info: {
+          id: 0,
+          company_name: '',
+          logo_image_link: null,
+          verify: 0,
+          user_id: 0
+        },
+        type: '',
+        updated_at: '',
+        is_read: 0,
+      }),
+      image: '',
+    }
+  );
+
 
   const showButton = () => {
     if (window.innerWidth <= 960) {
@@ -38,22 +63,52 @@ function Header(props) {
     showButton();
   }, []);
 
+  useEffect(() => {
+    const fetchCountNotifications = async () => {
+      try {
+        const data = await studentApi.getRecruiterCountNotifications();
+        console.log({data})
+      } catch (error) {
+        console.log("Cannot fetch notifications count. Error: " + error.message);
+      }
+    }
+
+    fetchCountNotifications();
+  }, [])
+  
+
   window.addEventListener('resize', showButton);
 
-  // console.log({ showNoti }, { notification });
+  console.log({ body: JSON.parse(notification.body) });
 
   onMessageListener()
     .then((payload) => {
-      // const newTitle = JSON.parse(payload.notification.title);
-      // const newBody = JSON.parse(payload.notification.body);
-      setNotification({
-        title: payload.notification.title,
-        body: payload.notification.description
-      });
+      setNotification(payload.notification);
       setShowNoti(true);
       setTimeout(() => {
         setShowNoti(false);
-      }, 5000);
+        setNotification({
+          title: '',
+          body: JSON.stringify({
+            job: {
+              id: 0,
+              title: '',
+              user_id: 0
+            },
+            company_info: {
+              id: 0,
+              company_name: '',
+              logo_image_link: null,
+              verify: 0,
+              user_id: 0
+            },
+            type: '',
+            updated_at: '',
+            is_read: 0,
+          }),
+          image: '',
+        })
+      }, 10000);
       console.log({ payload });
     })
     .catch((err) => console.log("failed: ", err));
@@ -95,8 +150,7 @@ function Header(props) {
 
   return <>
     <NotificationAlertCard
-      title={notification.title}
-      body={notification.body}
+      notification={notification}
       showNoti={showNoti}
       onChangeAlertStatus={onChangeAlertStatus}
     />

@@ -59,8 +59,7 @@ function NotificationCard(props) {
                   className="notification-content__content__text__name__icon"
                 />}
               </span>
-              has just created a new job titled
-              <span className="notification-content__content__text__job-title">
+              has just created a new job titled <span className="notification-content__content__text__job-title">
                 {notification.body.job.title}
               </span>
               . Join now!
@@ -78,8 +77,7 @@ function NotificationCard(props) {
                   className="notification-content__content__text__name__icon"
                 />}
               </span>
-              has just updated job
-              <span className="notification-content__content__text__job-title">
+              has just updated job <span className="notification-content__content__text__job-title">
                 {notification.body.job.title}
               </span>
               . Join now!
@@ -115,8 +113,7 @@ function NotificationCard(props) {
               has <span className="notification-content__content__text__name">
                 accepted your application
               </span>
-              in job
-              <span className="notification-content__content__text__job-title">
+              in job <span className="notification-content__content__text__job-title">
                 {notification.body.job.title}
               </span>. From now on, you can start working on this!
             </div>
@@ -136,8 +133,7 @@ function NotificationCard(props) {
               has <span className="notification-content__content__text__name">
                 rejected your application
               </span>
-              in job
-              <span className="notification-content__content__text__job-title">
+              in job <span className="notification-content__content__text__job-title">
                 {notification.body.job.title}
               </span>. Apply for other jobs now!
             </div>
@@ -154,8 +150,7 @@ function NotificationCard(props) {
                   className="notification-content__content__text__name__icon"
                 />}
               </span>
-              has invited you to their
-              <span className="notification-content__content__text__job-title">
+              has invited you to their <span className="notification-content__content__text__job-title">
                 {notification.body.job.title}
               </span> job.
             </div>

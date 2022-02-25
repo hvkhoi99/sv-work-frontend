@@ -23,17 +23,19 @@ RecruiterHeader.propTypes = {
   closeMobileMenu: PropTypes.func,
   handleClick: PropTypes.func,
   click: PropTypes.bool,
+  countUnread: PropTypes.number
 };
 
 RecruiterHeader.defaultProps = {
   closeMobileMenu: null,
   handleClick: null,
   click: false,
+  countUnread: 0
 }
 
 function RecruiterHeader(props) {
   const {
-    closeMobileMenu, click, handleClick,
+    closeMobileMenu, click, handleClick, countUnread
   } = props;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.current);
@@ -71,10 +73,10 @@ function RecruiterHeader(props) {
 
   const logOut = async () => {
     setHiddenMe(true);
+    dispatch(logout());
     if (user.signin_method === "google.com") {
       await firebase.auth().signOut()
     }
-    dispatch(logout());
     return history.push("/auth/sign-in");
   }
 
@@ -129,7 +131,7 @@ function RecruiterHeader(props) {
             <div className="notify-me__icon">
               <div className="notify-me__notify" onClick={(e) => showNotification(e)}>
                 <RiIcons.RiNotification4Line className="notify-me__notify__icon" />
-                <span className="notify-me__notify__count">4</span>
+                {countUnread > 0 && <span className="notify-me__notify__count">{countUnread}</span>}
               </div>
               <div className="notify-me__notify" onClick={(e) => showMe(e)}>
                 {/* <FaIcons.FaUserAstronaut className="notify-me__notify__icon" /> */}

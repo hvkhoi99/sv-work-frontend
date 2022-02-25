@@ -2,6 +2,12 @@ import axiosClient from "./axiosClient";
 
 const recruiterApi = {
 
+  // Recruiter -> Notifications
+  getRecruiterCountNotifications: () => {
+    const url = "/recruiter/notifications/count";
+    return axiosClient.get(url);
+  },
+
   // Dashboard
   getAvailableJobs: (params) => {
     const url = `/recruiter/dashboard/available-recruitments?page=${params.page}&_limit=${params._limit}`;

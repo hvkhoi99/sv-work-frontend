@@ -2,6 +2,12 @@ import axiosClient from "./axiosClient";
 
 const studentApi = {
 
+  // Notifications
+  getCountNotifications: () => {
+    const url = "/student/notifications/count";
+    return axiosClient.get(url);
+  },
+
   // Search Jobs, Company
   findJobs: (params) => {
     const url = "/find/jobs";
@@ -309,7 +315,13 @@ const studentApi = {
   getCandidatesList: (params) => {
     const url = `/student/recruiter/candidates/list?page=${params.page}&_limit=${params._limit}`;
     return axiosClient.get(url);
-  }
+  },
+
+  // Student -> Recruiter -> Notifications
+  getRecruiterCountNotifications: () => {
+    const url = "/student/recruiter/notifications/count";
+    return axiosClient.get(url);
+  },
 }
 
 export default studentApi;
