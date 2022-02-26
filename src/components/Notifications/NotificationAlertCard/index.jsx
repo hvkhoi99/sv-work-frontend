@@ -78,23 +78,45 @@ function NotificationAlertCard(props) {
           </>
         );
       case "update-recruitment":
-        return (
-          <>
-            <div className="notification-alert__container__content__main__description__text">
-              <span className="notification-alert__container__content__main__description__text__name">
-                {body.company_info.company_name}
-                {body.company_info.verify && <FaIcons.FaCheckCircle
-                  className="notification-alert__container__content__main__description__text__name__icon"
-                />}
-              </span>
-              has just updated job <span className="notification-alert__container__content__main__description__text__job-title">
-                {body.job.title}
-              </span>
-              . Join now!
-            </div>
-            <span className="notification-alert__container__content__main__description__date">{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
-          </>
-        );
+        if (body.job.last_title !== "") {
+          return (
+            <>
+              <div className="notification-alert__container__content__main__description__text">
+                <span className="notification-alert__container__content__main__description__text__name">
+                  {body.company_info.company_name}
+                  {body.company_info.verify && <FaIcons.FaCheckCircle
+                    className="notification-alert__container__content__main__description__text__name__icon"
+                  />}
+                </span>
+                has just renamed job <span className="notification-alert__container__content__main__description__text__job-title">
+                  {body.job.last_title}
+                </span> to <span className="notification-alert__container__content__main__description__text__job-title">
+                  {body.job.title}
+                </span>
+                . Maybe some of the criteria have been changed to match your abilities. Don't miss it!
+              </div>
+              <span className="notification-alert__container__content__main__description__date">{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+            </>
+          );
+        } else {
+          return (
+            <>
+              <div className="notification-alert__container__content__main__description__text">
+                <span className="notification-alert__container__content__main__description__text__name">
+                  {body.company_info.company_name}
+                  {body.company_info.verify && <FaIcons.FaCheckCircle
+                    className="notification-alert__container__content__main__description__text__name__icon"
+                  />}
+                </span>
+                has just updated the content of job <span className="notification-alert__container__content__main__description__text__job-title">
+                  {body.job.title}
+                </span>
+                . Maybe some criteria have changed to suit you. Don't miss it!
+              </div>
+              <span className="notification-alert__container__content__main__description__date">{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+            </>
+          );
+        }
       case "update-avatar":
         return (
           <>
@@ -286,7 +308,7 @@ function NotificationAlertCard(props) {
           </div>}
           <div
             className={`notification-alert__container__content__more-options ${isShowMarkAsRead && "is-focus-noti-option"}`}
-            ref={ref}
+            ref={isShowMarkAsRead ? ref : null}
             onClick={onShowMarkAsRead}
           >
             <MdIcons.MdMoreHoriz className="notification-alert__container__content__more-options__icon" />

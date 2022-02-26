@@ -4,11 +4,13 @@
   cursor: pointer;
 
   width: 100%;
+  // min-height: 10rem;
   max-height: 12rem;
   border-radius: 0.3rem;
   padding: 0.5rem;
 
   position: relative;
+  // background-color: red;
 
   .notification-link {
     text-decoration: none;
@@ -156,8 +158,8 @@
       display: flex;
 
       position: absolute;
-      top: 2.4rem;
-      right: 0.2rem;
+      top: 2.6rem;
+      right: 0.1rem;
       z-index: 1;
 
       &__icon {

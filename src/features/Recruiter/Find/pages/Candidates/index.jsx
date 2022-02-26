@@ -85,12 +85,9 @@ function FindCadidatesPage(props) {
           school: selectValue.school !== null ? selectValue.school.value : null,
         }
 
-        console.log({ params });
-
         const data = user.role_id === 2
           ? await recruiterApi.findCandidates(params)
           : await studentApi.findCandidates(params);
-        console.log({data})
         if (data.data.status === 1) {
           setCandidates(data.data.data.data)
           const total = data.data.data.total;

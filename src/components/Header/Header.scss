@@ -212,7 +212,7 @@
       border-radius: 50%;
       width: 2.5rem;
       height: 2.5rem;
-      padding: 0.5rem;
+      padding: 0.4rem;
       color: black;
 
       &:hover {
@@ -246,12 +246,15 @@
       align-items: center;
       background-color: var(--danger);
       border-radius: 50%;
-      width: 1rem;
-      height: 1rem;
-      font-size: 0.8rem;
+      width: 1.5rem;
+      height: 1.5rem;
       color: #fff;
       position: absolute;
-      margin: -1.2rem 0 0 1.2rem;
+      top: 0;
+      right: 0;
+      z-index: 999;
+
+      transition: all 0.35s ease 0s;
     }
 
     &__ul {
@@ -262,7 +265,7 @@
       width: 700%;
       height: auto;
       margin: 0.5rem 0 0 -8rem;
-      background-color: red;
+      // background-color: red;
       list-style: none;
     }
   }
@@ -283,7 +286,7 @@
       background-color: #fff;
       border-radius: 0.5rem;
       box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-      font-size: .9rem;
+      font-size: 0.9rem;
     }
 
     &__me {
@@ -366,7 +369,7 @@
       background-color: lightgrey;
       border-radius: 50%;
     }
-  
+
     & > span {
       margin: 0 0 0 0.5rem;
       font-size: 0.9rem;
@@ -384,7 +387,7 @@
       font-size: 1rem;
     }
   }
-  
+
   &:hover {
     text-decoration: none;
     color: var(--success);
@@ -405,4 +408,13 @@
   font-family: "Slackey", "cursive";
   font-size: 3rem;
   font-weight: bold;
+}
+
+.scale-down-count-noti {
+  transform: scale(0.8);
+  // font-size: .9rem;
+}
+
+.scale-up-count-noti {
+  transform: scale(1.1)
 }

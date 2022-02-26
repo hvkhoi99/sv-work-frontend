@@ -1,3 +1,4 @@
+import studentApi from 'api/studentApi';
 import NotificationsContainer from 'components/Notifications/NotificationsContainer';
 import Images from 'constants/images';
 import Paths from 'constants/paths';
@@ -39,6 +40,9 @@ function StudentHeader(props) {
   const history = useHistory();
   const [hiddenNoti, setHiddenNoti] = useState(true);
   const [hiddenMe, setHiddenMe] = useState(true);
+  const [isScaleUp, setIsScaleUp] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const _limit = 10;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -54,6 +58,38 @@ function StudentHeader(props) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [ref, hiddenMe, hiddenNoti]);
+
+  useEffect(() => {
+    if (countUnread > 0) {
+      setIsScaleUp(true);
+      setTimeout(() => {
+        setIsScaleUp(false);
+      }, 350);
+    }
+  }, [countUnread])  
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const params = {
+          page: 1, 
+          _limit
+        }
+        const data = await studentApi.getListNotificationsByStudent(params);
+        console.log({data});
+        if (data.data.status === 1) {
+          setNotifications(data.data.data.data);
+        }
+
+        return;
+      } catch (error) {
+        console.log("Cannot fetch notifications. Error " + error.message);
+        return;
+      }
+    }
+
+    fetchNotifications();
+  }, [])
 
   const showNotification = (e) => {
     e.preventDefault();
@@ -126,7 +162,10 @@ function StudentHeader(props) {
             <div className="notify-me__icon">
               <div className="notify-me__notify" onClick={(e) => showNotification(e)}>
                 <RiIcons.RiNotification4Line className="notify-me__notify__icon" />
-                {countUnread > 0 && <span className="notify-me__notify__count">{countUnread}</span>}
+                {countUnread > 0 && <span
+                  className={`notify-me__notify__count ${isScaleUp ? "scale-up-count-noti" : "scale-down-count-noti"}`}
+                >
+                  {countUnread}</span>}
               </div>
               <div className="notify-me__notify" onClick={(e) => showMe(e)}>
                 {/* <FaIcons.FaUserAstronaut className="notify-me__notify__icon" /> */}
@@ -143,6 +182,7 @@ function StudentHeader(props) {
                 : "notify-me__action__notification isVisible"}
               >
                 <NotificationsContainer
+                  notifications={notifications}
                 />
               </div>
               <div className={hiddenMe ? "notify-me__action__me" : "notify-me__action__me isVisible"}>

@@ -302,8 +302,8 @@ function JobDetailPage(props) {
                   {
                     isRejecting && <span className="spinner-border spinner-border-sm mr-2" />
                   }
-                  Reject
-                </button> to "Decline".
+                  Cancel
+                </button> to "Cancel".
               </div>
             </>
           );

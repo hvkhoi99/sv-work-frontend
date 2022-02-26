@@ -31,7 +31,7 @@ function StudentProfilePage(props) {
   const profilePath = `${Paths.clientProfile}/info`;
   const resumePath = `${Paths.clientProfile}/resume`;
   const user = useSelector((state) => state.user.current);
-  const [checked, setChecked] = useState(user.s_profile.open_for_job);
+  const [checked, setChecked] = useState(user.s_profile.open_for_job ? true : false);
   const [currentAvatar, setCurrentAvatar] = useState(
     user.s_profile === null
       ? Images.defaultAvatar

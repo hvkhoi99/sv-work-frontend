@@ -8,6 +8,11 @@ const studentApi = {
     return axiosClient.get(url);
   },
 
+  getListNotificationsByStudent: (params) => {
+    const url = `/student/notifications/list?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
   // Search Jobs, Company
   findJobs: (params) => {
     const url = "/find/jobs";

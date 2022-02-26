@@ -10,6 +10,7 @@ import * as SiIcons from 'react-icons/si';
 import { Button } from 'reactstrap';
 import './NotificationCard.scss';
 import { useHistory } from 'react-router-dom';
+import ReactTimeAgo from 'react-time-ago';
 
 NotificationCard.propTypes = {
   notificaition: PropTypes.object,
@@ -64,27 +65,50 @@ function NotificationCard(props) {
               </span>
               . Join now!
             </div>
-            <span className="notification-content__content__date">{notification.updated_at}</span>
+            <span className="notification-content__content__date">{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
           </>
         );
       case "update-recruitment":
-        return (
-          <>
-            <div className="notification-content__content__text">
-              <span className="notification-content__content__text__name">
-                {notification.body.company_info.company_name}
-                {notification.body.company_info.verify && <FaIcons.FaCheckCircle
-                  className="notification-content__content__text__name__icon"
-                />}
-              </span>
-              has just updated job <span className="notification-content__content__text__job-title">
-                {notification.body.job.title}
-              </span>
-              . Join now!
-            </div>
-            <span className="notification-content__content__date">{notification.updated_at}</span>
-          </>
-        );
+        if (notification.body.job.last_title !== "") {
+          return (
+            <>
+              <div className="notification-content__content__text">
+                <span className="notification-content__content__text__name">
+                  {notification.body.company_info.company_name}
+                  {notification.body.company_info.verify && <FaIcons.FaCheckCircle
+                    className="notification-content__content__text__name__icon"
+                  />}
+                </span>
+                has just renamed job <span className="notification-content__content__text__job-title">
+                  {notification.body.job.last_title}
+                </span> to <span className="notification-content__content__text__job-title">
+                  {notification.body.job.title}
+                </span>
+                . Maybe some of the criteria have been changed to match your abilities. Don't miss it!
+              </div>
+              <span className="notification-content__content__date">{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
+            </>
+          );
+        } else {
+          return (
+            <>
+              <div className="notification-content__content__text">
+                <span className="notification-content__content__text__name">
+                  {notification.body.company_info.company_name}
+                  {notification.body.company_info.verify && <FaIcons.FaCheckCircle
+                    className="notification-content__content__text__name__icon"
+                  />}
+                </span>
+                has just updated the content of job <span className="notification-content__content__text__job-title">
+                  {notification.body.job.title}
+                </span>
+                . Maybe some criteria have changed to suit you. Don't miss it! 
+              </div>
+              <span className="notification-content__content__date">{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
+            </>
+          );
+        }
+
       case "update-avatar":
         return (
           <>
@@ -97,7 +121,7 @@ function NotificationCard(props) {
               </span>
               just updated their avatar profile.
             </div>
-            <span className="notification-content__content__date">{notification.updated_at}</span>
+            <span className="notification-content__content__date">{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
           </>
         );
       case "approved-application":
@@ -117,7 +141,7 @@ function NotificationCard(props) {
                 {notification.body.job.title}
               </span>. From now on, you can start working on this!
             </div>
-            <span className="notification-content__content__date read-notification-success__date">{notification.updated_at}</span>
+            <span className="notification-content__content__date read-notification-success__date">{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
           </>
         );
       case "rejected-application":
@@ -137,7 +161,7 @@ function NotificationCard(props) {
                 {notification.body.job.title}
               </span>. Apply for other jobs now!
             </div>
-            <span className="notification-content__content__date read-notification-success__date">{notification.updated_at}</span>
+            <span className="notification-content__content__date read-notification-success__date">{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
           </>
         );
       case "invited-job":
@@ -154,7 +178,7 @@ function NotificationCard(props) {
                 {notification.body.job.title}
               </span> job.
             </div>
-            <span className="notification-content__content__date">{notification.updated_at}</span>
+            <span className="notification-content__content__date">{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
             <div className="notification-content__content__actions">
               <Button
                 color="success"
@@ -219,7 +243,7 @@ function NotificationCard(props) {
       default: break;
     }
   }
-
+  
   const onViewNotification = (notification) => {
     switch (notification.type) {
       case "create-recruitment":
@@ -237,7 +261,7 @@ function NotificationCard(props) {
       default: break;
     }
   }
-
+  
   const onMarkRead = () => {
     setIsHidden(true);
   }
@@ -269,7 +293,7 @@ function NotificationCard(props) {
       <div
         className={`noti-card-container__more-options ${!isHidden && "is-focus-noti-option"}`}
         onClick={onShowMarkAsRead}
-        ref={ref}
+        ref={!isHidden ? ref : null}
       >
         <div className="noti-card-container__more-options__action">
           <MdIcons.MdMoreHoriz className="noti-card-container__more-options__action__icon" />

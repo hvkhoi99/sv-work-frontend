@@ -7,6 +7,8 @@ import { onMessageListener } from 'init-fcm';
 import './Header.scss';
 import NotificationAlertCard from 'components/Notifications/NotificationAlertCard';
 import studentApi from 'api/studentApi';
+import { useSelector } from 'react-redux';
+import recruiterApi from 'api/recruiterApi';
 
 Header.propTypes = {
 
@@ -18,14 +20,13 @@ Header.defaultProps = {
 
 function Header(props) {
   const history = useHistory();
+  const user = useSelector((state) => state.user.current);
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const roleId = parseInt(localStorage.getItem('role_id'), 10);
   let isRecruiterPath = localStorage.getItem('isRecruiterPath') === "true";
-  // const [countUnread, setCountUnread] = useState(0);
-
+  const [countUnread, setCountUnread] = useState(0);
   const [showNoti, setShowNoti] = useState(false);
-  // const [notification, setNotification] = useState({ title: "", body: "" });
   const [notification, setNotification] = useState(
     {
       title: '',
@@ -50,7 +51,6 @@ function Header(props) {
     }
   );
 
-
   const showButton = () => {
     if (window.innerWidth <= 960) {
       setButton(false);
@@ -58,31 +58,40 @@ function Header(props) {
       setButton(true);
     }
   };
-
+  
   useEffect(() => {
     showButton();
-  }, []);
+    console.log("re-render")
 
-  useEffect(() => {
     const fetchCountNotifications = async () => {
       try {
-        const data = await studentApi.getRecruiterCountNotifications();
-        console.log({data})
+        const data = user.role_id === 2
+        ? await recruiterApi.getRecruiterCountNotifications()
+        : (
+          user.role_id === 3
+          ? (
+            roleId === 2
+            ? await studentApi.getRecruiterCountNotifications()
+            : await studentApi.getCountNotifications()
+          )
+          : 0
+        )
+        setCountUnread(data.data.data)
       } catch (error) {
         console.log("Cannot fetch notifications count. Error: " + error.message);
       }
     }
 
     fetchCountNotifications();
-  }, [])
-  
+  }, [roleId, user.role_id])
 
   window.addEventListener('resize', showButton);
 
-  console.log({ body: JSON.parse(notification.body) });
+  // console.log({ body: JSON.parse(notification.body) });
 
   onMessageListener()
     .then((payload) => {
+      setCountUnread(countUnread + 1);
       setNotification(payload.notification);
       setShowNoti(true);
       setTimeout(() => {
@@ -108,22 +117,30 @@ function Header(props) {
           }),
           image: '',
         })
-      }, 10000);
+      }, 5000);
       console.log({ payload });
     })
     .catch((err) => console.log("failed: ", err));
-
 
   const handleChangeRole = () => {
     localStorage.setItem("isRecruiterPath", !isRecruiterPath);
     history.push(isRecruiterPath ? "/" : "/recruiter");
   }
 
-  const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setClick(false);
+  const handleClick = (e) => {
+    // e.preventDefault();
+    setClick(!click);
+  };
+  const closeMobileMenu = (e) => {
+    // e.preventDefault();
+    setClick(false);
+  };
   const onChangeAlertStatus = (bool) => {
     return setShowNoti(bool);
   }
+
+  // console.log({countUnread})
+
 
   const currentUI = !roleId ? (
     <DefaultHeader
@@ -139,14 +156,17 @@ function Header(props) {
       closeMobileMenu={closeMobileMenu}
       handleClick={handleClick}
       click={click}
+      countUnread={countUnread}
     />
   ) : (
     <StudentHeader
       closeMobileMenu={closeMobileMenu}
       handleClick={handleClick}
       click={click}
+      countUnread={countUnread}
     />
   );
+
 
   return <>
     <NotificationAlertCard
