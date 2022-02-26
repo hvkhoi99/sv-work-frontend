@@ -35,7 +35,7 @@ function PersonalInfoCard(props) {
             <FaIcons.FaUser
               className="candidates-item-icon"
             />
-            <span>{personalInfo.gender ? "Male" : "Female"}</span>
+            <span>{personalInfo.gender ? "Male" : (personalInfo.gender === null ? "N/A" : "Female")}</span>
           </div>
         </div>
         <div className="personal-info-card__content__center">
@@ -43,13 +43,13 @@ function PersonalInfoCard(props) {
             <MdIcons.MdEmail
               className="candidates-item-icon"
             />
-            <span>{personalInfo.email}</span>
+            <span>{personalInfo.email ?? "N/A"}</span>
           </div>
           <div className="personal-info-card__content__center__phone">
             <FaIcons.FaPhoneAlt
               className="candidates-item-icon"
             />
-            <span>{personalInfo.phone_number}</span>
+            <span>{personalInfo.phone_number ?? "N/A"}</span>
           </div>
         </div>
         <div className="personal-info-card__content__bottom">
@@ -57,13 +57,13 @@ function PersonalInfoCard(props) {
             <ImIcons.ImLocation
               className="candidates-item-icon"
             />
-            <span>{personalInfo.address}</span>
+            <span>{personalInfo.address ?? "N/A"}</span>
           </div>
           <div className="personal-info-card__content__bottom__nationality">
             <FaIcons.FaPassport
               className="candidates-item-icon"
             />
-            <span>{personalInfo.nationality}</span>
+            <span>{personalInfo.nationality ?? "N/A"}</span>
           </div>
         </div>
       </div>

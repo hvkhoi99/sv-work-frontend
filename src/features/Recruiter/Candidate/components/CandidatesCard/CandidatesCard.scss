@@ -41,6 +41,7 @@
         height: 6rem;
         border-radius: 50%;
         border: 1px solid lightgrey;
+        object-fit: cover;
       }
     }
 
@@ -49,31 +50,40 @@
       flex-direction: column;
       line-height: 1.7rem;
       margin-left: 1rem;
-      min-width: calc(100% - 6rem);
+      max-width: calc(100% - 7rem);
 
       &__name {
         font-size: 1rem;
         font-weight: 600;
         // word-break: break-all;
+
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
 
       &__job-title {
         font-size: 0.8rem;
         font-weight: 500;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
 
       &__location {
         display: flex;
         align-items: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
 
         &__icon {
-          margin: 0 .2rem 0 0;
+          margin: 0 0.2rem 0 0;
         }
 
         &__name {
           font-size: 0.8rem;
           font-weight: 300;
-          word-break: break-all;
         }
       }
     }
@@ -94,13 +104,11 @@
     }
 
     animation-name: move-left;
-    animation-duration:3s;
-    animation-iteration-count:infinite;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
   }
 }
 
 .candidate-card-invisible {
   display: none;
 }
-
-

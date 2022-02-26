@@ -57,7 +57,7 @@ function StudentOverviewCard(props) {
           <StudentProfileMoreOptions 
             typePopup="overview"
             label="Update Student Overview"
-            initData={overView === null ? "" : overView}
+            initData={overView ?? ""}
             onTextChange={onTextChange}
             onDelete={onDeleteOverview}
             isUpdating={isOverviewUpdating}

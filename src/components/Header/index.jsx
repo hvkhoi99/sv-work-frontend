@@ -96,27 +96,27 @@ function Header(props) {
       setShowNoti(true);
       setTimeout(() => {
         setShowNoti(false);
-        setNotification({
-          title: '',
-          body: JSON.stringify({
-            job: {
-              id: 0,
-              title: '',
-              user_id: 0
-            },
-            company_info: {
-              id: 0,
-              company_name: '',
-              logo_image_link: null,
-              verify: 0,
-              user_id: 0
-            },
-            type: '',
-            updated_at: '',
-            is_read: 0,
-          }),
-          image: '',
-        })
+        // setNotification({
+        //   title: '',
+        //   body: JSON.stringify({
+        //     job: {
+        //       id: 0,
+        //       title: '',
+        //       user_id: 0
+        //     },
+        //     company_info: {
+        //       id: 0,
+        //       company_name: '',
+        //       logo_image_link: null,
+        //       verify: 0,
+        //       user_id: 0
+        //     },
+        //     type: '',
+        //     updated_at: '',
+        //     is_read: 0,
+        //   }),
+        //   image: '',
+        // })
       }, 5000);
       console.log({ payload });
     })

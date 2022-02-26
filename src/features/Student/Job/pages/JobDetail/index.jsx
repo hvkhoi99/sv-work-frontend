@@ -1,7 +1,6 @@
 import studentApi from 'api/studentApi';
 import LoadingUI from 'components/Loading';
 import PopupConfirm from 'components/PopupConfirm';
-import Images from 'constants/images';
 import Paths from 'constants/paths';
 import RecruitmentDetail from 'features/Recruiter/Recruitment/pages/RecruitmentDetail';
 import { useSnackbar } from 'notistack';
@@ -212,23 +211,61 @@ function JobDetailPage(props) {
 
   const renderApplicationArea = (state) => {
     switch (state) {
-      case 1 || true:
-        return (
-          <span style={{ color: 'var(--success)' }}>
-            <BsIcons.BsCheckCircle
-              style={{
-                color: 'var(--success)',
-                fontSize: '1.5rem',
-                margin: '0 .2rem'
-              }}
-            />
-            {"You have accepted the invitation to join this job."}
-          </span>
-        );
+      case 1:
+        switch (stateData.isApplied) {
+          case 1:
+            return (
+              <span style={{ color: 'var(--success)' }}>
+                <BsIcons.BsCheckCircle
+                  style={{
+                    color: 'var(--success)',
+                    fontSize: '1.5rem',
+                    margin: '0 .2rem'
+                  }}
+                />
+                {"Your application has been accepted by the employer."}
+              </span>
+            );
+          case 0:
+            switch (stateData.isInvited) {
+              case 1:
+                return (
+                  <span style={{ color: 'var(--success)' }}>
+                    <BsIcons.BsCheckCircle
+                      style={{
+                        color: 'var(--success)',
+                        fontSize: '1.5rem',
+                        margin: '0 .2rem'
+                      }}
+                    />
+                    {"You have accepted the invitation to join this job."}
+                  </span>
+                );
+              case 0:
+                return (
+                  <span style={{ color: 'var(--success)' }}>
+                    <BsIcons.BsCheckCircle
+                      style={{
+                        color: 'var(--success)',
+                        fontSize: '1.5rem',
+                        margin: '0 .2rem'
+                      }}
+                    />
+                    {"Your application for employment has been accepted by the employer."}
+                  </span>
+                );
+              default:
+                break;
+            }
+            break;
+          default:
+            break;
+        }
+        break;
       // break;
-      case 0 || false:
+      case 0:
         switch (stateData.isInvited) {
-          case 1 || true:
+          case 1:
             return (
               <span style={{ color: 'red' }}>
                 <ImIcons.ImCancelCircle
@@ -243,7 +280,7 @@ function JobDetailPage(props) {
                 }
               </span>
             );
-          case 0 || false: {
+          case 0:
             return (
               <span style={{ color: 'red' }}>
                 <ImIcons.ImCancelCircle
@@ -258,7 +295,6 @@ function JobDetailPage(props) {
                 }
               </span>
             );
-          }
           default:
             break;
         }
@@ -314,8 +350,6 @@ function JobDetailPage(props) {
     }
   }
 
-  // console.log({recruitment})
-
   return (
     <>
       {
@@ -328,11 +362,7 @@ function JobDetailPage(props) {
               <div className="job-detail-page__container__top">
                 <div className="job-detail-page__container__top__left">
                   <div className="job-detail-page__container__top__left__img">
-                    <img src={
-                      recruitment.company_info.logo_image_link === (null || "" || undefined)
-                        ? Images.defaultAvatar
-                        : recruitment.company_info.logo_image_link
-                    } alt="company-avatar" />
+                    <img src={recruitment.company_info.logo_image_link} alt="company-avatar" />
                     <div className="job-detail-page__container__top__left__img__check">
                       <FaIcons.FaCheckCircle
                         className="job-detail-page__container__top__left__img__check__icon"

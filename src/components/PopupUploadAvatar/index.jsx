@@ -29,7 +29,7 @@ const ChangeAvatarButton = React.forwardRef(({ open, ...props }, ref) => (
       backgroundColor: 'transparent',
       borderRadius: '50%',
       overFlow: 'hidden',
-
+      
     }}
     className="button-edit"
     ref={ref}

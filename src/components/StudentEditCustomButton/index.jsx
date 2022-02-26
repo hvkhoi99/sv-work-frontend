@@ -8,7 +8,7 @@ const renderIcon = (typeIcon) => {
   switch (typeIcon) {
     case "add":
       return (
-        <FiIcons.FiPlusCircle className="student-experiences-card__header__icon" />
+        <FiIcons.FiPlusCircle className="popup-update-student-profile-button__icon" />
       );
     case "edit":
       return (
@@ -16,14 +16,15 @@ const renderIcon = (typeIcon) => {
       );
     case "more-edit":
       return (
-        <>
+        <span style={{width: '6rem'}}>
           Edit
-        </>
+        </span>
       );
     default:
       break;
   }
 }
+
 
 const StudentEditCustomButton = React.forwardRef(({ open, typeIcon, ...props }, ref) => (
   <button
@@ -33,6 +34,7 @@ const StudentEditCustomButton = React.forwardRef(({ open, typeIcon, ...props }, 
     {...props}
   >
     {renderIcon(typeIcon)}
+    {console.log({ typeIcon })}
     {/* Trigger - {props.open ? 'Opened' : 'Closed' */}
   </button>
 ));

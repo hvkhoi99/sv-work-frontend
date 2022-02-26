@@ -1,10 +1,8 @@
-import Images from 'constants/images';
 import Paths from 'constants/paths';
 import PropTypes from 'prop-types';
 import React from 'react';
 import * as GrIcons from 'react-icons/gr';
 import * as TiIcons from 'react-icons/ti';
-import LinesEllipsis from 'react-lines-ellipsis';
 import { Link } from 'react-router-dom';
 import './CandidatesCard.scss';
 
@@ -52,42 +50,38 @@ function CandidatesCard(props) {
     >
       <div className="candidates-card__left">
         <div className="candidates-card__left__img">
-          <img src={
-            candidate.avatar_link === (null || "" || undefined)
-            ? Images.defaultAvatar
-            : candidate.avatar_link
-        } alt="student-avatar" />
+          <img src={candidate.avatar_link} alt="student-avatar" />
         </div>
         <div className="candidates-card__left__info">
-          <LinesEllipsis
+          {/* <LinesEllipsis
             text={`${candidate.first_name !== null ? candidate.first_name : ""} ${candidate.last_name}`}
             maxLine='1'
             ellipsis='...'
             trimRight
             basedOn='letters'
             className="candidates-card__left__info__name"
-          />
-          {/* <span className="candidates-card__left__info__name">{candidate.first_name} {candidate.last_name}</span> */}
-          <LinesEllipsis
+          /> */}
+          <span className="candidates-card__left__info__name">{candidate.first_name ?? ""} {candidate.last_name}</span>
+          {/* <LinesEllipsis
             text={candidate.job_title}
             maxLine='1'
             ellipsis='...'
             trimRight
             basedOn='letters'
             className="candidates-card__left__info__job-title"
-          />
-          {/* <span className="candidates-card__left__info__job-title">{candidate.job_title}</span> */}
+          /> */}
+          <span className="candidates-card__left__info__job-title">{candidate.job_title ?? "N/A"}</span>
           <div className="candidates-card__left__info__location">
             <GrIcons.GrLocation className="candidates-card__left__info__location__icon" />
-            <LinesEllipsis
+            {/* <LinesEllipsis
               text={candidate.address}
               maxLine='1'
               ellipsis='...'
               trimRight
               basedOn='letters'
               className="candidates-card__left__info__location__name"
-            />
-            {/* <span className="candidates-card__left__info__location__name">{candidate.address}</span> */}
+            /> */}
+            <span className="candidates-card__left__info__location__name">{candidate.address ?? "N/A"}</span>
           </div>
         </div>
       </div>

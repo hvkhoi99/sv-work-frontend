@@ -15,11 +15,12 @@ import React, { useEffect, useState } from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import * as GoIcons from 'react-icons/go';
 import { useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import helper from 'utils/common';
 import PopupInviteCandidate from '../../components/PopupInviteCandidate';
 import './CandidateDetail.scss';
 import { useSnackbar } from 'notistack';
+import Paths from 'constants/paths';
 
 CandidateDetailPage.propTypes = {
 };
@@ -114,7 +115,7 @@ function CandidateDetailPage(props) {
     }
   }
 
-  console.log({candidate})
+  console.log({ candidate })
 
   return (
     <>
@@ -163,7 +164,7 @@ function CandidateDetailPage(props) {
                         {
                           // (job.is_closed || (job.application.state !== null)) &&
                           <div className="candidate-detail__above__applied-recruitment__status">
-                            <span
+                            <Link to={`${Paths.recruiterDashboard}/available-jobs/${job.id}/list-candidates`}
                               className={
                                 (job.is_closed || (job.application.state !== null))
                                   ? "candidate-detail__above__applied-recruitment__status__title recruitment-was-closed"
@@ -171,7 +172,7 @@ function CandidateDetailPage(props) {
                               }
                             >
                               {index + 1}. {job.title}
-                            </span>
+                            </Link>
                             <span
                               className="candidate-detail__above__applied-recruitment__status__is-closed"
                               style={job.is_closed ? { color: "red" } : { color: "var(--success)" }}
@@ -267,7 +268,7 @@ function CandidateDetailPage(props) {
                         {
                           // (job.is_closed || (job.application.state !== null)) &&
                           <div className="candidate-detail__above__applied-recruitment__status">
-                            <span
+                            <Link to={`${Paths.recruiterDashboard}/available-jobs/${job.id}`}
                               className={
                                 (job.is_closed || (job.application.state !== null))
                                   ? "candidate-detail__above__applied-recruitment__status__title recruitment-was-closed"
@@ -275,7 +276,7 @@ function CandidateDetailPage(props) {
                               }
                             >
                               {index + 1}. {job.title}
-                            </span>
+                            </Link>
                             <span
                               className="candidate-detail__above__applied-recruitment__status__is-closed"
                               style={job.is_closed ? { color: "red" } : { color: "var(--success)" }}

@@ -140,6 +140,38 @@ function ListCandidates(props) {
     }
   }
 
+  const onRejectCandidate = async (candidateCard) => {
+
+    try {
+      const data = user.role_id === 2
+        ? await recruiterApi.rejectCandidate(recruitmentId, candidateCard.id)
+        : await studentApi.rejectCandidate(recruitmentId, candidateCard.id);
+      if (data.data.status === 1) {
+        const newCandidates = candidates.filter((candidate) => {
+          return candidate.id !== candidateCard.id;
+        })
+        setCandidates(newCandidates);
+        window.history.replaceState(
+          null,
+          "",
+          candidates.length > 0
+            ? (
+              page > 0
+                ? `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates?page=${currentPage}`
+                : `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates`
+            )
+            : `${Paths.recruiterDashboard}/available-jobs/${recruitmentId}/list-candidates`
+        )
+        enqueueSnackbar(data.data.message, { variant: "success" });
+        setIsReloadPage(!isReloadPage);
+      } else {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+      }
+    } catch (error) {
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+    }
+  }
+
   return (
     <>
       {isLoading
@@ -186,6 +218,7 @@ function ListCandidates(props) {
                       <CandidatePage
                         candidateId={candidateId}
                         onApproveCandidate={onApproveCandidate}
+                        onRejectCandidate={onRejectCandidate}
                         isClosed={isClosed}
                       />
                     </div>

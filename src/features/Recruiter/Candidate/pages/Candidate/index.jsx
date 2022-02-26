@@ -21,18 +21,20 @@ import './Candidate.scss';
 CandidatePage.propTypes = {
   candidateId: PropTypes.number,
   onApproveCandidate: PropTypes.func,
+  onRejectCandidate: PropTypes.func,
   isClosed: PropTypes.bool,
 };
 
 CandidatePage.defaultProps = {
   candidateId: 0,
   onApproveCandidate: null,
+  onRejectCandidate: null,
   isClosed: false,
 }
 
 function CandidatePage(props) {
   const user = useSelector((state) => state.user.current);
-  const { candidateId, onApproveCandidate, isClosed } = props;
+  const { candidateId, onApproveCandidate, onRejectCandidate, isClosed } = props;
   const [isLoading, setIsLoading] = useState(true);
   const [candidate, setCandidate] = useState({});
   const [approveLoading, setApproveLoading] = useState(false);
@@ -43,8 +45,8 @@ function CandidatePage(props) {
     const fetchCandidateProfile = async () => {
       try {
         const data = user.role_id === 2
-        ? await recruiterApi.getCandidateProfile(candidateId)
-        : await studentApi.getCandidateProfile(candidateId);
+          ? await recruiterApi.getCandidateProfile(candidateId)
+          : await studentApi.getCandidateProfile(candidateId);
         setCandidate(data.data.data)
         setIsLoading(false);
       } catch (error) {
@@ -62,18 +64,19 @@ function CandidatePage(props) {
         setTimeout(() => {
           setApproveLoading(false);
         }, 2000)
+        onApproveCandidate(candidate);
         break;
       case "reject":
-        setRejectLoading(true); 
+        setRejectLoading(true);
         setTimeout(() => {
           setRejectLoading(false);
         }, 2000)
+        onRejectCandidate(candidate);
         break;
       default:
         break;
     }
 
-    onApproveCandidate(candidate);
   }
 
   return (
@@ -88,8 +91,8 @@ function CandidatePage(props) {
               <div className="candidate__above__img">
                 <img src={
                   candidate.avatar_link === (null || "" || undefined)
-                  ? Images.defaultAvatar
-                  : candidate.avatar_link
+                    ? Images.defaultAvatar
+                    : candidate.avatar_link
                 } alt="candidate-avatar" />
               </div>
               <span className="candidate__above__candidate-name">
@@ -99,33 +102,33 @@ function CandidatePage(props) {
                 {candidate.job_title}
               </span>
               {
-                !isClosed 
-                ? <div className="candidate__above__btn-group">
-                  <button
-                    type="button"
-                    className="btn btn-success btn-sm mr-4"
-                    disabled={approveLoading}
-                    style={approveLoading ? { cursor: "default" } : { cursor: "pointer" }}
-                    onClick={() => handleApprove("approve")}
-                  >
-                    {approveLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                    Approve
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-secondary btn-sm"
-                    disabled={rejectLoading}
-                    style={rejectLoading ? { cursor: "default" } : { cursor: "pointer" }}
-                    onClick={() => handleApprove("reject")}
-                  >
-                    {rejectLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                    Reject
-                  </button>
-                </div>
-                : <div style={{
-                  borderBottom: "1px solid lightgrey",
-                  width: "100%",
-                }} />
+                !isClosed
+                  ? <div className="candidate__above__btn-group">
+                    <button
+                      type="button"
+                      className="btn btn-success btn-sm mr-4"
+                      disabled={approveLoading}
+                      style={approveLoading ? { cursor: "default" } : { cursor: "pointer" }}
+                      onClick={() => handleApprove("approve")}
+                    >
+                      {approveLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                      Approve
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-secondary btn-sm"
+                      disabled={rejectLoading}
+                      style={rejectLoading ? { cursor: "default" } : { cursor: "pointer" }}
+                      onClick={() => handleApprove("reject")}
+                    >
+                      {rejectLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                      Reject
+                    </button>
+                  </div>
+                  : <div style={{
+                    borderBottom: "1px solid lightgrey",
+                    width: "100%",
+                  }} />
               }
               <div className="candidate__above__overview">
                 <div className="candidate__above__overview__title">

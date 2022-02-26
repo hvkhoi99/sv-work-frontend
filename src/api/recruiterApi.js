@@ -97,6 +97,11 @@ const recruiterApi = {
     return axiosClient.put(url);
   },
 
+  rejectCandidate: (recruitmentId, candidateId) => {
+    const url = `/recruiter/recruitment/${recruitmentId}/candidate/${candidateId}/reject`;
+    return axiosClient.put(url);
+  },
+
   inviteCandidate: (candidateId, recruitmentId) => {
     const url = `/recruiter/candidate/${candidateId}/recruitment/${recruitmentId}`;
     return axiosClient.post(url);

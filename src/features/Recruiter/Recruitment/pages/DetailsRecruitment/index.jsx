@@ -199,7 +199,7 @@ function DetailsRecruitmentPage(props) {
                     : currentPath === listCandidatesPath
                       ? <ListCandidates
                         recruitmentId={recruitmentId}
-                        isClosed={recruitmentDetail.is_closed}
+                        isClosed={recruitmentDetail.is_closed ? true : false} // change 1 0
                       /> : <></>}
                 </div>
               </div>
