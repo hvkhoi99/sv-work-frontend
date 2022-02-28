@@ -13,7 +13,7 @@ import 'reactjs-popup/dist/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'react-toastify/dist/ReactToastify.css';
-// import 'react-toastify/dist/ReactToastify.min.css';
+import 'react-loading-skeleton/dist/skeleton.css'
 
 TimeAgo.addDefaultLocale(en)
 TimeAgo.addLocale(ru)

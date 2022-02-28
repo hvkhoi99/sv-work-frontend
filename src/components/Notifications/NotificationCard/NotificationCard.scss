@@ -30,7 +30,7 @@
       width: 0.5rem;
       height: 0.5rem;
       border-radius: 50%;
-      margin: 0 0 0 .3rem;
+      margin: 0 0 0 0.3rem;
     }
   }
 
@@ -159,7 +159,7 @@
 
       position: absolute;
       top: 2.6rem;
-      right: 0.1rem;
+      right: -0.3rem;
       z-index: 1;
 
       &__icon {
@@ -177,8 +177,8 @@
   &__content {
     display: flex;
     flex-direction: column;
-    margin: 0 0 0 0.5rem;
-    width: calc(100% - 0.5rem - 22%);
+    margin: 0 0 0 1rem;
+    // width: calc(100% - 0.5rem - 22%);
     font-size: 0.9rem;
     position: relative;
 
@@ -194,14 +194,14 @@
 
       &__name {
         font-weight: 600;
-        margin: 0 .3rem 0 0;
+        margin: 0 0.3rem 0 0;
 
         &__icon {
           color: var(--success);
-          width: .8rem;
-          height: .8rem;
+          width: 0.8rem;
+          height: 0.8rem;
           border-radius: 50%;
-          margin: 0 0 .1rem .2rem;
+          margin: 0 0 0.1rem 0.2rem;
           background-color: #fff;
         }
       }
@@ -242,16 +242,26 @@
   }
 }
 
-// .read-notification-success {
-//   // font-weight: 300;
-//   color: rgba(0, 0, 0, 0.6);
+.read-notification-content {
+  &__content {
+    &__text {
+      color: rgba(0, 0, 0, 0.5);
 
-//   &__actions {
-//     display: none;
-//   }
+      &__name {
+        color: rgba(0, 0, 0, 0.5);
 
-//   &__date {
-//     color: rgba(0, 0, 0, 0.6);
-//     font-weight: 400;
-//   }
-// }
+        &__icon {
+          color: rgba(0, 0, 0, 0.5);
+        }
+      }
+
+      &__job-title {
+        color: rgba(0, 0, 0, 0.5);
+      }
+    }
+
+    &__date {
+      color: rgba(0, 0, 0, 0.5);
+    }
+  }
+}

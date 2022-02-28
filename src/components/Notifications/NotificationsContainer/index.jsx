@@ -1,148 +1,49 @@
+import studentApi from 'api/studentApi';
 import NotificationCard from 'components/Notifications/NotificationCard';
 import PropTypes from 'prop-types';
 // import Images from 'constants/images';
 import React, { useEffect, useRef, useState } from 'react';
 import * as FiIcons from 'react-icons/fi';
 import * as MdIcons from 'react-icons/md';
+import Skeleton from 'react-loading-skeleton';
+import { useSelector } from 'react-redux';
 import './NotificationsContainer.scss';
 
 NotificationsContainer.propTypes = {
-  notifications: PropTypes.array
+  notifications: PropTypes.array,
+  onMarkAsRead: PropTypes.func,
+  onHiddenAll: PropTypes.func,
+  onFetchUnreadNotifications: PropTypes.func,
+  isLoading: PropTypes.bool,
+  onFetchAllNotifications: PropTypes.func,
+  onMarkAllAsRead: PropTypes.func
 };
 
 NotificationsContainer.defaultProps = {
-  notifications: []
+  notifications: [],
+  onMarkAsRead: null,
+  onHiddenAll: null,
+  onFetchUnreadNotifications: null,
+  isLoading: true,
+  onFetchAllNotifications: null,
+  onMarkAllAsRead: null,
 }
 
 function NotificationsContainer(props) {
-  const { notifications } = props;
+  const {
+    notifications, onMarkAsRead, onHiddenAll,
+    onFetchUnreadNotifications, isLoading, onFetchAllNotifications, onMarkAllAsRead
+  } = props;
+  const user = useSelector((state) => state.user.current);
+  const roleId = parseInt(localStorage.getItem('role_id'), 10);
   const [isAll, setIsAll] = useState(true);
   const [isShowMarkAllAsRead, setIsShowMarkAllAsRead] = useState(false);
   const ref = useRef(null);
-
-  // const notifications = [
-  //   {
-  //     title: 'Employer creates a new job.',
-  //     body: {
-  //       job: {
-  //         id: 10,
-  //         title: 'New Job',
-  //         user_id: 3
-  //       },
-  //       company_info: {
-  //         id: 10,
-  //         company_name: 'Facebook',
-  //         logo_image_link: Images.defaultAvatar,
-  //         verify: true,
-  //         user_id: 3
-  //       }
-  //     },
-  //     type: "create-recruitment",
-  //     link: '',
-  //     updated_at: "2 minutes ago",
-  //     is_read: 0
-  //   },
-  //   {
-  //     title: 'Employer has updated the job.',
-  //     body: {
-  //       job: {
-  //         id: 10,
-  //         title: 'Update Job',
-  //         user_id: 3
-  //       },
-  //       company_info: {
-  //         id: 10,
-  //         company_name: 'Facebook',
-  //         logo_image_link: Images.defaultAvatar,
-  //         verify: true,
-  //         user_id: 3
-  //       }
-  //     },
-  //     type: "update-recruitment",
-  //     link: '',
-  //     updated_at: "2 minutes ago",
-  //     is_read: 0
-  //   },
-  //   {
-  //     title: 'Invited to the job.',
-  //     body: {
-  //       job: {
-  //         id: 10,
-  //         title: 'Invited Job',
-  //         user_id: 3
-  //       },
-  //       company_info: {
-  //         id: 10,
-  //         company_name: 'Twitter',
-  //         logo_image_link: Images.defaultCompany,
-  //         verify: true,
-  //         user_id: 3
-  //       }
-  //     },
-  //     type: "invited-job",
-  //     link: '',
-  //     updated_at: "2 minutes ago",
-  //     is_read: 0
-  //   },
-  //   {
-  //     title: 'Application rejected.',
-  //     body: {
-  //       job: {
-  //         id: 10,
-  //         title: 'Application Job',
-  //         user_id: 3
-  //       },
-  //       company_info: {
-  //         id: 10,
-  //         company_name: 'The Company C',
-  //         logo_image_link: Images.defaultCompany,
-  //         verify: true,
-  //         user_id: 3
-  //       }
-  //     },
-  //     type: "rejected-application",
-  //     link: '',
-  //     updated_at: "2 minutes ago",
-  //     is_read: 0
-  //   },
-  //   {
-  //     title: 'Application approved.',
-  //     body: {
-  //       job: {
-  //         id: 10,
-  //         title: 'Application Job',
-  //         user_id: 3
-  //       },
-  //       company_info: {
-  //         id: 10,
-  //         company_name: 'WhiteHouse',
-  //         logo_image_link: Images.defaultCompany,
-  //         verify: true,
-  //         user_id: 3
-  //       }
-  //     },
-  //     type: "approved-application",
-  //     link: '',
-  //     updated_at: "2 minutes ago",
-  //     is_read: 0
-  //   },
-  //   {
-  //     title: 'Employer updated avatar profile.',
-  //     body: {
-  //       company_info: {
-  //         id: 6,
-  //         company_name: 'Ho Van Khoi',
-  //         logo_image_link: Images.defaultCompany,
-  //         verify: true,
-  //         user_id: 3
-  //       }
-  //     },
-  //     type: "update-avatar",
-  //     link: '',
-  //     updated_at: "2 minutes ago",
-  //     is_read: 0
-  //   },
-  // ];
+  const [moreNotifications, setMoreNotifications] = useState([]);
+  let [currentPage, setCurrentPage] = useState(1);
+  let [lastPage, setLastPage] = useState(1);
+  const [isMoreLoading, setIsMoreLoading] = useState(false);
+  const _limit = 3;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -158,13 +59,97 @@ function NotificationsContainer(props) {
     };
   }, [ref, isShowMarkAllAsRead]);
 
+  useEffect(() => {
+    setMoreNotifications(notifications);
+  }, [notifications]);
+
+  const onLoadMore = async (e) => {
+    const bottom = Number((e.target.scrollHeight - e.target.scrollTop).toFixed(0)) - e.target.clientHeight < 5;
+    if (bottom && (lastPage >= currentPage) && !isMoreLoading) {
+      setCurrentPage(++currentPage);
+      setIsMoreLoading(true);
+      switch (isAll) {
+        case true:
+          try {
+            const params = {
+              page: currentPage,
+              _limit
+            }
+            const data = user.role_id === 2
+              ? []
+              : (
+                user.role_id === 3
+                  ? (
+                    roleId === 2
+                      ? []
+                      : await studentApi.getListNotificationsByStudent(params)
+                  )
+                  : []
+              )
+            if (data.data.status === 1) {
+              setLastPage(data.data.data.last_page);
+              setTimeout(() => {
+                setIsMoreLoading(false);
+                setMoreNotifications(moreNotifications.concat(data.data.data.data));
+              }, 2000);
+            }
+            return;
+          } catch (error) {
+            setIsMoreLoading(false);
+            console.log("Cannot fetch notifications. Error " + error.message);
+            return;
+          }
+        case false:
+          try {
+            const params = {
+              page: currentPage,
+              _limit
+            }
+            const data = user.role_id === 2
+              ? []
+              : (
+                user.role_id === 3
+                  ? (
+                    roleId === 2
+                      ? []
+                      : await studentApi.getListUnreadNotificationsByStudent(params)
+                  )
+                  : []
+              )
+            if (data.data.status === 1) {
+              setLastPage(data.data.data.last_page);
+              setTimeout(() => {
+                setIsMoreLoading(false);
+                setMoreNotifications(moreNotifications.concat(data.data.data.data));
+              }, 2000);
+            }
+            return;
+          } catch (error) {
+            setIsMoreLoading(false);
+            console.log("Cannot fetch unread notifications. Error " + error.message);
+            return;
+          }
+        default:
+          break;
+      }
+    }
+  }
+
   const onViewMode = (type) => {
     switch (type) {
       case "all":
         setIsAll(true);
+        setCurrentPage(1);
+        setLastPage(1);
+        onFetchAllNotifications();
+        setMoreNotifications(notifications);
         break;
       case "unread":
-        setIsAll(false)
+        setIsAll(false);
+        setCurrentPage(1);
+        setLastPage(1);
+        onFetchUnreadNotifications();
+        setMoreNotifications(notifications);
         break;
       default: break;
     }
@@ -172,6 +157,11 @@ function NotificationsContainer(props) {
 
   const onShowMarkAllAsRead = () => {
     setIsShowMarkAllAsRead(!isShowMarkAllAsRead);
+  }
+
+  const handleMarkAllAsRead = () => {
+    onMarkAllAsRead();
+    setIsShowMarkAllAsRead(false);
   }
 
   return (
@@ -186,7 +176,7 @@ function NotificationsContainer(props) {
           />
           <div
             className={`notifications-container__header__more-options__mark-all ${!isShowMarkAllAsRead && "show-mark-all-as-read"}`}
-            onClick={onShowMarkAllAsRead}
+            onClick={handleMarkAllAsRead}
           >
             <FiIcons.FiCheck className="notifications-container__header__more-options__mark-all__icon" />
             <span>
@@ -222,21 +212,57 @@ function NotificationsContainer(props) {
             See All
           </span>
         </div>
-        <ul>
+        <ul onScroll={onLoadMore}>
           {
-            notifications.length > 0 &&
-            notifications.map((notification, index) => {
-              return <NotificationCard
-                key={index}
-                notification={notification}
-              />
-            })
+            isLoading
+              ? <>
+                {
+                  [1, 2, 3, 4, 5, 6].map((item, index) => {
+                    return <li
+                      key={index}
+                      className="notification-skeleton-item"
+                    >
+                      <Skeleton circle width={70} height={70} />
+                      <span className="notification-skeleton-item__line">
+                        <Skeleton count={1} width={220} height={15} />
+                        <Skeleton count={1} width={150} height={15} />
+                        <Skeleton count={1} width={50} height={15} />
+                      </span>
+                    </li>
+                  })
+                }
+              </>
+              : <>
+                {(
+                  moreNotifications.length > 0
+                    ? moreNotifications.map((notification, index) => {
+                      return <NotificationCard
+                        key={index}
+                        notification={notification}
+                        onMarkAsRead={onMarkAsRead}
+                        onHiddenAll={onHiddenAll}
+                      />
+                    })
+                    : <span>No Notifications.</span>
+                )}
+                {
+                  isMoreLoading &&
+                  [1, 2].map((item, index) => {
+                    return <li
+                      key={index}
+                      className="notification-skeleton-item"
+                    >
+                      <Skeleton circle width={70} height={70} />
+                      <span className="notification-skeleton-item__line">
+                        <Skeleton count={1} width={220} height={15} />
+                        <Skeleton count={1} width={150} height={15} />
+                        <Skeleton count={1} width={50} height={15} />
+                      </span>
+                    </li>
+                  })
+                }
+              </>
           }
-          {/* <NotificationCard type="invited-job"/>
-          <NotificationCard type="rejected-application"/>
-          <NotificationCard type="update-recruitment"/>
-          <NotificationCard type="approved-application"/>
-          <NotificationCard type="update-avatar"/> */}
         </ul>
       </div>
     </div>

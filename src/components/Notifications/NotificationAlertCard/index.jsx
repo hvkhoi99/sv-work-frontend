@@ -2,14 +2,14 @@ import Images from 'constants/images';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
-import * as FiIcons from 'react-icons/fi';
+// import * as FiIcons from 'react-icons/fi';
 import * as GiIcons from 'react-icons/gi';
 import * as MdIcons from 'react-icons/md';
 import * as RiIcons from 'react-icons/ri';
 import * as SiIcons from 'react-icons/si';
 import { useHistory } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago';
-import { Button } from 'reactstrap';
+// import { Button } from 'reactstrap';
 import './NotificationAlertCard.scss';
 
 NotificationAlertCard.propTypes = {
@@ -18,6 +18,7 @@ NotificationAlertCard.propTypes = {
   showNoti: PropTypes.bool,
   onChangeAlertStatus: PropTypes.func,
   notificaition: PropTypes.object,
+  onMarkAsRead: PropTypes.func
 };
 
 NotificationAlertCard.defaultProps = {
@@ -29,6 +30,7 @@ NotificationAlertCard.defaultProps = {
     type: 'create-recruitment',
     image: Images.defaultAvatar
   },
+  onMarkAsRead: null
 }
 
 function NotificationAlertCard(props) {
@@ -53,9 +55,9 @@ function NotificationAlertCard(props) {
     };
   }, [ref, isShowMarkAsRead]);
 
-  const handleClick = (e) => {
-    e.stopPropagation();
-  }
+  // const handleClick = (e) => {
+  //   e.stopPropagation();
+  // }
 
   const renderContent = (type) => {
     switch (type) {
@@ -187,7 +189,7 @@ function NotificationAlertCard(props) {
               </span> job.
             </div>
             <span className="notification-alert__container__content__main__description__date">{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
-            <div className="notification-alert__container__content__main__description__actions">
+            {/* <div className="notification-alert__container__content__main__description__actions">
               <Button
                 color="success"
                 // outline 
@@ -202,7 +204,7 @@ function NotificationAlertCard(props) {
                 type="button"
                 onClick={handleClick}
               >Cancel</Button>
-            </div>
+            </div> */}
           </>
         );
       // case "cancel-invite-job":
@@ -261,19 +263,33 @@ function NotificationAlertCard(props) {
       case "update-avatar":
         return history.push(`company/${body.company_info.id}`)
       case "approved-application":
+        // !body.is_read && onMarkRead(true);
         return history.push(`/recruitment/${body.job.id}`);
       case "rejected-application":
+        // !body.is_read && onMarkRead(true);
         return history.push(`/recruitment/${body.job.id}`);
       case "invited-job":
+        // !body.is_read && onMarkRead(true);
         return history.push(`/recruitment/${body.job.id}`);
       default: break;
     }
   }
 
-  const onShowMarkAsRead = (e) => {
-    e.stopPropagation();
-    setIsShowMarkAsRead(!isShowMarkAsRead);
-  }
+  // const onShowMarkAsRead = (e) => {
+  //   e.stopPropagation();
+  //   setIsShowMarkAsRead(!isShowMarkAsRead);
+  // }
+
+  // const onMarkRead = (body, isRead) => {
+  //   switch (body) {
+  //     case "invited-job" || "approved-application" || "rejected-application":
+  //       onMarkAsRead(body.user_messages_id, isRead);
+  //       setIsShowMarkAsRead(false);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 
   return (
     <div className={`notification-alert ${showNoti && "start-alert"}`}>
@@ -306,33 +322,41 @@ function NotificationAlertCard(props) {
           {!body.is_read && <div className="notification-alert__container__content__dot">
             <span />
           </div>}
-          <div
-            className={`notification-alert__container__content__more-options ${isShowMarkAsRead && "is-focus-noti-option"}`}
-            ref={isShowMarkAsRead ? ref : null}
-            onClick={onShowMarkAsRead}
-          >
-            <MdIcons.MdMoreHoriz className="notification-alert__container__content__more-options__icon" />
-          </div>
-          <div
-            className={`notification-alert__container__content__list-options ${!isShowMarkAsRead && "invisible-noti-options"}`}
-            ref={ref}
-          >
-            <ul className="notification-alert__container__content__list-options__list-item">
-              <li
-                className="notification-alert__container__content__list-options__list-item__item"
-                onClick={() => setIsShowMarkAsRead(false)}
+          {/* {
+            body.type === ("invited-job" || "approved-application" || "rejected-application") &&
+            <>
+              <div
+                className={`notification-alert__container__content__more-options ${isShowMarkAsRead && "is-focus-noti-option"}`}
+                // ref={isShowMarkAsRead ? ref : null}
+                onClick={onShowMarkAsRead}
               >
-                <FiIcons.FiCheck
-                  className="notification-alert__container__content__list-options__list-item__item__icon"
-                />
-                {
-                  body.is_read
-                    ? <span>Mark as unread</span>
-                    : <span>Mark as read</span>
-                }
-              </li>
-            </ul>
-          </div>
+                <MdIcons.MdMoreHoriz className="notification-alert__container__content__more-options__icon" />
+              </div>
+              <div
+                className={`notification-alert__container__content__list-options ${!isShowMarkAsRead && "invisible-noti-options"}`}
+                ref={ref}
+              >
+                <ul className="notification-alert__container__content__list-options__list-item">
+                  {body.is_read
+                    ? <li
+                      className="notification-alert__container__content__list-options__list-item__item"
+                      onClick={() => onMarkRead(body, false)}
+                    >
+                      <FiIcons.FiCheck className="notification-alert__container__content__list-options__list-item__item__icon" />
+                      <span>Mark as unread</span>
+                    </li>
+                    : <li
+                      className="notification-alert__container__content__list-options__list-item__item"
+                      onClick={() => onMarkRead(body, true)}
+                    >
+                      <FiIcons.FiCheck className="notification-alert__container__content__list-options__list-item__item__icon" />
+                      <span>Mark as read</span>
+                    </li>
+                  }
+                </ul>
+              </div>
+            </>
+          } */}
         </div>
       </div>
     </div>

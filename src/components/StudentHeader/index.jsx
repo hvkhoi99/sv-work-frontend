@@ -1,4 +1,3 @@
-import studentApi from 'api/studentApi';
 import NotificationsContainer from 'components/Notifications/NotificationsContainer';
 import Images from 'constants/images';
 import Paths from 'constants/paths';
@@ -20,19 +19,33 @@ StudentHeader.propTypes = {
   closeMobileMenu: PropTypes.func,
   handleClick: PropTypes.func,
   click: PropTypes.bool,
-  countUnread: PropTypes.number
+  countUnread: PropTypes.number,
+  notifications: PropTypes.array,
+  onMarkAsRead: PropTypes.func,
+  onFetchUnreadNotifications: PropTypes.func,
+  isLoading: PropTypes.bool,
+  onFetchAllNotifications: PropTypes.func,
+  onMarkAllAsRead: PropTypes.func
 };
 
 StudentHeader.defaultProps = {
   closeMobileMenu: null,
   handleClick: null,
   click: false,
-  countUnread: 0
+  countUnread: 0,
+  notifications: [],
+  onMarkAsRead: null,
+  onFetchUnreadNotifications: null,
+  isLoading: true,
+  onFetchAllNotifications: null,
+  onMarkAllAsRead: null,
 }
 
 function StudentHeader(props) {
   const {
-    closeMobileMenu, click, handleClick, countUnread
+    closeMobileMenu, click, handleClick, countUnread,
+    notifications, onMarkAsRead, onFetchUnreadNotifications, 
+    isLoading, onFetchAllNotifications, onMarkAllAsRead
   } = props;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.current);
@@ -41,8 +54,6 @@ function StudentHeader(props) {
   const [hiddenNoti, setHiddenNoti] = useState(true);
   const [hiddenMe, setHiddenMe] = useState(true);
   const [isScaleUp, setIsScaleUp] = useState(false);
-  const [notifications, setNotifications] = useState([]);
-  const _limit = 10;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -66,30 +77,7 @@ function StudentHeader(props) {
         setIsScaleUp(false);
       }, 350);
     }
-  }, [countUnread])  
-
-  useEffect(() => {
-    const fetchNotifications = async () => {
-      try {
-        const params = {
-          page: 1, 
-          _limit
-        }
-        const data = await studentApi.getListNotificationsByStudent(params);
-        console.log({data});
-        if (data.data.status === 1) {
-          setNotifications(data.data.data.data);
-        }
-
-        return;
-      } catch (error) {
-        console.log("Cannot fetch notifications. Error " + error.message);
-        return;
-      }
-    }
-
-    fetchNotifications();
-  }, [])
+  }, [countUnread]);
 
   const showNotification = (e) => {
     e.preventDefault();
@@ -118,6 +106,11 @@ function StudentHeader(props) {
       await firebase.auth().signOut();
     }
     return history.push("/auth/sign-in");
+  }
+  
+  const onHiddenAll = () => {
+    setHiddenMe(true);
+    setHiddenNoti(true);
   }
 
   return (
@@ -183,6 +176,12 @@ function StudentHeader(props) {
               >
                 <NotificationsContainer
                   notifications={notifications}
+                  onMarkAsRead={onMarkAsRead}
+                  onHiddenAll={onHiddenAll}
+                  isLoading={isLoading}
+                  onFetchUnreadNotifications={onFetchUnreadNotifications}
+                  onFetchAllNotifications={onFetchAllNotifications}
+                  onMarkAllAsRead={onMarkAllAsRead}
                 />
               </div>
               <div className={hiddenMe ? "notify-me__action__me" : "notify-me__action__me isVisible"}>

@@ -13,6 +13,21 @@ const studentApi = {
     return axiosClient.get(url);
   },
 
+  getListUnreadNotificationsByStudent: (params) => {
+    const url = `/student/notifications/list-unread?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
+  markAsReadByStudent: (id) => {
+    const url = `/student/notification/${id}/mark-as-read`;
+    return axiosClient.put(url);
+  },
+
+  markAllAsReadByStudent: () => {
+    const url = `/student/notification/mark-all-as-read`;
+    return axiosClient.put(url);
+  },
+
   // Search Jobs, Company
   findJobs: (params) => {
     const url = "/find/jobs";

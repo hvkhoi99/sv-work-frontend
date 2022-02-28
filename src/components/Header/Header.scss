@@ -418,3 +418,21 @@
 .scale-up-count-noti {
   transform: scale(1.1)
 }
+
+.notification-skeleton-item {
+  display: flex;
+  margin-bottom: 1rem;
+  padding: 0 .5rem;
+  width: 100%;
+
+  &__line {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+    padding: 0.2rem 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0.2rem;
+  }
+}
