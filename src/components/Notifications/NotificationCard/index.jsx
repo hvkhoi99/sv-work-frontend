@@ -7,6 +7,7 @@ import * as MdIcons from 'react-icons/md';
 import * as RiIcons from 'react-icons/ri';
 import * as GiIcons from 'react-icons/gi';
 import * as SiIcons from 'react-icons/si';
+import * as BiIcons from 'react-icons/bi';
 // import { Button } from 'reactstrap';
 import './NotificationCard.scss';
 import { useHistory } from 'react-router-dom';
@@ -300,6 +301,79 @@ function NotificationCard(props) {
       //       <span className={`notification-content__content__date ${notification.is_read && "read-notification-content__content__date"}`}>2 minutes ago</span>
       //     </>
       //   );
+      case "applied-job":
+        return (
+          <>
+            <div className={`notification-content__content__text ${notification.is_read && "read-notification-content__content__text"}`}>
+              <span className={`notification-content__content__text__name ${notification.is_read && "read-notification-content__content__text__name"}`}>
+                {notification.body.student_info.first_name ?? ""} {notification.body.student_info.last_name ?? ""}
+              </span>
+              has just <span className={`notification-content__content__text__name ${notification.is_read && "read-notification-content__content__text__name"}`}>
+                applied
+              </span>
+              to your <span className={`notification-content__content__text__job-title ${notification.is_read && "read-notification-content__content__text__job-title"}`}>
+                {notification.body.job.title}
+              </span> job posting. Let's see what {
+                notification.body.student_info.gender === null
+                  ? "he" : (
+                    notification.body.student_info.gender ? "he" : "she"
+                  )
+              }'s got!
+            </div>
+            <span className={`notification-content__content__date ${notification.is_read && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
+      case "follow-company":
+        return (
+          <>
+            <div className={`notification-content__content__text ${notification.is_read && "read-notification-content__content__text"}`}>
+              <span className={`notification-content__content__text__name ${notification.is_read && "read-notification-content__content__text__name"}`}>
+                {notification.body.student_info.first_name ?? ""} {notification.body.student_info.last_name ?? ""}
+              </span>
+              just followed you. From now on, {
+                notification.body.student_info.gender === null
+                  ? "he" : (
+                    notification.body.student_info.gender ? "he" : "she"
+                  )
+              } can receive notifications about your job posting.
+            </div>
+            <span className={`notification-content__content__date ${notification.is_read && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
+      case "rejected-your-job":
+        return (
+          <>
+            <div className={`notification-content__content__text ${notification.is_read && "read-notification-content__content__text"}`}>
+              <span className={`notification-content__content__text__name ${notification.is_read && "read-notification-content__content__text__name"}`}>
+                {notification.body.student_info.first_name ?? ""} {notification.body.student_info.last_name ?? ""}
+              </span>
+              has just <span className={`notification-content__content__text__name ${notification.is_read && "read-notification-content__content__text__name"}`}>
+                declined your offer
+              </span>
+              of job <span className={`notification-content__content__text__job-title ${notification.is_read && "read-notification-content__content__text__job-title"}`}>
+                {notification.body.job.title}
+              </span>.
+            </div>
+            <span className={`notification-content__content__date ${notification.is_read && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
+      case "accepted-your-job":
+        return (
+          <>
+            <div className={`notification-content__content__text ${notification.is_read && "read-notification-content__content__text"}`}>
+              <span className={`notification-content__content__text__name ${notification.is_read && "read-notification-content__content__text__name"}`}>
+                {notification.body.student_info.first_name ?? ""} {notification.body.student_info.last_name ?? ""}
+              </span>
+              has just <span className={`notification-content__content__text__name ${notification.is_read && "read-notification-content__content__text__name"}`}>
+                accepted
+              </span>
+              your <span className={`notification-content__content__text__job-title ${notification.is_read && "read-notification-content__content__text__job-title"}`}>
+                {notification.body.job.title}
+              </span> job offer.
+            </div>
+            <span className={`notification-content__content__date ${notification.is_read && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
       default: break;
     }
   }
@@ -329,6 +403,22 @@ function NotificationCard(props) {
       case "invited-job":
         return (
           <GiIcons.GiLetterBomb className="notification-content__img__type-icon__icon bg-invited-job" />
+        );
+      case "applied-job":
+        return (
+          <RiIcons.RiCheckDoubleLine className="notification-content__img__type-icon__icon bg-applied" />
+        );
+      case "follow-company":
+        return (
+          <RiIcons.RiMapPinUserFill className="notification-content__img__type-icon__icon bg-follow" />
+        );
+      case "accepted-your-job":
+        return (
+          <BiIcons.BiNetworkChart className="notification-content__img__type-icon__icon bg-accepted-job" />
+        );
+      case "rejected-your-job":
+        return (
+          <BiIcons.BiNetworkChart className="notification-content__img__type-icon__icon bg-accepted-job" />
         );
       // case "cancel-invite-job":
       //   return (
@@ -364,7 +454,26 @@ function NotificationCard(props) {
         return history.push(`/recruitment/${notification.body.job.id}`);
       case "invited-job":
         return history.push(`/recruitment/${notification.body.job.id}`);
+      case "applied-job":
+        return history.push(`/recruiter/candidate/${notification.body.student_info.id}`);
+      case "follow-company":
+        return history.push(`/recruiter/candidate/${notification.body.student_info.id}`);
+      case "accepted-your-job":
+        return history.push(`/recruiter/candidate/${notification.body.student_info.id}`);
+      case "rejected-your-job":
+        return history.push(`/recruiter/candidate/${notification.body.student_info.id}`);
       default: break;
+    }
+  }
+
+  const renderAvatarLink = (notification) => {
+    switch (notification.type) {
+      case "create-recruitment" || "update-recruitment" || "update-avatar" || "approved-application" || "rejected-application" || "invited-job":
+        return (<img src={notification.body.company_info.logo_image_link} alt="avatar" />)
+      case "applied-job" || "follow-company" || "accepted-your-job" || "rejected-your-job":
+        return (<img src={notification.body.student_info.avatar_link} alt="avatar" />)
+      default:
+        return (<img src={Images.defaultAvatar} alt="avatar" />)
     }
   }
 
@@ -373,7 +482,9 @@ function NotificationCard(props) {
       <div className="notification-link" onClick={() => onViewNotification(notification)}>
         <div className={`notification-content ${notification.is_read && "read-notification-content"}`}>
           <div className="notification-content__img">
-            <img src={notification.body.company_info.logo_image_link} alt="company" />
+            {
+              renderAvatarLink(notification)
+            }
             <div className="notification-content__img__type-icon">
               {
                 renderTypeIcon(notification.type)

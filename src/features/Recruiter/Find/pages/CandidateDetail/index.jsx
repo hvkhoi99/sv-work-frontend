@@ -115,7 +115,7 @@ function CandidateDetailPage(props) {
     }
   }
 
-  console.log({ candidate })
+  // console.log({ candidate })
 
   return (
     <>

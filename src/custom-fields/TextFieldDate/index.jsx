@@ -22,6 +22,7 @@ TextFieldDate.propTypes = {
   txtLabel: PropTypes.string,
   lineHeight: PropTypes.string,
   fontSize: PropTypes.string,
+  inputProps: PropTypes.object
 };
 
 TextFieldDate.defaultProps = {
@@ -38,13 +39,14 @@ TextFieldDate.defaultProps = {
   txtLabel: '',
   lineHeight: '1rem',
   fontSize: '1.2rem',
+  inputProps: {}
 }
 
 function TextFieldDate(props) {
   const {
     field, form,
     type, label, placeholder, disabled, moreClassName, inputClassName, 
-    labelClassName, txtLabel, variant, lineHeight, fontSize,
+    labelClassName, txtLabel, variant, lineHeight, fontSize, inputProps
   } = props;
 
   const useStyles = makeStyles(theme => ({
@@ -81,6 +83,7 @@ function TextFieldDate(props) {
         className={`${inputClassName} ${classes.root}`}
         variant={variant}
         helperText={showError && errors[name]}
+        inputProps={inputProps}
 
         InputLabelProps={{
           shrink: true,

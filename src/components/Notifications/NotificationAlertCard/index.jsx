@@ -2,11 +2,12 @@ import Images from 'constants/images';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
-// import * as FiIcons from 'react-icons/fi';
+import * as FiIcons from 'react-icons/fi';
 import * as GiIcons from 'react-icons/gi';
 import * as MdIcons from 'react-icons/md';
 import * as RiIcons from 'react-icons/ri';
 import * as SiIcons from 'react-icons/si';
+import * as BiIcons from 'react-icons/bi';
 import { useHistory } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago';
 // import { Button } from 'reactstrap';
@@ -34,11 +35,11 @@ NotificationAlertCard.defaultProps = {
 }
 
 function NotificationAlertCard(props) {
-  const { showNoti, onChangeAlertStatus, notification } = props;
+  const { showNoti, onChangeAlertStatus, notification, onMarkAsRead } = props;
   const [isShowMarkAsRead, setIsShowMarkAsRead] = useState(false);
   const ref = useRef(null);
   const body = JSON.parse(notification.body);
-
+  const [isRead, setIsRead] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -55,140 +56,143 @@ function NotificationAlertCard(props) {
     };
   }, [ref, isShowMarkAsRead]);
 
-  // const handleClick = (e) => {
-  //   e.stopPropagation();
-  // }
+  useEffect(() => {
+    !showNoti && setIsRead(false);
+  }, [showNoti]);
 
   const renderContent = (type) => {
     switch (type) {
       case "create-recruitment":
         return (
           <>
-            <div className="notification-alert__container__content__main__description__text">
-              <span className="notification-alert__container__content__main__description__text__name">
+            <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
+              <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
                 {body.company_info.company_name}
                 {body.company_info.verify && <FaIcons.FaCheckCircle
-                  className="notification-alert__container__content__main__description__text__name__icon"
+                  className={`notification-alert__container__content__main__description__text__name__icon ${isRead && "read-notification-content__content__text__name__icon"}`}
                 />}
               </span>
-              has just created a new job titled <span className="notification-alert__container__content__main__description__text__job-title">
+              has just created a new job titled <span 
+              className={`notification-alert__container__content__main__description__text__job-title 
+              ${isRead && "read-notification-content__content__text__job-title"}`}
+              >
                 {body.job.title}
               </span>
               . Join now!
             </div>
-            <span className="notification-alert__container__content__main__description__date">{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+            <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
           </>
         );
       case "update-recruitment":
         if (body.job.last_title !== "") {
           return (
             <>
-              <div className="notification-alert__container__content__main__description__text">
-                <span className="notification-alert__container__content__main__description__text__name">
+              <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
+                <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
                   {body.company_info.company_name}
                   {body.company_info.verify && <FaIcons.FaCheckCircle
-                    className="notification-alert__container__content__main__description__text__name__icon"
+                    className={`notification-alert__container__content__main__description__text__name__icon ${isRead && "read-notification-content__content__text__name__icon"}`}
                   />}
                 </span>
-                has just renamed job <span className="notification-alert__container__content__main__description__text__job-title">
+                has just renamed job <span className={`notification-alert__container__content__main__description__text__job-title ${isRead && "read-notification-content__content__text__job-title"}`}>
                   {body.job.last_title}
-                </span> to <span className="notification-alert__container__content__main__description__text__job-title">
+                </span> to <span className={`notification-alert__container__content__main__description__text__job-title ${isRead && "read-notification-content__content__text__job-title"}`}>
                   {body.job.title}
                 </span>
                 . Maybe some of the criteria have been changed to match your abilities. Don't miss it!
               </div>
-              <span className="notification-alert__container__content__main__description__date">{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+              <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
             </>
           );
         } else {
           return (
             <>
-              <div className="notification-alert__container__content__main__description__text">
-                <span className="notification-alert__container__content__main__description__text__name">
+              <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
+                <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
                   {body.company_info.company_name}
                   {body.company_info.verify && <FaIcons.FaCheckCircle
-                    className="notification-alert__container__content__main__description__text__name__icon"
+                    className={`notification-alert__container__content__main__description__text__name__icon ${isRead && "read-notification-content__content__text__name__icon"}`}
                   />}
                 </span>
-                has just updated the content of job <span className="notification-alert__container__content__main__description__text__job-title">
+                has just updated the content of job <span className={`notification-alert__container__content__main__description__text__job-title ${isRead && "read-notification-content__content__text__job-title"}`}>
                   {body.job.title}
                 </span>
                 . Maybe some criteria have changed to suit you. Don't miss it!
               </div>
-              <span className="notification-alert__container__content__main__description__date">{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+              <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
             </>
           );
         }
       case "update-avatar":
         return (
           <>
-            <div className="notification-alert__container__content__main__description__text read-notification-success">
-              <span className="notification-alert__container__content__main__description__text__name">
+            <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
+              <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
                 {body.company_info.company_name}
                 {body.company_info.verify && <FaIcons.FaCheckCircle
-                  className="notification-alert__container__content__main__description__text__name__icon"
+                  className={`notification-alert__container__content__main__description__text__name__icon ${isRead && "read-notification-content__content__text__name__icon"}`}
                 />}
               </span>
               just updated their avatar profile.
             </div>
-            <span className="notification-alert__container__content__main__description__date">{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+            <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
           </>
         );
       case "approved-application":
         return (
           <>
-            <div className="notification-alert__container__content__main__description__text read-notification-success">
-              <span className="notification-alert__container__content__main__description__text__name">
+            <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
+              <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
                 {body.company_info.company_name}
                 {body.company_info.verify && <FaIcons.FaCheckCircle
-                  className="notification-alert__container__content__main__description__text__name__icon"
+                  className={`notification-alert__container__content__main__description__text__name__icon ${isRead && "read-notification-content__content__text__name__icon"}`}
                 />}
               </span>
-              has <span className="notification-alert__container__content__main__description__text__name">
+              has <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
                 accepted your application
               </span>
-              in job <span className="notification-alert__container__content__main__description__text__job-title">
+              in job <span className={`notification-alert__container__content__main__description__text__job-title ${isRead && "read-notification-content__content__text__job-title"}`}>
                 {body.job.title}
               </span>. From now on, you can start working on this!
             </div>
-            <span className="notification-alert__container__content__main__description__date read-notification-success__date">{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+            <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
           </>
         );
       case "rejected-application":
         return (
           <>
-            <div className="notification-alert__container__content__main__description__text read-notification-success">
-              <span className="notification-alert__container__content__main__description__text__name">
+            <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
+              <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
                 {body.company_info.company_name}
                 {body.company_info.verify && <FaIcons.FaCheckCircle
-                  className="notification-alert__container__content__main__description__text__name__icon"
+                  className={`notification-alert__container__content__main__description__text__name__icon ${isRead && "read-notification-content__content__text__name__icon"}`}
                 />}
               </span>
-              has <span className="notification-alert__container__content__main__description__text__name">
+              has <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
                 rejected your application
               </span>
-              in job <span className="notification-alert__container__content__main__description__text__job-title">
+              in job <span className={`notification-alert__container__content__main__description__text__job-title ${isRead && "read-notification-content__content__text__job-title"}`}>
                 {body.job.title}
               </span>. Apply for other jobs now!
             </div>
-            <span className="notification-alert__container__content__main__description__date read-notification-success__date">{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+            <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
           </>
         );
       case "invited-job":
         return (
           <>
-            <div className="notification-alert__container__content__main__description__text">
-              <span className="notification-alert__container__content__main__description__text__name">
+            <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
+              <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
                 {body.company_info.company_name}
                 {body.company_info.verify && <FaIcons.FaCheckCircle
-                  className="notification-alert__container__content__main__description__text__name__icon"
+                  className={`notification-alert__container__content__main__description__text__name__icon ${isRead && "read-notification-content__content__text__name__icon"}`}
                 />}
               </span>
-              has invited you to their <span className="notification-alert__container__content__main__description__text__job-title">
+              has invited you to their <span className={`notification-alert__container__content__main__description__text__job-title ${isRead && "read-notification-content__content__text__job-title"}`}>
                 {body.job.title}
               </span> job.
             </div>
-            <span className="notification-alert__container__content__main__description__date">{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+            <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
             {/* <div className="notification-alert__container__content__main__description__actions">
               <Button
                 color="success"
@@ -210,12 +214,85 @@ function NotificationAlertCard(props) {
       // case "cancel-invite-job":
       //   return (
       //     <>
-      //       <div className="notification-alert__container__content__main__description__text">
+      //       <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
       //         <span>Company A</span> has invited you to their <span>XYZ</span> job.
       //       </div>
-      //       <span className="notification-alert__container__content__main__description__date">2 minutes ago</span>
+      //       <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>2 minutes ago</span>
       //     </>
       //   );
+      case "applied-job":
+        return (
+          <>
+            <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
+              <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
+                {body.student_info.first_name ?? ""} {body.student_info.last_name ?? ""}
+              </span>
+              has just <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
+                applied
+              </span>
+              to your <span className={`notification-alert__container__content__main__description__text__job-title ${isRead && "read-notification-content__content__text__job-title"}`}>
+                {body.job.title}
+              </span> job posting. Let's see what {
+                body.student_info.gender === null
+                  ? "he" : (
+                    body.student_info.gender ? "he" : "she"
+                  )
+              }'s got!
+            </div>
+            <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
+      case "follow-company":
+        return (
+          <>
+            <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
+              <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
+                {body.student_info.first_name ?? ""} {body.student_info.last_name ?? ""}
+              </span>
+              just followed you. From now on, {
+                body.student_info.gender === null
+                  ? "he" : (
+                    body.student_info.gender ? "he" : "she"
+                  )
+              } can receive notifications about your job posting.
+            </div>
+            <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
+      case "rejected-your-job":
+        return (
+          <>
+            <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
+              <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
+                {body.student_info.first_name ?? ""} {body.student_info.last_name ?? ""}
+              </span>
+              has just <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
+                declined your offer
+              </span>
+              of job <span className={`notification-alert__container__content__main__description__text__job-title ${isRead && "read-notification-content__content__text__job-title"}`}>
+                {body.job.title}
+              </span>.
+            </div>
+            <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
+      case "accepted-your-job":
+        return (
+          <>
+            <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
+              <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
+                {body.student_info.first_name ?? ""} {body.student_info.last_name ?? ""}
+              </span>
+              has just <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
+                accepted
+              </span>
+              your <span className={`notification-alert__container__content__main__description__text__job-title ${isRead && "read-notification-content__content__text__job-title"}`}>
+                {body.job.title}
+              </span> job offer.
+            </div>
+            <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
       default: break;
     }
   }
@@ -246,6 +323,22 @@ function NotificationAlertCard(props) {
         return (
           <GiIcons.GiLetterBomb className="notification-alert__container__content__main__avatar__type-icon__icon bg-invited-job" />
         );
+      case "applied-job":
+        return (
+          <RiIcons.RiCheckDoubleLine className="notification-alert__container__content__main__avatar__type-icon__icon" />
+        );
+      case "follow-company":
+        return (
+          <RiIcons.RiChatFollowUpFill className="notification-alert__container__content__main__avatar__type-icon__icon bg-follow" />
+        );
+      case "accepted-your-job":
+        return (
+          <BiIcons.BiNetworkChart className="notification-alert__container__content__main__avatar__type-icon__icon bg-accepted-job" />
+        );
+      case "rejected-your-job":
+        return (
+          <BiIcons.BiNetworkChart className="notification-alert__container__content__main__avatar__type-icon__icon bg-accepted-job" />
+        );
       // case "cancel-invite-job":
       //   return (
       //     <GiIcons.GiLetterBomb className="notification-alert__container__content__main__avatar__type-icon__icon"/>
@@ -254,42 +347,56 @@ function NotificationAlertCard(props) {
     }
   }
 
-  const onViewNotification = (body) => {
+  const onMarkRead = (body, isRead) => {
+    onMarkAsRead(body.user_messages_id, isRead);
+    setIsRead(isRead);
+    setIsShowMarkAsRead(false);
+  }
+
+  const onViewNotification = async (body) => {
+    await onMarkAsRead(body.user_messages_id, true);
+    setIsRead(true);
+    onChangeAlertStatus(false);
     switch (body.type) {
       case "create-recruitment":
         return history.push(`/recruitment/${body.job.id}`);
       case "update-recruitment":
         return history.push(`/recruitment/${body.job.id}`);
       case "update-avatar":
-        return history.push(`company/${body.company_info.id}`)
+        return history.push(`/company/${body.company_info.id}`)
       case "approved-application":
-        // !body.is_read && onMarkRead(true);
         return history.push(`/recruitment/${body.job.id}`);
       case "rejected-application":
-        // !body.is_read && onMarkRead(true);
         return history.push(`/recruitment/${body.job.id}`);
       case "invited-job":
-        // !body.is_read && onMarkRead(true);
         return history.push(`/recruitment/${body.job.id}`);
+      case "applied-job":
+        return history.push(`/recruiter/candidate/${body.student_info.id}`);
+      case "follow-company":
+        return history.push(`/recruiter/candidate/${body.student_info.id}`);
+      case "accepted-your-job":
+        return history.push(`/recruiter/candidate/${body.student_info.id}`);
+      case "rejected-your-job":
+        return history.push(`/recruiter/candidate/${body.student_info.id}`);
       default: break;
     }
   }
 
-  // const onShowMarkAsRead = (e) => {
-  //   e.stopPropagation();
-  //   setIsShowMarkAsRead(!isShowMarkAsRead);
-  // }
+  const onShowMarkAsRead = (e) => {
+    e.stopPropagation();
+    setIsShowMarkAsRead(!isShowMarkAsRead);
+  }
 
-  // const onMarkRead = (body, isRead) => {
-  //   switch (body) {
-  //     case "invited-job" || "approved-application" || "rejected-application":
-  //       onMarkAsRead(body.user_messages_id, isRead);
-  //       setIsShowMarkAsRead(false);
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
+  const renderAvatarLink = (body) => {
+    switch (body.type) {
+      case "create-recruitment" || "update-recruitment" || "update-avatar" || "approved-application" || "rejected-application" || "invited-job":
+        return (<img src={body.company_info.logo_image_link} alt="avatar" />)
+      case "applied-job" || "follow-company" || "accepted-your-job" || "rejected-your-job":
+        return (<img src={body.student_info.avatar_link} alt="avatar" />)
+      default:
+        return (<img src={Images.defaultAvatar} alt="avatar" />)
+    }
+  }
 
   return (
     <div className={`notification-alert ${showNoti && "start-alert"}`}>
@@ -306,7 +413,9 @@ function NotificationAlertCard(props) {
         <div className="notification-alert__container__content">
           <div className="notification-alert__container__content__main" onClick={() => onViewNotification(body)}>
             <div className="notification-alert__container__content__main__avatar">
-              <img src={body.company_info.logo_image_link} alt="avatar" />
+              {
+                renderAvatarLink(body)
+              }
               <div className="notification-alert__container__content__main__avatar__type-icon">
                 {
                   renderTypeIcon(body.type)
@@ -319,44 +428,39 @@ function NotificationAlertCard(props) {
               }
             </div>
           </div>
-          {!body.is_read && <div className="notification-alert__container__content__dot">
+          {!isRead && <div className="notification-alert__container__content__dot">
             <span />
           </div>}
-          {/* {
-            body.type === ("invited-job" || "approved-application" || "rejected-application") &&
-            <>
-              <div
-                className={`notification-alert__container__content__more-options ${isShowMarkAsRead && "is-focus-noti-option"}`}
-                // ref={isShowMarkAsRead ? ref : null}
-                onClick={onShowMarkAsRead}
-              >
-                <MdIcons.MdMoreHoriz className="notification-alert__container__content__more-options__icon" />
-              </div>
-              <div
-                className={`notification-alert__container__content__list-options ${!isShowMarkAsRead && "invisible-noti-options"}`}
-                ref={ref}
-              >
-                <ul className="notification-alert__container__content__list-options__list-item">
-                  {body.is_read
-                    ? <li
-                      className="notification-alert__container__content__list-options__list-item__item"
-                      onClick={() => onMarkRead(body, false)}
-                    >
-                      <FiIcons.FiCheck className="notification-alert__container__content__list-options__list-item__item__icon" />
-                      <span>Mark as unread</span>
-                    </li>
-                    : <li
-                      className="notification-alert__container__content__list-options__list-item__item"
-                      onClick={() => onMarkRead(body, true)}
-                    >
-                      <FiIcons.FiCheck className="notification-alert__container__content__list-options__list-item__item__icon" />
-                      <span>Mark as read</span>
-                    </li>
-                  }
-                </ul>
-              </div>
-            </>
-          } */}
+          <div
+            className={`notification-alert__container__content__more-options ${isShowMarkAsRead && "is-focus-noti-option"}`}
+            // ref={isShowMarkAsRead ? ref : null}
+            onClick={onShowMarkAsRead}
+          >
+            <MdIcons.MdMoreHoriz className="notification-alert__container__content__more-options__icon" />
+          </div>
+          <div
+            className={`notification-alert__container__content__list-options ${!isShowMarkAsRead && "invisible-noti-options"}`}
+            ref={ref}
+          >
+            <ul className="notification-alert__container__content__list-options__list-item">
+              {isRead
+                ? <li
+                  className="notification-alert__container__content__list-options__list-item__item"
+                  onClick={() => onMarkRead(body, false)}
+                >
+                  <FiIcons.FiCheck className="notification-alert__container__content__list-options__list-item__item__icon" />
+                  <span>Mark as unread</span>
+                </li>
+                : <li
+                  className="notification-alert__container__content__list-options__list-item__item"
+                  onClick={() => onMarkRead(body, true)}
+                >
+                  <FiIcons.FiCheck className="notification-alert__container__content__list-options__list-item__item__icon" />
+                  <span>Mark as read</span>
+                </li>
+              }
+            </ul>
+          </div>
         </div>
       </div>
     </div>

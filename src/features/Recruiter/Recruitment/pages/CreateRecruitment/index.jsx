@@ -6,6 +6,7 @@ import { Redirect, useHistory } from 'react-router-dom';
 import CreateRecruitmentForm from '../../components/CreateRecruitmentForm';
 import moment from 'moment';
 import './CreateRecruitment.scss';
+import helper from 'utils/common';
 
 CreateRecruitmentPage.propTypes = {
 };
@@ -35,6 +36,7 @@ function CreateRecruitmentPage(props) {
   } : {};
 
   useEffect(() => {
+    helper.scrollToTop();
     const timer = setTimeout(() => {
       setIsLoading(false);
     }, 1000)

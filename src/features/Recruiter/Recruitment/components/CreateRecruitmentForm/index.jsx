@@ -6,6 +6,7 @@ import InputField from 'custom-fields/InputField';
 import SelectField from 'custom-fields/SelectField';
 import TextFieldDate from 'custom-fields/TextFieldDate';
 import { FastField, Form, Formik } from 'formik';
+import moment from 'moment';
 import { useSnackbar } from 'notistack';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
@@ -16,7 +17,6 @@ import { Button, FormGroup, Spinner } from 'reactstrap';
 import * as Yup from 'yup';
 import DivAreaText from '../DivAreaText';
 import './CreateRecruitmentForm.scss';
-
 
 CreateRecruitmentForm.propTypes = {
   recruitment: PropTypes.object,
@@ -162,8 +162,8 @@ function CreateRecruitmentForm(props) {
           history.push(`${Paths.recruiterDashboard}`);
         } else {
           user.role_id === 2
-          ? await recruiterApi.updateRecruitment(recruitment.id, params)
-          : await studentApi.updateRecruitment(recruitment.id, params);
+            ? await recruiterApi.updateRecruitment(recruitment.id, params)
+            : await studentApi.updateRecruitment(recruitment.id, params);
           enqueueSnackbar("Your recruitment has been updated.", { variant: "success" });
           history.push(`${Paths.recruiterDashboard}/available-jobs/${recruitment.id}`);
         }
@@ -323,6 +323,7 @@ function CreateRecruitmentForm(props) {
                     moreClassName="text-field-date"
                     labelClassName="input-field-label"
                     inputClassName="text-field-date-width"
+                    inputProps={{ min: moment(new Date().toJSON().slice(0, 10)).format('YYYY-MM-DD') }}
                   />
 
                   <FastField

@@ -97,7 +97,6 @@ function JobDetailPage(props) {
         const action = await studentApi.applyJob(id);
         if (action.data.status === 1) {
           setIsApplying(false);
-          // setApplyText(action.data.data.is_applied ? "Applied" : "Apply");
           setStateData(state => ({
             ...state,
             isApplied: action.data.data.is_applied
@@ -106,16 +105,15 @@ function JobDetailPage(props) {
             `Successfully ${action.data.data.is_applied ? "Applied" : "Un-Apply"} job.`,
             { variant: "success" }
           );
-          return true;
         } else {
           setIsApplying(false);
           enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
-          return false;
         }
+        return;
       } catch (error) {
         setIsApplying(false);
         enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
-        return false;
+        return;
       }
     }
   }
@@ -338,8 +336,8 @@ function JobDetailPage(props) {
                   {
                     isRejecting && <span className="spinner-border spinner-border-sm mr-2" />
                   }
-                  Cancel
-                </button> to "Cancel".
+                  Reject
+                </button> to "Reject".
               </div>
             </>
           );

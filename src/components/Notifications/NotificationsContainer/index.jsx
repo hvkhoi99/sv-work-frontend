@@ -1,3 +1,4 @@
+import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
 import NotificationCard from 'components/Notifications/NotificationCard';
 import PropTypes from 'prop-types';
@@ -43,7 +44,7 @@ function NotificationsContainer(props) {
   let [currentPage, setCurrentPage] = useState(1);
   let [lastPage, setLastPage] = useState(1);
   const [isMoreLoading, setIsMoreLoading] = useState(false);
-  const _limit = 3;
+  const _limit = 6;
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -64,7 +65,7 @@ function NotificationsContainer(props) {
   }, [notifications]);
 
   const onLoadMore = async (e) => {
-    const bottom = Number((e.target.scrollHeight - e.target.scrollTop).toFixed(0)) - e.target.clientHeight < 5;
+    const bottom = Number((e.target.scrollHeight - e.target.scrollTop).toFixed(0)) - e.target.clientHeight < 1;
     if (bottom && (lastPage >= currentPage) && !isMoreLoading) {
       setCurrentPage(++currentPage);
       setIsMoreLoading(true);
@@ -76,21 +77,22 @@ function NotificationsContainer(props) {
               _limit
             }
             const data = user.role_id === 2
-              ? []
+              ? await recruiterApi.getListNotificationsByRecruiter(params)
               : (
                 user.role_id === 3
                   ? (
                     roleId === 2
-                      ? []
+                      ? await studentApi.getListNotificationsByRecruiter(params)
                       : await studentApi.getListNotificationsByStudent(params)
                   )
                   : []
               )
             if (data.data.status === 1) {
+              console.log({data})
               setLastPage(data.data.data.last_page);
               setTimeout(() => {
-                setIsMoreLoading(false);
                 setMoreNotifications(moreNotifications.concat(data.data.data.data));
+                setIsMoreLoading(false);
               }, 2000);
             }
             return;
@@ -106,12 +108,12 @@ function NotificationsContainer(props) {
               _limit
             }
             const data = user.role_id === 2
-              ? []
+              ? await recruiterApi.getListUnreadNotificationsByRecruiter(params)
               : (
                 user.role_id === 3
                   ? (
                     roleId === 2
-                      ? []
+                      ? await studentApi.getListUnreadNotificationsByRecruiter(params)
                       : await studentApi.getListUnreadNotificationsByStudent(params)
                   )
                   : []

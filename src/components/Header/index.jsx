@@ -44,7 +44,7 @@ function Header(props) {
         },
         type: '',
         updated_at: '',
-        is_read: 0,
+        is_read: false,
       }),
       image: '',
     }
@@ -127,7 +127,15 @@ function Header(props) {
       setShowNoti(true);
       setTimeout(() => {
         setShowNoti(false);
-      }, 10000);
+        // const newBody = {
+        //   ...JSON.parse(notification.body),
+        //   is_read: false
+        // };
+        // setNotification({
+        //   ...notification,
+        //   body: JSON.stringify(newBody)
+        // });
+      }, 5000);
       console.log({ payload });
     })
     .catch((err) => console.log("failed: ", err));
@@ -155,22 +163,22 @@ function Header(props) {
       const index = newNotifications.findIndex(x => x.user_messages_id === notificationId);
       if (index > -1) {
         newNotifications[index].is_read = !newNotifications[index].is_read;
-      }
-      setCountUnread(isRead ? countUnread - 1 : countUnread + 1);
-      const action = user.role_id === 2
-        ? await recruiterApi.markAsReadByRecruiter(notificationId)
-        : (
-          user.role_id === 3
-            ? (
-              roleId === 2
-                ? await studentApi.markAsReadByRecruiter(notificationId)
-                : await studentApi.markAsReadByStudent(notificationId)
-            )
-            : []
-        )
-      // console.log({action});
-      if (action.data.status === 0) {
-        enqueueSnackbar(action.data.message, { variant: "error" });
+        setCountUnread(isRead ? countUnread - 1 : countUnread + 1);
+        const action = user.role_id === 2
+          ? await recruiterApi.markAsReadByRecruiter(notificationId)
+          : (
+            user.role_id === 3
+              ? (
+                roleId === 2
+                  ? await studentApi.markAsReadByRecruiter(notificationId)
+                  : await studentApi.markAsReadByStudent(notificationId)
+              )
+              : []
+          )
+        // console.log({action});
+        if (action.data.status === 0) {
+          enqueueSnackbar(action.data.message, { variant: "error" });
+        }
       }
       return;
     } catch (error) {
@@ -247,16 +255,16 @@ function Header(props) {
       });
       setCountUnread(0);
       const action = user.role_id === 2
-      ? await recruiterApi.markAllAsReadByRecruiter()
-      : (
-        user.role_id === 3
-          ? (
-            roleId === 2
-              ? await studentApi.markAllAsReadByRecruiter()
-              : await studentApi.markAllAsReadByStudent()
-          )
-          : []
-      )
+        ? await recruiterApi.markAllAsReadByRecruiter()
+        : (
+          user.role_id === 3
+            ? (
+              roleId === 2
+                ? await studentApi.markAllAsReadByRecruiter()
+                : await studentApi.markAllAsReadByStudent()
+            )
+            : []
+        )
       // console.log({action});
       if (action.data.status === 0) {
         enqueueSnackbar(action.data.message, { variant: "error" });

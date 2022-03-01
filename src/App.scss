@@ -212,5 +212,29 @@ textarea {
 .bg-invited-job {
   // background:linear-gradient(120deg, #3b5998, #FFFFFF);
   // background:linear-gradient(120deg, #1db954, #191414);
-  background-color:  #3b5998;
+  background-color: #3b5998;
+}
+
+.bg-follow {
+  // background-color: #3f0d12;
+  // background-image: linear-gradient(315deg, #3f0d12 0%, #a71d31 74%);
+  //   background-color: #7f5a83;
+  // background-image: linear-gradient(315deg, #7f5a83 0%, #0d324d 74%);
+  background-color: #aff6cf;
+  background-image: linear-gradient(315deg, #aff6cf 0%, #9f98e8 74%);
+}
+
+.bg-applied {
+  background-color: #3bb78f;
+  background-image: linear-gradient(315deg, #3bb78f 0%, #0bab64 74%);
+}
+
+.bg-rejected-job {
+  background-color: #485461;
+  background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+}
+
+.bg-accepted-job {
+  background-color: #2a2a72;
+  background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
 }

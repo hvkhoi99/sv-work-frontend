@@ -216,7 +216,7 @@ function RecruiterDashboardPage(props) {
         onOK={handleToUpdateProfile}
         contentConfirm={
           user.r_profile.tax_code !== ""
-            ? "Your profile is pending approval. Do you want to update again?"
+            ? "Your profile is waiting to be Verified by the Administrator. Do you want to update again?"
             : "You need to have your profile Verified to continue."
         }
       />
