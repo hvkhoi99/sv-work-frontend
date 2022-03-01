@@ -61,8 +61,6 @@ function Header(props) {
 
   useEffect(() => {
     showButton();
-    // console.log("re-render")
-
     const fetchCountNotifications = async () => {
       try {
         const data = user.role_id === 2
@@ -95,12 +93,12 @@ function Header(props) {
           _limit
         }
         const data = user.role_id === 2
-          ? []
+          ? await recruiterApi.getListNotificationsByRecruiter(params)
           : (
             user.role_id === 3
               ? (
                 roleId === 2
-                  ? []
+                  ? await studentApi.getListNotificationsByRecruiter(params)
                   : await studentApi.getListNotificationsByStudent(params)
               )
               : []
@@ -159,7 +157,17 @@ function Header(props) {
         newNotifications[index].is_read = !newNotifications[index].is_read;
       }
       setCountUnread(isRead ? countUnread - 1 : countUnread + 1);
-      const action = await studentApi.markAsReadByStudent(notificationId);
+      const action = user.role_id === 2
+        ? await recruiterApi.markAsReadByRecruiter(notificationId)
+        : (
+          user.role_id === 3
+            ? (
+              roleId === 2
+                ? await studentApi.markAsReadByRecruiter(notificationId)
+                : await studentApi.markAsReadByStudent(notificationId)
+            )
+            : []
+        )
       // console.log({action});
       if (action.data.status === 0) {
         enqueueSnackbar(action.data.message, { variant: "error" });
@@ -180,12 +188,12 @@ function Header(props) {
         _limit
       }
       const data = user.role_id === 2
-        ? []
+        ? await recruiterApi.getListNotificationsByRecruiter(params)
         : (
           user.role_id === 3
             ? (
               roleId === 2
-                ? []
+                ? await studentApi.getListNotificationsByRecruiter(params)
                 : await studentApi.getListNotificationsByStudent(params)
             )
             : []
@@ -209,12 +217,12 @@ function Header(props) {
         _limit
       }
       const data = user.role_id === 2
-        ? []
+        ? await recruiterApi.getListUnreadNotificationsByRecruiter(params)
         : (
           user.role_id === 3
             ? (
               roleId === 2
-                ? []
+                ? await studentApi.getListUnreadNotificationsByRecruiter(params)
                 : await studentApi.getListUnreadNotificationsByStudent(params)
             )
             : []
@@ -238,7 +246,17 @@ function Header(props) {
         return item.is_read = true;
       });
       setCountUnread(0);
-      const action = await studentApi.markAllAsReadByStudent();
+      const action = user.role_id === 2
+      ? await recruiterApi.markAllAsReadByRecruiter()
+      : (
+        user.role_id === 3
+          ? (
+            roleId === 2
+              ? await studentApi.markAllAsReadByRecruiter()
+              : await studentApi.markAllAsReadByStudent()
+          )
+          : []
+      )
       // console.log({action});
       if (action.data.status === 0) {
         enqueueSnackbar(action.data.message, { variant: "error" });
@@ -266,6 +284,12 @@ function Header(props) {
       handleClick={handleClick}
       click={click}
       countUnread={countUnread}
+      notifications={notifications}
+      onMarkAsRead={onMarkAsRead}
+      isLoading={isLoading}
+      onFetchUnreadNotifications={onFetchUnreadNotifications}
+      onFetchAllNotifications={onFetchAllNotifications}
+      onMarkAllAsRead={onMarkAllAsRead}
     />
   ) : (
     <StudentHeader

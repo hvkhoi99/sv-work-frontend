@@ -23,19 +23,33 @@ RecruiterHeader.propTypes = {
   closeMobileMenu: PropTypes.func,
   handleClick: PropTypes.func,
   click: PropTypes.bool,
-  countUnread: PropTypes.number
+  countUnread: PropTypes.number,
+  notifications: PropTypes.array,
+  onMarkAsRead: PropTypes.func,
+  onFetchUnreadNotifications: PropTypes.func,
+  isLoading: PropTypes.bool,
+  onFetchAllNotifications: PropTypes.func,
+  onMarkAllAsRead: PropTypes.func
 };
 
 RecruiterHeader.defaultProps = {
   closeMobileMenu: null,
   handleClick: null,
   click: false,
-  countUnread: 0
+  countUnread: 0,
+  notifications: [],
+  onMarkAsRead: null,
+  onFetchUnreadNotifications: null,
+  isLoading: true,
+  onFetchAllNotifications: null,
+  onMarkAllAsRead: null,
 }
 
 function RecruiterHeader(props) {
   const {
-    closeMobileMenu, click, handleClick, countUnread
+    closeMobileMenu, click, handleClick, countUnread,
+    notifications, onMarkAsRead, onFetchUnreadNotifications,
+    isLoading, onFetchAllNotifications, onMarkAllAsRead
   } = props;
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.current);
@@ -43,6 +57,7 @@ function RecruiterHeader(props) {
   const history = useHistory();
   const [hiddenNoti, setHiddenNoti] = useState(true);
   const [hiddenMe, setHiddenMe] = useState(true);
+  const [isScaleUp, setIsScaleUp] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -58,6 +73,15 @@ function RecruiterHeader(props) {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [ref, hiddenMe, hiddenNoti]);
+
+  useEffect(() => {
+    if (countUnread > 0) {
+      setIsScaleUp(true);
+      setTimeout(() => {
+        setIsScaleUp(false);
+      }, 350);
+    }
+  }, [countUnread]);
 
   const showNotification = (e) => {
     e.preventDefault();
@@ -87,6 +111,11 @@ function RecruiterHeader(props) {
       localStorage.setItem("role_id", 3);
       history.push("/")
     }
+  }
+
+  const onHiddenAll = () => {
+    setHiddenMe(true);
+    setHiddenNoti(true);
   }
 
   return (
@@ -131,7 +160,10 @@ function RecruiterHeader(props) {
             <div className="notify-me__icon">
               <div className="notify-me__notify" onClick={(e) => showNotification(e)}>
                 <RiIcons.RiNotification4Line className="notify-me__notify__icon" />
-                {countUnread > 0 && <span className="notify-me__notify__count">{countUnread}</span>}
+                {countUnread > 0 && <span
+                  className={`notify-me__notify__count ${isScaleUp ? "scale-up-count-noti" : "scale-down-count-noti"}`}
+                >
+                  {countUnread}</span>}
               </div>
               <div className="notify-me__notify" onClick={(e) => showMe(e)}>
                 {/* <FaIcons.FaUserAstronaut className="notify-me__notify__icon" /> */}
@@ -143,8 +175,18 @@ function RecruiterHeader(props) {
               </div>
             </div>
             <div className="notify-me__action">
-              <div className={hiddenNoti ? "notify-me__action__notification" : "notify-me__action__notification isVisible"}>
+              <div className={hiddenNoti
+                ? "notify-me__action__notification"
+                : "notify-me__action__notification isVisible"
+              }>
                 <NotificationsContainer
+                  notifications={notifications}
+                  onMarkAsRead={onMarkAsRead}
+                  onHiddenAll={onHiddenAll}
+                  isLoading={isLoading}
+                  onFetchUnreadNotifications={onFetchUnreadNotifications}
+                  onFetchAllNotifications={onFetchAllNotifications}
+                  onMarkAllAsRead={onMarkAllAsRead}
                 />
               </div>
               <div className={hiddenMe ? "notify-me__action__me" : "notify-me__action__me isVisible"}>

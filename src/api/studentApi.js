@@ -347,6 +347,26 @@ const studentApi = {
     const url = "/student/recruiter/notifications/count";
     return axiosClient.get(url);
   },
+
+  getListNotificationsByRecruiter: (params) => {
+    const url = `/student/recruiter/notifications/list?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
+  getListUnreadNotificationsByRecruiter: (params) => {
+    const url = `/student/recruiter/notifications/list-unread?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
+  markAsReadByRecruiter: (id) => {
+    const url = `/student/recruiter/notification/${id}/mark-as-read`;
+    return axiosClient.put(url);
+  },
+
+  markAllAsReadByRecruiter: () => {
+    const url = `/student/recruiter/notification/mark-all-as-read`;
+    return axiosClient.put(url);
+  },
 }
 
 export default studentApi;

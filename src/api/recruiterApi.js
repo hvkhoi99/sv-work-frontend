@@ -7,6 +7,26 @@ const recruiterApi = {
     const url = "/recruiter/notifications/count";
     return axiosClient.get(url);
   },
+  
+  getListNotificationsByRecruiter: (params) => {
+    const url = `/recruiter/notifications/list?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
+  getListUnreadNotificationsByRecruiter: (params) => {
+    const url = `/recruiter/notifications/list-unread?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
+  markAsReadByRecruiter: (id) => {
+    const url = `/recruiter/notification/${id}/mark-as-read`;
+    return axiosClient.put(url);
+  },
+
+  markAllAsReadByRecruiter: () => {
+    const url = `/recruiter/notification/mark-all-as-read`;
+    return axiosClient.put(url);
+  },
 
   // Dashboard
   getAvailableJobs: (params) => {
