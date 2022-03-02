@@ -42,12 +42,16 @@ function InvitedJobsCard(props) {
         <div className="invited-jobs-card__left__avatar">
           <img src={
             job.company_info.logo_image_link === (null || "" || undefined)
-            ? Images.defaultAvatar
-            : job.company_info.logo_image_link
+              ? Images.defaultAvatar
+              : job.company_info.logo_image_link
           } alt="company-avatar" />
-          {job.company_info.verify && <div className="invited-jobs-card__left__avatar__check">
-            <HiIcons.HiCheckCircle className="invited-jobs-card__left__avatar__check__icon" />
-          </div>}
+          {
+            job.company_info.verify
+              ? <div className="invited-jobs-card__left__avatar__check">
+                <HiIcons.HiCheckCircle className="invited-jobs-card__left__avatar__check__icon" />
+              </div>
+              : ""
+          }
         </div>
         <div className="invited-jobs-card__left__info">
           <span className="invited-jobs-card__left__info__job-name">

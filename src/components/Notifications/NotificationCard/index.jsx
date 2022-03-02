@@ -8,6 +8,7 @@ import * as RiIcons from 'react-icons/ri';
 import * as GiIcons from 'react-icons/gi';
 import * as SiIcons from 'react-icons/si';
 import * as BiIcons from 'react-icons/bi';
+import * as GoIcons from 'react-icons/go';
 // import { Button } from 'reactstrap';
 import './NotificationCard.scss';
 import { useHistory } from 'react-router-dom';
@@ -374,6 +375,52 @@ function NotificationCard(props) {
             <span className={`notification-content__content__date ${notification.is_read && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
           </>
         );
+      case "accepted-verify-profile":
+        return (
+          <>
+            <div className={`notification-content__content__text ${notification.is_read && "read-notification-content__content__text"}`}>
+              <span className={`notification-content__content__text__name ${notification.is_read && "read-notification-content__content__text__name"}`}>
+                The Administrator
+              </span>
+              has <span className={`notification-content__content__text__name ${notification.is_read && "read-notification-content__content__text__name"}`}>
+                accepted
+              </span>
+              your request to verify your <span className={`notification-content__content__text__job-title ${notification.is_read && "read-notification-content__content__text__job-title"}`}>
+                company profile
+              </span>. From now on, you can use the full features of Recruiter.
+            </div>
+            <span className={`notification-content__content__date ${notification.is_read && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
+      case "rejected-verify-profile":
+        return (
+          <>
+            <div className={`notification-content__content__text ${notification.is_read && "read-notification-content__content__text"}`}>
+              <span className={`notification-content__content__text__name ${notification.is_read && "read-notification-content__content__text__name"}`}>
+                The Administrator
+              </span>
+              has <span className={`notification-content__content__text__name ${notification.is_read && "read-notification-content__content__text__name"}`}>
+                declined
+              </span>
+              your request to verify your <span className={`notification-content__content__text__job-title ${notification.is_read && "read-notification-content__content__text__job-title"}`}>
+                company profile
+              </span>.
+            </div>
+            <span className={`notification-content__content__date ${notification.is_read && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
+      case "verify-company-profile":
+        return (
+          <>
+            <div className={`notification-content__content__text ${notification.is_read && "read-notification-content__content__text"}`}>
+              <span className={`notification-content__content__text__name ${notification.is_read && "read-notification-content__content__text__name"}`}>
+                {notification.body.company_info.company_name}
+              </span>
+              has requested to verify their company profile.
+            </div>
+            <span className={`notification-content__content__date ${notification.is_read && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
       default: break;
     }
   }
@@ -420,6 +467,18 @@ function NotificationCard(props) {
         return (
           <BiIcons.BiNetworkChart className="notification-content__img__type-icon__icon bg-accepted-job" />
         );
+      case "verify-company-profile":
+        return (
+          <GoIcons.GoUnverified className="notification-content__img__type-icon__icon" />
+        );
+      case "accepted-verify-profile":
+        return (
+          <MdIcons.MdAdminPanelSettings className="notification-content__img__type-icon__icon bg-accepted-job" />
+        );
+      case "rejected-verify-profile":
+        return (
+          <MdIcons.MdAdminPanelSettings className="notification-content__img__type-icon__icon bg-accepted-job" />
+        );
       // case "cancel-invite-job":
       //   return (
       //     <GiIcons.GiLetterBomb className="notification-content__img__type-icon__icon"/>
@@ -440,41 +499,51 @@ function NotificationCard(props) {
 
   const onViewNotification = (notification) => {
     !notification.is_read && onMarkRead(true);
-    onHiddenAll();
     switch (notification.type) {
       case "create-recruitment":
+        onHiddenAll();
         return history.push(`/recruitment/${notification.body.job.id}`);
       case "update-recruitment":
+        onHiddenAll();
         return history.push(`/recruitment/${notification.body.job.id}`);
       case "update-avatar":
+        onHiddenAll();
         return history.push(`/company/${notification.body.company_info.id}`)
       case "approved-application":
+        onHiddenAll();
         return history.push(`/recruitment/${notification.body.job.id}`);
       case "rejected-application":
+        onHiddenAll();
         return history.push(`/recruitment/${notification.body.job.id}`);
       case "invited-job":
+        onHiddenAll();
         return history.push(`/recruitment/${notification.body.job.id}`);
       case "applied-job":
+        onHiddenAll();
         return history.push(`/recruiter/candidate/${notification.body.student_info.id}`);
       case "follow-company":
+        onHiddenAll();
         return history.push(`/recruiter/candidate/${notification.body.student_info.id}`);
       case "accepted-your-job":
+        onHiddenAll();
         return history.push(`/recruiter/candidate/${notification.body.student_info.id}`);
       case "rejected-your-job":
+        onHiddenAll();
         return history.push(`/recruiter/candidate/${notification.body.student_info.id}`);
       default: break;
     }
   }
 
   const renderAvatarLink = (notification) => {
-    switch (notification.type) {
-      case "create-recruitment" || "update-recruitment" || "update-avatar" || "approved-application" || "rejected-application" || "invited-job":
-        return (<img src={notification.body.company_info.logo_image_link} alt="avatar" />)
-      case "applied-job" || "follow-company" || "accepted-your-job" || "rejected-your-job":
-        return (<img src={notification.body.student_info.avatar_link} alt="avatar" />)
-      default:
-        return (<img src={Images.defaultAvatar} alt="avatar" />)
+    if (["create-recruitment", "update-recruitment", "update-avatar", "approved-application", "rejected-application", "invited-job", "verify-company-profile"].includes(notification.type)) {
+      return (<img src={notification.body.company_info.logo_image_link} alt="avatar" />);
     }
+
+    if (["applied-job", "follow-company", "accepted-your-job", "rejected-your-job"].includes(notification.type)) {
+      return (<img src={notification.body.student_info.avatar_link} alt="avatar" />);
+    }
+
+    return (<img src={Images.employerAvatar} alt="avatar" />);
   }
 
   return (

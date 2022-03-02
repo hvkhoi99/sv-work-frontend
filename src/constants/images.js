@@ -35,6 +35,7 @@ import teamwork from '../assets/img/teamwork.png';
 import threeMinions from '../assets/img/three-minions.png';
 import tw from '../assets/img/tw.png';
 import verifyImage from '../assets/img/verifyImage.png';
+import forgotpass from '../assets/img/forgotpass.png';
 import verifyImage1 from '../assets/img/verifyImage1.jpg';
 import avatar from '../assets/img/avatar.jpg';
 import vinfast from '../assets/img/vinfast.png';
@@ -45,7 +46,7 @@ const Images = {
   admin, teamwork, overview, ellipse, apple, coffeeTime, levis, tw, shopee, fb, vinfast,
   burger, lamborghini, student, recruiter, bmw, create, searchCard, recruitmentManageCard, aio,
   threeMinions, ship, event1, aboutUsCard, googleCV, defaultAvatar, notfoundcandidate, defaultCompany,
-  verifyImage, verifyImage1, employerAvatar, avatar
+  verifyImage, verifyImage1, employerAvatar, avatar, forgotpass
 }
 
 export default Images;

@@ -48,9 +48,17 @@ const adminSlice = createSlice({
       state.recruiters = [];
       state.current = {};
     },
+    addToRecruiters: (state, action) => {
+      const newRecruiters = state.recruiters;
+      const index = newRecruiters.findIndex(x => x.id === action.payload.id);
+      if (index > -1) {
+        return;
+      }
+      newRecruiters.splice(0, 0, action.payload);
+    },
     removeCompany: (state, action) => {
       const data = state.recruiters;
-      const index = data.findIndex( company => company.id === action.payload);
+      const index = data.findIndex(company => company.id === action.payload);
       if (index !== -1) {
         data.splice(index, 1);
       } else { return }
@@ -71,5 +79,5 @@ const adminSlice = createSlice({
 });
 
 const { actions, reducer: adminReducer } = adminSlice;
-export const { logout, removeCompany } = actions;
+export const { logout, removeCompany, addToRecruiters } = actions;
 export default adminReducer;

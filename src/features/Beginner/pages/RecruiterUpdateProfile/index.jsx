@@ -33,7 +33,7 @@ function RecruiterUpdateProfilePage(props) {
   const [isLoading, setIsLoading] = useState(true);
   const { update } = useParams();
   const isUpdate = update === "update";
-  console.log({ update }, { isUpdate })
+  // console.log({ update }, { isUpdate })
 
   const initialValues = !isUpdate
     ? {
@@ -58,6 +58,7 @@ function RecruiterUpdateProfilePage(props) {
   }, []);
 
   const handleSubmit = async (values) => {
+    console.log({values});
     try {
       const params = {
         contact_email: values.contact_email,
@@ -135,6 +136,7 @@ function RecruiterUpdateProfilePage(props) {
                     <UpdateCompanyInfoForm
                       initialValues={initialValues}
                       onSubmit={handleSubmit}
+                      isUpdate={isUpdate}
                     />
                   </div>
                 </div>

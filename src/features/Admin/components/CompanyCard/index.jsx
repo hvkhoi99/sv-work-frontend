@@ -1,4 +1,3 @@
-import Images from 'constants/images';
 import PropTypes from 'prop-types';
 import React from 'react';
 import './CompanyCard.scss';
@@ -27,7 +26,7 @@ function CompanyCard(props) {
 
   return (
     <div className={className} onClick={() => handleCard(index, recruiter)}>
-      <img src={Images.burger} alt="emoji" />
+      <img src={recruiter.logo_image_link} alt="emoji" />
       <div className="company-card__right">
         <span className="company-card__right__name">{recruiter.company_name}</span>
         <span className="company-card__right__industry">{recruiter.company_industry}</span>

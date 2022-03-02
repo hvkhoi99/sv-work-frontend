@@ -8,11 +8,13 @@ import './PopupUpdateProfile.scss';
 PopupUpdateProfile.propTypes = {
   initialValues: PropTypes.object,
   onSubmit: PropTypes.func,
+  isUpdateWithPopup: PropTypes.bool,
 };
 
 PopupUpdateProfile.defaultProps = {
   initialValues: {},
   onSubmit: null,
+  isUpdateWithPopup: false
 }
 
 const EditProfileButton = React.forwardRef(({ open, ...props }, ref) => (
@@ -29,7 +31,7 @@ const EditProfileButton = React.forwardRef(({ open, ...props }, ref) => (
 ));
 
 function PopupUpdateProfile(props) {
-  const { onSubmit, initialValues } = props;
+  const { onSubmit, initialValues, isUpdateWithPopup } = props;
 
   return (
     <div className="popup-update-profile">
@@ -50,6 +52,7 @@ function PopupUpdateProfile(props) {
               initialValues={initialValues}
               onSubmit={onSubmit}
               close={close}
+              isUpdateWithPopup={isUpdateWithPopup}
             />
           </div>
         )}

@@ -27,6 +27,21 @@
 
       position: relative;
 
+      &__notification-container {
+        display: flex;
+        justify-content: center;
+        width: 23rem;
+        padding: 0.5rem;
+        background-color: #fff;
+        border-radius: 0.5rem;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+        font-size: 0.9rem;
+
+        position: absolute;
+        top: 3.2rem;
+        right: -4.5rem;
+      }
+
       & > ul {
         list-style: none;
         margin: 3.5rem -1rem 0 0;
@@ -82,7 +97,7 @@
   }
 
   &__options {
-    font-size: 2rem;
+    // font-size: 2rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -99,6 +114,24 @@
         color: var(--success);
       }
     }
+
+    &__count {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--danger);
+      border-radius: 50%;
+      width: 1.5rem;
+      height: 1.5rem;
+      color: #fff;
+      position: absolute;
+      top: -0.2rem;
+      right: -0.5rem;
+      z-index: 999;
+      font-size: 1.2rem;
+
+      transition: all 0.35s ease 0s;
+    }
   }
 }
 
@@ -112,4 +145,13 @@
 
 .isVisited {
   color: var(--success);
+}
+
+.scale-down-count-nav-noti {
+  transform: scale(0.8);
+  // font-size: .9rem;
+}
+
+.scale-up-count-nav-noti {
+  transform: scale(1.1)
 }

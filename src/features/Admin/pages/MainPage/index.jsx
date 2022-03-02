@@ -10,7 +10,7 @@ import { useSnackbar } from 'notistack';
 import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Route, Switch, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import AdminNotificationPage from '../AdminNotification';
 import AdminDashboardPage from '../Dashboard';
 import VerificationPage from '../VerificationPage';
@@ -62,7 +62,6 @@ function AdminMainPage(props) {
       total_events: []
     }
   })
-  var [isVerify, setIsVerify] = useState(false);
   const [recruiter, setRecruiter] = useState({});
   const [lastPage, setLastPage] = useState(1);
   const { enqueueSnackbar } = useSnackbar();
@@ -87,7 +86,7 @@ function AdminMainPage(props) {
     }
 
     fetchDashboard();
-  }, [])
+  }, []);
 
   useEffect(() => {
     setCurrentPage(page > 0 ? page : 1)
@@ -103,17 +102,17 @@ function AdminMainPage(props) {
 
         const actionResult = await dispatch(action);
         const result = unwrapResult(actionResult);
+        console.log({result})
         setLastPage(result.last_page);
         setRecruiter({});
         setActiveIndex(null);
-        return result;
       } catch (error) {
         console.log("error show: ", error.message);
       }
     }
 
     fetchRecruiters();
-  }, [currentPage, isVerify, dispatch, page]);
+  }, [currentPage, dispatch, page]);
 
   const handlePageClick = (e, state) => {
     switch (state) {
@@ -140,6 +139,7 @@ function AdminMainPage(props) {
   const handleCompanyClick = (index, company) => {
     setActiveIndex(index);
     setRecruiter(company);
+    history.push(`${Paths.adminVerification}?page=${currentPage}&companyId=${company.id}`);
   }
 
   const handleVerifyCompany = async (e, company, verify) => {
@@ -160,7 +160,6 @@ function AdminMainPage(props) {
       dispatch(removeCompanyAction);
       const actionResult = await dispatch(action);
       unwrapResult(actionResult);
-      setIsVerify(!isVerify);
     } catch (error) {
       enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
     }
@@ -193,7 +192,10 @@ function AdminMainPage(props) {
           }
         />
         <Route path={`${match.url}/company/:id`} component={VerificationPage} />
+        <Redirect exact from={`${match.url}/notification`} to={`${match.url}/notification/all-notifications`} />
         <Route path={`${match.url}/notification`} component={AdminNotificationPage} />
+        <Route path={`${match.url}/notification/all-notifications`} component={AdminNotificationPage} />
+        <Route path={`${match.url}/notification/unread-notifications`} component={AdminNotificationPage} />
       </Switch>
     </>)
 

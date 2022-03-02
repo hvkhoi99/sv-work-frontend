@@ -1,7 +1,8 @@
+import PopupConfirm from 'components/PopupConfirm';
 import InputField from 'custom-fields/InputField';
 import { FastField, Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, FormGroup, Spinner } from 'reactstrap';
 import * as Yup from 'yup';
 import './UpdateCompanyInfoForm.scss';
@@ -10,17 +11,24 @@ UpdateCompanyInfoForm.propTypes = {
   initialValues: PropTypes.object,
   onSubmit: PropTypes.func,
   close: PropTypes.func,
+  isUpdate: PropTypes.bool,
+  isUpdateWithPopup: PropTypes.bool,
 };
 
 UpdateCompanyInfoForm.defaultProps = {
   initialValues: {},
   onSubmit: null,
   close: null,
+  isUpdate: false,
+  isUpdateWithPopup: false,
 }
 
 function UpdateCompanyInfoForm(props) {
-  const { initialValues, onSubmit, close } = props;
+  const { initialValues, onSubmit, close, isUpdate, isUpdateWithPopup } = props;
   // const phoneRegExp = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+  const [show, setShow] = useState(false);
+  const [values, setValues] = useState({});
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const validationSchema = Yup.object().shape({
     company_name: Yup
@@ -63,99 +71,131 @@ function UpdateCompanyInfoForm(props) {
   });
 
   const onSubmitForm = async (values) => {
+    setIsUpdating(true);
     await onSubmit(values);
+    setIsUpdating(false);
+    isUpdateWithPopup && close();
+  }
+  
+  const onShow = (value) => {
+    setShow(value);
+  }
+  
+  const onUpdateProfileWithTaxCode = async (values) => {
+    if (isUpdate || isUpdateWithPopup) {
+      if (values.tax_code !== "" && values.tax_code !== initialValues.tax_code) {
+        setValues(values);
+        onShow(true);
+        return;
+      }
+    }
+    await onSubmitForm(values);
     close();
   }
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={onSubmitForm}
-    >
-      {formikProps => {
-        const { isSubmitting } = formikProps;
+    <>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onUpdateProfileWithTaxCode}
+      >
+        {formikProps => {
+          const { isSubmitting } = formikProps;
 
-        return (
-          <Form>
-            <FastField
-              name="company_name"
-              component={InputField}
-
-              label="Company Name"
-            />
-
-            <div className="formGroup-phone-email">
+          return (
+            <Form>
               <FastField
-                name="phone_number"
+                name="company_name"
                 component={InputField}
 
-                label="Phone Number"
-                moreClassName="mr-4"
+                label="Company Name"
               />
+
+              <div className="formGroup-phone-email">
+                <FastField
+                  name="phone_number"
+                  component={InputField}
+
+                  label="Phone Number"
+                  moreClassName="mr-4"
+                />
+
+                <FastField
+                  name="contact_email"
+                  component={InputField}
+
+                  label="Contact Email"
+                  moreClassName="width-60"
+
+                />
+              </div>
 
               <FastField
-                name="contact_email"
+                name="address"
                 component={InputField}
 
-                label="Contact Email"
-                moreClassName="width-60"
-
+                label="Location"
               />
-            </div>
 
-            <FastField
-              name="address"
-              component={InputField}
+              <div className="formGroup-industry-size">
+                <FastField
+                  name="company_industry"
+                  component={InputField}
 
-              label="Location"
-            />
+                  label="Company Industry"
+                  moreClassName="width-60 mr-4"
 
-            <div className="formGroup-industry-size">
+                />
+
+                <FastField
+                  name="company_size"
+                  component={InputField}
+
+                  label="Company Size"
+
+                />
+              </div>
+
+              <FormGroup className="formGroup-label">
+                <label>Verify Option</label>
+              </FormGroup>
+
               <FastField
-                name="company_industry"
+                name="tax_code"
                 component={InputField}
 
-                label="Company Industry"
-                moreClassName="width-60 mr-4"
-
+                label="Tax Code"
+                labelClassName="tax-code"
               />
 
-              <FastField
-                name="company_size"
-                component={InputField}
-
-                label="Company Size"
-
-              />
-            </div>
-
-            <FormGroup className="formGroup-label">
-              <label>Verify Option</label>
-            </FormGroup>
-
-            <FastField
-              name="tax_code"
-              component={InputField}
-
-              label="Tax Code"
-            />
-
-            <FormGroup className="formGroup-button">
-              <Button
-                type="submit"
-                color={'success'}
-                className="formGroup-button__btn-update"
-                disabled={isSubmitting}
-              >
-                {isSubmitting && <Spinner children="" size="sm" />}
-                &nbsp;Update
-              </Button>
-            </FormGroup>
-          </Form>
-        );
-      }}
-    </Formik>
+              <FormGroup className="formGroup-button">
+                <Button
+                  type="submit"
+                  color={'success'}
+                  className="formGroup-button__btn-update"
+                  disabled={isSubmitting || isUpdating}
+                >
+                  {(isSubmitting || isUpdating) && <Spinner children="" size="sm" />}
+                  &nbsp;Update
+                </Button>
+              </FormGroup>
+            </Form>
+          );
+        }}
+      </Formik>
+      <PopupConfirm
+        show={show}
+        onShow={onShow}
+        onOK={async () => await onSubmitForm(values)}
+        titleConfirm="Update Recruiter Profile"
+        contentConfirm={
+          `Your "Tax Code" has just changed. 
+          If you select "OK", you will not be able to create new jobs until your profile is verified by the Administrator. 
+          Are you sure to continue?`
+        }
+      />
+    </>
   );
 }
 

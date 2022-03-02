@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import * as FiIcons from 'react-icons/fi';
 import * as GiIcons from 'react-icons/gi';
+import * as GoIcons from 'react-icons/go';
 import * as MdIcons from 'react-icons/md';
 import * as RiIcons from 'react-icons/ri';
 import * as SiIcons from 'react-icons/si';
@@ -72,8 +73,8 @@ function NotificationAlertCard(props) {
                   className={`notification-alert__container__content__main__description__text__name__icon ${isRead && "read-notification-content__content__text__name__icon"}`}
                 />}
               </span>
-              has just created a new job titled <span 
-              className={`notification-alert__container__content__main__description__text__job-title 
+              has just created a new job titled <span
+                className={`notification-alert__container__content__main__description__text__job-title 
               ${isRead && "read-notification-content__content__text__job-title"}`}
               >
                 {body.job.title}
@@ -276,19 +277,48 @@ function NotificationAlertCard(props) {
             <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
           </>
         );
-      case "accepted-your-job":
+      case "rejected-verify-profile":
         return (
           <>
             <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
               <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
-                {body.student_info.first_name ?? ""} {body.student_info.last_name ?? ""}
+                The Administrator
               </span>
-              has just <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
+              has <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
+                declined
+              </span>
+              your request to verify your <span className={`notification-alert__container__content__main__description__text__job-title ${isRead && "read-notification-content__content__text__job-title"}`}>
+                company profile
+              </span>.
+            </div>
+            <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
+      case "accepted-verify-profile":
+        return (
+          <>
+            <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
+              <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
+                The Administrator
+              </span>
+              has <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
                 accepted
               </span>
-              your <span className={`notification-alert__container__content__main__description__text__job-title ${isRead && "read-notification-content__content__text__job-title"}`}>
-                {body.job.title}
-              </span> job offer.
+              your request to verify your <span className={`notification-alert__container__content__main__description__text__job-title ${isRead && "read-notification-content__content__text__job-title"}`}>
+                company profile
+              </span>. From now on, you can use the full features of Recruiter.
+            </div>
+            <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
+      case "verify-company-profile":
+        return (
+          <>
+            <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
+              <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
+                {body.company_info.company_name}
+              </span>
+              has requested to verify their company profile.
             </div>
             <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
           </>
@@ -339,6 +369,18 @@ function NotificationAlertCard(props) {
         return (
           <BiIcons.BiNetworkChart className="notification-alert__container__content__main__avatar__type-icon__icon bg-accepted-job" />
         );
+      case "verify-company-profile":
+        return (
+          <GoIcons.GoUnverified className="notification-alert__container__content__main__avatar__type-icon__icon" />
+        );
+      case "accepted-verify-profile":
+        return (
+          <MdIcons.MdAdminPanelSettings className="notification-alert__container__content__main__avatar__type-icon__icon bg-accepted-job" />
+        );
+      case "rejected-verify-profile":
+        return (
+          <MdIcons.MdAdminPanelSettings className="notification-alert__container__content__main__avatar__type-icon__icon bg-accepted-job" />
+        );
       // case "cancel-invite-job":
       //   return (
       //     <GiIcons.GiLetterBomb className="notification-alert__container__content__main__avatar__type-icon__icon"/>
@@ -388,14 +430,23 @@ function NotificationAlertCard(props) {
   }
 
   const renderAvatarLink = (body) => {
-    switch (body.type) {
-      case "create-recruitment" || "update-recruitment" || "update-avatar" || "approved-application" || "rejected-application" || "invited-job":
-        return (<img src={body.company_info.logo_image_link} alt="avatar" />)
-      case "applied-job" || "follow-company" || "accepted-your-job" || "rejected-your-job":
-        return (<img src={body.student_info.avatar_link} alt="avatar" />)
-      default:
-        return (<img src={Images.defaultAvatar} alt="avatar" />)
+    // switch (body.type) {
+    //   case "create-recruitment" || "update-recruitment" || "update-avatar" || "approved-application" || "rejected-application" || "invited-job" || "verify-company-profile":
+    //     return (<img src={body.company_info.logo_image_link} alt="avatar" />)
+    //   case "applied-job" || "follow-company" || "accepted-your-job" || "rejected-your-job":
+    //     return (<img src={body.student_info.avatar_link} alt="avatar" />)
+    //   default:
+    //     return (<img src={Images.employerAvatar} alt="avatar" />)
+    // }
+    if (["create-recruitment", "update-recruitment", "update-avatar", "approved-application", "rejected-application", "invited-job", "verify-company-profile"].includes(body.type)) {
+      return (<img src={body.company_info.logo_image_link} alt="avatar" />);
     }
+
+    if (["applied-job", "follow-company", "accepted-your-job", "rejected-your-job"].includes(body.type)) {
+      return (<img src={body.student_info.avatar_link} alt="avatar" />);
+    }
+
+    return (<img src={Images.employerAvatar} alt="avatar" />);
   }
 
   return (

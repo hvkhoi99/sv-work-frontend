@@ -173,7 +173,7 @@ function RecruiterAccountPage(props) {
                         ? `${student.first_name ?? ""} ${student.last_name ?? ""}`
                         : "Error"
                   }
-                  {currentPath === recruiterAccountPath && recruiter.verify && <HiIcons.HiCheckCircle className="inforCard-icon" />}
+                  {(currentPath === recruiterAccountPath && recruiter.verify) ? <HiIcons.HiCheckCircle className="inforCard-icon" /> : ""}
                 </span>
                 <span className="account__container__profile__info__industry">
                   {

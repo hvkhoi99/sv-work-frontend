@@ -34,13 +34,15 @@ function AppliedJobsCard(props) {
         <div className="applied-jobs-card__left__avatar">
           <img src={
             job.company_info.logo_image_link === (null || "" || undefined)
-            ? Images.defaultAvatar
-            : job.company_info.logo_image_link
+              ? Images.defaultAvatar
+              : job.company_info.logo_image_link
           } alt="company-avatar" />
           {
-            job.company_info.verify && <div className="applied-jobs-card__left__avatar__check">
-              <HiIcons.HiCheckCircle className="applied-jobs-card__left__avatar__check__icon" />
-            </div>
+            job.company_info.verify
+              ? <div className="applied-jobs-card__left__avatar__check">
+                <HiIcons.HiCheckCircle className="applied-jobs-card__left__avatar__check__icon" />
+              </div>
+              : ""
           }
         </div>
         <div className="applied-jobs-card__left__info">
@@ -115,17 +117,17 @@ function AppliedJobsCard(props) {
           <div className="applied-jobs-card__right__overlay__action action">
             {
               job.status
-              ? <span className="applied-jobs-card__right__overlay__action__approved">Approved</span>
-              : <Button
-              type="button"
-              outline size="sm" color="danger"
-              onClick={handleUnApplyJob}
-              disabled={isCancelling}
-              style={isCancelling ? { cursor: "default" } : { cursor: "pointer" }}
-            >
-              {isCancelling && <span className="spinner-border spinner-border-sm mr-2" />}
-              Cancel
-            </Button>
+                ? <span className="applied-jobs-card__right__overlay__action__approved">Approved</span>
+                : <Button
+                  type="button"
+                  outline size="sm" color="danger"
+                  onClick={handleUnApplyJob}
+                  disabled={isCancelling}
+                  style={isCancelling ? { cursor: "default" } : { cursor: "pointer" }}
+                >
+                  {isCancelling && <span className="spinner-border spinner-border-sm mr-2" />}
+                  Cancel
+                </Button>
             }
           </div>
         </div>

@@ -168,7 +168,7 @@ function CompanyDetailPage(props) {
                 <div className="company-detail__container__info__top__right">
                   <span className="company-detail__container__info__top__right__recruiter-name">
                     {company.company_name ?? "N/A"}
-                    {company.verify && <HiIcons.HiCheckCircle className="inforCard-icon" />}
+                    {company.verify ? <HiIcons.HiCheckCircle className="inforCard-icon" /> : ""}
                   </span>
                   <span className="company-detail__container__info__top__right__recruiter-industry">
                     {company.company_industry ?? ""}

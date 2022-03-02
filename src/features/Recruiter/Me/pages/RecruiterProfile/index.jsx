@@ -197,7 +197,7 @@ function RecruiterProfilePage(props) {
                 <div className="recruiter-profile__container__info__top__right">
                   <span className="recruiter-profile__container__info__top__right__recruiter-name">
                     {user.r_profile.company_name}
-                    {user.r_profile.verify && <HiIcons.HiCheckCircle className="inforCard-icon" />}
+                    {user.r_profile.verify ? <HiIcons.HiCheckCircle className="inforCard-icon" /> : ""}
                   </span>
                   <span className="recruiter-profile__container__info__top__right__recruiter-industry">
                     {user.r_profile.company_industry}
@@ -214,6 +214,7 @@ function RecruiterProfilePage(props) {
                     <PopupUpdateProfile
                       initialValues={user.r_profile}
                       onSubmit={onSubmit}
+                      isUpdateWithPopup={true}
                     />
                   </div>
                 </div>

@@ -7,13 +7,14 @@
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   padding: 1rem;
   border-radius: 1rem;
+  margin: 0 0 1.5rem;
 
   & > img {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-right: 1rem;
-    border: 0.2rem solid var(--success);
+    border: 1px solid lightgrey;
     border-radius: 50%;
     width: 4.5rem;
     height: 4.5rem;

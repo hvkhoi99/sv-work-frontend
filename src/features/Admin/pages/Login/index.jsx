@@ -3,13 +3,16 @@ import LoadingUI from "components/Loading";
 import Images from 'constants/images';
 import InputField from "custom-fields/InputField";
 import { login } from 'features/Auth/adminSlice';
+import 'firebase/compat/auth';
 import { FastField, Form, Formik } from 'formik';
+import { getToken } from 'init-fcm';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import './AdminLogin.scss';
+
 
 AdminLoginPage.propTypes = {
 
@@ -22,6 +25,8 @@ function AdminLoginPage(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const isRecruiterPath = localStorage.getItem('isRecruiterPath');
+  const [isTokenFound, setTokenFound] = useState(false);
+  const [firebaseToken, setFirebaseToken] = useState(null);
 
   const validationSchema = Yup.object().shape({
     email: Yup
@@ -33,14 +38,24 @@ function AdminLoginPage(props) {
       .required('Password is required')
   })
 
+    console.log("Token found", isTokenFound);
   useEffect(() => {
-    let timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+    let data;
+
+    async function tokenFunc() {
+      data = await getToken(setTokenFound);
+      if (data) {
+        console.log("Token is", data);
+        setFirebaseToken(data);
+      }
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+      return data;
+    }
+
+    tokenFunc();
+  }, [setTokenFound]);
 
   const onSignIn = async (values) => {
     try {
@@ -52,7 +67,8 @@ function AdminLoginPage(props) {
 
       const action = login({
         email: values.email,
-        password: values.password
+        password: values.password,
+        device_token: firebaseToken
       });
 
       const actionResult = await dispatch(action);

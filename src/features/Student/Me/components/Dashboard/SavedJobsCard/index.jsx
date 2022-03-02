@@ -36,9 +36,13 @@ function SavedJobsCard(props) {
               ? Images.defaultAvatar
               : job.company_info.logo_image_link
           } alt="company-avatar" />
-          {job.company_info.verify && <div className="saved-jobs-card__left__avatar__check">
-            <HiIcons.HiCheckCircle className="saved-jobs-card__left__avatar__check__icon" />
-          </div>}
+          {
+            job.company_info.verify
+              ? <div className="saved-jobs-card__left__avatar__check">
+                <HiIcons.HiCheckCircle className="saved-jobs-card__left__avatar__check__icon" />
+              </div>
+              : ""
+          }
         </div>
         <div className="saved-jobs-card__left__info">
           <span className="saved-jobs-card__left__info__job-name">

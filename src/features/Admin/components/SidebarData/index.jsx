@@ -20,7 +20,7 @@ export const SidebarData = [
   },
   {
     title: 'Notification',
-    path: "/admin/notification",
+    path: "/admin/notification/all-notifications",
     icon: <RiIcons.RiNotificationBadgeFill />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,

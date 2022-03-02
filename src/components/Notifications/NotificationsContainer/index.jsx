@@ -208,11 +208,11 @@ function NotificationsContainer(props) {
           >
             Recently
           </span>
-          <span
+          {/* <span
             className="notifications-container__content__header__see-all"
           >
             See All
-          </span>
+          </span> */}
         </div>
         <ul onScroll={onLoadMore}>
           {

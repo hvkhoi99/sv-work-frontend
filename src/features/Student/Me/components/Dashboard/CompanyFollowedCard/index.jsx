@@ -35,12 +35,16 @@ function CompanyFollowedCard(props) {
         <div className="company-followed-card__left__avatar">
           <img src={
             company.logo_image_link === (null || "" || undefined)
-            ? Images.defaultAvatar
-            : company.logo_image_link
+              ? Images.defaultAvatar
+              : company.logo_image_link
           } alt="company-avatar" />
-          {company.verify && <div className="company-followed-card__left__avatar__check">
-            <HiIcons.HiCheckCircle className="company-followed-card__left__avatar__check__icon" />
-          </div>}
+          {
+            company.verify
+              ? <div className="company-followed-card__left__avatar__check">
+                <HiIcons.HiCheckCircle className="company-followed-card__left__avatar__check__icon" />
+              </div>
+              : ""
+          }
         </div>
         <div className="company-followed-card__left__info">
           <span className="company-followed-card__left__info__name">

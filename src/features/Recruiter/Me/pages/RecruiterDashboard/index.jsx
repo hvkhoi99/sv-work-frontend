@@ -139,7 +139,7 @@ function RecruiterDashboardPage(props) {
                   <div className="recruiter-dashboard__container__top__left__inforCard__description">
                     <div className="recruiter-dashboard__container__top__left__inforCard__description__title">
                       <span>{user.r_profile.company_name}</span>
-                      {dashboardIndexData.profile.verify && <HiIcons.HiCheckCircle className="inforCard-icon" />}
+                      {dashboardIndexData.profile.verify ? <HiIcons.HiCheckCircle className="inforCard-icon" /> : ""}
                     </div>
                     <span
                       className="recruiter-dashboard__container__top__left__inforCard__description__company-industry"
