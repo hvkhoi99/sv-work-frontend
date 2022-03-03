@@ -34,7 +34,7 @@ const StudentEditCustomButton = React.forwardRef(({ open, typeIcon, ...props }, 
     {...props}
   >
     {renderIcon(typeIcon)}
-    {console.log({ typeIcon })}
+    {/* {console.log({ typeIcon })} */}
     {/* Trigger - {props.open ? 'Opened' : 'Closed' */}
   </button>
 ));

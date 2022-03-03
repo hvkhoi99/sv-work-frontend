@@ -119,7 +119,6 @@ function Header(props) {
   }, [roleId, user.role_id, showNoti]);
 
   // console.log({ body: JSON.parse(notification.body) });
-  console.log({notifications})
 
   onMessageListener()
     .then((payload) => {

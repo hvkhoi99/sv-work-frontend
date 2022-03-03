@@ -14,7 +14,6 @@ UploadAvatarForm.propTypes = {
   isUploading: PropTypes.bool,
   close: PropTypes.func,
   currentAvatar: PropTypes.string,
-
 };
 
 UploadAvatarForm.defaultProps = {
@@ -31,6 +30,7 @@ function UploadAvatarForm(props) {
     currentAvatar,
     scaleValue: 10
   })
+  const [fileName, setFileName] = useState("");
   const [editor, setEditor] = useState(null);
 
   const setEditorRef = (editor) => {
@@ -60,6 +60,7 @@ function UploadAvatarForm(props) {
         ...state,
         currentAvatar: URL.createObjectURL(e.target.files[0])
       }));
+      setFileName(e.target.files[0].name);
     }
   }
 
@@ -99,6 +100,14 @@ function UploadAvatarForm(props) {
             >
               <AddIcon /> Upload photo
             </Fab>
+            <span style={{
+              margin: '.5rem 0 0 1rem',
+              borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+              width: '9rem',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden'
+            }}>{fileName}asjndajsdjas</span>
           </label>
 
           <div className="upload-avatar-form__main__editor__slider">

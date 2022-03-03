@@ -1,0 +1,169 @@
+.student-upload-cv {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 1rem 4rem 2rem;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    &__header {
+      display: flex;
+      align-items: center;
+
+      &__title {
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+
+      &__dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 50%;
+        background-color: var(--success);
+        margin: 0.5rem 0 0 0.2rem;
+      }
+    }
+
+    &__main {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+
+      margin: 1rem 0 0 0;
+
+      &__header {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        &__title {
+          font-weight: 500;
+          margin-bottom: 0.2rem;
+        }
+
+        & > input {
+          border: 1px solid var(--success);
+          border-radius: 0.5rem;
+          box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        }
+      }
+
+      &__center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem 0;
+        width: 100%;
+
+        &__description {
+          font-weight: 300;
+        }
+      }
+
+      &__upload-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        padding: 3rem 2rem;
+        border-radius: .5rem;
+        cursor: pointer;
+        transition: all 0.45s ease 0s;
+
+        &__image {
+          display: flex;
+          justify-content: center;
+          width: 100%;
+
+          &__icon {
+            font-size: 5rem;
+            color: var(--success);
+          }
+        }
+
+        &__description {
+          text-align: center;
+          width: 100%;
+          font-weight: 300;
+          margin-top: 2rem;
+        }
+
+        &:hover {
+          background-color: rgba(0,0,0,0.05);
+          transition: all 0.35s ease 0s;
+        }
+
+        &:active {
+          background-color: #fff;
+        }
+      }
+
+      &__uploaded-cv {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        padding: 2rem 1rem 2rem 1.5rem;
+        border-radius: .5rem;
+
+        &__item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+
+          &__left {
+            display: flex;
+            align-items: center;
+            max-width: 80%;
+
+            & > span {
+              margin-left: 2rem;
+              max-width: 80%;
+
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden;
+            }
+          }
+
+          &__right-icon {
+            font-size: 2rem;
+            padding: 0.4rem;
+            cursor: pointer;
+
+            &:hover {
+              transition: all 0.1s ease-out;
+              color: darkred;
+            }
+          }
+        }
+      }
+    }
+
+    &__footer {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin: 2rem 0 0 0;
+
+      & > button {
+        &:last-child {
+          margin-left: 2rem;
+        }
+      }
+    }
+  }
+}
+
+.invalid-title-cv {
+  border-color: red;
+  box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.2);
+}

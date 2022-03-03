@@ -1,6 +1,21 @@
 import axiosClient from "./axiosClient";
 
 const studentApi = {
+  // CV
+  getListCV: (params) => {
+    const url = `/student/cv/list?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
+  uploadCV: (params) => {
+    const url = "/student/cv/upload";
+    return axiosClient.post(url, params);
+  },
+
+  deleteCV: (id) => {
+    const url = `/student/cv/${id}/delete`;
+    return axiosClient.delete(url);
+  },
 
   // Notifications
   getCountNotifications: () => {
