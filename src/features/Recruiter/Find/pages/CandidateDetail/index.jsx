@@ -45,6 +45,7 @@ function CandidateDetailPage(props) {
         const data = user.role_id === 2
           ? await recruiterApi.getCandidateProfile(id)
           : await studentApi.getCandidateProfile(id);
+          // console.log({data})
         if (data.data.status === 1) {
           setCandidate(data.data.data);
           setIsLoading(false);
@@ -335,7 +336,7 @@ function CandidateDetailPage(props) {
                 />
                 <SkillsCard skills={candidate.skills} />
                 <LanguagesCard languages={candidate.languages} />
-                <AnotherCVCard />
+                <AnotherCVCard cvs={candidate.cvs}/>
               </div>
               <div className="candidate-detail__below__right">
                 <ExperiencesCard experiences={candidate.experiences} />

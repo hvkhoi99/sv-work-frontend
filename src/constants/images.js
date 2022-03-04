@@ -2,6 +2,7 @@ import aboutUsCard from '../assets/img/aboutuscard.png';
 import admin from '../assets/img/admin.png';
 import aio from '../assets/img/aio.png';
 import apple from '../assets/img/apple.png';
+import avatar from '../assets/img/avatar.jpg';
 import background from '../assets/img/background.png';
 import bgRight from '../assets/img/bg-right.png';
 import bmw from '../assets/img/bmw.png';
@@ -12,9 +13,11 @@ import defaultAvatar from '../assets/img/default-avatar.jpg';
 import defaultCompany from '../assets/img/default-company.png';
 import ellipse from '../assets/img/Ellipse.png';
 import emoji from '../assets/img/emoji.png';
+import employerAvatar from '../assets/img/employerAvatar.png';
 import event1 from '../assets/img/event1.jpg';
 import eventcircle from '../assets/img/eventcircle.png';
 import fb from '../assets/img/fb.png';
+import forgotpass from '../assets/img/forgotpass.png';
 import fptSoftware from '../assets/img/fpt-software.jpg';
 import googleCV from '../assets/img/GoogleCV.jpg';
 import home from '../assets/img/home.png';
@@ -26,6 +29,7 @@ import notfoundcandidate from '../assets/img/notfoundcandidate.png';
 import overview from '../assets/img/overview.png';
 import recruiter from '../assets/img/recruiter.png';
 import recruitmentManageCard from '../assets/img/recruitment-manage.png';
+import reset from '../assets/img/reset.png';
 import searchCard from '../assets/img/search-card.png';
 import ship from '../assets/img/ship.png';
 import shopee from '../assets/img/shopee.png';
@@ -35,18 +39,15 @@ import teamwork from '../assets/img/teamwork.png';
 import threeMinions from '../assets/img/three-minions.png';
 import tw from '../assets/img/tw.png';
 import verifyImage from '../assets/img/verifyImage.png';
-import forgotpass from '../assets/img/forgotpass.png';
 import verifyImage1 from '../assets/img/verifyImage1.jpg';
-import avatar from '../assets/img/avatar.jpg';
 import vinfast from '../assets/img/vinfast.png';
-import employerAvatar from '../assets/img/employerAvatar.png';
 
 const Images = {
   home, notFound, emoji, minami, bgRight, background, fptSoftware, smDot, eventcircle,
   admin, teamwork, overview, ellipse, apple, coffeeTime, levis, tw, shopee, fb, vinfast,
   burger, lamborghini, student, recruiter, bmw, create, searchCard, recruitmentManageCard, aio,
   threeMinions, ship, event1, aboutUsCard, googleCV, defaultAvatar, notfoundcandidate, defaultCompany,
-  verifyImage, verifyImage1, employerAvatar, avatar, forgotpass
+  verifyImage, verifyImage1, employerAvatar, avatar, forgotpass, reset
 }
 
 export default Images;

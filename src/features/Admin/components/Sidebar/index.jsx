@@ -9,10 +9,10 @@ import './Sidebar.scss';
 const Sidebar = () => {
   // const [sidebar, setSidebar] = useState(false);
 
-  // const showSidebar = (e) => {
-  //   e.preventDefault();
-  //   setSidebar(!sidebar);
-  // };
+  const showSidebar = (e) => {
+    e.preventDefault();
+    // setSidebar(!sidebar);
+  };
 
   return (
     <>
@@ -20,6 +20,9 @@ const Sidebar = () => {
         {/* <div className={sidebar ? "sidebar__nav" : "sidebar__nav sidebar__nav--active"} > */}
         <div className={"sidebar__nav sidebar__nav--active"} >
           <div className="sidebar__wrap">
+            <div className={"sidebar__wrap__logo"}>
+              <span>AIO</span>
+            </div>
             {SidebarData.map((item, index) => {
               return <SubMenu
                 item={item}
@@ -28,7 +31,7 @@ const Sidebar = () => {
             })}
           </div>
           <Link className="sidebar__icon" to='#'
-          // onClick={(e) => showSidebar(e)}
+          onClick={showSidebar}
           >
             {
               // sidebar

@@ -35,6 +35,16 @@ const userApi = {
   sendNotification: (params) => {
     const url = "/send-notifications";
     return axiosClient.post(url, params);
+  },
+
+  forgotPassword: (params) => {
+    const url = "reset-password";
+    return axiosClient.post(url, params);
+  },
+
+  resetPassword: (params, token) => {
+    const url = `reset-password/${token}`;
+    return axiosClient.put(url, params);
   }
 };
 

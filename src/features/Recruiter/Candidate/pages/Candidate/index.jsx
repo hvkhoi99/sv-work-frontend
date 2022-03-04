@@ -23,6 +23,7 @@ CandidatePage.propTypes = {
   onApproveCandidate: PropTypes.func,
   onRejectCandidate: PropTypes.func,
   isClosed: PropTypes.bool,
+  currentApplication: PropTypes.object,
 };
 
 CandidatePage.defaultProps = {
@@ -30,11 +31,12 @@ CandidatePage.defaultProps = {
   onApproveCandidate: null,
   onRejectCandidate: null,
   isClosed: false,
+  currentApplication: {}
 }
 
 function CandidatePage(props) {
   const user = useSelector((state) => state.user.current);
-  const { candidateId, onApproveCandidate, onRejectCandidate, isClosed } = props;
+  const { candidateId, onApproveCandidate, onRejectCandidate, isClosed, currentApplication } = props;
   const [isLoading, setIsLoading] = useState(true);
   const [candidate, setCandidate] = useState({});
   const [approveLoading, setApproveLoading] = useState(false);
@@ -47,6 +49,7 @@ function CandidatePage(props) {
         const data = user.role_id === 2
           ? await recruiterApi.getCandidateProfile(candidateId)
           : await studentApi.getCandidateProfile(candidateId);
+        console.log({ data });
         setCandidate(data.data.data)
         setIsLoading(false);
       } catch (error) {
@@ -79,6 +82,8 @@ function CandidatePage(props) {
 
   }
 
+  // console.log({currentApplication})
+
   return (
     <>
       {
@@ -103,32 +108,102 @@ function CandidatePage(props) {
               </span>
               {
                 !isClosed
-                  ? <div className="candidate__above__btn-group">
-                    <button
-                      type="button"
-                      className="btn btn-success btn-sm mr-4"
-                      disabled={approveLoading}
-                      style={approveLoading ? { cursor: "default" } : { cursor: "pointer" }}
-                      onClick={() => handleApprove("approve")}
-                    >
-                      {approveLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                      Approve
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-secondary btn-sm"
-                      disabled={rejectLoading}
-                      style={rejectLoading ? { cursor: "default" } : { cursor: "pointer" }}
-                      onClick={() => handleApprove("reject")}
-                    >
-                      {rejectLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                      Reject
-                    </button>
-                  </div>
-                  : <div style={{
-                    borderBottom: "1px solid lightgrey",
-                    width: "100%",
-                  }} />
+                  ? (
+                    currentApplication.state === null
+                      ? <div className="candidate__above__btn-group">
+                        <button
+                          type="button"
+                          className="btn btn-success btn-sm mr-4"
+                          disabled={approveLoading}
+                          style={approveLoading ? { cursor: "default" } : { cursor: "pointer" }}
+                          onClick={() => handleApprove("approve")}
+                        >
+                          {approveLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                          Approve
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-secondary btn-sm"
+                          disabled={rejectLoading}
+                          style={rejectLoading ? { cursor: "default" } : { cursor: "pointer" }}
+                          onClick={() => handleApprove("reject")}
+                        >
+                          {rejectLoading && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                          Reject
+                        </button>
+                      </div>
+                      : (
+                        currentApplication.state
+                          ? <div className="candidate__above__btn-group">
+                            <button
+                              type="button"
+                              className="btn btn-success btn-sm"
+                              disabled={true}
+                              style={{ cursor: "default" }}
+                            >
+                              Approved
+                            </button>
+                          </div>
+                          : <div className="candidate__above__btn-group">
+                            <button
+                              type="button"
+                              className="btn btn-secondary btn-sm"
+                              disabled={true}
+                              style={{ cursor: "default" }}
+                            >
+                              Rejected
+                            </button>
+                          </div>
+                      )
+                  )
+                  : (
+                    currentApplication.state === null
+                      ? <div className="candidate__above__btn-group">
+                        <button
+                          type="button"
+                          className="btn btn-success btn-sm mr-4"
+                          disabled={true}
+                          style={{ cursor: "default" }}
+                        >
+                          Approve
+                        </button>
+                        <button
+                          type="button"
+                          className="btn btn-secondary btn-sm"
+                          disabled={true}
+                          style={{ cursor: "default" }}
+                        >
+                          Reject
+                        </button>
+                      </div>
+                      : (
+                        currentApplication.state
+                          ? <div className="candidate__above__btn-group">
+                            <button
+                              type="button"
+                              className="btn btn-success btn-sm"
+                              disabled={true}
+                              style={{ cursor: "default" }}
+                            >
+                              Approved
+                            </button>
+                          </div>
+                          : <div className="candidate__above__btn-group">
+                            <button
+                              type="button"
+                              className="btn btn-secondary btn-sm"
+                              disabled={true}
+                              style={{ cursor: "default" }}
+                            >
+                              Rejected
+                            </button>
+                          </div>
+                      )
+                  )
+                // <div style={{
+                //   borderBottom: "1px solid lightgrey",
+                //   width: "100%",
+                // }} />
               }
               <div className="candidate__above__overview">
                 <div className="candidate__above__overview__title">
@@ -136,7 +211,7 @@ function CandidatePage(props) {
                   <GoIcons.GoPrimitiveDot className="candidate__above__overview__title__dot" />
                 </div>
                 <div className="candidate__above__overview__description">
-                  {ReactHtmlParser(candidate.over_view)}
+                  {ReactHtmlParser(candidate.over_view ?? "No Information Available.")}
                 </div>
               </div>
             </div>
@@ -154,7 +229,7 @@ function CandidatePage(props) {
                 />
                 <SkillsCard skills={candidate.skills} />
                 <LanguagesCard languages={candidate.languages} />
-                <AnotherCVCard />
+                <AnotherCVCard cvs={candidate.cvs} />
               </div>
               <div className="candidate__below__right">
                 <ExperiencesCard experiences={candidate.experiences} />

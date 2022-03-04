@@ -2,6 +2,7 @@ import React from 'react';
 import * as AiIcons from 'react-icons/ai';
 import * as MdIcons from 'react-icons/md';
 import * as RiIcons from 'react-icons/ri';
+import * as GoIcons from 'react-icons/go';
 
 export const SidebarData = [
   {
@@ -22,6 +23,13 @@ export const SidebarData = [
     title: 'Notification',
     path: "/admin/notification/all-notifications",
     icon: <RiIcons.RiNotificationBadgeFill />,
+    iconClosed: <RiIcons.RiArrowDownSFill />,
+    iconOpened: <RiIcons.RiArrowUpSFill />,
+  },
+  {
+    title: 'Log out',
+    path: "#",
+    icon: <GoIcons.GoSignOut />,
     iconClosed: <RiIcons.RiArrowDownSFill />,
     iconOpened: <RiIcons.RiArrowUpSFill />,
   },

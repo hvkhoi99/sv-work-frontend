@@ -228,8 +228,8 @@ function SignInPage(props) {
                         <input type="checkbox" />
                         <p>Remember</p>
                       </div>
-                      <Link to="/auth/forget-password" className="remember-forget__link">
-                        Forget Password
+                      <Link to="/auth/forgot-password" className="remember-forget__link">
+                        Forgot Password
                       </Link>
                     </div>
                     <div className="form-group signin-button">

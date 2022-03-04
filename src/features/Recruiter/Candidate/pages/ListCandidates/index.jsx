@@ -45,6 +45,14 @@ function ListCandidates(props) {
   let [candidateId, setCandidateId] = useState(currentCandidateId);
   const indexOfCandidateId = candidateId > 0 ? candidates.findIndex((candidate) => candidate.id === candidateId) : null;
   const [activeIndex, setActiveIndex] = useState(indexOfCandidateId);
+  const [currentApplication, setCurrentApplication] = useState({
+    id: 0,
+    is_applied: false,
+    is_invited: false,
+    is_saved: false,
+    recruitment_id: 0,
+    state: false,
+  });
 
   useEffect(() => {
     setActiveIndex(-1);
@@ -59,6 +67,7 @@ function ListCandidates(props) {
         const data = user.role_id === 2
           ? await recruiterApi.getRecruitmentCandidates(recruitmentId, params)
           : await studentApi.getRecruitmentCandidates(recruitmentId, params)
+        // console.log({ data })
         data.data.data.data.length === 0 && helper.scrollToTop();
         setCandidates(data.data.data.data);
         setLastPage(data.data.data.last_page);
@@ -74,6 +83,7 @@ function ListCandidates(props) {
 
   const handleActiveCard = (index, candidate) => {
     setActiveIndex(index);
+    setCurrentApplication(candidate.application)
     setCandidateId(candidate.id);
   }
 
@@ -220,6 +230,7 @@ function ListCandidates(props) {
                         onApproveCandidate={onApproveCandidate}
                         onRejectCandidate={onRejectCandidate}
                         isClosed={isClosed}
+                        currentApplication={currentApplication}
                       />
                     </div>
                     : <div className="list-candidates__container__intro">

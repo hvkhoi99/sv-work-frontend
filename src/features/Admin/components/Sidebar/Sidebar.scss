@@ -17,8 +17,24 @@
   }
 
   &__wrap {
-    margin-top: 5rem;
     width: 100%;
+    position: relative;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 15px 0px;
+
+    &__logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+
+      & > span {
+        font-family: "Slackey", "cursive";
+        font-size: 3.35rem;
+        font-weight: bold;
+        color: var(--success);
+      }
+      // margin-bottom: 5rem;
+    }
   }
 
   &__icon {
@@ -31,6 +47,6 @@
     background-color: #15171c;
     border-top-right-radius: 1rem;
     border-bottom-right-radius: 1rem;
-    opacity: .5;
+    opacity: 0.5;
   }
 }

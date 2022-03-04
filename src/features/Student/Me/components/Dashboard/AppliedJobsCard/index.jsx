@@ -108,7 +108,7 @@ function AppliedJobsCard(props) {
               ? <RiIcons.RiCheckboxCircleFill className="applied-jobs-card__right__icon__item" />
               : (
                 job.status === false
-                  ? <RiIcons.RiCloseCircleFill className="applied-jobs-card__right__icon__item" />
+                ? <RiIcons.RiCloseCircleFill className="applied-jobs-card__right__icon__item" />
                   : <RiIcons.RiErrorWarningFill className="applied-jobs-card__right__icon__item" />
               )
           }

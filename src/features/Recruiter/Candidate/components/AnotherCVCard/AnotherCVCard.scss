@@ -33,29 +33,36 @@
     
     &__item {
       display: flex;
-      justify-content: space-around;
+      justify-content: center;
       align-items: center;
+      
       width: 100%;
       line-height: 2rem;
 
       &__link {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
 
-        width: 100%;
+        width: 60%;
         color: black;
         font-weight: 300;
+
+        transition: all 0.2s ease 0s;
+
+        & > span {
+          max-width: 80%;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          // font-weight: 500;
+        }
         
         &:hover {
           color: var(--success);
           text-decoration: none;
-          font-weight: 500;
-          transition: all 0.2s ease-out;
-        }
-
-        &:hover > &__icon {
-          font-size: 1.2rem;
+          transition: all 0.15s ease 0s;
+          transform: scale(1.05);
         }
       }
     }

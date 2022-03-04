@@ -277,6 +277,23 @@ function NotificationAlertCard(props) {
             <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
           </>
         );
+      case "accepted-your-job":
+        return (
+          <>
+            <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
+              <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
+                {body.student_info.first_name ?? ""} {body.student_info.last_name ?? ""}
+              </span>
+              has just <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
+                accepted
+              </span>
+              your <span className={`notification-alert__container__content__main__description__text__job-title ${isRead && "read-notification-content__content__text__job-title"}`}>
+                {body.job.title}
+              </span> job offer.
+            </div>
+            <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
       case "rejected-verify-profile":
         return (
           <>

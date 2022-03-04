@@ -112,3 +112,17 @@
 .candidate-card-invisible {
   display: none;
 }
+
+.approved-candidate {
+  background-color: lightgreen;
+  &__icon {
+    color: green;
+  }
+}
+
+.rejected-candidate {
+  background-color: lightcoral;
+  &__icon {
+    color: crimson;
+  }
+}
