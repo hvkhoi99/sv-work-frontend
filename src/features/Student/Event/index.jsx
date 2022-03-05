@@ -6,7 +6,6 @@ import RecruiterMainEventPage from 'features/Recruiter/Event/pages/MainPage';
 import RecruiterHomeFeature from 'features/Recruiter/Home';
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
-import StudentCreateEventPage from './pages/CreatePage';
 import { useSelector } from 'react-redux';
 import SearchEventPage from 'features/Recruiter/Event/pages/SearchEvent';
 import RecruiterCreateEventPage from 'features/Recruiter/Event/pages/CreatePage';
@@ -30,12 +29,22 @@ function StudentEventFeature(props) {
           <Route exact path={match.url} component={RecruiterMainEventPage} />
           <Route exact path={`${match.url}/search`} component={SearchEventPage} />
           <Route exact path={`${match.url}/create`} component={RecruiterCreateEventPage} />
-          <Route exact path={`${match.url}/dashboard`} component={EventDashboardPage} />
-          {/* <Redirect exact from={`${match.url}/:id`} to={`${match.url}/:id/detail`} /> */}
+          <Redirect
+            exact
+            from={`${match.url}/dashboard`}
+            to={`${match.url}/dashboard/posted-event`}
+          />
+          <Route exact path={`${match.url}/dashboard/posted-event`} component={EventDashboardPage} />
+          <Route exact path={`${match.url}/dashboard/joined-event`} component={EventDashboardPage} />
+          <Redirect
+            exact
+            from={`${match.url}/dashboard/posted-event/:id`}
+            to={`${match.url}/dashboard/posted-event/:id/detail`}
+          />
+          <Route exact path={`${match.url}/dashboard/posted-event/:id/detail`} component={DetailEventPage} />
+          <Redirect exact from={`${match.url}/:id`} to={`${match.url}/:id/detail`} />
           <Route exact path={`${match.url}/:id/detail`} component={DetailEventPage} />
-          <Route exact path={`${match.url}/create`} component={StudentCreateEventPage} />
           <Route path="*" component={NotFoundPage} />
-
         </Switch>
         <Footer />
       </>

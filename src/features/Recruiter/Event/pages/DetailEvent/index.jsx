@@ -36,7 +36,9 @@ function DetailEventPage(props) {
     <>
       {
         isLoading
-          ? <LoadingUI />
+          ? <div className="loading-ui">
+            < LoadingUI />
+          </div >
           : <div className="detail-event">
             <div className="detail-event__container">
               <div className="detail-event__container__top">

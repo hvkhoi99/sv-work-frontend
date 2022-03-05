@@ -3,7 +3,6 @@ import Header from 'components/Header';
 import NotFoundPage from 'components/NotFound';
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
-import StudentEventFeature from './Event';
 import StudentFindFeature from './Find';
 import StudentHomeFeature from './Home';
 
@@ -19,7 +18,6 @@ function StudentFeature(props) {
       <Header />
       <Switch>
         <Route exact path={match.url} component={StudentHomeFeature} />
-        <Route path={`${match.url}/event`} component={StudentEventFeature} />
         <Route path={`${match.url}/find-jobs`} component={StudentFindFeature} />
         <Route path="*" component={NotFoundPage} />
       </Switch>

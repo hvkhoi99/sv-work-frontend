@@ -9,6 +9,7 @@ import * as MdIcons from 'react-icons/md';
 import Skeleton from 'react-loading-skeleton';
 import ReactPaginate from 'react-paginate';
 import { useHistory, useLocation } from 'react-router-dom';
+import helper from 'utils/common';
 import './AdminNotification.scss';
 
 AdminNotificationPage.propTypes = {
@@ -33,6 +34,7 @@ function AdminNotificationPage(props) {
   ]
 
   useEffect(() => {
+    helper.scrollToTop();
     setIsLoading(true);
     const fetchNotifications = async () => {
       try {

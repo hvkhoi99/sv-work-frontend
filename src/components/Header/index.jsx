@@ -74,7 +74,9 @@ function Header(props) {
               )
               : 0
           )
-        setCountUnread(data.data.data)
+        if (data !== 0 && data.data.status === 1) {
+          setCountUnread(data.data.data)
+        }
       } catch (error) {
         console.log("Cannot fetch notifications count. Error: " + error.message);
       }
@@ -101,10 +103,10 @@ function Header(props) {
                   ? await studentApi.getListNotificationsByRecruiter(params)
                   : await studentApi.getListNotificationsByStudent(params)
               )
-              : []
+              : 0
           )
         // console.log({ data });
-        if (data.data.status === 1) {
+        if (data !== 0 && data.data.status === 1) {
           setIsLoading(false);
           setNotifications(data.data.data.data);
         }
@@ -265,7 +267,6 @@ function Header(props) {
             )
             : []
         )
-      // console.log({action});
       if (action.data.status === 0) {
         enqueueSnackbar(action.data.message, { variant: "error" });
       }

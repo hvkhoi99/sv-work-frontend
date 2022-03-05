@@ -1,6 +1,6 @@
 import Images from 'constants/images';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import * as BsIcons from 'react-icons/bs';
 import * as FaIcons from 'react-icons/fa';
 import * as IoIcons from 'react-icons/io';
@@ -11,6 +11,7 @@ import { Chart, registerables } from 'chart.js';
 import TotalAccountChart from 'features/Admin/components/TotalAccountChart';
 import TotalJobChart from 'features/Admin/components/TotalJobChart';
 import TotalEventChart from 'features/Admin/components/TotalEventChart';
+import helper from 'utils/common';
 Chart.register(...registerables);
 
 AdminDashboardPage.propTypes = {
@@ -50,6 +51,10 @@ function AdminDashboardPage(props) {
   //     }
   //   ]
   // };
+
+  useEffect(() => {
+    helper.scrollToTop();
+  }, []);
 
   return (
     <div className="dashboard">

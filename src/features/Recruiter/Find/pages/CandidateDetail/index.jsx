@@ -45,7 +45,7 @@ function CandidateDetailPage(props) {
         const data = user.role_id === 2
           ? await recruiterApi.getCandidateProfile(id)
           : await studentApi.getCandidateProfile(id);
-          // console.log({data})
+        // console.log({data})
         if (data.data.status === 1) {
           setCandidate(data.data.data);
           setIsLoading(false);
@@ -165,7 +165,11 @@ function CandidateDetailPage(props) {
                         {
                           // (job.is_closed || (job.application.state !== null)) &&
                           <div className="candidate-detail__above__applied-recruitment__status">
-                            <Link to={`${Paths.recruiterDashboard}/available-jobs/${job.id}/list-candidates`}
+                            <Link to={
+                              job.is_closed
+                                ? `${Paths.recruiterDashboard}/closed-recruitments/${job.id}/list-candidates`
+                                : `${Paths.recruiterDashboard}/available-jobs/${job.id}/list-candidates`
+                            }
                               className={
                                 (job.is_closed || (job.application.state !== null))
                                   ? "candidate-detail__above__applied-recruitment__status__title recruitment-was-closed"
@@ -269,7 +273,11 @@ function CandidateDetailPage(props) {
                         {
                           // (job.is_closed || (job.application.state !== null)) &&
                           <div className="candidate-detail__above__applied-recruitment__status">
-                            <Link to={`${Paths.recruiterDashboard}/available-jobs/${job.id}`}
+                            <Link to={
+                              job.is_closed
+                                ? `${Paths.recruiterDashboard}/closed-recruitments/${job.id}/list-candidates`
+                                : `${Paths.recruiterDashboard}/available-jobs/${job.id}/list-candidates`
+                            }
                               className={
                                 (job.is_closed || (job.application.state !== null))
                                   ? "candidate-detail__above__applied-recruitment__status__title recruitment-was-closed"
@@ -301,7 +309,7 @@ function CandidateDetailPage(props) {
                                   ? "Accepted"
                                   : (
                                     job.application.state === null
-                                      ? "Waiting" : "Denied"
+                                      ? "Waiting" : "Rejected"
                                   )
                               }
                             </span>
@@ -336,7 +344,7 @@ function CandidateDetailPage(props) {
                 />
                 <SkillsCard skills={candidate.skills} />
                 <LanguagesCard languages={candidate.languages} />
-                <AnotherCVCard cvs={candidate.cvs}/>
+                <AnotherCVCard cvs={candidate.cvs} />
               </div>
               <div className="candidate-detail__below__right">
                 <ExperiencesCard experiences={candidate.experiences} />
