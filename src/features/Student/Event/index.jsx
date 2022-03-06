@@ -36,6 +36,7 @@ function StudentEventFeature(props) {
           />
           <Route exact path={`${match.url}/dashboard/posted-event`} component={EventDashboardPage} />
           <Route exact path={`${match.url}/dashboard/joined-event`} component={EventDashboardPage} />
+          <Route exact path={`${match.url}/dashboard/closed-event`} component={EventDashboardPage} />
           <Redirect
             exact
             from={`${match.url}/dashboard/posted-event/:id`}

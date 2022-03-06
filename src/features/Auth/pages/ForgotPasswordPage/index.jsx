@@ -25,7 +25,7 @@ function ForgotPasswordPage(props) {
       .string()
       .email('Email is invalid')
       .required('Email is required'),
-  })
+  });
 
   const {
     register,

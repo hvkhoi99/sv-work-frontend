@@ -1,18 +1,18 @@
-import Paths from 'constants/paths';
 import React, { useEffect, useState } from 'react';
+import Paths from 'constants/paths';
+import LoadingChildUI from 'components/LoadingChild';
+import * as MdIcons from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
 import { useHistory } from 'react-router-dom';
 import EventCard from '../EventCard';
 // import PropTypes from 'prop-types';
-import * as MdIcons from 'react-icons/md';
-import './PostedEventArea.scss';
-import LoadingChildUI from 'components/LoadingChild';
+import './ClosedEventArea.scss';
 
-PostedEventArea.propTypes = {
-
+ClosedEventArea.propTypes = {
+  
 };
 
-function PostedEventArea(props) {
+function ClosedEventArea(props) {
   const items = [1, 2, 3, 4, 5, 6];
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
@@ -42,25 +42,25 @@ function PostedEventArea(props) {
   }
 
   return (
-    <div className="posted-event-area">
+    <div className="closed-event-area">
       {isLoading
         ? <div className="loading-child-ui">
           <LoadingChildUI />
         </div>
-        : <div className="posted-event-area__container">
-          <div className="posted-event-area__container__main">
+        : <div className="closed-event-area__container">
+          <div className="closed-event-area__container__main">
             {
               items.map((item, index) => {
                 return <div
                   key={index}
-                  className="posted-event-area__container__main__item"
+                  className="closed-event-area__container__main__item"
                 >
                   <EventCard onViewDetailEvent={onViewDetailEvent} />
                 </div>
               })
             }
           </div>
-          <div className="posted-event-area__container__paginator">
+          <div className="closed-event-area__container__paginator">
             <ReactPaginate
               previousLabel={
                 <MdIcons.MdArrowBackIosNew />
@@ -96,4 +96,4 @@ function PostedEventArea(props) {
   );
 }
 
-export default PostedEventArea;
+export default ClosedEventArea;

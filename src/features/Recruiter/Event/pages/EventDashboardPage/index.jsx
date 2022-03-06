@@ -10,6 +10,8 @@ import { useHistory } from 'react-router-dom';
 import DashboardSelectOption from 'features/Recruiter/Me/components/DashboardSelectOption';
 import helper from 'utils/common';
 import PostedEventArea from '../../components/PostedEventArea';
+import JoinedEventArea from '../../components/JoinedEventArea';
+import ClosedEventArea from '../../components/ClosedEventArea';
 
 EventDashboardPage.propTypes = {
 };
@@ -17,12 +19,14 @@ EventDashboardPage.propTypes = {
 function EventDashboardPage(props) {
   const postedEventPath = `${Paths.clientEvent}/dashboard/posted-event`;
   const joinedEventPath = `${Paths.clientEvent}/dashboard/joined-event`;
+  const closedEventPath = `${Paths.clientEvent}/dashboard/closed-event`;
   const history = useHistory();
   const location = history.location.pathname;
   const [currentPath, setCurrentPath] = useState(location);
   const options = [
     { id: 0, name: "Posted Event", path: postedEventPath },
-    { id: 1, name: "Joined Event", path: joinedEventPath }
+    { id: 1, name: "Joined Event", path: joinedEventPath },
+    { id: 2, name: "Closed Event", path: closedEventPath },
   ]
 
   useEffect(() => {
@@ -31,6 +35,10 @@ function EventDashboardPage(props) {
 
   const onChangeIndex = (option) => {
     setCurrentPath(option.path);
+  }
+
+  const onMoveToFormCreateEvent = () => {
+    history.push(`${Paths.clientEvent}/create`);
   }
 
   return (
@@ -68,7 +76,8 @@ function EventDashboardPage(props) {
             </div>
             <div
               className="event-dashboard-page__container__top__right__card"
-            // onClick={isChecking ? null : handleCreateRecruitment}
+              // onClick={isChecking ? null : handleCreateRecruitment}
+              onClick={onMoveToFormCreateEvent}
             >
               {/* {
                 isChecking
@@ -106,8 +115,13 @@ function EventDashboardPage(props) {
               ? <PostedEventArea
               />
               : currentPath === joinedEventPath
-                ? "Joined Event"
-                : <></>}
+                ? <JoinedEventArea
+                />
+                : currentPath === closedEventPath
+                  ? <ClosedEventArea
+                  />
+                  : <></>
+            }
           </div>
         </div>
       </div>

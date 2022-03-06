@@ -32,7 +32,7 @@
         justify-content: center;
         align-items: center;
         height: auto;
-        width: 28%;
+        width: 25%;
         padding: 0.5rem;
 
         &__inforCard {
@@ -40,6 +40,7 @@
           justify-content: center;
           align-items: center;
           height: 7.9rem;
+          // min-width: 15rem;
           width: 100%;
           padding: 1.5rem;
           border-radius: 1rem;
@@ -100,7 +101,7 @@
         flex-flow: row wrap;
         justify-content: space-between;
         align-items: center;
-        width: calc(100% - 28% - 3rem);
+        width: calc(100% - 25% - 3rem);
         height: auto;
         padding: 0.5rem;
 
@@ -110,8 +111,7 @@
           justify-content: center;
           align-items: center;
           padding: 0rem 1.5rem;
-          min-width: 10rem;
-          max-width: 12rem;
+          width: 12rem;
           min-height: 8rem;
           border-radius: 1rem;
           box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -139,9 +139,9 @@
             justify-content: center;
             text-align: center;
             align-items: center;
-            width: 8rem;
+            width: 10rem;
             height: 8rem;
-            // background-color: #fff;
+            background-color: #fff;
             cursor: pointer;
 
             box-shadow: none;
@@ -174,7 +174,7 @@
         display: flex;
         flex-direction: column;
         padding: 0.5rem;
-        width: 28%;
+        width: 25%;
         height: auto;
         // background-color: burlywood;
 
@@ -223,10 +223,10 @@
         display: flex;
         justify-content: center;
         align-items: flex-start;
-        width: calc(100% - 28%);
+        width: calc(100% - 25%);
         height: 10;
         padding: 0 0.5rem;
-        padding-left: 3.25rem;
+        padding-left: 3.5rem;
       }
     }
   }
