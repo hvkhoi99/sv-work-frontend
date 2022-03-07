@@ -1,8 +1,10 @@
 import LoadingUI from 'components/Loading';
+import PopupConfirm from 'components/PopupConfirm';
 import Paths from 'constants/paths';
 import React, { useEffect, useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import helper from 'utils/common';
 import EventCard from '../../components/EventCard';
@@ -16,9 +18,11 @@ RecruiterMainEventPage.propTypes = {
 
 function RecruiterMainEventPage(props) {
   const history = useHistory();
-  const roleId = parseInt(localStorage.getItem('role_id'));
   const [isLoading, setIsLoading] = useState(true);
   const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const user = useSelector((state) => state.user.current);
+  const roleId = parseInt(localStorage.getItem('role_id'), 10);
+  const [show, setShow] = useState(false);
 
   const sliderData = [
     {
@@ -82,19 +86,85 @@ function RecruiterMainEventPage(props) {
   }
 
   const onManageEvent = () => {
-    history.push(
-      roleId === 2
-        ? `${Paths.recruiterEvent}/dashboard`
-        : `${Paths.clientEvent}/dashboard`
-    );
+    if ((user && Object.keys(user).length === 0)) {
+      onShow(true);
+      return;
+    } else {
+      if (user.role_id === 2) {
+        history.push(`${Paths.recruiterEvent}/dashboard`);
+        return;
+      }
+
+      if (user.role_id === 3) {
+        if (roleId === 2) {
+          history.push(`${Paths.recruiterEvent}/dashboard`);
+          return;
+        }
+
+        if (user.s_profile) {
+          history.push(`${Paths.clientEvent}/dashboard`);
+          return;
+        }
+      }
+
+      onShow(true);
+      return;
+    }
   }
 
   const onCreateEvent = () => {
-    history.push(
-      roleId === 2
-        ? `${Paths.recruiterEvent}/create`
-        : `${Paths.clientEvent}/create`
-    );
+    if ((user && Object.keys(user).length === 0)) {
+      onShow(true);
+      return;
+    } else {
+      if (user.role_id === 2) {
+        history.push(`${Paths.recruiterEvent}/create`);
+        return;
+      }
+
+      if (user.role_id === 3) {
+        if (roleId === 2) {
+          history.push(`${Paths.recruiterEvent}/create`);
+          return;
+        }
+
+        if (user.s_profile) {
+          history.push(`${Paths.clientEvent}/create`);
+          return;
+        }
+
+      }
+
+      onShow(true);
+      return;
+    }
+  }
+
+  const onShow = (value) => {
+    setShow(value);
+  }
+
+  const onTryThisPopupConfirm = () => {
+    if ((user && Object.keys(user).length === 0)) {
+      history.push("/auth/sign-in");
+      return;
+    } else {
+      if (user.role_id === 2) {
+        return;
+      }
+
+      if (user.role_id === 3) {
+        if (roleId === 2) {
+          return;
+        }
+
+        if (user.s_profile) {
+          return;
+        }
+
+        history.push("/first-update/student");
+      }
+    }
   }
 
   return (
@@ -177,6 +247,33 @@ function RecruiterMainEventPage(props) {
             </div>
           </div>
       }
+      <PopupConfirm
+        show={show}
+        onShow={onShow}
+        onOK={onTryThisPopupConfirm}
+        // titleConfirm="Update Profile"
+        contentConfirm={
+          (user && Object.keys(user).length === 0)
+            ? "Only accounts with the role of employer or student, and already have a personal profile, can use this function. Continue?"
+            : (user.role_id === 2
+              ? user.r_profile
+                ? "Something went wrong. Please try again!"
+                : "You need to update your Personal Profile to perform this function."
+              : (user.role_id === 3
+                ? (roleId === 2
+                  ? (
+                    user.r_profile
+                      ? "Something went wrong. Please try again!"
+                      : "You need to update your Personal Profile to perform this function. Continue?"
+                  )
+                  : (
+                    user.s_profile
+                      ? "Something went wrong. Please try again!"
+                      : "You need to update your Personal Profile to perform this function. Continue?"
+                  ))
+                : "Something went wrong. Please try again!"))
+        }
+      />
     </>
 
   );

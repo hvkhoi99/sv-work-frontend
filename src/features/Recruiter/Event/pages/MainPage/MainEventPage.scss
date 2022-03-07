@@ -100,11 +100,11 @@
         margin: 3rem 0;
 
         &__item {
-          margin: 2rem;
-          flex: 0 0 0.333333333333%;
+          margin: 1.5rem;
+          // flex: 0 0 0.333333333333%;
 
           & > .event-card {
-            width: 15.5rem;
+            width: 16rem;
           }
         }
       }

@@ -190,10 +190,10 @@ function CompanyDetailPage(props) {
                       style={isFollowing ? { cursor: "default" } : { cursor: "pointer" }}
                       onClick={onFollowCompany}
                     >
-                      {isFollowing && <span className="spinner-border spinner-border-sm mr-1" />}
                       <RiIcons.RiChatFollowUpFill
                         className="company-detail__container__info__top__right__follow__button__icon"
                       />
+                      {isFollowing && <span className="spinner-border spinner-border-sm mr-1" />}
                       {followState ? "Following" : "Follow"}
                     </Button>
                   </div>
@@ -306,8 +306,8 @@ function CompanyDetailPage(props) {
         // titleConfirm="Update Profile"
         contentConfirm={
           (user && Object.keys(user).length === 0)
-            ? "You need to LOGIN first and then you need to update your STUDENT PROFILE. Continue?"
-            : "You need to update your STUDENT PROFILE. Continue?"
+            ? "To perform this function, you need to Log in as a Student. You will then need to update your Personal Information if it has not been created. Continue?"
+            : "You need to update your Student Profile. Continue?"
         }
       />
     </>

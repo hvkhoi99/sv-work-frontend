@@ -10,7 +10,7 @@ StudentFindFeature.propTypes = {
 };
 
 function StudentFindFeature(props) {
-  const roleId = parseInt(localStorage.getItem('role_id'));
+  const roleId = parseInt(localStorage.getItem('role_id'), 10);
   const match = useRouteMatch();
 
   const currentUI = roleId === 2 ? (

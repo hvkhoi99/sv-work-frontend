@@ -6,7 +6,7 @@ import RecruiterHeader from 'components/RecruiterHeader';
 import StudentHeader from 'components/StudentHeader';
 import { onMessageListener } from 'init-fcm';
 import { useSnackbar } from 'notistack';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './Header.scss';
@@ -59,31 +59,35 @@ function Header(props) {
     }
   };
 
+  const onFetchCountNotifications = useCallback(async () => {
+    try {
+      const data = user.role_id === 2
+        ? await recruiterApi.getRecruiterCountNotifications()
+        : (
+          user.role_id === 3
+            ? (
+              roleId === 2
+                ? await studentApi.getRecruiterCountNotifications()
+                : (
+                  user.s_profile
+                    ? await studentApi.getCountNotifications()
+                    : 0
+                )
+            )
+            : 0
+        )
+      if (data !== 0 && data.data.status === 1) {
+        setCountUnread(data.data.data)
+      }
+    } catch (error) {
+      console.log("Cannot fetch notifications count. Error: " + error.message);
+    }
+  }, [roleId, user.role_id, user.s_profile])
+
   useEffect(() => {
     showButton();
-    const fetchCountNotifications = async () => {
-      try {
-        const data = user.role_id === 2
-          ? await recruiterApi.getRecruiterCountNotifications()
-          : (
-            user.role_id === 3
-              ? (
-                roleId === 2
-                  ? await studentApi.getRecruiterCountNotifications()
-                  : await studentApi.getCountNotifications()
-              )
-              : 0
-          )
-        if (data !== 0 && data.data.status === 1) {
-          setCountUnread(data.data.data)
-        }
-      } catch (error) {
-        console.log("Cannot fetch notifications count. Error: " + error.message);
-      }
-    }
-
-    fetchCountNotifications();
-  }, [roleId, user.role_id]);
+    onFetchCountNotifications();
+  }, [onFetchCountNotifications]);
 
   window.addEventListener('resize', showButton);
 
@@ -101,11 +105,14 @@ function Header(props) {
               ? (
                 roleId === 2
                   ? await studentApi.getListNotificationsByRecruiter(params)
-                  : await studentApi.getListNotificationsByStudent(params)
+                  : (
+                    user.s_profile
+                      ? await studentApi.getListNotificationsByStudent(params)
+                      : 0
+                  )
               )
               : 0
           )
-        // console.log({ data });
         if (data !== 0 && data.data.status === 1) {
           setIsLoading(false);
           setNotifications(data.data.data.data);
@@ -118,13 +125,14 @@ function Header(props) {
     }
 
     fetchNotifications();
-  }, [roleId, user.role_id, showNoti]);
+  }, [roleId, user.role_id, showNoti, user.s_profile]);
 
   // console.log({ body: JSON.parse(notification.body) });
 
   onMessageListener()
     .then((payload) => {
-      setCountUnread(countUnread + 1);
+      // setCountUnread(countUnread + 1);
+      onFetchCountNotifications();
       setNotification(payload.notification);
       setShowNoti(true);
       setTimeout(() => {
@@ -173,12 +181,16 @@ function Header(props) {
               ? (
                 roleId === 2
                   ? await studentApi.markAsReadByRecruiter(notificationId)
-                  : await studentApi.markAsReadByStudent(notificationId)
+                  : (
+                    user.s_profile
+                      ? await studentApi.markAsReadByStudent(notificationId)
+                      : 0
+                  )
               )
-              : []
+              : 0
           )
         // console.log({action});
-        if (action.data.status === 0) {
+        if (action !== 0 && action.data.status === 0) {
           enqueueSnackbar(action.data.message, { variant: "error" });
         }
       }
@@ -204,11 +216,15 @@ function Header(props) {
             ? (
               roleId === 2
                 ? await studentApi.getListNotificationsByRecruiter(params)
-                : await studentApi.getListNotificationsByStudent(params)
+                : (
+                  user.s_profile
+                    ? await studentApi.getListNotificationsByStudent(params)
+                    : 0
+                )
             )
-            : []
+            : 0
         )
-      if (data.data.status === 1) {
+      if (data !== 0 && data.data.status === 1) {
         setIsLoading(false);
         setNotifications(data.data.data.data);
       }
@@ -233,11 +249,15 @@ function Header(props) {
             ? (
               roleId === 2
                 ? await studentApi.getListUnreadNotificationsByRecruiter(params)
-                : await studentApi.getListUnreadNotificationsByStudent(params)
+                : (
+                  user.s_profile
+                    ? await studentApi.getListUnreadNotificationsByStudent(params)
+                    : 0
+                )
             )
-            : []
+            : 0
         )
-      if (data.data.status === 1) {
+      if (data !== 0 && data.data.status === 1) {
         console.log({ data })
         setIsLoading(false);
         setNotifications(data.data.data.data);
@@ -263,11 +283,15 @@ function Header(props) {
             ? (
               roleId === 2
                 ? await studentApi.markAllAsReadByRecruiter()
-                : await studentApi.markAllAsReadByStudent()
+                : (
+                  user.s_profile
+                    ? await studentApi.markAllAsReadByStudent()
+                    : 0
+                )
             )
-            : []
+            : 0
         )
-      if (action.data.status === 0) {
+      if (action !== 0 && action.data.status === 0) {
         enqueueSnackbar(action.data.message, { variant: "error" });
       }
       return;

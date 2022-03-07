@@ -69,7 +69,7 @@ export function PrivateRouteUserAuth({ component: Component, ...rest }) {
 
 export function PrivateRouteStudent({ component: Component, ...rest }) {
   const user = useSelector((state) => state.user.current);
-  const userRole = parseInt(localStorage.getItem('role_id'));
+  const userRole = parseInt(localStorage.getItem('role_id'), 10);
 
   return (
     <div>
@@ -86,11 +86,11 @@ export function PrivateRouteStudent({ component: Component, ...rest }) {
           return userRole === 3 ? (
             user.s_profile !== null
               ? <Component {...props} />
-              : <Redirect to='/first-update' />
+              : <Redirect to='/first-update/student' />
           ) : userRole === 2 ? (
             user.r_profile !== null
               ? <Redirect to='/recruiter' />
-              : <Redirect to='/first-update' />
+              : <Redirect to='/first-update/recruiter' />
           ) : <Redirect to='/' />
         }}
       />
@@ -144,8 +144,7 @@ export function PrivateRouteFirstUpdateProfile({ component: Component, ...rest }
 
 export function PrivateRouteRecruiter({ component: Component, ...rest }) {
   const user = useSelector((state) => state.user.current);
-  const userRole = parseInt(localStorage.getItem('role_id'));
-  // localStorage.removeItem('isRecruiterPath');
+  const userRole = parseInt(localStorage.getItem('role_id'), 10);
 
   return (
     <div>
@@ -155,7 +154,7 @@ export function PrivateRouteRecruiter({ component: Component, ...rest }) {
           return userRole === 2 ? (
             user.r_profile !== null
               ? <Component {...props} />
-              : <Redirect to='/first-update' />
+              : <Redirect to='/first-update/recruiter' />
           ) : (
             <Redirect to='/auth/sign-in' />
           );

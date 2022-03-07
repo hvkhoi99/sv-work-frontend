@@ -27,9 +27,6 @@ function JobDetailPage(props) {
   const { enqueueSnackbar } = useSnackbar();
   const [isApplying, setIsApplying] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  // const [applyText, setApplyText] = useState("Apply");
-  // const [saveText, setSaveText] = useState("Save Job");
-  // const [applicationState, setApplicationState] = useState(null);
   const [isAccepting, setIsAccepting] = useState(false);
   const [isRejecting, setIsRejecting] = useState(false);
   const [stateData, setStateData] = useState({
@@ -50,9 +47,6 @@ function JobDetailPage(props) {
         // console.log(data.data.data);
         setRecruitment(data.data.data);
         if (data.data.data.application !== null) {
-          // setApplicationState(data.data.data.application.state);
-          // setApplyText(data.data.data.application.is_applied ? "Applied" : "Apply");
-          // setSaveText(data.data.data.application.is_saved ? "Saved Job" : "Save Job");
           setStateData(state => ({
             ...state,
             applicationState: data.data.data.application.state,
@@ -127,7 +121,6 @@ function JobDetailPage(props) {
         const action = await studentApi.saveJob(id);
         if (action.data.status === 1) {
           setIsSaving(false);
-          // setSaveText(action.data.data.is_saved ? "Saved Job" : "Save Job");
           setStateData(state => ({
             ...state,
             isSaved: action.data.data.is_saved
@@ -156,7 +149,6 @@ function JobDetailPage(props) {
         const action = await studentApi.acceptInvitedJob(id);
         if (action.data.status === 1) {
           setIsAccepting(false);
-          // setApplicationState(true);
           setStateData(state => ({
             ...state,
             applicationState: true
@@ -438,11 +430,11 @@ function JobDetailPage(props) {
         // titleConfirm="Update Profile"
         contentConfirm={
           (user && Object.keys(user).length === 0)
-            ? "You need to LOGIN first and then you need to update your STUDENT PROFILE. Continue?"
+            ? "To perform this function, you need to Log in as a Student. You will then need to update your Personal Information if it has not been created. Continue?"
             : (
               user.s_profile && !user.s_profile.open_for_job
-                ? "You need to enable OPEN JOB in your PROFILE page for this functionality to work."
-                : "You need to update your STUDENT PROFILE. Continue?"
+                ? "You need to enable OPEN JOB in your Profile page for this functionality to work."
+                : "You need to update your Student Profile. Continue?"
             )
         }
       />

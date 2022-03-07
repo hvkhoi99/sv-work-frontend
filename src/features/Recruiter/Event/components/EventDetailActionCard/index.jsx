@@ -6,16 +6,18 @@ import './EventDetailActionCard.scss';
 EventDetailActionCard.propTypes = {
   onJoinEvent: PropTypes.func,
   onEditEvent: PropTypes.func,
-  onDeleteEvent: PropTypes.func
+  onCloseEvent: PropTypes.func
 };
 
 EventDetailActionCard.defaultProps = {
   onJoinEvent: null,
   onEditEvent: null,
-  onDeleteEvent: null
+  onCloseEvent: null
 }
 
 function EventDetailActionCard(props) {
+  const { onJoinEvent, onEditEvent, onCloseEvent } = props;
+
   return (
     <div className="event-detail-action-card">
       <div className="event-detail-action-card__date">
@@ -34,8 +36,23 @@ function EventDetailActionCard(props) {
         </div>
       </div>
       <div className="event-detail-action-card__group-button">
-        <Button color="success">Edit</Button>
-        <Button color="secondary">Delete</Button>
+        <Button
+          type="button"
+          color="success"
+          onClick={() => onEditEvent(1)}
+        >Edit</Button>
+        <Button
+          type="button"
+          color="secondary"
+          onClick={() => onCloseEvent(1)}
+        >Close</Button>
+      </div>
+      <div className="event-detail-action-card__group-button hidden">
+        <Button
+          type="button"
+          color="success"
+          onClick={() => onJoinEvent(1)}
+        >Join</Button>
       </div>
     </div>
   );

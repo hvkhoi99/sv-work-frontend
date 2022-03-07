@@ -39,7 +39,7 @@ function RecruiterUpdateProfilePage(props) {
     ? {
       company_name: 'New Company',
       phone_number: '0702666777',
-      contact_email: 'new.company@gmail.com',
+      contact_email: user.email,
       address: 'Da Nang, Viet Nam',
       company_industry: 'Software Company',
       company_size: '1000',

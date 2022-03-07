@@ -176,12 +176,25 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      padding: 2rem 2rem 0;
+      padding: 2rem 0 0;
 
       &__title {
+        display: flex;
+        align-items: center;
         width: 100%;
-        font-size: 1.2rem;
-        font-weight: 600;
+
+        & > span {
+          font-size: 1.2rem;
+          font-weight: 600;
+        }
+
+        &__dot {
+          width: 0.5rem;
+          height: 0.5rem;
+          border-radius: 50%;
+          background-color: var(--success);
+          margin: 0.25rem 0 0 0.2rem;
+        }
       }
 
       &__event {
@@ -192,7 +205,12 @@
         margin: 3rem 0 0 0;
 
         &__item {
-          margin: 0 1rem 4rem;
+          margin: 1rem;
+          // flex: 0 0 0.333333333333%;
+
+          & > .event-card {
+            width: 16rem;
+          }
         }
       }
     }

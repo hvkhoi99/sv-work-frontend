@@ -34,8 +34,8 @@ function RHFSelectField(props) {
     control: (base, state) => ({
       ...base,
       borderRadius: '1rem',
-      borderColor: state.isFocused ? 'rgba(126, 239, 104, 0.8)' : 'var(--success)',
-      boxShadow: state.isFocused ? '0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(126, 239, 104, 0.6)' : null,
+      borderColor: state.isFocused ? 'var(--success)' : 'var(--success)',
+      boxShadow: state.isFocused ? '0 0 0 3px rgba(0, 194, 0, 0.4)' : null,
       outline: state.isFocused ? '0 none' : null,
       "&:hover": {
         borderColor: state.isFocused ? null : "var(--success)"

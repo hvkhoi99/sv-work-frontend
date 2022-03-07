@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import SearchEventPage from 'features/Recruiter/Event/pages/SearchEvent';
 import RecruiterCreateEventPage from 'features/Recruiter/Event/pages/CreatePage';
 import EventDashboardPage from 'features/Recruiter/Event/pages/EventDashboardPage';
+import { PrivateRouteStudent } from 'components/PrivateRoute';
 
 StudentEventFeature.propTypes = {
 
@@ -28,21 +29,23 @@ function StudentEventFeature(props) {
         <Switch>
           <Route exact path={match.url} component={RecruiterMainEventPage} />
           <Route exact path={`${match.url}/search`} component={SearchEventPage} />
-          <Route exact path={`${match.url}/create`} component={RecruiterCreateEventPage} />
+          <PrivateRouteStudent exact path={`${match.url}/create`} component={RecruiterCreateEventPage} />
           <Redirect
             exact
             from={`${match.url}/dashboard`}
             to={`${match.url}/dashboard/posted-event`}
           />
-          <Route exact path={`${match.url}/dashboard/posted-event`} component={EventDashboardPage} />
-          <Route exact path={`${match.url}/dashboard/joined-event`} component={EventDashboardPage} />
-          <Route exact path={`${match.url}/dashboard/closed-event`} component={EventDashboardPage} />
+          <PrivateRouteStudent exact path={`${match.url}/dashboard/posted-event`} component={EventDashboardPage} />
+          <PrivateRouteStudent exact path={`${match.url}/dashboard/joined-event`} component={EventDashboardPage} />
+          <PrivateRouteStudent exact path={`${match.url}/dashboard/closed-event`} component={EventDashboardPage} />
           <Redirect
             exact
             from={`${match.url}/dashboard/posted-event/:id`}
             to={`${match.url}/dashboard/posted-event/:id/detail`}
           />
-          <Route exact path={`${match.url}/dashboard/posted-event/:id/detail`} component={DetailEventPage} />
+          <PrivateRouteStudent exact path={`${match.url}/dashboard/posted-event/:id/detail`} component={DetailEventPage} />
+          <PrivateRouteStudent exact path={`${match.url}/dashboard/joined-event/:id/detail`} component={DetailEventPage} />
+          <PrivateRouteStudent exact path={`${match.url}/dashboard/closed-event/:id/detail`} component={DetailEventPage} />
           <Redirect exact from={`${match.url}/:id`} to={`${match.url}/:id/detail`} />
           <Route exact path={`${match.url}/:id/detail`} component={DetailEventPage} />
           <Route path="*" component={NotFoundPage} />

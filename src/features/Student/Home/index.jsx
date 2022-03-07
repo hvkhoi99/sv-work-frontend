@@ -11,7 +11,7 @@ StudentHomeFeature.propTypes = {
 };
 
 function StudentHomeFeature(props) {
-  const roleId = parseInt(localStorage.getItem('role_id'));
+  const roleId = parseInt(localStorage.getItem('role_id'), 10);
   const match = useRouteMatch();
   const [isLoading, setIsLoading] = useState(true);
 

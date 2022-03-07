@@ -12,17 +12,50 @@ import helper from 'utils/common';
 import PostedEventArea from '../../components/PostedEventArea';
 import JoinedEventArea from '../../components/JoinedEventArea';
 import ClosedEventArea from '../../components/ClosedEventArea';
+import { useSelector } from 'react-redux';
 
 EventDashboardPage.propTypes = {
 };
 
 function EventDashboardPage(props) {
-  const postedEventPath = `${Paths.clientEvent}/dashboard/posted-event`;
-  const joinedEventPath = `${Paths.clientEvent}/dashboard/joined-event`;
-  const closedEventPath = `${Paths.clientEvent}/dashboard/closed-event`;
   const history = useHistory();
+  const user = useSelector((state) => state.user.current);
+  const roleId = parseInt(localStorage.getItem('role_id'), 10);
   const location = history.location.pathname;
   const [currentPath, setCurrentPath] = useState(location);
+  const postedEventPath = user.role_id === 2
+    ? `${Paths.recruiterEvent}/dashboard/posted-event`
+    : (
+      user.role_id === 3
+        ? (
+          roleId === 2
+            ? `${Paths.recruiterEvent}/dashboard/posted-event`
+            : `${Paths.clientEvent}/dashboard/posted-event`
+        )
+        : ""
+    );
+  const joinedEventPath = user.role_id === 2
+    ? `${Paths.recruiterEvent}/dashboard/joined-event`
+    : (
+      user.role_id === 3
+        ? (
+          roleId === 2
+            ? `${Paths.recruiterEvent}/dashboard/joined-event`
+            : `${Paths.clientEvent}/dashboard/joined-event`
+        )
+        : ""
+    );
+  const closedEventPath = user.role_id === 2
+    ? `${Paths.recruiterEvent}/dashboard/closed-event`
+    : (
+      user.role_id === 3
+        ? (
+          roleId === 2
+            ? `${Paths.recruiterEvent}/dashboard/closed-event`
+            : `${Paths.clientEvent}/dashboard/closed-event`
+        )
+        : ""
+    );
   const options = [
     { id: 0, name: "Posted Event", path: postedEventPath },
     { id: 1, name: "Joined Event", path: joinedEventPath },
@@ -38,7 +71,19 @@ function EventDashboardPage(props) {
   }
 
   const onMoveToFormCreateEvent = () => {
-    history.push(`${Paths.clientEvent}/create`);
+    history.push(
+      user.role_id === 2
+        ? `${Paths.recruiterEvent}/create`
+        : (
+          user.role_id === 3
+            ? (
+              roleId === 2
+                ? `${Paths.recruiterEvent}/create`
+                : `${Paths.clientEvent}/create`
+            )
+            : ""
+        )
+    );
   }
 
   return (

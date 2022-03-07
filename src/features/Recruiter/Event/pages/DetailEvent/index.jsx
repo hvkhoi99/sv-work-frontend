@@ -9,6 +9,10 @@ import * as AiIcons from 'react-icons/ai';
 import EventCard from '../../components/EventCard';
 import helper from 'utils/common';
 import LoadingUI from 'components/Loading';
+import { useSelector } from 'react-redux';
+import PopupConfirm from 'components/PopupConfirm';
+import { useHistory } from 'react-router-dom';
+import Paths from 'constants/paths';
 // import * as SiIcons from 'react-icons/si';
 
 DetailEventPage.propTypes = {
@@ -16,7 +20,12 @@ DetailEventPage.propTypes = {
 };
 
 function DetailEventPage(props) {
+  const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
+  const user = useSelector((state) => state.user.current);
+  const roleId = parseInt(localStorage.getItem('role_id'), 10);
+  const [show, setShow] = useState(false);
+
   const onViewDetailEvent = () => {
     console.log("View event!");
   }
@@ -31,6 +40,68 @@ function DetailEventPage(props) {
       clearTimeout(timer);
     };
   }, []);
+
+  const onShow = (value) => {
+    setShow(value);
+  }
+
+  const onTryThisPopupConfirm = () => {
+    if ((user && Object.keys(user).length === 0)) {
+      history.push("/auth/sign-in");
+      return;
+    } else {
+      if (user.role_id === 2) {
+        return;
+      }
+
+      if (user.role_id === 3) {
+        if (roleId === 2) {
+          return;
+        }
+
+        if (user.s_profile) {
+          return;
+        }
+
+        history.push("/first-update/student");
+      }
+    }
+  }
+
+  const onEditEvent = (id) => {
+    if ((user && Object.keys(user).length === 0)) {
+      onShow(true);
+      return;
+    } else {
+      if (user.role_id === 2) {
+        history.push(`${Paths.recruiterEvent}/${id}/update`);
+        return;
+      }
+
+      if (user.role_id === 3) {
+        if (roleId === 2) {
+          history.push(`${Paths.recruiterEvent}/${id}/update`);
+          return;
+        }
+
+        if (user.s_profile) {
+          history.push(`${Paths.clientEvent}/${id}/update`);
+          return;
+        }
+      }
+
+      onShow(true);
+      return;
+    }
+  }
+
+  const onCloseEvent = (id) => {
+    console.log({ id })
+  }
+
+  const onJoinEvent = (id) => {
+    console.log({ id })
+  }
 
   return (
     <>
@@ -68,7 +139,11 @@ function DetailEventPage(props) {
                 </div>
                 <div className="detail-event__container__center__right">
                   <div className="detail-event__container__center__right__more-info">
-                    <EventDetailActionCard />
+                    <EventDetailActionCard
+                      onEditEvent={onEditEvent}
+                      onJoinEvent={onJoinEvent}
+                      onCloseEvent={onCloseEvent}
+                    />
                   </div>
                   <div className="detail-event__container__center__right__share-with">
                     <span className="detail-event__container__center__right__share-with__title">
@@ -89,7 +164,10 @@ function DetailEventPage(props) {
                 </div>
               </div>
               <div className="detail-event__container__top-event">
-                <span className="detail-event__container__top-event__title">Top Events</span>
+                <div className="detail-event__container__top-event__title">
+                  <span>Top Events</span>
+                  <div className="detail-event__container__top-event__title__dot" />
+                </div>
                 <div className="detail-event__container__top-event__event">
                   <div className="detail-event__container__top-event__event__item">
                     <EventCard onViewDetailEvent={onViewDetailEvent} />
@@ -108,6 +186,33 @@ function DetailEventPage(props) {
             </div>
           </div>
       }
+      <PopupConfirm
+        show={show}
+        onShow={onShow}
+        onOK={onTryThisPopupConfirm}
+        // titleConfirm="Update Profile"
+        contentConfirm={
+          (user && Object.keys(user).length === 0)
+            ? "Only accounts with the role of employer or student, and already have a personal profile, can use this function. Continue?"
+            : (user.role_id === 2
+              ? user.r_profile
+                ? "Something went wrong. Please try again!"
+                : "You need to update your Personal Profile to perform this function."
+              : (user.role_id === 3
+                ? (roleId === 2
+                  ? (
+                    user.r_profile
+                      ? "Something went wrong. Please try again!"
+                      : "You need to update your Personal Profile to perform this function. Continue?"
+                  )
+                  : (
+                    user.s_profile
+                      ? "Something went wrong. Please try again!"
+                      : "You need to update your Personal Profile to perform this function. Continue?"
+                  ))
+                : "Something went wrong. Please try again!"))
+        }
+      />
     </>
   );
 }

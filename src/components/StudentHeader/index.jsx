@@ -94,8 +94,11 @@ function StudentHeader(props) {
     if (user.r_profile !== null) {
       localStorage.setItem("role_id", 2);
       history.push("/recruiter");
+      return;
     } else {
-      history.push("/first-update");
+      // localStorage.setItem("role_id", 2);
+      history.push("/first-update/recruiter");
+      return;
     }
   }
 
