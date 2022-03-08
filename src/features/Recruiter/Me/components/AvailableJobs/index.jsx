@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import helper from 'utils/common';
 import AvailableJobsCard from '../AvailableJobsCard';
+import * as RiIcons from 'react-icons/ri';
 import './AvailableJobs.scss';
 
 AvailableJobs.propTypes = {
@@ -81,8 +82,14 @@ function AvailableJobs(props) {
           }
           {
             items.length <= 0
-              ? <div className="no-available">
-                <span>There are currently no articles available</span>
+              // ? <div className="no-available">
+              //   <span>There are currently no articles available.</span>
+              // </div>
+              ? <div className="find-candidates__container__pagination__not-found__info">
+                <RiIcons.RiErrorWarningFill
+                  className="find-candidates__container__pagination__not-found__info__icon"
+                />
+                <span>There are currently no articles available.</span>
               </div>
               : <ReactPaginate
                 previousLabel={

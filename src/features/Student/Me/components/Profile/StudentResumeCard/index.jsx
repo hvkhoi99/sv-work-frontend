@@ -9,7 +9,7 @@ import ReactPaginate from 'react-paginate';
 import { useHistory, useLocation } from 'react-router-dom';
 import helper from 'utils/common';
 import PopupUpdateStudentCV from '../../PopupUpdateStudentProfile/PopupUpdateStudentCV';
-// import * as FiIcons from 'react-icons/fi';
+import * as RiIcons from 'react-icons/ri';
 import StudentResumeItemCard from '../StudentResumeItem';
 // import PropTypes from 'prop-types';
 import './StudentResumeCard.scss';
@@ -154,7 +154,13 @@ function StudentResumeCard(props) {
               <div className="student-resume-card__main__paginator">
                 {
                   listCV.length <= 0
-                    ? <div className="no-available">
+                    // ? <div className="no-available">
+                    //   <span>You haven't uploaded any CV at this time.</span>
+                    // </div>
+                    ? <div className="find-candidates__container__pagination__not-found__info">
+                      <RiIcons.RiErrorWarningFill
+                        className="find-candidates__container__pagination__not-found__info__icon"
+                      />
                       <span>You haven't uploaded any CV at this time.</span>
                     </div>
                     : <ReactPaginate

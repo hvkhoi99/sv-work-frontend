@@ -1,11 +1,14 @@
+import userApi from 'api/userApi';
 import LoadingUI from 'components/Loading';
 import PopupConfirm from 'components/PopupConfirm';
+import Images from 'constants/images';
 import Paths from 'constants/paths';
+import queryString from 'query-string';
 import React, { useEffect, useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
 import { useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import helper from 'utils/common';
 import EventCard from '../../components/EventCard';
 import ImageSlider from '../../components/ImageSlider';
@@ -19,10 +22,15 @@ RecruiterMainEventPage.propTypes = {
 function RecruiterMainEventPage(props) {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
-  const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const [events, setEvents] = useState([]);
   const user = useSelector((state) => state.user.current);
   const roleId = parseInt(localStorage.getItem('role_id'), 10);
   const [show, setShow] = useState(false);
+  const { search } = useLocation();
+  const page = parseInt(queryString.parse(search).page);
+  const [currentPage, setCurrentPage] = useState(page > 1 ? page : 1);
+  const [pageCount, setPageCount] = useState(0);
+  const _limit = 8;
 
   const sliderData = [
     {
@@ -47,27 +55,45 @@ function RecruiterMainEventPage(props) {
     }
   ];
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageCount, setPageCount] = useState(0);
-
   useEffect(() => {
     helper.scrollToTop();
 
-    const timer = setTimeout(() => {
-      setCurrentPage(1);
-      const total = items.length;
-      setPageCount(Math.ceil(total / 2));
-      setIsLoading(false);
-    }, 1000)
+    const fetchListEvents = async () => {
+      try {
+        const params = {
+          page: currentPage,
+          _limit
+        }
 
-    return () => {
-      clearTimeout(timer);
+        const data = await userApi.getListEvents(params);
+        console.log({ data })
+        if (data.data.status === 1) {
+          setEvents(data.data.data.data);
+          const total = data.data.data.total;
+          setPageCount(Math.ceil(total / _limit));
+        }
+        setIsLoading(false);
+        return;
+      } catch (error) {
+        console.log("Cannot fetch events. Error: " + error.message);
+        setIsLoading(false);
+        return;
+      }
     }
-  }, [items.length]);
 
-  const handlePageClick = () => {
-    console.log("prev/next page");
-  }
+    fetchListEvents();
+  }, [currentPage]);
+
+  const handlePageClick = async (data) => {
+    const newPage = data.selected + 1;
+    setCurrentPage(newPage);
+    history.push(
+      roleId === 2
+        ? `${Paths.recruiterEvent}?page=${newPage}`
+        : `${Paths.clientEvent}?page=${newPage}`
+    )
+    helper.scrollToTop(350);
+  };
 
   const onViewDetailEvent = () => {
     history.push(
@@ -201,48 +227,60 @@ function RecruiterMainEventPage(props) {
                   <span>Upcoming Events</span>
                   <div className="event-main__container__upcomming-events__title__dot"></div>
                 </div>
-                <div className="event-main__container__upcomming-events__cards">
-                  {
-                    items.map((item, index) => {
-                      return <div
-                        key={index}
-                        className="event-main__container__upcomming-events__cards__item"
-                      >
-                        <EventCard onViewDetailEvent={onViewDetailEvent} />
+                {
+                  events.length > 0
+                    ? <>
+                      <div className="event-main__container__upcomming-events__cards">
+                        {
+                          events.map((event, index) => {
+                            return <div
+                              key={index}
+                              className="event-main__container__upcomming-events__cards__item"
+                            >
+                              <EventCard
+                                event={event}
+                                onViewDetailEvent={onViewDetailEvent}
+                              />
+                            </div>
+                          })
+                        }
                       </div>
-                    })
-                  }
-                </div>
-                <div className="event-main__container__upcomming-events__pagination">
-                  <ReactPaginate
-                    previousLabel={
-                      <MdIcons.MdArrowBackIosNew />
-                    }
-                    nextLabel={
-                      <MdIcons.MdArrowForwardIos />
-                    }
+                      <div className="event-main__container__upcomming-events__pagination">
+                        <ReactPaginate
+                          previousLabel={
+                            <MdIcons.MdArrowBackIosNew />
+                          }
+                          nextLabel={
+                            <MdIcons.MdArrowForwardIos />
+                          }
 
-                    // initialPage={1}
-                    // initialPage={currentPage}
-                    forcePage={currentPage - 1}
-                    breakLabel={"..."}
-                    pageCount={pageCount}
-                    marginPagesDisplayed={1}
-                    pageRangeDisplayed={2}
-                    onPageChange={handlePageClick}
-                    containerClassName={"pagination justify-content-center"}
-                    pageClassName={"page-item"}
-                    pageLinkClassName={"page-link"}
-                    previousClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
-                    previousLinkClassName={"page-link"}
-                    nextClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
-                    nextLinkClassName={"page-link"}
-                    breakClassName={"page-item"}
-                    breakLinkClassName={"page-link"}
-                    activeClassName={"active"}
-
-                  />
-                </div>
+                          // initialPage={1}
+                          // initialPage={currentPage}
+                          forcePage={currentPage - 1}
+                          breakLabel={"..."}
+                          pageCount={pageCount}
+                          marginPagesDisplayed={1}
+                          pageRangeDisplayed={2}
+                          onPageChange={handlePageClick}
+                          containerClassName={"pagination justify-content-center"}
+                          pageClassName={"page-item"}
+                          pageLinkClassName={"page-link"}
+                          previousClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
+                          previousLinkClassName={"page-link"}
+                          nextClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
+                          nextLinkClassName={"page-link"}
+                          breakClassName={"page-item"}
+                          breakLinkClassName={"page-link"}
+                          activeClassName={"active"}
+                          // renderOnZeroPageCount={null}
+                        />
+                      </div>
+                    </>
+                    : <div className="event-main__container__upcomming-events__no-data">
+                      <span>"No events have been created yet."</span>
+                      <img src={Images.upcomingEvent} alt="upcoming event" />
+                    </div>
+                }
               </div>
             </div>
           </div>

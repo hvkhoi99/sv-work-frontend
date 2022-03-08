@@ -24,13 +24,15 @@
       justify-content: center;
       width: 100%;
       height: 20rem;
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid lightgrey;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
       & > img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 1rem;
-        border: 1px solid lightgrey;
       }
     }
 
@@ -176,7 +178,7 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      padding: 2rem 0 0;
+      padding: 2rem 2rem 0;
 
       &__title {
         display: flex;
@@ -200,12 +202,12 @@
       &__event {
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
+        justify-content: space-between;
         width: 100%;
-        margin: 3rem 0 0 0;
+        margin: 2rem 0 0 0;
 
         &__item {
-          margin: 1rem;
+          // margin: 1rem;
           // flex: 0 0 0.333333333333%;
 
           & > .event-card {

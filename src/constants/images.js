@@ -42,13 +42,16 @@ import verifyImage from '../assets/img/verifyImage.png';
 import verifyImage1 from '../assets/img/verifyImage1.jpg';
 import vinfast from '../assets/img/vinfast.png';
 import manageevent from '../assets/img/manageevent.png';
+import bachkhoaEvent from '../assets/img/bachkhoa-event.png';
+import upcomingEvent from '../assets/img/upcoming-event.png';
 
 const Images = {
   home, notFound, emoji, minami, bgRight, background, fptSoftware, smDot, eventcircle,
   admin, teamwork, overview, ellipse, apple, coffeeTime, levis, tw, shopee, fb, vinfast,
   burger, lamborghini, student, recruiter, bmw, create, searchCard, recruitmentManageCard, aio,
   threeMinions, ship, event1, aboutUsCard, googleCV, defaultAvatar, notfoundcandidate, defaultCompany,
-  verifyImage, verifyImage1, employerAvatar, avatar, forgotpass, reset, manageevent
+  verifyImage, verifyImage1, employerAvatar, avatar, forgotpass, reset, manageevent, bachkhoaEvent,
+  upcomingEvent
 }
 
 export default Images;

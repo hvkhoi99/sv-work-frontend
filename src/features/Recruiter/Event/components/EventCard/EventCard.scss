@@ -14,7 +14,7 @@
 
   cursor: pointer;
 
-  font-size: .9rem;
+  font-size: 0.9rem;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.05);
@@ -43,7 +43,7 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
 
     &__left {
       display: flex;
@@ -54,8 +54,13 @@
       height: 100%;
 
       &__month {
-        font-size: .8rem;
+        width: 100%;
+        font-size: 0.8rem;
         font-weight: 300;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
 
       &__day {
@@ -68,21 +73,29 @@
     &__right {
       display: flex;
       flex-direction: column;
-      width: 80%;
-      padding: 0 0 0 .5rem;
+      width: 75%;
+      padding: 0 0 0 0.5rem;
 
       &__title {
         // font-size: 1rem;
         font-weight: 600;
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
 
-      &__location, &__participants {
-        font-size: .8rem;
+      &__location,
+      &__participants {
+        width: 100%;
+        font-size: 0.8rem;
         font-weight: 300;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
 
       &__participants {
-
         &__count {
           color: var(--success);
           font-weight: 400;

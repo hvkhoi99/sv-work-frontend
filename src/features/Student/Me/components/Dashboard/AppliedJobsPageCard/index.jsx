@@ -9,6 +9,7 @@ import ReactPaginate from 'react-paginate';
 import { useHistory, useLocation } from 'react-router-dom';
 import helper from 'utils/common';
 import AppliedJobsCard from '../AppliedJobsCard';
+import * as RiIcons from 'react-icons/ri';
 // import PropTypes from 'prop-types';
 import './AppliedJobsPageCard.scss';
 
@@ -113,7 +114,13 @@ function AppliedJobsPageCard(props) {
             <div className="find-jobs__container__pagination">
               {
                 appliedJobs.length <= 0
-                  ? <div className="no-available">
+                  // ? <div className="no-available">
+                  //   <span>No information was found!</span>
+                  // </div>
+                  ? <div className="find-candidates__container__pagination__not-found__info">
+                    <RiIcons.RiErrorWarningFill
+                      className="find-candidates__container__pagination__not-found__info__icon"
+                    />
                     <span>No information was found!</span>
                   </div>
                   : <ReactPaginate

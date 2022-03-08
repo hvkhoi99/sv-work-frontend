@@ -261,9 +261,9 @@ function CompanyDetailPage(props) {
                     <div className="find-jobs__container__pagination">
                       {
                         jobs.length <= 0
-                          ? <div className="no-available">
-                            <span>There are currently no jobs!</span>
-                          </div>
+                          ? <span className="find-jobs__container__pagination__no-data">
+                            There are currently no jobs.
+                          </span>
                           : <ReactPaginate
                             previousLabel={
                               <MdIcons.MdArrowBackIosNew />

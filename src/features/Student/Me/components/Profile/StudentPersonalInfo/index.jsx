@@ -50,7 +50,7 @@ function StudentPersonalInfoCard(props) {
             <FaIcons.FaPhoneAlt
               className="student-personal-info-card__icon"
             />
-            <span>{profile.phone_number ?? "N/A."}</span>
+            <span>{profile.phone_number ?? "N/A"}</span>
           </div>
           <div className="student-personal-info-card__main__center__email">
             <MdIcons.MdEmail

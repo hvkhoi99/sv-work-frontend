@@ -38,14 +38,20 @@ const userApi = {
   },
 
   forgotPassword: (params) => {
-    const url = "reset-password";
+    const url = "/reset-password";
     return axiosClient.post(url, params);
   },
 
   resetPassword: (params, token) => {
-    const url = `reset-password/${token}`;
+    const url = `/reset-password/${token}`;
     return axiosClient.put(url, params);
-  }
+  },
+
+  // event
+  getListEvents: (params) => {
+    const url = `/event/list-event?page=${params.page}&_limit=${params._limit}`;
+    return axiosClient.get(url);
+  } 
 };
 
 export default userApi;

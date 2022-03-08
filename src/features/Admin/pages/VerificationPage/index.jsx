@@ -8,6 +8,7 @@ import React, { useEffect } from 'react';
 import { Button, FormGroup } from 'reactstrap';
 import helper from 'utils/common';
 import './verification.scss';
+import * as RiIcons from 'react-icons/ri';
 
 VerificationPage.propTypes = {
   handlePageClick: PropTypes.func,
@@ -83,9 +84,16 @@ function VerificationPage(props) {
                     currentPage={currentPage}
                     lastPage={lastPage}
                   />
-                  : <div className="no-available">
-                    <span>There are currently no articles available</span>
+                  // : <div className="no-available">
+                  //   <span>There are currently no articles available</span>
+                  // </div>
+                  : <div className="find-candidates__container__pagination__not-found__info">
+                    <RiIcons.RiErrorWarningFill
+                      className="find-candidates__container__pagination__not-found__info__icon"
+                    />
+                    <span>There are currently no articles available.</span>
                   </div>
+
               }
             </div>
 

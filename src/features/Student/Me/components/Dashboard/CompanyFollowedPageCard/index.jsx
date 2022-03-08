@@ -11,6 +11,7 @@ import studentApi from 'api/studentApi';
 import Paths from 'constants/paths';
 import helper from 'utils/common';
 import {useSnackbar} from 'notistack';
+import * as RiIcons from 'react-icons/ri';
 
 CompanyFollowedPageCard.propTypes = {
 
@@ -113,7 +114,13 @@ function CompanyFollowedPageCard(props) {
             <div className="find-jobs__container__pagination">
               {
                 followedCompanies.length <= 0
-                  ? <div className="no-available">
+                  // ? <div className="no-available">
+                  //   <span>No information was found!</span>
+                  // </div>
+                  ? <div className="find-candidates__container__pagination__not-found__info">
+                    <RiIcons.RiErrorWarningFill
+                      className="find-candidates__container__pagination__not-found__info__icon"
+                    />
                     <span>No information was found!</span>
                   </div>
                   : <ReactPaginate

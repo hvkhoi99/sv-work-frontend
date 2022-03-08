@@ -8,9 +8,10 @@ import ReactPaginate from 'react-paginate';
 import { useHistory, useLocation } from 'react-router-dom';
 import helper from 'utils/common';
 import SavedJobsCard from '../SavedJobsCard';
-import {useSnackbar} from 'notistack';
+import { useSnackbar } from 'notistack';
 // import PropTypes from 'prop-types';
 import './SavedJobsPageCard.scss';
+import * as RiIcons from 'react-icons/ri';
 
 SavedJobsPageCard.propTypes = {
 
@@ -113,7 +114,13 @@ function SavedJobsPageCard(props) {
             <div className="find-jobs__container__pagination">
               {
                 savedJobs.length <= 0
-                  ? <div className="no-available">
+                  // ? <div className="no-available">
+                  //   <span>No information was found!</span>
+                  // </div>
+                  ? <div className="find-candidates__container__pagination__not-found__info">
+                    <RiIcons.RiErrorWarningFill
+                      className="find-candidates__container__pagination__not-found__info__icon"
+                    />
                     <span>No information was found!</span>
                   </div>
                   : <ReactPaginate

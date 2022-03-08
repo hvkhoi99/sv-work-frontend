@@ -49,9 +49,9 @@
   font-weight: 400;
 
   margin: 0 0.2rem;
-  border-radius: 50%;
-  width: 2.2rem;
-  height: 2.2rem;
+  border-radius: .3rem;
+  width: 1.8rem;
+  height: 2rem;
 }
 
 .pagination > li:first-child > a,
@@ -59,12 +59,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-weight: 700;
+  // font-weight: 700;
   color: var(--success);
   border-radius: 50% !important;
   border: none;
   padding: 0.5rem;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .pagination > li > a:focus,
@@ -79,9 +79,9 @@
 .pagination > .active > a {
   color: white;
   background-color: var(--success) !important;
-  border: solid 1px var(--success) !important;
-  font-size: 1.4rem;
-  font-weight: 500 !important;
+  border-color: var(--success) !important;
+  // font-size: 1.4rem;
+  // font-weight: 500 !important;
 }
 
 .pagination > .active > a:hover {
@@ -157,6 +157,7 @@
   & > span {
     // font-weight: 500;
     font-size: 1.2rem;
+    font-weight: 300;
   }
 }
 
