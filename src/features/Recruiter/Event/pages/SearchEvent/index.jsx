@@ -4,7 +4,6 @@ import SortByItem from 'features/Recruiter/Find/components/SortByItem';
 import React, { useEffect, useState } from 'react';
 import * as MdIcons from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
-import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import helper from 'utils/common';
 import EventCard from '../../components/EventCard';
@@ -18,7 +17,8 @@ SearchEventPage.propTypes = {
 
 function SearchEventPage(props) {
   const history = useHistory();
-  const user = useSelector((state) => state.user.current);
+  // const user = useSelector((state) => state.user.current);
+  const roleId = parseInt(localStorage.getItem('role_id'), 10);
   const [isLoading, setIsLoading] = useState(true);
   const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -44,11 +44,11 @@ function SearchEventPage(props) {
     console.log("prev/next page");
   }
 
-  const onViewDetailEvent = () => {
+  const onViewDetailEvent = (event) => {
     history.push(
-      user.role_id === 2
-        ? `${Paths.recruiterEvent}/1`
-        : `${Paths.clientEvent}/1`
+      roleId === 2
+        ? `${Paths.recruiterEvent}/${event.id}`
+        : `${Paths.clientEvent}/${event.id}`
     );
   }
 

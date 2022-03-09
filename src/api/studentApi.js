@@ -1,6 +1,17 @@
 import axiosClient from "./axiosClient";
 
 const studentApi = {
+  // Event
+  createEventByStudent: (params) => {
+    const url = "/student/event/store";
+    return axiosClient.post(url, params);
+  },
+
+  createEventByRecruiter: (params) => {
+    const url = "/student/recruiter/event/store";
+    return axiosClient.post(url, params);
+  },
+
   // CV
   getListCV: (params) => {
     const url = `/student/cv/list?page=${params.page}&_limit=${params._limit}`;

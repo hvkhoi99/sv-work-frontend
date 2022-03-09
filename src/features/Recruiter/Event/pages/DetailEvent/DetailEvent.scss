@@ -27,7 +27,7 @@
       border-radius: 1rem;
       overflow: hidden;
       border: 1px solid lightgrey;
-      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      // box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 
       & > img {
         width: 100%;
@@ -52,11 +52,31 @@
           font-size: 1.5rem;
           font-weight: 600;
           width: 100%;
+          
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
         }
 
         &__by {
           margin: 0.5rem 0;
           width: 100%;
+
+          & > span {
+            width: 80%;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            font-weight: 600;
+          }
+        }
+
+        &__address {
+          margin: 0.5rem 0;
+          width: 80%;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
         }
 
         &__description {

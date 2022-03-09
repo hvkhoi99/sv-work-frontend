@@ -11,9 +11,10 @@ import helper from 'utils/common';
 import LoadingUI from 'components/Loading';
 import { useSelector } from 'react-redux';
 import PopupConfirm from 'components/PopupConfirm';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Paths from 'constants/paths';
 // import * as SiIcons from 'react-icons/si';
+import userApi from 'api/userApi';
 
 DetailEventPage.propTypes = {
 
@@ -21,25 +22,52 @@ DetailEventPage.propTypes = {
 
 function DetailEventPage(props) {
   const history = useHistory();
+  const [event, setEvent] = useState({
+    id: 0,
+    title: '',
+    description: '',
+    location: '',
+    start_date: '',
+    end_date: '',
+    creator_name: '',
+    is_closed: false,
+    is_creator: false,
+    is_joined: false,
+    image_link: Images.bachkhoaEvent
+  });
   const [isLoading, setIsLoading] = useState(true);
   const user = useSelector((state) => state.user.current);
   const roleId = parseInt(localStorage.getItem('role_id'), 10);
   const [show, setShow] = useState(false);
+  const {id} = useParams();
 
-  const onViewDetailEvent = () => {
-    console.log("View event!");
+  const onViewDetailEvent = (event) => {
+    history.push(
+      roleId === 2
+        ? `${Paths.recruiterEvent}/${event.id}`
+        : `${Paths.clientEvent}/${event.id}`
+    );
   }
 
   useEffect(() => {
     helper.scrollToTop();
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000)
+    const fetchDetailOfEvent = async () => {
+      try {
+        const data = await userApi.getDetailOfEvent(id);
+        console.log({data})
+        if (data.data.status === 1) {
+          setEvent(data.data.data);
+        }
+        setIsLoading(false);
+        return;
+      } catch (error) {
+        console.log("Cannot fetch detail of event. Error " + error.message);
+        return;
+      }
+    }
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+    fetchDetailOfEvent();
+  }, [id]);
 
   const onShow = (value) => {
     setShow(value);
@@ -68,24 +96,24 @@ function DetailEventPage(props) {
     }
   }
 
-  const onEditEvent = (id) => {
+  const onEditEvent = (event) => {
     if ((user && Object.keys(user).length === 0)) {
       onShow(true);
       return;
     } else {
       if (user.role_id === 2) {
-        history.push(`${Paths.recruiterEvent}/${id}/update`);
+        history.push(`${Paths.recruiterEvent}/${event.id}/update`);
         return;
       }
 
       if (user.role_id === 3) {
         if (roleId === 2) {
-          history.push(`${Paths.recruiterEvent}/${id}/update`);
+          history.push(`${Paths.recruiterEvent}/${event.id}/update`);
           return;
         }
 
         if (user.s_profile) {
-          history.push(`${Paths.clientEvent}/${id}/update`);
+          history.push(`${Paths.clientEvent}/${event.id}/update`);
           return;
         }
       }
@@ -95,12 +123,16 @@ function DetailEventPage(props) {
     }
   }
 
-  const onCloseEvent = (id) => {
-    console.log({ id })
+  const onCloseEvent = (event) => {
+    console.log({ event })
   }
 
-  const onJoinEvent = (id) => {
-    console.log({ id })
+  const onJoinEvent = (event) => {
+    console.log({ event })
+  }
+
+  const onDeleteEvent = (event) => {
+    console.log({ event })
   }
 
   return (
@@ -113,33 +145,33 @@ function DetailEventPage(props) {
           : <div className="detail-event">
             <div className="detail-event__container">
               <div className="detail-event__container__top">
-                <img src={Images.event1} alt="event-img" />
+                <img src={event.image_link ?? Images.bachkhoaEvent} alt="event-img" />
               </div>
               <div className="detail-event__container__center">
                 <div className="detail-event__container__center__left">
                   <span className="detail-event__container__center__left__title">
-                    {`${"student achievement awards".toUpperCase()}`}
+                    {event.title.toUpperCase()}
                   </span>
-                  <span className="detail-event__container__center__left__by">
-                    By {"HVKHOI99"}
-                  </span>
+                  <div className="detail-event__container__center__left__by">
+                    By <span>{event.creator_name}</span>
+                  </div>
                   <span className="detail-event__container__center__left__address">
-                    Truong Dai hoc Bach Khoa, Da Nang
+                    {event.location}
                   </span>
                   <div className="detail-event__container__center__left__description">
                     <span className="detail-event__container__center__left__description__title">
                       Description
                     </span>
                     <p className="detail-event__container__center__left__description__main">
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam mollitia enim iure sequi. Placeat vero soluta rem sint obcaecati in cum. Tempore doloribus exercitationem neque iure voluptas corrupti accusamus dicta?
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam mollitia enim iure sequi. Placeat vero soluta rem sint obcaecati in cum. Tempore doloribus exercitationem neque iure voluptas corrupti accusamus dicta?
-                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam mollitia enim iure sequi. Placeat vero soluta rem sint obcaecati in cum. Tempore doloribus exercitationem neque iure voluptas corrupti accusamus dicta?
+                      {event.description}
                     </p>
                   </div>
                 </div>
                 <div className="detail-event__container__center__right">
                   <div className="detail-event__container__center__right__more-info">
                     <EventDetailActionCard
+                      event={event}
+                      onDeleteEvent={onDeleteEvent}
                       onEditEvent={onEditEvent}
                       onJoinEvent={onJoinEvent}
                       onCloseEvent={onCloseEvent}

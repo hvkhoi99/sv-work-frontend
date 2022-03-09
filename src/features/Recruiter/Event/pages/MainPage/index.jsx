@@ -56,7 +56,7 @@ function RecruiterMainEventPage(props) {
   ];
 
   useEffect(() => {
-    helper.scrollToTop();
+    // helper.scrollToTop();
 
     const fetchListEvents = async () => {
       try {
@@ -95,11 +95,11 @@ function RecruiterMainEventPage(props) {
     helper.scrollToTop(350);
   };
 
-  const onViewDetailEvent = () => {
+  const onViewDetailEvent = (event) => {
     history.push(
       roleId === 2
-        ? `${Paths.recruiterEvent}/1/detail`
-        : `${Paths.clientEvent}/1/detail`
+        ? `${Paths.recruiterEvent}/${event.id}`
+        : `${Paths.clientEvent}/${event.id}`
     );
   }
 

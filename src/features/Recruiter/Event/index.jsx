@@ -23,19 +23,20 @@ function RecruiterEventFeature(props) {
         <Redirect
           exact
           from={`${match.url}/dashboard`}
-          to={`${match.url}/dashboard/posted-event`}
+          to={`${match.url}/dashboard/available-event`}
         />
-        <Route exact path={`${match.url}/dashboard/posted-event`} component={EventDashboardPage} />
+        <Route exact path={`${match.url}/dashboard/available-event`} component={EventDashboardPage} />
         <Route exact path={`${match.url}/dashboard/joined-event`} component={EventDashboardPage} />
         <Route exact path={`${match.url}/dashboard/closed-event`} component={EventDashboardPage} />
-        <Redirect
+        {/* <Redirect
           exact
-          from={`${match.url}/dashboard/posted-event/:id`}
-          to={`${match.url}/dashboard/posted-event/:id/detail`}
+          from={`${match.url}/dashboard/available-event/:id`}
+          to={`${match.url}/dashboard/available-event/:id/detail`}
         />
-        <Route exact path={`${match.url}/dashboard/posted-event/:id`} component={DetailEventPage} />
+        <Route exact path={`${match.url}/dashboard/available-event/:id`} component={DetailEventPage} /> */}
         <Redirect exact from={`${match.url}/:id`} to={`${match.url}/:id/detail`} />
         <Route exact path={`${match.url}/:id/detail`} component={DetailEventPage} />
+          <Route exact path={`${match.url}/:id/update`} component={RecruiterCreateEventPage} />
         <Route path="*" component={NotFoundPage} />
       </Switch>
     </>

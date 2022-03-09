@@ -24,12 +24,12 @@ EventCard.defaultProps = {
 function EventCard(props) {
   const { event, onViewDetailEvent } = props;
 
-  const handleViewDetailEvent = () => {
-    onViewDetailEvent();
+  const handleViewDetailEvent = (event) => {
+    onViewDetailEvent(event);
   }
 
   return (
-    <div className="event-card" onClick={handleViewDetailEvent}>
+    <div className="event-card" onClick={() => handleViewDetailEvent(event)}>
       <div className="event-card__img">
         <img src={event.image_link ?? Images.bachkhoaEvent} alt="event-img" />
       </div>

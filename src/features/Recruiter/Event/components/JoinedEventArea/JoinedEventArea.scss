@@ -13,7 +13,7 @@
       display: flex;
       flex-wrap: wrap;
 
-      justify-content: center;
+      justify-content: space-between;
       width: 100%;
 
       &__item {
@@ -22,6 +22,11 @@
         & > .event-card {
           width: 16rem;
         }
+      }
+
+      &::after {
+        content: "";
+        flex: 0 0 30%;
       }
     }
 

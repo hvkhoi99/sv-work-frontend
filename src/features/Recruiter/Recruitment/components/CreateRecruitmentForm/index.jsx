@@ -318,12 +318,12 @@ function CreateRecruitmentForm(props) {
                     component={TextFieldDate}
 
                     label="Expiry"
-                    type="date"
+                    type="datetime-local"
                     placeholder=""
                     moreClassName="text-field-date"
                     labelClassName="input-field-label"
                     inputClassName="text-field-date-width"
-                    inputProps={{ min: moment(new Date().toJSON().slice(0, 10)).format('YYYY-MM-DD') }}
+                    inputProps={{ min: moment(new Date().toJSON().slice(0, 10)).format('YYYY-MM-DDThh:mm') }}
                   />
 
                   <FastField

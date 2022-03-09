@@ -33,21 +33,22 @@ function StudentEventFeature(props) {
           <Redirect
             exact
             from={`${match.url}/dashboard`}
-            to={`${match.url}/dashboard/posted-event`}
+            to={`${match.url}/dashboard/available-event`}
           />
-          <PrivateRouteStudent exact path={`${match.url}/dashboard/posted-event`} component={EventDashboardPage} />
+          <PrivateRouteStudent exact path={`${match.url}/dashboard/available-event`} component={EventDashboardPage} />
           <PrivateRouteStudent exact path={`${match.url}/dashboard/joined-event`} component={EventDashboardPage} />
           <PrivateRouteStudent exact path={`${match.url}/dashboard/closed-event`} component={EventDashboardPage} />
-          <Redirect
+          {/* <Redirect
             exact
-            from={`${match.url}/dashboard/posted-event/:id`}
-            to={`${match.url}/dashboard/posted-event/:id/detail`}
+            from={`${match.url}/:id`}
+            to={`${match.url}/dashboard/available-event/:id/detail`}
           />
-          <PrivateRouteStudent exact path={`${match.url}/dashboard/posted-event/:id/detail`} component={DetailEventPage} />
+          <PrivateRouteStudent exact path={`${match.url}/dashboard/available-event/:id/detail`} component={DetailEventPage} />
           <PrivateRouteStudent exact path={`${match.url}/dashboard/joined-event/:id/detail`} component={DetailEventPage} />
-          <PrivateRouteStudent exact path={`${match.url}/dashboard/closed-event/:id/detail`} component={DetailEventPage} />
+          <PrivateRouteStudent exact path={`${match.url}/dashboard/closed-event/:id/detail`} component={DetailEventPage} /> */}
           <Redirect exact from={`${match.url}/:id`} to={`${match.url}/:id/detail`} />
           <Route exact path={`${match.url}/:id/detail`} component={DetailEventPage} />
+          <Route exact path={`${match.url}/:id/update`} component={RecruiterCreateEventPage} />
           <Route path="*" component={NotFoundPage} />
         </Switch>
         <Footer />

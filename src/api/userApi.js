@@ -49,9 +49,34 @@ const userApi = {
 
   // event
   getListEvents: (params) => {
-    const url = `/event/list-event?page=${params.page}&_limit=${params._limit}`;
+    const url = `/upcoming-events?page=${params.page}&_limit=${params._limit}`;
     return axiosClient.get(url);
-  } 
+  },
+
+  getDashboardEventData: () => {
+    const url = "/events/dashboard-data";
+    return axiosClient.get(url);
+  },
+
+  getAvailableEvents: (params) => {
+    const url = `/events/available?page=${params.page}&_limit=${params._limit}`
+    return axiosClient.get(url);
+  },
+
+  getJoinedEvents: (params) => {
+    const url = `/events/joined?page=${params.page}&_limit=${params._limit}`
+    return axiosClient.get(url);
+  },
+
+  getClosedEvents: (params) => {
+    const url = `/events/closed?page=${params.page}&_limit=${params._limit}`
+    return axiosClient.get(url);
+  },
+
+  getDetailOfEvent: (id) => {
+    const url = `/event/${id}`;
+    return axiosClient.get(url);
+  }
 };
 
 export default userApi;

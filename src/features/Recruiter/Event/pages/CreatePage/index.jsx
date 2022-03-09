@@ -1,23 +1,45 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { TextField } from '@material-ui/core';
+import LoadingUI from 'components/Loading';
+import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import './EventCreatePage.scss';
 import { useForm } from 'react-hook-form';
+import * as BsIcons from 'react-icons/bs';
 import { Spinner } from 'reactstrap';
+import styled from "styled-components";
+import helper from 'utils/common';
 // import { useSnackbar } from 'notistack';
 import * as Yup from 'yup';
-import helper from 'utils/common';
-import LoadingUI from 'components/Loading';
-import { TextField } from '@material-ui/core';
-import moment from 'moment';
-import * as BsIcons from 'react-icons/bs';
+import './EventCreatePage.scss';
 
 RecruiterCreateEventPage.propTypes = {
 
 };
 
+
+const StyledTextField = styled(TextField)`
+  /* default */
+  /* .MuiInput-underline:before {
+    border-bottom: 1px solid green;
+  } */
+  /* hover (double-ampersand needed for specificity reasons. */
+  /* && .MuiInput-underline:hover:before {
+    border-bottom: 2px solid lightblue;
+  } */
+  /* focused */
+  .MuiInput-underline:after {
+    border-bottom: 2px solid green;
+  }
+
+  .MuiInput {
+    &::placeholder {
+      color: 'blue'
+    }
+  }
+`;
+
 function RecruiterCreateEventPage(props) {
   const [isLoading, setIsLoading] = useState(true);
-  // const [errorMessage, setErrorMessage] = useState("");
   // const { enqueueSnackbar } = useSnackbar();
   const schema = Yup.object().shape({
     title: Yup
@@ -126,17 +148,22 @@ function RecruiterCreateEventPage(props) {
                           <div
                             className="event-create-page__container__main__form__above__left__time__start__input"
                           >
-                            <TextField
+                            <StyledTextField
                               // fullWidth
                               // label={"Event Starts"}
                               {...register("start")}
-                              type="date"
+                              type="datetime-local"
                               className="event-create-page__container__main__form__above__left__time__start__input__input"
                               placeholder={"placeholder"}
                               // disabled={false}
                               error={errors.start}
                               helperText={errors.start && errors.start.message}
-                              inputProps={{ min: moment(new Date().toJSON().slice(0, 10)).format('YYYY-MM-DD') }}
+                              inputProps={{ 
+                                min: moment(new Date().toJSON().slice(0, 10)).format('YYYY-MM-DDThh:mm'),
+                                style: {
+                                  fontSize: '0.9rem',
+                                }
+                              }}
 
                               InputLabelProps={{
                                 shrink: true,
@@ -156,19 +183,27 @@ function RecruiterCreateEventPage(props) {
                           <div
                             className="event-create-page__container__main__form__above__left__time__end__input"
                           >
-                            <TextField
+                            <StyledTextField
                               // fullWidth
                               // label={"Event ends"}
                               {...register("end")}
-                              type="date"
+                              type="datetime-local"
+                              className="event-create-page__container__main__form__above__left__time__end__input__input"
                               placeholder={"placeholder"}
                               // disabled={false}
                               error={errors.end}
                               helperText={errors.end && errors.end.message}
-                              inputProps={{ min: moment(new Date().toJSON().slice(0, 10)).format('YYYY-MM-DD') }}
+                              inputProps={{
+                                min: moment(new Date().toJSON().slice(0, 10)).format('YYYY-MM-DDThh:mm'),
+                                style: {
+                                  fontSize: '0.9rem',
+                                  // colorScheme: 'green'
+                                }
+                              }}
 
                               InputLabelProps={{
                                 shrink: true,
+                                
                               }}
                             />
                             {/* {errors.end && <span className="text-danger mt-2">{errors.end.message}</span>} */}

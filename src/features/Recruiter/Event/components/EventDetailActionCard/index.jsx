@@ -2,21 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import './EventDetailActionCard.scss';
+// import moment from 'moment';
 
 EventDetailActionCard.propTypes = {
+  event: PropTypes.object,
   onJoinEvent: PropTypes.func,
   onEditEvent: PropTypes.func,
-  onCloseEvent: PropTypes.func
+  onCloseEvent: PropTypes.func,
+  onDeleteEvent: PropTypes.func,
 };
 
 EventDetailActionCard.defaultProps = {
+  event: {},
   onJoinEvent: null,
   onEditEvent: null,
-  onCloseEvent: null
+  onCloseEvent: null,
+  onDeleteEvent: null,
 }
 
 function EventDetailActionCard(props) {
-  const { onJoinEvent, onEditEvent, onCloseEvent } = props;
+  const { event, onJoinEvent, onEditEvent, onCloseEvent, onDeleteEvent } = props;
 
   return (
     <div className="event-detail-action-card">
@@ -26,34 +31,51 @@ function EventDetailActionCard(props) {
         </span>
         <div className="event-detail-action-card__date__start">
           Start:<span>
-            19:00 2/12/2022
+            {/* {moment(new Date(event.start_date)).format('MM/DD/YYYY hh:mm')} */}
+            {new Date(event.start_date).toLocaleString()}
           </span>
         </div>
         <div className="event-detail-action-card__date__end">
           End:<span>
-            21:00 2/12/2022
+            {/* {moment(new Date(event.end_date)).format('MM/DD/YYYY hh:mm')} */}
+            {new Date(event.end_date).toLocaleString()}
           </span>
         </div>
       </div>
-      <div className="event-detail-action-card__group-button">
-        <Button
-          type="button"
-          color="success"
-          onClick={() => onEditEvent(1)}
-        >Edit</Button>
-        <Button
-          type="button"
-          color="secondary"
-          onClick={() => onCloseEvent(1)}
-        >Close</Button>
-      </div>
-      <div className="event-detail-action-card__group-button hidden">
-        <Button
-          type="button"
-          color="success"
-          onClick={() => onJoinEvent(1)}
-        >Join</Button>
-      </div>
+      {
+        event.is_creator
+          ? <div className="event-detail-action-card__group-button">
+            {
+              event.is_closed
+                ? <Button
+                  type="button"
+                  color="danger"
+                  onClick={() => onDeleteEvent(event)}
+                >Delete</Button>
+                : <>
+                  <Button
+                    type="button"
+                    color="success"
+                    onClick={() => onEditEvent(event)}
+                  >Edit</Button>
+                  <Button
+                    type="button"
+                    color="secondary"
+                    onClick={() => onCloseEvent(event)}
+                  >Close</Button>
+                </>
+            }
+          </div>
+          : <div className="event-detail-action-card__group-button">
+            <Button
+              type="button"
+              color="success"
+              style={event.is_joined ? {cursor: "default" } : { cursor: "pointer" }}
+              disabled={event.is_joined ? true : false}
+              onClick={() => onJoinEvent(event)}
+            >{event.is_joined ? "Joined" : "Join"}</Button>
+          </div>
+      }
     </div>
   );
 }

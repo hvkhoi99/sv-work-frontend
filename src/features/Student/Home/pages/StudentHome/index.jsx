@@ -22,6 +22,7 @@ function StudentHomePage(props) {
   const [topRecruiters, setTopRecruiters] = useState([]);
   const [topJobs, setTopJobs] = useState([]);
   const [totalJobs, setTotalJobs] = useState(0);
+  const roleId = parseInt(localStorage.getItem('role_id'), 10);
 
   const listImg = [
     [{ src: Images.bmw }, { src: Images.fb }],
@@ -103,8 +104,12 @@ function StudentHomePage(props) {
     if (e.code === 'Enter') e.preventDefault();
   };
 
-  const onViewDetailEvent = () => {
-    history.push(`${Paths.clientEvent}/1/detail`)
+  const onViewDetailEvent = (event) => {
+    history.push(
+      roleId === 2
+        ? `${Paths.recruiterEvent}/${event.id}`
+        : `${Paths.clientEvent}/${event.id}`
+    );
   }
 
   const renderStatusForApplyButton = (application) => {

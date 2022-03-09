@@ -1,6 +1,11 @@
 import axiosClient from "./axiosClient";
 
 const recruiterApi = {
+  // Event
+  createEventByRecruiter: (params) => {
+    const url = "/recruiter/event/store";
+    return axiosClient.post(url, params);
+  },
 
   // Recruiter -> Notifications
   getRecruiterCountNotifications: () => {

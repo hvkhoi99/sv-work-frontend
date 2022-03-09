@@ -13,6 +13,7 @@ import MainJobsArea from '../../components/MainJobsArea';
 import SliderSelect from '../../components/SliderSelect';
 import StudentSearchBar from '../../components/StudentSearchBar';
 import './FindJobs.scss';
+import LoadingUI from 'components/Loading';
 
 FindJobsPage.propTypes = {
 
@@ -34,6 +35,7 @@ const colourStyles = {
 
 function FindJobsPage(props) {
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(true);
   const { search } = useLocation();
   const { keyword, location, career, type, salary, closed, extra } = queryString.parse(search);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -88,6 +90,13 @@ function FindJobsPage(props) {
 
   useEffect(() => {
     helper.scrollToTop();
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    }
   }, []);
 
   const onSubmit = (values) => {
@@ -260,93 +269,99 @@ function FindJobsPage(props) {
 
   return (
     <>
-      <div className="find-jobs">
-        <div className="find-jobs__container">
-          <div className="find-jobs__container__search-bar">
-            <StudentSearchBar
-              initialValues={initValue}
-              onSubmit={onSubmit}
-            />
+      {
+        isLoading
+          ? <div className="loading-ui">
+            <LoadingUI />
           </div>
-          <div className="find-jobs__container__job-tags">
-            <JobTagsMainCard
-              jobTags={jobTags}
-              onActiveClass={onActiveClass}
-              activeIndex={activeIndex}
-            />
-          </div>
-          <div className="find-jobs__container__sort-bar">
-            <SortByItem
-              name={initValue.keyword}
-              options={SORT_JOBS_OPTIONS}
-              onSortCandidates={onSortItems}
-            />
-          </div>
-          <div className="find-jobs__container__filter-area">
-            <CreatableSelect
-              value={filterItems[0].value}
-              onChange={(data) => handleChangeSelectValue(data, filterItems[0].name)}
-              options={filterItems[0].options}
-              className="find-jobs__container__filter-area__select"
-              styles={colourStyles}
-              isClearable={true}
-              placeholder={filterItems[0].defaultValue}
-            />
-            <CreatableSelect
-              value={filterItems[1].value}
-              onChange={(data) => handleChangeSelectValue(data, filterItems[1].name)}
-              options={filterItems[1].options}
-              className="find-jobs__container__filter-area__select"
-              styles={colourStyles}
-              isClearable={true}
-              placeholder={filterItems[1].defaultValue}
-            />
-            <SliderSelect
-              title={filterItems[2].value}
-              placeholder="All of Salary"
-              onChangeSalary={handleChangeSelectValue}
-            />
-            <Select
-              value={filterItems[3].value}
-              onChange={(data) => handleChangeSelectValue(data, filterItems[3].name)}
-              options={filterItems[3].options}
-              className="find-jobs__container__filter-area__select"
-              styles={colourStyles}
-              isClearable={true}
-              placeholder={filterItems[3].defaultValue}
-            />
-            <CreatableSelect
-              value={filterItems[4].value}
-              onChange={(data) => handleChangeSelectValue(data, filterItems[4].name)}
-              options={filterItems[4].options}
-              className="find-jobs__container__filter-area__select"
-              styles={colourStyles}
-              isClearable={true}
-              placeholder={filterItems[4].defaultValue}
-            />
-          </div>
-          <span className="find-jobs__container__title">
-            All "{initValue.keyword}" Results
-          </span> <>
-            <div className="find-jobs__container__main-jobs">
-              <MainJobsArea
-                initialValues={initValue}
-                jobs={jobs}
-                setJobs={setJobs}
-              />
+          : <div className="find-jobs">
+            <div className="find-jobs__container">
+              <div className="find-jobs__container__search-bar">
+                <StudentSearchBar
+                  initialValues={initValue}
+                  onSubmit={onSubmit}
+                />
+              </div>
+              <div className="find-jobs__container__job-tags">
+                <JobTagsMainCard
+                  jobTags={jobTags}
+                  onActiveClass={onActiveClass}
+                  activeIndex={activeIndex}
+                />
+              </div>
+              <div className="find-jobs__container__sort-bar">
+                <SortByItem
+                  name={initValue.keyword}
+                  options={SORT_JOBS_OPTIONS}
+                  onSortCandidates={onSortItems}
+                />
+              </div>
+              <div className="find-jobs__container__filter-area">
+                <CreatableSelect
+                  value={filterItems[0].value}
+                  onChange={(data) => handleChangeSelectValue(data, filterItems[0].name)}
+                  options={filterItems[0].options}
+                  className="find-jobs__container__filter-area__select"
+                  styles={colourStyles}
+                  isClearable={true}
+                  placeholder={filterItems[0].defaultValue}
+                />
+                <CreatableSelect
+                  value={filterItems[1].value}
+                  onChange={(data) => handleChangeSelectValue(data, filterItems[1].name)}
+                  options={filterItems[1].options}
+                  className="find-jobs__container__filter-area__select"
+                  styles={colourStyles}
+                  isClearable={true}
+                  placeholder={filterItems[1].defaultValue}
+                />
+                <SliderSelect
+                  title={filterItems[2].value}
+                  placeholder="All of Salary"
+                  onChangeSalary={handleChangeSelectValue}
+                />
+                <Select
+                  value={filterItems[3].value}
+                  onChange={(data) => handleChangeSelectValue(data, filterItems[3].name)}
+                  options={filterItems[3].options}
+                  className="find-jobs__container__filter-area__select"
+                  styles={colourStyles}
+                  isClearable={true}
+                  placeholder={filterItems[3].defaultValue}
+                />
+                <CreatableSelect
+                  value={filterItems[4].value}
+                  onChange={(data) => handleChangeSelectValue(data, filterItems[4].name)}
+                  options={filterItems[4].options}
+                  className="find-jobs__container__filter-area__select"
+                  styles={colourStyles}
+                  isClearable={true}
+                  placeholder={filterItems[4].defaultValue}
+                />
+              </div>
+              <span className="find-jobs__container__title">
+                All "{initValue.keyword}" Results
+              </span> <>
+                <div className="find-jobs__container__main-jobs">
+                  <MainJobsArea
+                    initialValues={initValue}
+                    jobs={jobs}
+                    setJobs={setJobs}
+                  />
+                </div>
+                <div className="find-jobs__container__main-employers">
+                  <MainEmployersArea
+                    initialValues={initValue}
+                    employers={employers}
+                    setEmployers={setEmployers}
+                  // onShow={onShow}
+                  />
+                </div>
+              </>
             </div>
-            <div className="find-jobs__container__main-employers">
-              <MainEmployersArea
-                initialValues={initValue}
-                employers={employers}
-                setEmployers={setEmployers}
-                // onShow={onShow}
-              />
-            </div>
-          </>
-        </div>
-      </div>
-      
+          </div>
+      }
+
     </>
   );
 }

@@ -1,0 +1,48 @@
+.event-card-skeleton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  overflow: hidden;  
+
+  width: 16rem;
+  height: 14.75rem;
+
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+  &__image {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    line-height: 1;
+    overflow: hidden;
+  }
+
+  &__bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    
+    padding: 0.25rem 1rem 0.25rem 0.5rem;
+
+    &__left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 25%;
+    }
+
+    &__right {
+      display: flex;
+      flex-direction: column;
+      // align-items: center;
+      justify-content: center;
+      width: 75%;
+      
+      padding: 0 0 0 0.5rem;
+    }
+  }
+}

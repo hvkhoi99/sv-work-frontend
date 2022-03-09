@@ -49,7 +49,7 @@
   font-weight: 400;
 
   margin: 0 0.2rem;
-  border-radius: .3rem;
+  border-radius: 0.3rem;
   width: 1.8rem;
   height: 2rem;
 }
@@ -238,4 +238,11 @@ textarea {
 .bg-accepted-job {
   background-color: #2a2a72;
   background-image: linear-gradient(315deg, #2a2a72 0%, #009ffd 74%);
+  color: #008000;
+}
+
+// change calender icon color
+::-webkit-calendar-picker-indicator {
+  filter: invert(21%) sepia(44%) saturate(7493%) hue-rotate(124deg)
+    brightness(92%) contrast(104%);
 }

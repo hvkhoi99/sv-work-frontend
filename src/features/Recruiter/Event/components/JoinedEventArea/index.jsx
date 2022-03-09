@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react';
 import Paths from 'constants/paths';
-import LoadingChildUI from 'components/LoadingChild';
-import * as MdIcons from 'react-icons/md';
+import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import EventCard from '../EventCard';
 // import PropTypes from 'prop-types';
+import * as MdIcons from 'react-icons/md';
+import queryString from 'query-string';
+import EventCardSkeleton from '../EventCardSkeleton';
+import userApi from 'api/userApi';
+import * as RiIcons from 'react-icons/ri';
 import './JoinedEventArea.scss';
 
 JoinedEventArea.propTypes = {
@@ -13,83 +16,130 @@ JoinedEventArea.propTypes = {
 };
 
 function JoinedEventArea(props) {
-  const items = [1, 2, 3, 4, 5, 6];
   const history = useHistory();
+  // const user = useSelector((state) => state.user.current);
+  const roleId = parseInt(localStorage.getItem('role_id'), 10);
   const [isLoading, setIsLoading] = useState(true);
-
-  const [currentPage, setCurrentPage] = useState(1);
+  const [events, setEvents] = useState([]);
+  const { search } = useLocation();
+  const page = parseInt(queryString.parse(search).page);
+  const [currentPage, setCurrentPage] = useState(page > 1 ? page : 1);
   const [pageCount, setPageCount] = useState(0);
+  const _limit = 6;
 
-  const onViewDetailEvent = () => {
-    history.push(`${Paths.clientEvent}/dashboard/posted-event/1`)
+  const onViewDetailEvent = (event) => {
+    history.push(
+      roleId === 2
+        ? `${Paths.recruiterEvent}/${event.id}`
+        : `${Paths.clientEvent}/${event.id}`
+    );
   }
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setCurrentPage(1);
-      const total = items.length;
-      setPageCount(Math.ceil(total / 4));
-      setIsLoading(false);
-    }, 1000)
+    const fetchJoinedEvents = async () => {
+      try {
+        const params = {
+          page: currentPage,
+          _limit
+        }
 
-    return () => {
-      clearTimeout(timer);
+        const data = await userApi.getJoinedEvents(params);
+        // console.log({ data })
+        if (data.data.status === 1) {
+          setEvents(data.data.data.data);
+          const total = data.data.data.total;
+          setPageCount(Math.ceil(total / _limit));
+        }
+        setIsLoading(false);
+        return;
+      } catch (error) {
+        console.log("Cannot fetch events. Error: " + error.message);
+        setIsLoading(false);
+        return;
+      }
     }
-  }, [items.length]);
 
-  const handlePageClick = () => {
-    console.log("prev/next page");
-  }
+    fetchJoinedEvents();
+  }, [currentPage]);
+
+  const handlePageClick = async (data) => {
+    const newPage = data.selected + 1;
+    setCurrentPage(newPage);
+    history.push(
+      roleId === 2
+        ? `${Paths.recruiterEvent}/joined-event?page=${newPage}`
+        : `${Paths.clientEvent}/joined-event?page=${newPage}`
+    )
+    // helper.scrollToTop(350);
+  };
 
   return (
     <div className="joined-event-area">
       {isLoading
-        ? <div className="loading-child-ui">
-          <LoadingChildUI />
+        ? <div className="posted-event-area__skeleton-area">
+          {
+            [1, 2, 3].map((item, index) => {
+              return <EventCardSkeleton key={index} />
+            })
+          }
         </div>
         : <div className="joined-event-area__container">
-          <div className="joined-event-area__container__main">
-            {
-              items.map((item, index) => {
-                return <div
-                  key={index}
-                  className="joined-event-area__container__main__item"
-                >
-                  <EventCard onViewDetailEvent={onViewDetailEvent} />
+          {
+            events.length > 0
+              ? <>
+                <div className="joined-event-area__container__main">
+                  {
+                    events.map((event, index) => {
+                      return <div
+                        key={index}
+                        className="joined-event-area__container__main__item"
+                      >
+                        <EventCard
+                          event={event}
+                          onViewDetailEvent={onViewDetailEvent}
+                        />
+                      </div>
+                    })
+                  }
                 </div>
-              })
-            }
-          </div>
-          <div className="joined-event-area__container__paginator">
-            <ReactPaginate
-              previousLabel={
-                <MdIcons.MdArrowBackIosNew />
-              }
-              nextLabel={
-                <MdIcons.MdArrowForwardIos />
-              }
+                <div className="joined-event-area__container__paginator">
+                  <ReactPaginate
+                    previousLabel={
+                      <MdIcons.MdArrowBackIosNew />
+                    }
+                    nextLabel={
+                      <MdIcons.MdArrowForwardIos />
+                    }
 
-              // initialPage={1}
-              // initialPage={currentPage}
-              forcePage={currentPage - 1}
-              breakLabel={"..."}
-              pageCount={pageCount}
-              marginPagesDisplayed={1}
-              pageRangeDisplayed={2}
-              onPageChange={handlePageClick}
-              containerClassName={"pagination justify-content-center"}
-              pageClassName={"page-item"}
-              pageLinkClassName={"page-link"}
-              previousClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
-              previousLinkClassName={"page-link"}
-              nextClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
-              nextLinkClassName={"page-link"}
-              breakClassName={"page-item"}
-              breakLinkClassName={"page-link"}
-              activeClassName={"active"}
+                    // initialPage={1}
+                    // initialPage={currentPage}
+                    forcePage={currentPage - 1}
+                    breakLabel={"..."}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={1}
+                    pageRangeDisplayed={2}
+                    onPageChange={handlePageClick}
+                    containerClassName={"pagination justify-content-center"}
+                    pageClassName={"page-item"}
+                    pageLinkClassName={"page-link"}
+                    previousClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    breakLinkClassName={"page-link"}
+                    activeClassName={"active"}
 
-            />
-          </div>
+                  />
+                </div>
+              </>
+              : <div className="find-candidates__container__pagination__not-found__info">
+                <RiIcons.RiErrorWarningFill
+                  className="find-candidates__container__pagination__not-found__info__icon"
+                />
+                <span>You have not created any events yet.</span>
+              </div>
+          }
         </div>
       }
     </div>
