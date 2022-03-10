@@ -14,6 +14,7 @@ import EventCard from '../../components/EventCard';
 import ImageSlider from '../../components/ImageSlider';
 import SearchFormEvent from '../../components/SearchFormEvent';
 import './MainEventPage.scss';
+import EventCardSkeleton from '../../components/EventCardSkeleton';
 
 RecruiterMainEventPage.propTypes = {
 
@@ -22,7 +23,9 @@ RecruiterMainEventPage.propTypes = {
 function RecruiterMainEventPage(props) {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
+  const [isGetting, setIsGetting] = useState(true);
   const [events, setEvents] = useState([]);
+  const [topEvents, setTopEvents] = useState([]);
   const user = useSelector((state) => state.user.current);
   const roleId = parseInt(localStorage.getItem('role_id'), 10);
   const [show, setShow] = useState(false);
@@ -32,32 +35,56 @@ function RecruiterMainEventPage(props) {
   const [pageCount, setPageCount] = useState(0);
   const _limit = 8;
 
-  const sliderData = [
-    {
-      image:
-        'https://images.unsplash.com/photo-1546768292-fb12f6c92568?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-    },
-    {
-      image:
-        'https://images.unsplash.com/photo-1501446529957-6226bd447c46?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1489&q=80'
-    },
-    {
-      image:
-        'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80'
-    },
-    {
-      image:
-        'https://images.unsplash.com/photo-1475189778702-5ec9941484ae?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1351&q=80'
-    },
-    {
-      image:
-        'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80'
+  // const sliderData = [
+  //   {
+  //     image:
+  //       'https://images.unsplash.com/photo-1546768292-fb12f6c92568?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
+  //   },
+  //   {
+  //     image:
+  //       'https://images.unsplash.com/photo-1501446529957-6226bd447c46?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1489&q=80'
+  //   },
+  //   {
+  //     image:
+  //       'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80'
+  //   },
+  //   {
+  //     image:
+  //       'https://images.unsplash.com/photo-1475189778702-5ec9941484ae?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1351&q=80'
+  //   },
+  //   {
+  //     image:
+  //       'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80'
+  //   }
+  // ];
+
+  useEffect(() => {
+    helper.scrollToTop();
+    const fetchListTopEvents = async () => {
+      try {
+        const params = {
+          _limit: 4
+        }
+
+        const data = await userApi.getTopEvents(params);
+        console.log({ data })
+        if (data.data.status === 1) {
+          setTopEvents(data.data.data);
+        }
+        setIsLoading(false);
+        return;
+      } catch (error) {
+        console.log("Cannot fetch top events. Error: " + error.message);
+        setIsLoading(false);
+        return;
+      }
     }
-  ];
+
+    fetchListTopEvents();
+  }, []);
 
   useEffect(() => {
     // helper.scrollToTop();
-
     const fetchListEvents = async () => {
       try {
         const params = {
@@ -66,17 +93,16 @@ function RecruiterMainEventPage(props) {
         }
 
         const data = await userApi.getListEvents(params);
-        console.log({ data })
         if (data.data.status === 1) {
           setEvents(data.data.data.data);
           const total = data.data.data.total;
           setPageCount(Math.ceil(total / _limit));
         }
-        setIsLoading(false);
+        setIsGetting(false);
         return;
       } catch (error) {
         console.log("Cannot fetch events. Error: " + error.message);
-        setIsLoading(false);
+        setIsGetting(false);
         return;
       }
     }
@@ -92,7 +118,8 @@ function RecruiterMainEventPage(props) {
         ? `${Paths.recruiterEvent}?page=${newPage}`
         : `${Paths.clientEvent}?page=${newPage}`
     )
-    helper.scrollToTop(350);
+    setIsGetting(true);
+    helper.scrollToTop(500);
   };
 
   const onViewDetailEvent = (event) => {
@@ -144,18 +171,27 @@ function RecruiterMainEventPage(props) {
       return;
     } else {
       if (user.role_id === 2) {
-        history.push(`${Paths.recruiterEvent}/create`);
+        history.push({
+          pathname: `${Paths.recruiterEvent}/create`,
+          state: { event: null, isEditMode: false }
+        });
         return;
       }
 
       if (user.role_id === 3) {
         if (roleId === 2) {
-          history.push(`${Paths.recruiterEvent}/create`);
+          history.push({
+            pathname: `${Paths.recruiterEvent}/create`,
+            state: { event: null, isEditMode: false }
+          });
           return;
         }
 
         if (user.s_profile) {
-          history.push(`${Paths.clientEvent}/create`);
+          history.push({
+            pathname: `${Paths.clientEvent}/create`,
+            state: { event: null, isEditMode: false }
+          });
           return;
         }
 
@@ -204,7 +240,8 @@ function RecruiterMainEventPage(props) {
             <div className="event-main__container">
               <div className="event-main__container__slider">
                 <ImageSlider
-                  sliderData={sliderData}
+                  sliderData={topEvents}
+                  onViewDetailEvent={onViewDetailEvent}
                 />
               </div>
               <div className="event-main__container__search">
@@ -228,59 +265,70 @@ function RecruiterMainEventPage(props) {
                   <div className="event-main__container__upcomming-events__title__dot"></div>
                 </div>
                 {
-                  events.length > 0
-                    ? <>
-                      <div className="event-main__container__upcomming-events__cards">
-                        {
-                          events.map((event, index) => {
-                            return <div
-                              key={index}
-                              className="event-main__container__upcomming-events__cards__item"
-                            >
-                              <EventCard
-                                event={event}
-                                onViewDetailEvent={onViewDetailEvent}
-                              />
-                            </div>
-                          })
-                        }
-                      </div>
-                      <div className="event-main__container__upcomming-events__pagination">
-                        <ReactPaginate
-                          previousLabel={
-                            <MdIcons.MdArrowBackIosNew />
-                          }
-                          nextLabel={
-                            <MdIcons.MdArrowForwardIos />
-                          }
-
-                          // initialPage={1}
-                          // initialPage={currentPage}
-                          forcePage={currentPage - 1}
-                          breakLabel={"..."}
-                          pageCount={pageCount}
-                          marginPagesDisplayed={1}
-                          pageRangeDisplayed={2}
-                          onPageChange={handlePageClick}
-                          containerClassName={"pagination justify-content-center"}
-                          pageClassName={"page-item"}
-                          pageLinkClassName={"page-link"}
-                          previousClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
-                          previousLinkClassName={"page-link"}
-                          nextClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
-                          nextLinkClassName={"page-link"}
-                          breakClassName={"page-item"}
-                          breakLinkClassName={"page-link"}
-                          activeClassName={"active"}
-                          // renderOnZeroPageCount={null}
-                        />
-                      </div>
-                    </>
-                    : <div className="event-main__container__upcomming-events__no-data">
-                      <span>"No events have been created yet."</span>
-                      <img src={Images.upcomingEvent} alt="upcoming event" />
+                  isGetting
+                    ? <div className="event-main__container__upcomming-events__skeleton-area">
+                      {
+                        [1, 2, 3, 4].map((item, index) => {
+                          return <EventCardSkeleton key={index} />
+                        })
+                      }
                     </div>
+                    :
+                    (events.length > 0
+                      ? <>
+                        <div className="event-main__container__upcomming-events__cards">
+                          {
+                            events.map((event, index) => {
+                              return <div
+                                key={index}
+                                className="event-main__container__upcomming-events__cards__item"
+                              >
+                                <EventCard
+                                  event={event}
+                                  onViewDetailEvent={onViewDetailEvent}
+                                />
+                              </div>
+                            })
+                          }
+                        </div>
+                        <div className="event-main__container__upcomming-events__pagination">
+                          <ReactPaginate
+                            previousLabel={
+                              <MdIcons.MdArrowBackIosNew />
+                            }
+                            nextLabel={
+                              <MdIcons.MdArrowForwardIos />
+                            }
+
+                            // initialPage={1}
+                            // initialPage={currentPage}
+                            forcePage={currentPage - 1}
+                            breakLabel={"..."}
+                            pageCount={pageCount}
+                            marginPagesDisplayed={1}
+                            pageRangeDisplayed={2}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination justify-content-center"}
+                            pageClassName={"page-item"}
+                            pageLinkClassName={"page-link"}
+                            previousClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
+                            previousLinkClassName={"page-link"}
+                            nextClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
+                            nextLinkClassName={"page-link"}
+                            breakClassName={"page-item"}
+                            breakLinkClassName={"page-link"}
+                            activeClassName={"active"}
+                          // renderOnZeroPageCount={null}
+                          />
+                        </div>
+                      </>
+                      : <div className="event-main__container__upcomming-events__no-data">
+                        <span>"No events have been created yet."</span>
+                        <img src={Images.upcomingEvent} alt="upcoming event" />
+                      </div>
+                    )
                 }
+
               </div>
             </div>
           </div>

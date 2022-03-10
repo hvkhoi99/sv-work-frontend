@@ -201,6 +201,11 @@
         &:disabled {
           background-color: lightgrey;
         }
+
+        &:focus {
+          border-color: var(--success);
+          box-shadow: 0 0 0 3px rgba(0, 194, 0, 0.4);
+        }
       }
 
       // &__icon {
@@ -228,6 +233,11 @@
   & > div > input {
     border-radius: 2rem;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+    &:focus {
+      border-color: var(--success);
+      box-shadow: 0 0 0 3px rgba(0, 194, 0, 0.4);
+    }
 
     &:disabled {
       background-color: lightgrey;
@@ -261,6 +271,11 @@
         border-radius: 2rem;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
         padding-right: 3.5rem;
+
+        &:focus {
+          border-color: var(--success);
+          box-shadow: 0 0 0 3px rgba(0, 194, 0, 0.4);
+        }
       }
 
       &__icon {

@@ -108,7 +108,7 @@ function SliderSelect(props) {
 
   return (
     <div className="slider-select" >
-      <div className="slider-select__select" onClick={handleShow}>
+      <div className={`slider-select__select ${show && "slider-select-active"}`} onClick={handleShow}>
         <div className="slider-select__select__container">
           <div className="slider-select__select__container__title">
             {

@@ -50,6 +50,11 @@
           border: 1px solid var(--success);
           border-radius: 0.5rem;
           box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+          &:focus {
+            border-color: var(--success);
+            box-shadow: 0 0 0 3px rgba(0, 194, 0, 0.4);
+          }
         }
       }
 

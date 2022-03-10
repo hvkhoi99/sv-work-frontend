@@ -30,6 +30,23 @@ function TopRecruiterCard(props) {
         src={recruiter.logo_image_link} alt={recruiter.name}
         onClick={handleToViewCompany}
       />
+      {/* <div className="card-item__overlay"> */}
+        {/* <h3 className="photo__title">ABC</h3> */}
+
+        {/* <div className="photo__actions">
+          <div>
+            <Button outline size="sm" color="light" onClick={handleEditClick}>
+              Edit
+            </Button>
+          </div>
+
+          <div>
+            <Button outline size="sm" color="danger" onClick={handleRemoveClick}>
+              Remove
+            </Button>
+          </div>
+        </div> */}
+      {/* </div> */}
     </div>
   );
 }

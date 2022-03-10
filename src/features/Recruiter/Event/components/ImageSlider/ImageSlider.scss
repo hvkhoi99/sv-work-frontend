@@ -14,13 +14,106 @@
     width: 100%;
     height: 20rem;
     position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
 
-    & > img {
+    &__img {
+      display: flex;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      border-radius: 1rem;
-      border: 1px solid lightgrey;
+      overflow: hidden;
+      position: relative;
+
+      & > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 1rem;
+        border: 1px solid lightgrey;
+        vertical-align: middle;
+        transition: all 0.45s ease 0s;
+      }
+
+      &__overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        display: flex;
+        flex-flow: column nowrap;
+        // justify-content: center;
+
+        width: 100%;
+        height: 100%;
+        padding: 1rem;
+
+        color: rgba(255, 255, 255, 0.8);
+        background-color: rgba(0, 0, 0, 0.8);
+        opacity: 0;
+        transition: all 0.25s ease 0s;
+
+        cursor: pointer;
+
+        font-size: 0.9rem;
+        line-height: 1.5rem;
+
+        &__title {
+          color: var(--success);
+          font-size: 1.2rem;
+          text-transform: uppercase;
+          font-weight: 600;
+        }
+
+        &__count {
+          & > span {
+            color: var(--success);
+            font-weight: 600;
+          }
+        }
+      }
+
+      &__actions {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        align-items: center;
+        margin-top: 1rem;
+        opacity: 0;
+        transition: all 0.35s ease 0s;
+        transform: translateY(1rem);
+
+        &__icon {
+          font-size: 4rem;
+          padding: 1rem;
+          border-radius: 50%;
+
+          background-color: #fff;
+          color: red;
+          transition: all 0.2s ease 0s;
+
+          &:hover {
+            transition: all 0.1s ease 0s;
+            background-color: lightcoral;
+            color: darkred;
+            cursor: pointer;
+          }
+        }
+      }
+
+      // When hover on photo card
+      // &:hover {
+      //   cursor: pointer;
+      // }
+
+      &:hover > img {
+        transform: scale(1.35);
+      }
+
+      &:hover &__overlay,
+      &:hover &__actions {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   }
 
@@ -33,37 +126,54 @@
     bottom: 3rem;
 
     &__dot {
-      width: .8rem;
-      height: .8rem;
+      width: 0.8rem;
+      height: 0.8rem;
       border-radius: 50%;
       background-color: #fff;
     }
   }
 
-  &__btn-group {
-    display: flex;
-    justify-content: space-between;
-    width: 105%;
-    align-items: center;
+  &__icon-prev {
     position: absolute;
+    top: calc(100% / 2 - 1.5rem);
+    left: -1.5rem;
+    font-size: 3rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    cursor: pointer;
 
-    &__icon {
-      font-size: 3rem;
-      padding: 0.5rem;
-      border-radius: 50%;
+    &:hover {
+      background-color: var(--success);
+      transition: all 0.15s ease-out;
+      // color: #fff;
+    }
+
+    &:active {
       background-color: #fff;
-      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-      cursor: pointer;
+    }
+  }
 
-      &:hover {
-        background-color: var(--success);
-        transition: all 0.15s ease-out;
-        // color: #fff;
-      }
+  &__icon-next {
+    position: absolute;
+    top: calc(100% / 2 - 1.5rem);
+    right: -1.5rem;
+    font-size: 3rem;
+    padding: 0.5rem;
+    border-radius: 50%;
+    background-color: #fff;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    cursor: pointer;
 
-      &:active {
-        background-color: #fff;
-      }
+    &:hover {
+      background-color: var(--success);
+      transition: all 0.15s ease-out;
+      // color: #fff;
+    }
+
+    &:active {
+      background-color: #fff;
     }
   }
 }

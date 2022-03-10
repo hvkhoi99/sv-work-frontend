@@ -18,6 +18,7 @@ SelectField.propTypes = {
   isCreatableSelect: PropTypes.bool,
   labelClassName: PropTypes.string,
   moreClassName: PropTypes.string,
+  isTheme: PropTypes.bool,
 };
 
 SelectField.defaultProps = {
@@ -33,6 +34,7 @@ SelectField.defaultProps = {
   isCreatableSelect: false,
   labelClassName: '',
   moreClassName: '',
+  isTheme: false,
 }
 
 function SelectField(props) {
@@ -58,9 +60,9 @@ function SelectField(props) {
       borderRadius: '.5rem',
       borderColor: showError
         ? "#dc3545"
-        : state.isFocused ? "rgba(0, 0, 255, 0.2)" : "#fff",
+        : state.isFocused ? "var(--success)" : "#fff",
       boxShadow: state.isFocused
-        ? (showError ? "0 0 0 3px rgba(255, 0, 0, 0.2)" : "0 0 0 3px rgba(0, 150, 255, 0.3)")
+        ? (showError ? "0 0 0 3px rgba(255, 0, 0, 0.2)" : "0 0 0 3px rgba(0, 194, 0, 0.4)")
         : "rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px",
       "&:hover": {
         cursor: 'text'
@@ -68,6 +70,15 @@ function SelectField(props) {
       "transition": state.isFocused && "all 0.15s ease-out",
     }),
   }
+
+  const theme = (theme) => ({
+    ...theme,
+    borderRadius: 0,
+    colors: {
+      ...theme.colors,
+      primary: 'var(--success)',
+    },
+  })
 
   const handleSelectedOptionChange = (selectedOption) => {
     const selectedValue = selectedOption ? selectedOption.value : selectedOption;
@@ -116,6 +127,7 @@ function SelectField(props) {
           placeholder={placeholder}
           isDisabled={disabled}
           styles={colourStyles}
+          theme={theme}
 
           className={showError ? 'is-invalid' : ''}
         />

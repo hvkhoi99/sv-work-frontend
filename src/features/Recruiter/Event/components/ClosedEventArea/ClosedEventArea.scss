@@ -23,6 +23,12 @@
           width: 16rem;
         }
       }
+
+      &::after {
+        content: "";
+        flex: 0 0 30%;
+
+      }
     }
 
     &__paginator {

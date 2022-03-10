@@ -6,6 +6,7 @@ import { FormFeedback, FormGroup, Label } from 'reactstrap';
 import '../InputField/InputField.scss';
 import './TextFieldDate.scss';
 import { makeStyles } from "@material-ui/core/styles";
+import styled from "styled-components";
 
 TextFieldDate.propTypes = {
   field: PropTypes.object,
@@ -42,6 +43,22 @@ TextFieldDate.defaultProps = {
   inputProps: {}
 }
 
+
+const StyledTextField = styled(TextField)`
+  /* default */
+  /* .MuiInput-underline:before {
+    border-bottom: 1px solid green;
+  } */
+  /* hover (double-ampersand needed for specificity reasons. */
+  /* && .MuiInput-underline:hover:before {
+    border-bottom: 2px solid lightblue;
+  } */
+  /* focused */
+  .MuiInput-underline:after {
+    border-bottom: 2px solid var(--success);
+  }
+`;
+
 function TextFieldDate(props) {
   const {
     field, form,
@@ -70,7 +87,7 @@ function TextFieldDate(props) {
     <FormGroup className={`field-container ${moreClassName}`}>
       {label && <Label className={`label ${labelClassName}`} for={name}>{label}</Label>}
 
-      <TextField
+      <StyledTextField
         // fullWidth
         id={name}
         {...field}

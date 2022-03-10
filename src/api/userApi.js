@@ -53,6 +53,11 @@ const userApi = {
     return axiosClient.get(url);
   },
 
+  getTopEvents: (params) => {
+    const url = `/top-events?_limit=${params._limit}`;
+    return axiosClient.get(url);
+  },
+
   getDashboardEventData: () => {
     const url = "/events/dashboard-data";
     return axiosClient.get(url);
@@ -76,6 +81,26 @@ const userApi = {
   getDetailOfEvent: (id) => {
     const url = `/event/${id}`;
     return axiosClient.get(url);
+  },
+  
+  updateEvent: (id, params) => {
+    const url = `/event/${id}/update?_method=PUT`;
+    return axiosClient.post(url, params);
+  },
+
+  closeEvent: (id) => {
+    const url = `/event/${id}/close`;
+    return axiosClient.put(url);
+  },
+
+  deleteEvent: (id) => {
+    const url = `/event/${id}`;
+    return axiosClient.delete(url);
+  },
+
+  joinEvent: (id) => {
+    const url = `/event/${id}/join`;
+    return axiosClient.post(url);
   }
 };
 

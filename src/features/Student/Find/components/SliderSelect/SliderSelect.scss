@@ -14,6 +14,7 @@
     border-radius: 0.5rem;
     padding: 8px;
     cursor: pointer;
+    transition: all 0.15s ease-out;
 
     &__container {
       display: flex;
@@ -121,4 +122,9 @@
       }
     }
   }
+}
+
+.slider-select-active {
+  border-color: var(--success);
+  box-shadow: 0 0 0 3px rgba(0, 194, 0, 0.4);
 }

@@ -10,6 +10,9 @@ EventDetailActionCard.propTypes = {
   onEditEvent: PropTypes.func,
   onCloseEvent: PropTypes.func,
   onDeleteEvent: PropTypes.func,
+  isClosing: PropTypes.bool,
+  isDeleting: PropTypes.bool,
+  isJoining: PropTypes.bool,
 };
 
 EventDetailActionCard.defaultProps = {
@@ -18,10 +21,16 @@ EventDetailActionCard.defaultProps = {
   onEditEvent: null,
   onCloseEvent: null,
   onDeleteEvent: null,
+  isClosing: false,
+  isDeleting: false,
+  isJoining: false,
 }
 
 function EventDetailActionCard(props) {
-  const { event, onJoinEvent, onEditEvent, onCloseEvent, onDeleteEvent } = props;
+  const {
+    event, onJoinEvent, onEditEvent, onCloseEvent, onDeleteEvent,
+    isClosing, isDeleting, isJoining
+  } = props;
 
   return (
     <div className="event-detail-action-card">
@@ -51,7 +60,12 @@ function EventDetailActionCard(props) {
                   type="button"
                   color="danger"
                   onClick={() => onDeleteEvent(event)}
-                >Delete</Button>
+                  disabled={isDeleting}
+                  style={isDeleting ? { cursor: "default" } : { cursor: "pointer" }}
+                >
+                  {isDeleting && <span className="spinner-border spinner-border-sm mr-1" />}
+                  Delete
+                </Button>
                 : <>
                   <Button
                     type="button"
@@ -62,7 +76,12 @@ function EventDetailActionCard(props) {
                     type="button"
                     color="secondary"
                     onClick={() => onCloseEvent(event)}
-                  >Close</Button>
+                    disabled={isClosing}
+                    style={isClosing ? { cursor: "default" } : { cursor: "pointer" }}
+                  >
+                    {isClosing && <span className="spinner-border spinner-border-sm mr-1" />}
+                    {event.is_closed ? "Closed" : "Close"}
+                  </Button>
                 </>
             }
           </div>
@@ -70,10 +89,13 @@ function EventDetailActionCard(props) {
             <Button
               type="button"
               color="success"
-              style={event.is_joined ? {cursor: "default" } : { cursor: "pointer" }}
-              disabled={event.is_joined ? true : false}
+              style={isJoining ? { cursor: "default" } : { cursor: "pointer" }}
+              disabled={isJoining}
               onClick={() => onJoinEvent(event)}
-            >{event.is_joined ? "Joined" : "Join"}</Button>
+            >
+              {isJoining && <span className="spinner-border spinner-border-sm mr-1" />}
+              {event.is_joined ? "Joined" : "Join"}
+              </Button>
           </div>
       }
     </div>

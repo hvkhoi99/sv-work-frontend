@@ -96,19 +96,24 @@ function EventDashboardPage(props) {
   }
 
   const onMoveToFormCreateEvent = () => {
-    history.push(
-      user.role_id === 2
-        ? `${Paths.recruiterEvent}/create`
-        : (
-          user.role_id === 3
-            ? (
-              roleId === 2
-                ? `${Paths.recruiterEvent}/create`
-                : `${Paths.clientEvent}/create`
-            )
-            : ""
-        )
-    );
+    history.push({
+      pathname:
+        user.role_id === 2
+          ? `${Paths.recruiterEvent}/create`
+          : (
+            user.role_id === 3
+              ? (
+                roleId === 2
+                  ? `${Paths.recruiterEvent}/create`
+                  : `${Paths.clientEvent}/create`
+              )
+              : ""
+          ),
+      state: {
+        event: null,
+        isEditMode: false
+      }
+    });
   }
 
   return (
@@ -146,7 +151,7 @@ function EventDashboardPage(props) {
                                 ? (
                                   roleId === 2
                                     ? user.r_profile.company_name
-                                    : (user.s_profile.first_name ?? "" + user.s_profile.last_name ?? "")
+                                    : ((user.s_profile.first_name ?? "") + " " + (user.s_profile.last_name ?? ""))
                                 )
                                 : "User"
                             )

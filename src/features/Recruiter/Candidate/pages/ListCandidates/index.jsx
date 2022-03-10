@@ -13,6 +13,7 @@ import CandidatePage from '../Candidate';
 import * as MdIcons from 'react-icons/md';
 import './ListCandidates.scss';
 import { useSnackbar } from 'notistack';
+import * as RiIcons from 'react-icons/ri';
 import helper from 'utils/common';
 
 ListCandidates.propTypes = {
@@ -242,9 +243,15 @@ function ListCandidates(props) {
                 }
               </div>
             </div>
-            : <div className="list-candidates-no-data">
-              <span>Your job posting has no candidates yet.</span>
-            </div>
+            // : <div className="list-candidates-no-data">
+            //   <span>Your job posting has no candidates yet.</span>
+            // </div>
+            : <div className="find-candidates__container__pagination__not-found__info">
+                <RiIcons.RiErrorWarningFill
+                  className="find-candidates__container__pagination__not-found__info__icon"
+                />
+                <span>Your job posting has no candidates yet.</span>
+              </div>
           }
         </>
       }
