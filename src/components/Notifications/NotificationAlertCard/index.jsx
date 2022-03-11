@@ -1,6 +1,8 @@
 import Images from 'constants/images';
+import Paths from 'constants/paths';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
+import * as BiIcons from 'react-icons/bi';
 import * as FaIcons from 'react-icons/fa';
 import * as FiIcons from 'react-icons/fi';
 import * as GiIcons from 'react-icons/gi';
@@ -8,7 +10,6 @@ import * as GoIcons from 'react-icons/go';
 import * as MdIcons from 'react-icons/md';
 import * as RiIcons from 'react-icons/ri';
 import * as SiIcons from 'react-icons/si';
-import * as BiIcons from 'react-icons/bi';
 import { useHistory } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago';
 // import { Button } from 'reactstrap';
@@ -38,6 +39,7 @@ NotificationAlertCard.defaultProps = {
 function NotificationAlertCard(props) {
   const { showNoti, onChangeAlertStatus, notification, onMarkAsRead } = props;
   const [isShowMarkAsRead, setIsShowMarkAsRead] = useState(false);
+  const roleId = parseInt(localStorage.getItem('role_id'), 10);
   const ref = useRef(null);
   const body = JSON.parse(notification.body);
   const [isRead, setIsRead] = useState(false);
@@ -63,6 +65,27 @@ function NotificationAlertCard(props) {
 
   const renderContent = (type) => {
     switch (type) {
+      case "create-event":
+        return (
+          <>
+            <div className={`notification-alert__container__content__main__description__text ${isRead && "read-notification-content__content__text"}`}>
+              <span className={`notification-alert__container__content__main__description__text__name ${isRead && "read-notification-content__content__text__name"}`}>
+                {body.company_info.company_name}
+                {body.company_info.verify && <FaIcons.FaCheckCircle
+                  className={`notification-alert__container__content__main__description__text__name__icon ${isRead && "read-notification-content__content__text__name__icon"}`}
+                />}
+              </span>
+              has just created a new event titled <span
+                className={`notification-alert__container__content__main__description__text__job-title 
+              ${isRead && "read-notification-content__content__text__job-title"}`}
+              >
+                {body.job.title}
+              </span>
+              . Join now!
+            </div>
+            <span className={`notification-alert__container__content__main__description__date ${isRead && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
       case "create-recruitment":
         return (
           <>
@@ -346,6 +369,10 @@ function NotificationAlertCard(props) {
 
   const renderTypeIcon = (type) => {
     switch (type) {
+      case "create-event":
+        return (
+          <MdIcons.MdEvent className="notification-alert__container__content__main__avatar__type-icon__icon" />
+        );
       case "create-recruitment":
         return (
           <SiIcons.SiWorkplace className="notification-alert__container__content__main__avatar__type-icon__icon" />
@@ -417,6 +444,12 @@ function NotificationAlertCard(props) {
     setIsRead(true);
     onChangeAlertStatus(false);
     switch (body.type) {
+      case "create-event":
+        return history.push(
+          roleId === 2
+            ? `${Paths.recruiterEvent}/${body.job.id}`
+            : `${Paths.clientEvent}/${body.job.id}`
+        );
       case "create-recruitment":
         return history.push(`/recruitment/${body.job.id}`);
       case "update-recruitment":
@@ -455,7 +488,7 @@ function NotificationAlertCard(props) {
     //   default:
     //     return (<img src={Images.employerAvatar} alt="avatar" />)
     // }
-    if (["create-recruitment", "update-recruitment", "update-avatar", "approved-application", "rejected-application", "invited-job", "verify-company-profile"].includes(body.type)) {
+    if (["create-event", "create-recruitment", "update-recruitment", "update-avatar", "approved-application", "rejected-application", "invited-job", "verify-company-profile"].includes(body.type)) {
       return (<img src={body.company_info.logo_image_link} alt="avatar" />);
     }
 

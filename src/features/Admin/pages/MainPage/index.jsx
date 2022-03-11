@@ -58,8 +58,10 @@ function AdminMainPage(props) {
       total_applications: []
     },
     events: {
-      total_participants: [],
-      total_events: []
+      // total_participant_events: [],
+      // total_student_events: [],
+      // total_recruiter_events: []
+      total: []
     }
   })
   const [recruiter, setRecruiter] = useState({});
@@ -139,7 +141,7 @@ function AdminMainPage(props) {
   const handleCompanyClick = (index, company) => {
     setActiveIndex(index);
     setRecruiter(company);
-    history.push(`${Paths.adminVerification}?page=${currentPage}&companyId=${company.id}`);
+    // history.push(`${Paths.adminVerification}?page=${currentPage}&companyId=${company.id}`);
   }
 
   const handleVerifyCompany = async (e, company, verify) => {

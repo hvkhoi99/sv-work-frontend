@@ -101,6 +101,11 @@ const userApi = {
   joinEvent: (id) => {
     const url = `/event/${id}/join`;
     return axiosClient.post(url);
+  },
+
+  findEvent: (params) => {
+    const url = "/find-event";
+    return axiosClient.get(url, {params});
   }
 };
 

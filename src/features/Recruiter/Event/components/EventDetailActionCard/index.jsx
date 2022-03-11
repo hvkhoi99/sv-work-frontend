@@ -85,18 +85,33 @@ function EventDetailActionCard(props) {
                 </>
             }
           </div>
-          : <div className="event-detail-action-card__group-button">
-            <Button
-              type="button"
-              color="success"
-              style={isJoining ? { cursor: "default" } : { cursor: "pointer" }}
-              disabled={isJoining}
-              onClick={() => onJoinEvent(event)}
-            >
-              {isJoining && <span className="spinner-border spinner-border-sm mr-1" />}
-              {event.is_joined ? "Joined" : "Join"}
-              </Button>
-          </div>
+          : <>
+            {
+              event.is_closed
+                ? <div className="event-detail-action-card__group-button">
+                  <Button
+                    type="button"
+                    color="secondary"
+                    style={{ cursor: "default" }}
+                    disabled={true}
+                  >
+                    Closed
+                  </Button>
+                </div>
+                : <div className="event-detail-action-card__group-button">
+                  <Button
+                    type="button"
+                    color="success"
+                    style={isJoining ? { cursor: "default" } : { cursor: "pointer" }}
+                    disabled={isJoining}
+                    onClick={() => onJoinEvent(event)}
+                  >
+                    {isJoining && <span className="spinner-border spinner-border-sm mr-1" />}
+                    {event.is_joined ? "Joined" : "Join"}
+                  </Button>
+                </div>
+            }
+          </>
       }
     </div>
   );

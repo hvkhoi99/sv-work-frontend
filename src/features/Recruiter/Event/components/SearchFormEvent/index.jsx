@@ -3,44 +3,42 @@ import TextFieldDate from 'custom-fields/TextFieldDate';
 import { FastField, Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Button, FormGroup, Spinner } from 'reactstrap';
-import './SearchFormEvent.scss';
 import * as RiIcons from 'react-icons/ri';
+import { Button, FormGroup } from 'reactstrap';
+import './SearchFormEvent.scss';
 
 SearchFormEvent.propTypes = {
   onSubmit: PropTypes.func,
+  event: PropTypes.string,
+  location: PropTypes.string,
+  when: PropTypes.string,
 };
 
 SearchFormEvent.defaultProps = {
   onSubmit: null,
+  event: '',
+  location: '',
+  when: ''
 }
 
 function SearchFormEvent(props) {
-  const { onSubmit } = props;
+  const { onSubmit, event, location, when } = props;
 
   const initialValues = {
-    event: '',
-    in: '',
-    when: ''
+    event: event !== undefined ? event : "",
+    location: location !== undefined ? location : "",
+    when: when !== 'undefined' ? when : ""
   };
-
-  // const validationSchema = Yup.object().shape({
-  //   event: Yup
-  //     .string()
-  //     .typeError('Type of Job is required')
-  //     .required('Type of Job is required'),
-  // });
 
   return (
     <>
       <Formik
         enableReinitialize
         initialValues={initialValues}
-        // validationSchema={validationSchema}
         onSubmit={onSubmit}
       >
         {formikProps => {
-          const { isSubmitting } = formikProps;
+          // const { isSubmitting } = formikProps;
 
           return (
             <Form>
@@ -50,20 +48,15 @@ function SearchFormEvent(props) {
 
                 txtLabel="Event"
                 placeholder=""
-                // variant="standard"
-                // label="Event"
-                // labelClassName="input-field-label"
                 moreClassName="width-40"
               />
 
               <FastField
-                name="in"
+                name="location"
                 component={TextFieldDate}
 
-                txtLabel="In"
+                txtLabel="Location"
                 placeholder=""
-                // label="In"
-                // labelClassName="input-field-label"
               />
 
               <FastField
@@ -72,20 +65,18 @@ function SearchFormEvent(props) {
 
                 txtLabel="When"
                 placeholder=""
-                // label="When"
-                // labelClassName="input-field-label"
                 type="date"
               />
 
               <FormGroup>
                 <Button
-                  disabled={isSubmitting}
-                  style={isSubmitting ? { cursor: "default" } : { cursor: "pointer" }}
+                  // disabled={isSubmitting}
+                  // style={isSubmitting ? { cursor: "default" } : { cursor: "pointer" }}
                   type="submit"
                   color={'success'}
                   className="candidates-search-button"
                 >
-                  {isSubmitting && <Spinner className="mr-2" children="" size="sm" />}
+                  {/* {isSubmitting && <Spinner className="mr-2" children="" size="sm" />} */}
                   <RiIcons.RiSearchLine className="search-icon" />
                 </Button>
               </FormGroup>

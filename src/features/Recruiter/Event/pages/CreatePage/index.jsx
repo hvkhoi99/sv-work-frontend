@@ -71,7 +71,8 @@ function RecruiterCreateEventPage(props) {
       .required('Event Ends is required'),
     description: Yup
       .string()
-      .required('Description is required'),
+      .required('Description is required')
+      .min(5, "Description must be at least 5 characters"),
   });
   const {
     register,

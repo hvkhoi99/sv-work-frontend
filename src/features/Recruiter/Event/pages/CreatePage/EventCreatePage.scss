@@ -217,8 +217,10 @@
 
               & > img {
                 width: 100%;
+                height: 100%;
                 vertical-align: middle;
                 transition: all 0.45s ease 0s;
+                object-fit: cover;
               }
 
               &__title {

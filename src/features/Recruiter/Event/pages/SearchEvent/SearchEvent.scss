@@ -69,25 +69,34 @@
 
       &__main {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         flex-wrap: wrap;
         width: 100%;
         margin-top: 2rem;
         margin-bottom: 2rem;
 
         &__item {
-          // margin: 2rem 1.5rem 1rem;
-          margin-bottom: 2.5rem;
+          margin: 2rem 1.5rem 1rem;
+          // margin-bottom: 2.5rem;
 
           & > .event-card {
             width: 16rem;
           }
         }
 
-        &::after {
-          content: "";
-          flex: 0 0 47.3%;
-        }
+        // &::after {
+        //   content: "";
+        //   flex: 0 0 47.3%;
+        // }
+      }
+
+      &__main-skeleton {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        width: 100%;
+        margin-top: 2rem;
+        margin-bottom: 2rem;
       }
     }
   }

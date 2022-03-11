@@ -149,7 +149,7 @@ function AdminDashboardPage(props) {
               <span>Event</span>
               <div className="dashboard__chart__bottom__left__chart">
                 <TotalEventChart
-
+                  chartData={chartData}
                 />
               </div>
             </div>

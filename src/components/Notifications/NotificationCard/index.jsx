@@ -1,18 +1,19 @@
 import Images from 'constants/images';
+import Paths from 'constants/paths';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from 'react';
-import * as FiIcons from 'react-icons/fi';
+import * as BiIcons from 'react-icons/bi';
 import * as FaIcons from 'react-icons/fa';
+import * as FiIcons from 'react-icons/fi';
+import * as GiIcons from 'react-icons/gi';
+import * as GoIcons from 'react-icons/go';
 import * as MdIcons from 'react-icons/md';
 import * as RiIcons from 'react-icons/ri';
-import * as GiIcons from 'react-icons/gi';
 import * as SiIcons from 'react-icons/si';
-import * as BiIcons from 'react-icons/bi';
-import * as GoIcons from 'react-icons/go';
-// import { Button } from 'reactstrap';
-import './NotificationCard.scss';
 import { useHistory } from 'react-router-dom';
 import ReactTimeAgo from 'react-time-ago';
+// import { Button } from 'reactstrap';
+import './NotificationCard.scss';
 // import { useSnackbar } from 'notistack';
 // import studentApi from 'api/studentApi';
 
@@ -36,6 +37,7 @@ function NotificationCard(props) {
   const [isHidden, setIsHidden] = useState(true);
   const ref = useRef(null);
   const history = useHistory();
+  const roleId = parseInt(localStorage.getItem('role_id'), 10);
   // const body = JSON.parse(notification.body);
   // const [isAccepting, setIsAccepting] = useState(false);
   // const [isCancelling, setIsCancelling] = useState(false);
@@ -112,6 +114,24 @@ function NotificationCard(props) {
 
   const renderContent = (type) => {
     switch (type) {
+      case "create-event":
+        return (
+          <>
+            <div className={`notification-content__content__text ${notification.is_read && "read-notification-content__content__text"}`}>
+              <span className={`notification-content__content__text__name ${notification.is_read && "read-notification-content__content__text__name"}`}>
+                {notification.body.company_info.company_name}
+                {notification.body.company_info.verify && <FaIcons.FaCheckCircle
+                  className={`notification-content__content__text__name__icon ${notification.is_read && "read-notification-content__content__text__name__icon"}`}
+                />}
+              </span>
+              has just created a new event titled <span className={`notification-content__content__text__job-title ${notification.is_read && "read-notification-content__content__text__job-title"}`}>
+                {notification.body.job.title}
+              </span>
+              . Join now!
+            </div>
+            <span className={`notification-content__content__date ${notification.is_read && "read-notification-content__content__date"}`}>{<ReactTimeAgo date={Date.parse(notification.body.updated_at)} locale="en-US" />}</span>
+          </>
+        );
       case "create-recruitment":
         return (
           <>
@@ -427,6 +447,10 @@ function NotificationCard(props) {
 
   const renderTypeIcon = (type) => {
     switch (type) {
+      case "create-event":
+        return (
+          <MdIcons.MdEvent className="notification-content__img__type-icon__icon" />
+        );
       case "create-recruitment":
         return (
           <SiIcons.SiWorkplace className="notification-content__img__type-icon__icon" />
@@ -500,6 +524,13 @@ function NotificationCard(props) {
   const onViewNotification = (notification) => {
     !notification.is_read && onMarkRead(true);
     switch (notification.type) {
+      case "create-event":
+        onHiddenAll();
+        return history.push(
+          roleId === 2
+            ? `${Paths.recruiterEvent}/${notification.body.job.id}`
+            : `${Paths.clientEvent}/${notification.body.job.id}`
+        );
       case "create-recruitment":
         onHiddenAll();
         return history.push(`/recruitment/${notification.body.job.id}`);
@@ -535,7 +566,7 @@ function NotificationCard(props) {
   }
 
   const renderAvatarLink = (notification) => {
-    if (["create-recruitment", "update-recruitment", "update-avatar", "approved-application", "rejected-application", "invited-job", "verify-company-profile"].includes(notification.type)) {
+    if (["create-event", "create-recruitment", "update-recruitment", "update-avatar", "approved-application", "rejected-application", "invited-job", "verify-company-profile"].includes(notification.type)) {
       return (<img src={notification.body.company_info.logo_image_link} alt="avatar" />);
     }
 

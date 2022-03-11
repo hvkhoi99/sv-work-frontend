@@ -133,8 +133,8 @@ function RecruiterMainEventPage(props) {
   const onSubmit = (values) => {
     history.push(
       roleId === 2
-        ? `${Paths.recruiterEvent}/search?event=${values.event}&in=${values.in}&when=${values.when}`
-        : `${Paths.clientEvent}/search?event=${values.event}&in=${values.in}&when=${values.when}`
+        ? `${Paths.recruiterEvent}/search?event=${values.event}&location=${values.location}&when=${values.when}`
+        : `${Paths.clientEvent}/search?event=${values.event}&location=${values.location}&when=${values.when}`
     );
   }
 
