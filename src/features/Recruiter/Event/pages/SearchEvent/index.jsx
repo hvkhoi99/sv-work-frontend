@@ -1,4 +1,3 @@
-import LoadingUI from 'components/Loading';
 import Paths from 'constants/paths';
 import SortByItem from 'features/Recruiter/Find/components/SortByItem';
 import React, { useEffect, useState } from 'react';
@@ -7,6 +6,7 @@ import ReactPaginate from 'react-paginate';
 import { useHistory } from 'react-router-dom';
 import helper from 'utils/common';
 import EventCard from '../../components/EventCard';
+import EventCardSkeleton from '../../components/EventCardSkeleton';
 import SearchFormEvent from '../../components/SearchFormEvent';
 // import PropTypes from 'prop-types';
 import './SearchEvent.scss';
@@ -54,71 +54,86 @@ function SearchEventPage(props) {
 
   return (
     <>
-      {
-        isLoading
-          ? <div className="loading-ui">
-            <LoadingUI />
+      <div className="search-event">
+        <div className="search-event__container">
+          <div className="search-event__container__search-bar">
+            <SearchFormEvent />
           </div>
-          : <div className="search-event">
-            <div className="search-event__container">
-              <div className="search-event__container__search-bar">
-                <SearchFormEvent />
-              </div>
-              <div className="search-event__container__sort-bar">
-                <SortByItem />
-              </div>
-              <div className="search-event__container__events">
-                <div className="search-event__container__events__title">
-                  <span>
-                    Results
-                  </span>
-                </div>
-                <div className="search-event__container__events__main">
+          <div className="search-event__container__sort-bar">
+            <SortByItem />
+          </div>
+          <div className="search-event__container__events">
+            <div className="search-event__container__events__title">
+              <span>
+                Results
+              </span>
+            </div>
+            {
+              isLoading
+                ? <div className="search-event__container__events__main">
                   {
-                    items.map((item, index) => {
-                      return <div
-                        key={index}
-                        className="search-event__container__events__main__item"
-                      >
-                        <EventCard onViewDetailEvent={onViewDetailEvent} />
-                      </div>
+                    [1, 2, 3, 4].map((item, index) => {
+                      return <EventCardSkeleton key={index} />
                     })
                   }
                 </div>
-              </div>
-              <div className="search-event__container__paginator">
-                <ReactPaginate
-                  previousLabel={
-                    <MdIcons.MdArrowBackIosNew />
-                  }
-                  nextLabel={
-                    <MdIcons.MdArrowForwardIos />
-                  }
-
-                  // initialPage={1}
-                  // initialPage={currentPage}
-                  forcePage={currentPage - 1}
-                  breakLabel={"..."}
-                  pageCount={pageCount}
-                  marginPagesDisplayed={1}
-                  pageRangeDisplayed={2}
-                  onPageChange={handlePageClick}
-                  containerClassName={"pagination justify-content-center"}
-                  pageClassName={"page-item"}
-                  pageLinkClassName={"page-link"}
-                  previousClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
-                  previousLinkClassName={"page-link"}
-                  nextClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
-                  nextLinkClassName={"page-link"}
-                  breakClassName={"page-item"}
-                  breakLinkClassName={"page-link"}
-                  activeClassName={"active"}
-
-                />
-              </div>
-            </div>
+                : (
+                  items.length > 0
+                    ? <div className="search-event__container__events__main">
+                      {
+                        items.map((item, index) => {
+                          return <div
+                            key={index}
+                            className="search-event__container__events__main__item"
+                          >
+                            <EventCard onViewDetailEvent={onViewDetailEvent} />
+                          </div>
+                        })
+                      }
+                    </div>
+                    : <div className="search-event__container__events__main">
+                      {
+                        [1, 2, 3, 4].map((item, index) => {
+                          return <EventCardSkeleton key={index} />
+                        })
+                      }
+                    </div>
+                )
+            }
           </div>
-      }
+          {!isLoading && items.length > 0 && <div className="search-event__container__paginator">
+            <ReactPaginate
+              previousLabel={
+                <MdIcons.MdArrowBackIosNew />
+              }
+              nextLabel={
+                <MdIcons.MdArrowForwardIos />
+              }
+
+              // initialPage={1}
+              // initialPage={currentPage}
+              forcePage={currentPage - 1}
+              breakLabel={"..."}
+              pageCount={pageCount}
+              marginPagesDisplayed={1}
+              pageRangeDisplayed={2}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination justify-content-center"}
+              pageClassName={"page-item"}
+              pageLinkClassName={"page-link"}
+              previousClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
+              previousLinkClassName={"page-link"}
+              nextClassName={pageCount === 0 ? "page-item disabled" : "page-item"}
+              nextLinkClassName={"page-link"}
+              breakClassName={"page-item"}
+              breakLinkClassName={"page-link"}
+              activeClassName={"active"}
+
+            />
+          </div>}
+        </div>
+      </div>
+
     </>
   );
 }

@@ -4,7 +4,7 @@
   width: 100%;
 
   padding: 2rem 4rem;
-  
+
   background-image: url("../../../../../assets/img/background.png");
   background-position: center;
   background-size: cover;
@@ -69,22 +69,24 @@
 
       &__main {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         flex-wrap: wrap;
         width: 100%;
         margin-top: 2rem;
+        margin-bottom: 2rem;
 
         &__item {
-          margin: 2rem 1.5rem 1rem;
-          flex: 0 0 0.3333333333333%;
+          // margin: 2rem 1.5rem 1rem;
+          margin-bottom: 2.5rem;
 
           & > .event-card {
-            width: 15.5rem;
+            width: 16rem;
           }
+        }
 
-          &:last-child {
-            margin-bottom: 4rem;
-          }
+        &::after {
+          content: "";
+          flex: 0 0 47.3%;
         }
       }
     }
