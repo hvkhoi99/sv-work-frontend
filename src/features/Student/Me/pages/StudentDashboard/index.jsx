@@ -1,3 +1,4 @@
+import homeApi from 'api/homeApi';
 import LoadingUI from 'components/Loading';
 import Images from 'constants/images';
 import Paths from 'constants/paths';
@@ -24,6 +25,7 @@ function StudentDashboardPage(props) {
   const history = useHistory();
   const user = useSelector((state) => state.user.current);
   const [isLoading, setIsLoading] = useState(true);
+  const [jobs, setJobs] = useState([]);
 
   const menuItems = [
     {
@@ -56,16 +58,36 @@ function StudentDashboardPage(props) {
     },
   ]
 
+  // useEffect(() => {
+  //   helper.scrollToTop();
+
+  //   const timer = setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 1000)
+
+  //   return () => {
+  //     clearTimeout(timer);
+  //   }
+  // }, []);
+
   useEffect(() => {
     helper.scrollToTop();
-
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000)
-
-    return () => {
-      clearTimeout(timer);
+    const fetchTopRecruitments = async () => {
+      try {
+        const topJobs = await homeApi.getTopRecruitments();
+        if (topJobs.data.status === 1) {
+          setJobs(topJobs.data.data);
+        }
+        setIsLoading(false);
+        return;
+      } catch (error) {
+        console.log("Cannot get top Jobs. Error: ", error.message);
+        setIsLoading(false);
+        return;
+      }
     }
+
+    fetchTopRecruitments();
   }, []);
 
   const handleEditProfile = () => {
@@ -85,8 +107,8 @@ function StudentDashboardPage(props) {
                 <div className="student-dashboard__container__base-info__avatar">
                   <img src={
                     user.s_profile === null
-                    ? Images.defaultAvatar
-                    : user.s_profile.avatar_link
+                      ? Images.defaultAvatar
+                      : user.s_profile.avatar_link
                   } alt="student-avatar" />
                 </div>
                 <span className="student-dashboard__container__base-info__name">
@@ -110,18 +132,25 @@ function StudentDashboardPage(props) {
                 <div className="student-dashboard__container__main__left">
                   <div className="student-dashboard__container__main__left__header">
                     <MdIcons.MdOutlineRecommend className="student-dashboard__container__main__left__header__icon" />
-                    <span>Suggested Jobs</span>
+                    <span>Top Jobs</span>
                   </div>
                   <div className="student-dashboard__container__main__left__main">
-                    <div className="student-dashboard__container__main__left__main__item">
-                      <SuggestedJobsCard />
-                    </div>
-                    <div className="student-dashboard__container__main__left__main__item">
-                      <SuggestedJobsCard />
-                    </div>
-                    <div className="student-dashboard__container__main__left__main__item">
-                      <SuggestedJobsCard />
-                    </div>
+                    {
+                      jobs.length > 0
+                        ? (
+                          jobs.map((job, index) => {
+                            return <div
+                              key={index}
+                              className="student-dashboard__container__main__left__main__item"
+                            >
+                              <SuggestedJobsCard
+                                job={job}
+                              />
+                            </div>
+                          })
+                        )
+                        : <></>
+                    }
                   </div>
 
                 </div>

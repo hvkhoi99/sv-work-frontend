@@ -6,6 +6,7 @@
 
   font-size: 0.8rem;
   padding: 1rem;
+  width: 16.5rem;
 
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 1rem;
@@ -46,6 +47,8 @@
         width: 3.5rem;
         height: 3.5rem;
         border-radius: 50%;
+        object-fit: cover;
+        border: 1px solid lightgrey;
       }
 
       &__verify {
@@ -68,20 +71,29 @@
     &__info {
       display: flex;
       flex-direction: column;
+      justify-content: center;
       padding: 0 0 0 1rem;
-      width: 100%;
+      width: calc(100% - 3.5rem);
 
       &__job-name {
+        width: 100%;
         font-weight: 600;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
       }
 
       &__company-name-size {
         display: flex;
         align-items: center;
         width: 100%;
+        margin-top: .3rem;
 
         &__name {
-          word-break: break-all;
+          width: 100%;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
           margin: 0 1rem 0 0;
           color: var(--success);
           font-weight: 500;
@@ -105,11 +117,12 @@
   }
 
   &__salary-location {
-    margin: 1rem 0 0 0;
+    margin: .5rem 0 0 0;
 
     &__salary {
       display: flex;
       align-items: center;
+      justify-content: center;
       width: 100%;
 
       &__icon {
@@ -117,35 +130,45 @@
         margin-right: 0.5rem;
       }
 
-      // & > span {
-      //   font-weight: 300;
-      // }
+      & > span {
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
     }
 
     &__location {
       display: flex;
       align-items: center;
+      justify-content: center;
       width: 100%;
+      margin-top: .3rem;
 
       &__icon {
         font-size: 1rem;
         margin-right: 0.5rem;
       }
 
-      // & > span {
-      //   font-weight: 300;
-      // }
+      & > span {
+        width: 100%;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
     }
   }
 
   &__btn-apply {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
     margin-top: 1rem;
 
     & > button {
       border-radius: 2rem;
-      width: 100%;
+      width: 70%;
 
       font-weight: 500;
 

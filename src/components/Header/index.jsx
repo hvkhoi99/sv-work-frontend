@@ -146,7 +146,7 @@ function Header(props) {
         //   body: JSON.stringify(newBody)
         // });
       }, 5000);
-      console.log({ payload });
+      // console.log({ payload });
     })
     .catch((err) => console.log("failed: ", err));
 
@@ -258,7 +258,7 @@ function Header(props) {
             : 0
         )
       if (data !== 0 && data.data.status === 1) {
-        console.log({ data })
+        // console.log({ data })
         setIsLoading(false);
         setNotifications(data.data.data.data);
       }

@@ -201,9 +201,9 @@ function JobDetailPage(props) {
 
   const renderApplicationArea = (state) => {
     switch (state) {
-      case 1:
+      case true:
         switch (stateData.isApplied) {
-          case 1:
+          case true:
             return (
               <span style={{ color: 'var(--success)' }}>
                 <BsIcons.BsCheckCircle
@@ -216,9 +216,9 @@ function JobDetailPage(props) {
                 {"Your application has been accepted by the employer."}
               </span>
             );
-          case 0:
+          case false:
             switch (stateData.isInvited) {
-              case 1:
+              case true:
                 return (
                   <span style={{ color: 'var(--success)' }}>
                     <BsIcons.BsCheckCircle
@@ -231,7 +231,7 @@ function JobDetailPage(props) {
                     {"You have accepted the invitation to join this job."}
                   </span>
                 );
-              case 0:
+              case false:
                 return (
                   <span style={{ color: 'var(--success)' }}>
                     <BsIcons.BsCheckCircle
@@ -253,9 +253,9 @@ function JobDetailPage(props) {
         }
         break;
       // break;
-      case 0:
+      case false:
         switch (stateData.isInvited) {
-          case 1:
+          case true:
             return (
               <span style={{ color: 'red' }}>
                 <ImIcons.ImCancelCircle
@@ -270,7 +270,7 @@ function JobDetailPage(props) {
                 }
               </span>
             );
-          case 0:
+          case false:
             return (
               <span style={{ color: 'red' }}>
                 <ImIcons.ImCancelCircle

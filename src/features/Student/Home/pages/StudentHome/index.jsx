@@ -164,7 +164,7 @@ function StudentHomePage(props) {
   const onFind = (data) => {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        console.log("data: ", data);
+        // console.log("data: ", data);
         history.push(
           `${Paths.clientFindJobs}?keyword=${data.search}&location=${data.options}`
         );

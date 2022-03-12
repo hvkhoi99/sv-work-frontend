@@ -65,7 +65,7 @@ function SignInPage(props) {
     async function tokenFunc() {
       data = await getToken(setTokenFound);
       if (data) {
-        console.log("Token is", data);
+        // console.log("Token is", data);
         setFirebaseToken(data);
       }
       setTimeout(() => {
@@ -91,7 +91,7 @@ function SignInPage(props) {
           social_token: token,
           device_token: firebaseToken
         };
-        console.log({ params });
+        // console.log({ params });
         const data = await userApi.loginWithGoogle(params);
         if (data.data.status === 1) {
           localStorage.setItem('access_token', data.data.data.token);
@@ -141,7 +141,7 @@ function SignInPage(props) {
   };
 
   const handleChooseRole = (id) => {
-    console.log(id)
+    // console.log(id)
     setCurrentRole(id);
   }
 

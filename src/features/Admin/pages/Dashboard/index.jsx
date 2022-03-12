@@ -31,7 +31,7 @@ function AdminDashboardPage(props) {
   const application = data.application ?? '';
   const event = data.event ?? '';
 
-  console.log({ chartData })
+  // console.log({ chartData })
   // const initialDataChart = {
   //   labels: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
   //   datasets: [

@@ -49,7 +49,7 @@ function SearchEventPage(props) {
           _limit
         }
         const data = await userApi.findEvent(params);
-        console.log({ data })
+        // console.log({ data })
         if (data.data.status === 1) {
           setEvents(data.data.data.data);
           const total = data.data.data.total;

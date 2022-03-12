@@ -31,7 +31,7 @@ CandidatesCard.defaultProps = {
 function CandidatesCard(props) {
   const { handleActiveCard, index, recruitmentId, candidate, page, isClosed } = props;
 
-  console.log({ candidate })
+  // console.log({ candidate })
 
   return (
     <Link

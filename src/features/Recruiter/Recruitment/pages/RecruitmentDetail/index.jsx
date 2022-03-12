@@ -8,7 +8,10 @@ import * as BsIcons from 'react-icons/bs';
 import * as MdIcons from 'react-icons/md';
 import * as TiIcons from 'react-icons/ti';
 import RecruitmentCard from '../../components/RecruitmentCard';
+import homeApi from 'api/homeApi';
 import './RecruitmentDetail.scss';
+import helper from 'utils/common';
+import { useHistory } from 'react-router-dom';
 
 RecruitmentDetail.propTypes = {
   recruitment: PropTypes.object,
@@ -21,43 +24,69 @@ RecruitmentDetail.defaultProps = {
 }
 
 function RecruitmentDetail(props) {
+  const history = useHistory();
   const { recruitment, isViewByStudent } = props;
   const [isLoading, setIsLoading] = useState(true);
-  const exampleRecruitment = {
-    title: 'Example Recruitment',
-    min_salary: 0,
-    max_salary: 0,
-    location: 'Viet Nam',
-    hashtags: [],
-    application: {
-      id: 0,
-      is_applied: 0,
-      is_invited: 0,
-      is_saved: 0,
-      recruitment_id: 0,
-      state: null,
-      user_id: 0,
-    },
-    company_info: {
-      company_name: 'Company',
-      id: 0,
-      logo_image_link: Images.defaultAvatar,
-      verify: false
-    },
-    count_applications: 0,
-    expiry_date: "01/10/2022",
-    created_at: "01/10/2022",
-  }
+  const [jobs, setJobs] = useState([]);
+  // const exampleRecruitment = {
+  //   title: 'Example Recruitment',
+  //   min_salary: 0,
+  //   max_salary: 0,
+  //   location: 'Viet Nam',
+  //   hashtags: [],
+  //   application: {
+  //     id: 0,
+  //     is_applied: 0,
+  //     is_invited: 0,
+  //     is_saved: 0,
+  //     recruitment_id: 0,
+  //     state: null,
+  //     user_id: 0,
+  //   },
+  //   company_info: {
+  //     company_name: 'Company',
+  //     id: 0,
+  //     logo_image_link: Images.defaultAvatar,
+  //     verify: false
+  //   },
+  //   count_applications: 0,
+  //   expiry_date: "01/10/2022",
+  //   created_at: "01/10/2022",
+  // }
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000)
+    if (isViewByStudent) {
+      helper.scrollToTop();
+      const fetchTopRecruitments = async () => {
+        try {
+          const topJobs = await homeApi.getTopRecruitments();
+          if (topJobs.data.status === 1) {
+            setJobs(topJobs.data.data);
+          }
+          setIsLoading(false);
+          return;
+        } catch (error) {
+          console.log("Cannot get top Jobs. Error: ", error.message);
+          setIsLoading(false);
+          return;
+        }
+      }
 
-    return () => {
-      clearTimeout(timer);
+      fetchTopRecruitments();
+    } else {
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+      }, 1000)
+
+      return () => {
+        clearTimeout(timer);
+      }
     }
-  }, [])
+  }, [isViewByStudent]);
+
+  const onViewJob = (id) => {
+    history.push(`/recruitment/${id}`);
+  }
 
   return (
     <>
@@ -150,13 +179,23 @@ function RecruitmentDetail(props) {
             </div>
           </div>
           {isViewByStudent && <div className="similar-job">
-            <h3>Top Jobs</h3>
-            <div className="similar-job__content">
-              <RecruitmentCard onViewJob={() => {console.log("View Job.")}} recruitment={exampleRecruitment} />
-              <RecruitmentCard onViewJob={() => {console.log("View Job.")}} recruitment={exampleRecruitment} />
-              <RecruitmentCard onViewJob={() => {console.log("View Job.")}} recruitment={exampleRecruitment} />
-              <RecruitmentCard onViewJob={() => {console.log("View Job.")}} recruitment={exampleRecruitment} />
-            </div>
+            {
+              jobs.length > 0 &&
+              <>
+                <h3>Top Jobs</h3>
+                <div className="similar-job__content">
+                  {
+                    jobs.map((job, index) => {
+                      return <RecruitmentCard
+                        key={index}
+                        onViewJob={onViewJob}
+                        recruitment={job}
+                      />
+                    })
+                  }
+                </div>
+              </>
+            }
           </div>}
         </>
       }

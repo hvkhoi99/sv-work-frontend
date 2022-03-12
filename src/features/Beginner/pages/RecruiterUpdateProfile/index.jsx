@@ -58,7 +58,7 @@ function RecruiterUpdateProfilePage(props) {
   }, []);
 
   const handleSubmit = async (values) => {
-    console.log({values});
+    // console.log({values});
     try {
       const params = {
         contact_email: values.contact_email,

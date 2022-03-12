@@ -100,7 +100,7 @@ function FindJobsPage(props) {
   }, []);
 
   const onSubmit = (values) => {
-    console.log({ values })
+    // console.log({ values })
     setInitValue(state => ({
       ...state,
       keyword: values.keyword,
@@ -212,7 +212,7 @@ function FindJobsPage(props) {
         const newDefaultEmployers = [...employers];
         newDefaultEmployers.sort((a, b) => (a.created_at < b.created_at) ? 1 : -1);
         setEmployers(newDefaultEmployers);
-        console.log({ option })
+        // console.log({ option })
         break;
       case "date":
         const newNewestJobs = [...jobs];
@@ -221,7 +221,7 @@ function FindJobsPage(props) {
         const newNewestEmployers = [...employers];
         newNewestEmployers.sort((a, b) => (a.created_at < b.created_at) ? 1 : -1);
         setEmployers(newNewestEmployers);
-        console.log({ option })
+        // console.log({ option })
         break;
       case "-date":
         const newLastestJobs = [...jobs];
@@ -230,7 +230,7 @@ function FindJobsPage(props) {
         const newLastestEmployers = [...employers];
         newLastestEmployers.sort((a, b) => (a.created_at > b.created_at) ? 1 : -1);
         setEmployers(newLastestEmployers);
-        console.log({ option })
+        // console.log({ option })
         break;
       case "name":
         const newNameAZJobs = [...jobs];
@@ -239,7 +239,7 @@ function FindJobsPage(props) {
         const newNameAZEmployers = [...employers];
         newNameAZEmployers.sort((a, b) => (a.company_name.toUpperCase() > b.company_name.toUpperCase()) ? 1 : -1);
         setEmployers(newNameAZEmployers);
-        console.log({ option })
+        // console.log({ option })
         break;
       case "-name":
         const newNameZAJobs = [...jobs];
@@ -248,19 +248,19 @@ function FindJobsPage(props) {
         const newNameZAEmployers = [...employers];
         newNameZAEmployers.sort((a, b) => (a.company_name.toUpperCase() < b.company_name.toUpperCase()) ? 1 : -1);
         setEmployers(newNameZAEmployers);
-        console.log({ option })
+        // console.log({ option })
         break;
       case "salary":
         const newSalaryIncreaseJobs = [...jobs];
         newSalaryIncreaseJobs.sort((a, b) => (a.max_salary > b.max_salary) ? 1 : -1);
         setJobs(newSalaryIncreaseJobs);
-        console.log({ option })
+        // console.log({ option })
         break;
       case "-salary":
         const newSalaryDecreaseJobs = [...jobs];
         newSalaryDecreaseJobs.sort((a, b) => (a.max_salary < b.max_salary) ? 1 : -1);
         setJobs(newSalaryDecreaseJobs);
-        console.log({ option })
+        // console.log({ option })
         break;
       default:
         break;

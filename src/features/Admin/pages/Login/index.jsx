@@ -45,7 +45,7 @@ function AdminLoginPage(props) {
     async function tokenFunc() {
       data = await getToken(setTokenFound);
       if (data) {
-        console.log("Token is", data);
+        // console.log("Token is", data);
         setFirebaseToken(data);
       }
       setTimeout(() => {

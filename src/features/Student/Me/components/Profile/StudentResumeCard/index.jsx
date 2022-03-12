@@ -83,7 +83,7 @@ function StudentResumeCard(props) {
       )
 
       const data = await studentApi.uploadCV(formData);
-      console.log({ data })
+      // console.log({ data })
       if (data.data.status === 1) {
         // const newListCV = listCV;
         // newListCV.splice(0, 0, data.data.data);

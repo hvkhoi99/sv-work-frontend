@@ -56,7 +56,7 @@ function RecruiterHomePage(props) {
           }
         }
         dispatch(updateUser(newUser));
-        console.log({ data, newUser })
+        // console.log({ data, newUser })
         if ((data.data.data === true) || (data.data.data === 1)) {
           history.push({
             pathname: `${Paths.recruiterDashboard}/available-jobs/create`,

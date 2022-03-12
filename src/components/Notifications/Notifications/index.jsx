@@ -19,12 +19,13 @@ function Notifications(props) {
     async function tokenFunc() {
       data = await getToken(setTokenFound);
       if (data) {
-        console.log("Token is", data);
+        // console.log("Token is", data);
         const params = {
           device_token: data
         };
-        const rs = await userApi.updateDeviceToken(params);
-        console.log({rs})
+        await userApi.updateDeviceToken(params);
+        // const rs = await userApi.updateDeviceToken(params);
+        // console.log({rs})
       }
       return data;
     }

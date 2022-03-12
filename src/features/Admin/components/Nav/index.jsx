@@ -117,7 +117,7 @@ function AdminNav(props) {
   const fetchCompanyProfile = async (company) => {
     try {
       const data = await adminApi.getCompanyProfile(company.id);
-      console.log({data});
+      // console.log({data});
       dispatch(addToRecruiters(data.data.data));
       return;
     } catch (error) {
@@ -136,7 +136,7 @@ function AdminNav(props) {
       setTimeout(() => {
         setShowNoti(false);
       }, 5000);
-      console.log({ payload });
+      // console.log({ payload });
     })
     .catch((err) => console.log("failed: ", err));
 

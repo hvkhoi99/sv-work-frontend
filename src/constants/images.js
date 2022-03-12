@@ -44,6 +44,7 @@ import vinfast from '../assets/img/vinfast.png';
 import manageevent from '../assets/img/manageevent.png';
 import bachkhoaEvent from '../assets/img/bachkhoa-event.png';
 import upcomingEvent from '../assets/img/upcoming-event.png';
+import adminAvatar from '../assets/img/admin-avatar.png';
 
 const Images = {
   home, notFound, emoji, minami, bgRight, background, fptSoftware, smDot, eventcircle,
@@ -51,7 +52,7 @@ const Images = {
   burger, lamborghini, student, recruiter, bmw, create, searchCard, recruitmentManageCard, aio,
   threeMinions, ship, event1, aboutUsCard, googleCV, defaultAvatar, notfoundcandidate, defaultCompany,
   verifyImage, verifyImage1, employerAvatar, avatar, forgotpass, reset, manageevent, bachkhoaEvent,
-  upcomingEvent
+  upcomingEvent, adminAvatar
 }
 
 export default Images;

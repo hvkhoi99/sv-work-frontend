@@ -76,7 +76,7 @@ function SignUpPage(props) {
 
       const action = await userApi.signup(params);
 
-      console.log({action});
+      // console.log({action});
 
       if (action.data.status === 1) {
         enqueueSnackbar(action.data.message, { variant: "success" });

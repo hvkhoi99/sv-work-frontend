@@ -109,7 +109,7 @@ function StudentProfileCard(props) {
         gender: (values.gender || "Male") ? true : false,
         job_title: values.job_title,
       };
-      console.log({ params });
+      // console.log({ params });
 
       const data = await studentApi.updateStudentProfile(values.user_id, params);
       if (data.data.status === 1) {
@@ -183,7 +183,7 @@ function StudentProfileCard(props) {
         from_date: values.from_date,
         to_date: values.to_date,
       };
-      console.log({ params });
+      // console.log({ params });
       const action = await studentApi.createAnExperience(params);
 
       if (action.data.status === 1) {
@@ -215,7 +215,7 @@ function StudentProfileCard(props) {
         from_date: values.from_date,
         to_date: values.to_date,
       };
-      console.log({ params });
+      // console.log({ params });
       const action = await studentApi.updateAnExperience(id, params);
 
       if (action.data.status === 1) {
@@ -257,7 +257,7 @@ function StudentProfileCard(props) {
         from_date: values.from_date,
         to_date: values.to_date,
       };
-      console.log({ params });
+      // console.log({ params });
       const action = await studentApi.createAnEducation(params);
 
       if (action.data.status === 1) {
@@ -289,7 +289,7 @@ function StudentProfileCard(props) {
         from_date: values.from_date,
         to_date: values.to_date,
       };
-      console.log({ params });
+      // console.log({ params });
       const action = await studentApi.updateAnEducation(id, params);
 
       if (action.data.status === 1) {
@@ -324,7 +324,7 @@ function StudentProfileCard(props) {
 
   // SKILLS
   const onCreateSkills = async (values) => {
-    console.log({ values });
+    // console.log({ values });
     try {
       const params = { ...values };
       // console.log({ params });
@@ -351,7 +351,7 @@ function StudentProfileCard(props) {
   }
 
   const onEditSkills = async (values) => {
-    console.log({ values });
+    // console.log({ values });
     try {
       const params = { ...values };
       const action = await studentApi.updateStudentSkills(responseData.skillsResponse.id, params);
@@ -380,7 +380,7 @@ function StudentProfileCard(props) {
       const params = {
         ...values
       };
-      console.log({ params });
+      // console.log({ params });
       const action = await studentApi.createStudentCertificate(params);
 
       if (action.data.status === 1) {
@@ -404,12 +404,12 @@ function StudentProfileCard(props) {
   }
 
   const onEditCertificate = async (id, values) => {
-    console.log({ values });
+    // console.log({ values });
     try {
       const params = {
         ...values
       };
-      console.log({ params });
+      // console.log({ params });
       const action = await studentApi.updateStudentCertificate(id, params);
 
       if (action.data.status === 1) {
@@ -442,7 +442,7 @@ function StudentProfileCard(props) {
 
   // LANGUAGES
   const onCreateLanguages = async (values) => {
-    console.log({ values });
+    // console.log({ values });
     try {
       const params = { ...values };
       const action = await studentApi.createStudentLanguages(params);
@@ -466,7 +466,7 @@ function StudentProfileCard(props) {
   }
 
   const onEditLanguages = async (values) => {
-    console.log({ values });
+    // console.log({ values });
     try {
       const params = { ...values };
       const action = await studentApi.updateStudentLanguages(responseData.languagesResponse.id, params);

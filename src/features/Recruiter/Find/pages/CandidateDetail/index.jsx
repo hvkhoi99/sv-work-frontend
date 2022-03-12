@@ -82,12 +82,12 @@ function CandidateDetailPage(props) {
   // }
 
   const onInvite = async (values) => {
-    console.log(values);
+    // console.log(values);
     try {
       const action = user.role_id === 2
         ? await recruiterApi.inviteCandidate(id, values.id)
         : await studentApi.inviteCandidate(id, values.id);
-      console.log({ action });
+      // console.log({ action });
       const newInvitedJobs = candidate.invited_jobs;
       const index = newInvitedJobs.findIndex(x => x.id === values.id);
       if (action.data.status === 1) {

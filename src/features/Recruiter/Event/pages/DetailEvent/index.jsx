@@ -63,7 +63,7 @@ function DetailEventPage(props) {
     const fetchDetailOfEvent = async () => {
       try {
         const data = await userApi.getDetailOfEvent(id);
-        console.log({ data })
+        // console.log({ data })
         if (data.data.status === 1) {
           setEvent(data.data.data);
         }

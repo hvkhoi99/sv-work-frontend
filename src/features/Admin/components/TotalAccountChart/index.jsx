@@ -12,7 +12,7 @@ TotalAccountChart.defaultProps = {
 
 function TotalAccountChart(props) {
   const { chartData } = props;
-  console.log(chartData.total_users)
+  // console.log(chartData.total_users)
 
   const data = {
     labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],

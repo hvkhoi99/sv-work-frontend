@@ -49,7 +49,7 @@ function CandidatePage(props) {
         const data = user.role_id === 2
           ? await recruiterApi.getCandidateProfile(candidateId)
           : await studentApi.getCandidateProfile(candidateId);
-        console.log({ data });
+        // console.log({ data });
         setCandidate(data.data.data)
         setIsLoading(false);
       } catch (error) {

@@ -30,7 +30,7 @@ function RedirectEmailVerifyingPage(props) {
         email: historyState.email
       }
       const action = await userApi.resendVerificationEmail(params);
-      console.log({ action });
+      // console.log({ action });
       if (action.data.status === 1) {
         enqueueSnackbar(action.data.message, { variant: "success" });
       } else {

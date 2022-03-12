@@ -54,7 +54,7 @@ function UploadAvatarForm(props) {
   };
 
   const onImageChange = (e) => {
-    console.log(e.target.files);
+    // console.log(e.target.files);
     if (e.target.files && e.target.files[0]) {
       setInitData(state => ({
         ...state,

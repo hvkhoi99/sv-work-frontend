@@ -12,7 +12,7 @@ function GoogleLoginButton(props) {
   const [isSignedIn, setIsSignedIn] = useState(false);
 
   const responseGoogle = (response) => {
-    console.log(response);
+    // console.log(response);
     if (response.profileObj) {
       setIsSignedIn(true);
     } else {

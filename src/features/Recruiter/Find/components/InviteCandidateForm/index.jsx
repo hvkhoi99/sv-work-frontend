@@ -34,7 +34,7 @@ function InviteCandidateForm(props) {
         const data = user.role_id === 2
           ? await recruiterApi.getJobsInvite()
           : await studentApi.getJobsInvite();
-        console.log(data);
+        // console.log(data);
         if (data.data.status === 1) {
           setJobsName(data.data.data);
           setIsLoading(false);

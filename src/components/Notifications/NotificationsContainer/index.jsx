@@ -88,7 +88,7 @@ function NotificationsContainer(props) {
                   : []
               )
             if (data.data.status === 1) {
-              console.log({data})
+              // console.log({data})
               setLastPage(data.data.data.last_page);
               setTimeout(() => {
                 setMoreNotifications(moreNotifications.concat(data.data.data.data));

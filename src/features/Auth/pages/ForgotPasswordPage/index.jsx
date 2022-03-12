@@ -54,7 +54,7 @@ function ForgotPasswordPage(props) {
       }
 
       const rs = await userApi.forgotPassword(params);
-      console.log({ rs })
+      // console.log({ rs })
       if (rs.data.status) {
         enqueueSnackbar(rs.data.message, { variant: "success" });
         // reset();

@@ -115,7 +115,7 @@ function RecruiterCreateEventPage(props) {
   }, [isEditMode, event, setValue]);
 
   const onImageChange = (e) => {
-    console.log(e.target.files);
+    // console.log(e.target.files);
     if (e.target.files && e.target.files[0]) {
       setUploadData({
         image: URL.createObjectURL(e.target.files[0]),
@@ -125,7 +125,7 @@ function RecruiterCreateEventPage(props) {
   }
 
   const onPostEvent = async (data) => {
-    console.log({ data })
+    // console.log({ data })
     try {
       const formData = new FormData();
       if (uploadData.file) {

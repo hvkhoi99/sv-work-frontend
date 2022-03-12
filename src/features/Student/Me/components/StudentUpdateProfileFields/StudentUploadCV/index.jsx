@@ -40,7 +40,7 @@ function StudentUploadCV(props) {
   } = useForm({ resolver: yupResolver(schema) });
 
   const onUpload = async (data) => {
-    console.log({data});
+    // console.log({data});
     if (fileValue !== null) {
       const values = {
         title: data.title,
@@ -58,7 +58,7 @@ function StudentUploadCV(props) {
   // }
 
   const onImageChange = (e) => {
-    console.log(e.target.files);
+    // console.log(e.target.files);
     if (e.target.files && e.target.files[0]) {
       setFileValue(e.target.files[0]);
     }

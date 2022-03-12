@@ -75,7 +75,7 @@ function AdminMainPage(props) {
       try {
         const dashboardData = await adminApi.getDashboard();
         const chartData = await adminApi.getChartData();
-        console.log({ chartData })
+        // console.log({ chartData })
         if (dashboardData.data.status === 1 || chartData.data.status === 1) {
           setDashboard(dashboardData.data.data);
           setChartData(chartData.data.data);
@@ -104,7 +104,7 @@ function AdminMainPage(props) {
 
         const actionResult = await dispatch(action);
         const result = unwrapResult(actionResult);
-        console.log({result})
+        // console.log({result})
         setLastPage(result.last_page);
         setRecruiter({});
         setActiveIndex(null);

@@ -67,7 +67,7 @@ function RecruiterMainEventPage(props) {
         }
 
         const data = await userApi.getTopEvents(params);
-        console.log({ data })
+        // console.log({ data })
         if (data.data.status === 1) {
           setTopEvents(data.data.data);
         }

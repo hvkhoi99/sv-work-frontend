@@ -119,13 +119,14 @@
 
   &__dots {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 10%;
     position: absolute;
     bottom: 3rem;
 
     &__dot {
+      margin: 0 .3rem;
       width: 0.8rem;
       height: 0.8rem;
       border-radius: 50%;

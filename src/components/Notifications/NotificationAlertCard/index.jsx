@@ -496,7 +496,7 @@ function NotificationAlertCard(props) {
       return (<img src={body.student_info.avatar_link} alt="avatar" />);
     }
 
-    return (<img src={Images.employerAvatar} alt="avatar" />);
+    return (<img src={Images.adminAvatar} alt="avatar" />);
   }
 
   return (

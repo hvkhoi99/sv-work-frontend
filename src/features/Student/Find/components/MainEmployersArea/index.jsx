@@ -80,7 +80,7 @@ function MainEmployersArea(props) {
     setIsLoading(true);
     const newPage = ++currentPage;
     setCurrentPage(newPage);
-    console.log({ newPage })
+    // console.log({ newPage })
     try {
       const params = {
         page: newPage,

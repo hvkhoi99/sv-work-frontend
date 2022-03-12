@@ -152,6 +152,8 @@
 
 .job-description,
 .requirements {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   margin: 2rem 0 0 0;
 
@@ -177,6 +179,7 @@
 
   &__content {
     display: flex;
+    flex-direction: column;
 
     width: 100%;
     margin: 1.5rem 0;
@@ -259,6 +262,7 @@
 .similar-job {
   display: flex;
   flex-direction: column;
+  // justify-content: center;
   width: 100%;
   // margin: 2rem 0 0 0;
 
@@ -269,8 +273,13 @@
 
   &__content {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 
     margin: 2rem 0;
+
+    &:after {
+      content: "";
+      flex: 0 0 45%;
+    }
   }
 }
