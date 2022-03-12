@@ -59,6 +59,8 @@ function Header(props) {
     }
   };
 
+  window.addEventListener('resize', showButton);
+
   const onFetchCountNotifications = useCallback(async () => {
     try {
       const data = user.role_id === 2
@@ -88,8 +90,6 @@ function Header(props) {
     showButton();
     onFetchCountNotifications();
   }, [onFetchCountNotifications]);
-
-  window.addEventListener('resize', showButton);
 
   useEffect(() => {
     const fetchNotifications = async () => {

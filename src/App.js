@@ -20,7 +20,6 @@ import './App.scss';
 
 function App() {
   const notistackRef = createRef();
-  // const { enqueueSnackbar } = useSnackbar();
 
   // Configure Firebase.
   const config = {
@@ -30,8 +29,6 @@ function App() {
   };
 
   !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
-
-  
 
   return (
     <div className="App">
