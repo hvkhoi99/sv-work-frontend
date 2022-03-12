@@ -79,7 +79,7 @@ const userApi = {
   },
 
   getDetailOfEvent: (id) => {
-    const url = `/event/${id}`;
+    const url = `/event-detail/${id}`;
     return axiosClient.get(url);
   },
   
