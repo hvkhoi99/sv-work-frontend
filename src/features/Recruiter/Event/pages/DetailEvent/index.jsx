@@ -173,66 +173,82 @@ function DetailEventPage(props) {
   }
 
   const onCloseEvent = async (event) => {
-    setIsClosing(true);
-    try {
-      const action = await userApi.closeEvent(event.id);
-      if (action.data.status === 1) {
-        setEvent(state => ({
-          ...state,
-          is_closed: true
-        }));
-        enqueueSnackbar(action.data.message, { variant: "success" });
+    if ((user && Object.keys(user).length === 0)) {
+      onShow(true);
+      return;
+    } else {
+      setIsClosing(true);
+      try {
+        const action = await userApi.closeEvent(event.id);
+        if (action.data.status === 1) {
+          setEvent(state => ({
+            ...state,
+            is_closed: true
+          }));
+          enqueueSnackbar(action.data.message, { variant: "success" });
 
-      } else {
-        enqueueSnackbar(action.data.message, { variant: "error" });
+        } else {
+          enqueueSnackbar(action.data.message, { variant: "error" });
+        }
+        setIsClosing(false);
+        return;
+      } catch (error) {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        setIsClosing(false);
+        return;
       }
-      setIsClosing(false);
-      return;
-    } catch (error) {
-      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
-      setIsClosing(false);
-      return;
     }
   }
 
   const onJoinEvent = async (event) => {
-    setIsJoining(true);
-    try {
-      const action = await userApi.joinEvent(event.id);
-      if (action.data.status === 1) {
-        setEvent(state => ({
-          ...state,
-          is_joined: !state.is_joined
-        }));
-        enqueueSnackbar(action.data.message, { variant: "success" });
+    if ((user && Object.keys(user).length === 0)) {
+      onShow(true);
+      return;
+    } else {
+      setIsJoining(true);
+      try {
+        const action = await userApi.joinEvent(event.id);
+        if (action.data.status === 1) {
+          setEvent(state => ({
+            ...state,
+            is_joined: !state.is_joined
+          }));
+          enqueueSnackbar(action.data.message, { variant: "success" });
 
-      } else {
-        enqueueSnackbar(action.data.message, { variant: "error" });
+        } else {
+          enqueueSnackbar(action.data.message, { variant: "error" });
+        }
+        setIsJoining(false);
+        return;
+      } catch (error) {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        setIsJoining(false);
+        return;
       }
-      setIsJoining(false);
-      return;
-    } catch (error) {
-      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
-      setIsJoining(false);
-      return;
     }
   }
 
   const onDeleteEvent = async (event) => {
-    try {
-      const action = await userApi.deleteEvent(event.id);
-      if (action.data.status === 1) {
-        enqueueSnackbar(action.data.message, { variant: "success" });
-        history.goBack();
-      } else {
-        enqueueSnackbar(action.data.message, { variant: "error" });
+    if ((user && Object.keys(user).length === 0)) {
+      onShow(true);
+      return;
+    } else {
+      setIsDeleting(true);
+      try {
+        const action = await userApi.deleteEvent(event.id);
+        if (action.data.status === 1) {
+          enqueueSnackbar(action.data.message, { variant: "success" });
+          history.goBack();
+        } else {
+          enqueueSnackbar(action.data.message, { variant: "error" });
+        }
+        setIsDeleting(false);
+        return;
+      } catch (error) {
+        enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
+        setIsDeleting(false);
+        return;
       }
-      setIsDeleting(false);
-      return;
-    } catch (error) {
-      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
-      setIsDeleting(false);
-      return;
     }
   }
 
