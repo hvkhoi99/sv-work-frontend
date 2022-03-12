@@ -42,16 +42,25 @@
     width: 100%;
 
     &__item {
-      margin: 0 2.5rem 4rem;
+      margin: 0 2.45rem 4rem;
     }
 
     &__item-loading {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 14rem;
-      height: 15rem;
-      margin: 0 2.5rem 4rem;
+      // width: 100%;
+      // justify-content: center;
+      // align-items: center;
+      // width: 14rem;
+      // height: 15rem;
+      // margin: 0 2.5rem 4rem;
+
+      & > .skeleton-company-card {
+        margin-left: 5rem;
+
+        &:first-child {
+          margin-left: 2.5rem;
+        }
+      }
     }
   }
 
@@ -78,4 +87,11 @@
       }
     }
   }
+}
+
+.main-employers-area-skeleton-area {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 2.45rem;
 }

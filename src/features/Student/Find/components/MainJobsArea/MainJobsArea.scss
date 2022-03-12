@@ -40,19 +40,20 @@
     flex-flow: row wrap;
     // justify-content: space-between;
     // width: 100%;
+    padding: 0 .1rem;
 
     &__item {
-      margin: 0 2rem 4rem;
+      margin: 0 2.4rem 4rem;
     }
 
-    &__item-loading {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 14rem;
-      height: 21rem;
-      margin: 0 2.5rem 4rem;
-    }
+    // &__item-loading {
+    //   display: flex;
+    //   justify-content: center;
+    //   align-items: center;
+    //   width: 14rem;
+    //   height: 18rem;
+    //   margin: 0 2rem 4rem;
+    // }
   }
 
   &__more {
@@ -76,6 +77,28 @@
       & > span {
         font-weight: 500;
       }
+    }
+  }
+}
+
+.main-jobs-area-skeleton-area {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 2.1rem;
+}
+
+.main-jobs-area-skeleton-area-child {
+  display: flex;
+  // justify-content: center;
+  // width: 100%;
+  margin: 0 0 4rem;
+
+  & > .skeleton-recruitment-card {
+    margin-left: 4.8rem;
+    
+    &:first-child {
+      margin-left: 2.35rem;
     }
   }
 }

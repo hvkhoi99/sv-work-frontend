@@ -1,5 +1,6 @@
 import studentApi from 'api/studentApi';
-import LoadingChildUI from 'components/LoadingChild';
+// import LoadingChildUI from 'components/LoadingChild';
+import SkeletonCompanyCard from 'components/SkeletonCards/SkeletonCompany';
 import Images from 'constants/images';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -108,8 +109,14 @@ function MainEmployersArea(props) {
     <>
       {
         mainLoading
-          ? <div className="loading-child-ui">
-            <LoadingChildUI />
+          // ? <div className="loading-child-ui">
+          //   <LoadingChildUI />
+          // </div>
+          ? <div className="main-employers-area-skeleton-area">
+            <SkeletonCompanyCard />
+            <SkeletonCompanyCard />
+            <SkeletonCompanyCard />
+            <SkeletonCompanyCard />
           </div>
           : <div className="main-employers-area">
             <div className="main-employers-area__title">
@@ -150,7 +157,9 @@ function MainEmployersArea(props) {
                         }
                         {
                           isLoading && <div className="main-employers-area__content__item-loading">
-                            <LoadingChildUI />
+                            <SkeletonCompanyCard />
+                            <SkeletonCompanyCard />
+                            {/* <SkeletonCompanyCard /> */}
                           </div>
                         }
                       </div>

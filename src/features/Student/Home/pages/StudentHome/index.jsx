@@ -18,6 +18,9 @@ import TopRecruiterGroupCard from "../../components/TopRecruiterGroupCard";
 import './StudentHome.scss';
 import userApi from 'api/userApi';
 import { useSelector } from "react-redux";
+import SkeletonRecruitmentCard from "components/SkeletonCards/SkeletonRecruitmentCard";
+import EventCardSkeleton from 'features/Recruiter/Event/components/EventCardSkeleton';
+import Skeleton from 'react-loading-skeleton';
 
 function StudentHomePage(props) {
   const history = useHistory();
@@ -29,6 +32,10 @@ function StudentHomePage(props) {
   const roleId = parseInt(localStorage.getItem('role_id'), 10);
   const user = useSelector((state) => state.user.current);
   const [show, setShow] = useState(false);
+
+  const [isRecruitmentLoading, setIsRecruitmentLoading] = useState(true);
+  const [isEventLoading, setIsEventLoading] = useState(true);
+  const [isCompanyLoading, setIsCompanyLoading] = useState(true);
 
   const listImg = [
     [{ src: Images.bmw }, { src: Images.fb }],
@@ -97,6 +104,7 @@ function StudentHomePage(props) {
         if (topJobs.data.status === 1) {
           setTopJobs(topJobs.data.data);
         }
+        setIsRecruitmentLoading(false);
         return;
       } catch (error) {
         console.log("Cannot get top Recruitments. Error: ", error.message);
@@ -117,6 +125,7 @@ function StudentHomePage(props) {
         if (data.data.status === 1) {
           setTopEvents(data.data.data);
         }
+        setIsEventLoading(false);
         return;
       } catch (error) {
         console.log("Cannot get top Events. Error: ", error.message);
@@ -127,22 +136,23 @@ function StudentHomePage(props) {
     fetchTopEvents();
   }, []);
 
-  useEffect(() => {
-    const fetchTopRecruitments = async () => {
-      try {
-        const topJobs = await homeApi.getTopRecruitments();
-        if (topJobs.data.status === 1) {
-          setTopJobs(topJobs.data.data);
-        }
-        return;
-      } catch (error) {
-        console.log("Cannot get top Recruitments. Error: ", error.message);
-        return;
-      }
-    }
+  // useEffect(() => {
+  //   const fetchTopRecruitments = async () => {
+  //     try {
+  //       const topJobs = await homeApi.getTopRecruitments();
+  //       if (topJobs.data.status === 1) {
+  //         setTopJobs(topJobs.data.data);
+  //       }
+  //       setIsRecruitmentLoading(false);
+  //       return;
+  //     } catch (error) {
+  //       console.log("Cannot get top Recruitments. Error: ", error.message);
+  //       return;
+  //     }
+  //   }
 
-    fetchTopRecruitments();
-  }, []);
+  //   fetchTopRecruitments();
+  // }, []);
 
   useEffect(() => {
     const fetchTopRecruiters = async () => {
@@ -151,6 +161,7 @@ function StudentHomePage(props) {
         if (result.data.status === 1) {
           setTopRecruiters(result.data.data);
         }
+        setIsCompanyLoading(false);
         return;
       } catch (error) {
         console.log("Cannot get top recruiters. Error: ", error.message);
@@ -397,20 +408,31 @@ function StudentHomePage(props) {
               data-aos="fade-zoom-in"
               className="home__container__popular-jobs__main">
               {
-                topJobs.map((job, index) => {
-                  return <div
-                    key={index}
-                    className="home__container__popular-jobs__main__item"
-                  >
-                    <RecruitmentCard
-                      recruitment={job}
-                      applyText={renderStatusForApplyButton(job.application)}
-                      // isApplying={isApplying}
-                      onApplyJob={onApplyJob}
-                      onViewJob={onViewJob}
-                    />
+                isRecruitmentLoading
+                  ? <div className="top-recruitment-skeleton">
+                    <SkeletonRecruitmentCard />
+                    <SkeletonRecruitmentCard />
+                    <SkeletonRecruitmentCard />
+                    <SkeletonRecruitmentCard />
                   </div>
-                })
+                  : (
+                    topJobs.length > 0
+                      ? topJobs.map((job, index) => {
+                        return <div
+                          key={index}
+                          className="home__container__popular-jobs__main__item"
+                        >
+                          <RecruitmentCard
+                            recruitment={job}
+                            applyText={renderStatusForApplyButton(job.application)}
+                            // isApplying={isApplying}
+                            onApplyJob={onApplyJob}
+                            onViewJob={onViewJob}
+                          />
+                        </div>
+                      })
+                      : <span style={{ fontStyle: 'italic' }}>"No jobs have been created yet."</span>
+                  )
               }
             </div>
           </div>
@@ -440,17 +462,39 @@ function StudentHomePage(props) {
               data-aos="fade-zoom-in"
               className="home__container__top-events__right">
               {
-                topEvents.map((event, index) => {
-                  return <div
-                    className="home__container__top-events__right__item"
-                    key={index}
-                  >
-                    <EventCard
-                      event={event}
-                      onViewDetailEvent={onViewDetailEvent}
-                    />
+                isEventLoading
+                  ? <div className="top-event-skeleton">
+                    <div className="top-event-skeleton__item">
+                      <EventCardSkeleton />
+                    </div>
+                    <div className="top-event-skeleton__item">
+                      <EventCardSkeleton />
+                    </div>
+                    <div className="top-event-skeleton__item">
+                      <EventCardSkeleton />
+                    </div>
+                    <div className="top-event-skeleton__item">
+                      <EventCardSkeleton />
+                    </div>
                   </div>
-                })
+                  : (
+                    topEvents.length > 0
+                      ? topEvents.map((event, index) => {
+                        return <div
+                          className="home__container__top-events__right__item"
+                          key={index}
+                        >
+                          <EventCard
+                            event={event}
+                            onViewDetailEvent={onViewDetailEvent}
+                          />
+                        </div>
+                      })
+                      : <div className="event-main__container__upcomming-events__no-data">
+                        {/* <span>"No events have been created yet."</span> */}
+                        <img src={Images.upcomingEvent} alt="upcoming event" />
+                      </div>
+                  )
               }
             </div>
           </div>
@@ -463,14 +507,48 @@ function StudentHomePage(props) {
             <div
               data-aos="fade-zoom-in"
               className="home__container__top-recruiter__main">
-              {topRecruiters.map((recruiters, index) => {
-                return <TopRecruiterGroupCard
-                  cardSize={cardSize[index]}
-                  listImg={listImg[index]}
-                  recruiters={recruiters}
-                  key={index}
-                />
-              })}
+              {
+                isCompanyLoading
+                  ? <div className="top-company-skeleton">
+                    <Skeleton
+                      circle
+                      width={120}
+                      height={120}
+                    />
+                    <Skeleton
+                      circle
+                      width={150}
+                      height={150}
+                    />
+                    <Skeleton
+                      circle
+                      width={200}
+                      height={200}
+                    />
+                    <Skeleton
+                      circle
+                      width={150}
+                      height={150}
+                    />
+                    <Skeleton
+                      circle
+                      width={120}
+                      height={120}
+                    />
+                  </div>
+                  : (
+                    topRecruiters.length > 0
+                    ? topRecruiters.map((recruiters, index) => {
+                      return <TopRecruiterGroupCard
+                        cardSize={cardSize[index]}
+                        listImg={listImg[index]}
+                        recruiters={recruiters}
+                        key={index}
+                      />
+                    })
+                    : <span style={{fontStyle: 'italic'}}>No Employers registered yet.</span>
+                  )
+              }
             </div>
           </div>
 

@@ -1,5 +1,5 @@
 import studentApi from 'api/studentApi';
-import LoadingChildUI from 'components/LoadingChild';
+// import LoadingChildUI from 'components/LoadingChild';
 import Images from 'constants/images';
 import RecruitmentCard from 'features/Recruiter/Recruitment/components/RecruitmentCard';
 import PropTypes from 'prop-types';
@@ -9,6 +9,8 @@ import * as RiIcons from 'react-icons/ri';
 import * as FaIcons from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 import './MainJobsArea.scss';
+import SkeletonRecruitmentCard from 'components/SkeletonCards/SkeletonRecruitmentCard';
+// import SkeletonRecruitmentCard from 'components/SkeletonCards/SkeletonRecruitment';
 
 MainJobsArea.propTypes = {
   initialValues: PropTypes.object,
@@ -141,7 +143,7 @@ function MainJobsArea(props) {
 
   const onApplyJob = (jobId) => {
     // setIsApplying(!isApplying);
-    console.log({jobId})
+    console.log({ jobId })
   }
 
   // console.log({jobs})
@@ -150,8 +152,14 @@ function MainJobsArea(props) {
     <>
       {
         mainLoading
-          ? <div className="loading-child-ui">
-            <LoadingChildUI />
+          // ? <div className="loading-child-ui">
+          //   <LoadingChildUI />
+          // </div>
+          ? <div className="main-jobs-area-skeleton-area">
+            <SkeletonRecruitmentCard />
+            <SkeletonRecruitmentCard />
+            <SkeletonRecruitmentCard />
+            <SkeletonRecruitmentCard />
           </div>
           : <div className="main-jobs-area">
             <div className="main-jobs-area__title">
@@ -194,8 +202,14 @@ function MainJobsArea(props) {
                           })
                         }
                         {
-                          isLoading && <div className="main-jobs-area__content__item-loading">
-                            <LoadingChildUI />
+                          // isLoading && <div className="main-jobs-area__content__item-loading">
+                          //   <LoadingChildUI />
+                          // </div>
+                          isLoading && <div className="main-jobs-area-skeleton-area-child">
+                            <SkeletonRecruitmentCard />
+                            <SkeletonRecruitmentCard />
+                            {/* <SkeletonRecruitmentCard />
+                            <SkeletonRecruitmentCard /> */}
                           </div>
                         }
                       </div>

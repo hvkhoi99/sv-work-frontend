@@ -1,8 +1,8 @@
 import studentApi from 'api/studentApi';
-import LoadingChildUI from 'components/LoadingChild';
 import { updateUser } from 'features/Auth/userSlice';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { useDispatch, useSelector } from 'react-redux';
 import StudentCertificatesCard from '../StudentCertificates';
 import StudentEducationsCard from '../StudentEducations';
@@ -648,8 +648,65 @@ function StudentProfileCard(props) {
     <>
       {
         isLoading
-          ? <div className="loading-child-ui" style={{margin: '5rem 0 0 0'}}>
-            <LoadingChildUI />
+          // ? <div className="loading-child-ui" style={{margin: '5rem 0 0 0'}}>
+          //   <LoadingChildUI />
+          // </div>
+          ? <div className="student-profile-card-skeleton-area">
+            <Skeleton
+              width={100}
+              height={30}
+            />
+            <div className="student-profile-card-skeleton-area__top">
+              <div className="student-profile-card-skeleton-area__top__left">
+                <Skeleton
+                  width={50}
+                  height={15}
+                  style={{
+                    margin: '1rem 0'
+                  }}
+                />
+                <Skeleton
+                  width={200}
+                  height={15}
+                />
+              </div>
+              <div className="student-profile-card-skeleton-area__top__center">
+                <Skeleton
+                  width={100}
+                  height={15}
+                  style={{
+                    margin: '1rem 0'
+                  }}
+                />
+                <Skeleton
+                  width={50}
+                  height={15}
+                />
+              </div>
+              <div className="student-profile-card-skeleton-area__top__right">
+                <Skeleton
+                  width={100}
+                  height={15}
+                  style={{
+                    margin: '1rem 0'
+                  }}
+                />
+                <Skeleton
+                  width={200}
+                  height={15}
+                />
+              </div>
+            </div>
+            <Skeleton
+              width={200}
+              height={30}
+            />
+            <div className="student-profile-card-skeleton-area__top">
+              <Skeleton
+                width={600}
+                height={15}
+              />
+            </div>
           </div>
           : <div className="student-profile-card">
             <div className="student-profile-card__personal-info">

@@ -1,8 +1,7 @@
 
 import recruiterApi from 'api/recruiterApi';
 import studentApi from 'api/studentApi';
-// import LoadingUI from 'components/Loading';
-import LoadingChildUI from 'components/LoadingChild';
+import SkeletonCandidateCard from 'components/SkeletonCards/SkeletonCandidate';
 import { SORT_OPTIONS_CANDIDATE } from 'constants/global';
 import Images from 'constants/images';
 import Paths from 'constants/paths';
@@ -309,9 +308,9 @@ function FindCadidatesPage(props) {
                     // isSearching
                     //   ? <span className="spinner-border spinner-border-lg" />
                     //   : 
-                      (isSearched
-                        ? <CgIcons.CgSearchFound className="search-icon" />
-                        : <RiIcons.RiSearchLine className="search-icon" />)
+                    (isSearched
+                      ? <CgIcons.CgSearchFound className="search-icon" />
+                      : <RiIcons.RiSearchLine className="search-icon" />)
                   }
                 </Link>
               </div>
@@ -334,8 +333,12 @@ function FindCadidatesPage(props) {
             </div>
             {
               isLoading
-                ? <div className="loading-child-ui" style={{ margin: '5rem 0' }}>
-                  <LoadingChildUI />
+                ? <div className="find-candidates-skeleton-area" style={{ margin: '5rem 0' }}>
+                  {/* <LoadingChildUI /> */}
+                  <SkeletonCandidateCard />
+                  <SkeletonCandidateCard />
+                  <SkeletonCandidateCard />
+                  <SkeletonCandidateCard />
                 </div>
                 : <>
                   <div className="find-candidates__container__below">

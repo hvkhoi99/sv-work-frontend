@@ -1,5 +1,5 @@
 import studentApi from 'api/studentApi';
-import LoadingChildUI from 'components/LoadingChild';
+// import LoadingChildUI from 'components/LoadingChild';
 import Paths from 'constants/paths';
 import { useSnackbar } from 'notistack';
 import queryString from 'query-string';
@@ -13,6 +13,7 @@ import * as RiIcons from 'react-icons/ri';
 import StudentResumeItemCard from '../StudentResumeItem';
 // import PropTypes from 'prop-types';
 import './StudentResumeCard.scss';
+import Skeleton from 'react-loading-skeleton';
 
 StudentResumeCard.propTypes = {
 
@@ -125,8 +126,19 @@ function StudentResumeCard(props) {
       <div className="student-resume-card__main">
         {
           isLoading
-            ? <div className="loading-child-ui">
-              <LoadingChildUI />
+            // ? <div className="loading-child-ui">
+            //   <LoadingChildUI />
+            // </div>
+            ? <div className="student-resume-card__main__skeleton-area">
+              <Skeleton
+                width={160}
+                height={227}
+              />
+              <Skeleton
+                width={160}
+                height={227}
+                style={{marginLeft: '2rem'}}
+              />
             </div>
             : <>
               <div className="student-resume-card__main__items">
