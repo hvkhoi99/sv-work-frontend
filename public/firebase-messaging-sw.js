@@ -13,8 +13,8 @@ importScripts("https://www.gstatic.com/firebasejs/8.2.0/firebase-messaging.js");
 // Initialize the Firebase app in the service worker by passing the generated config
 const firebaseConfig = {
   apiKey: "AIzaSyAEaJSqwXBi9pu7Ue3JzSA9uupRhnxY-34",
-  // authDomain: "sv-work-56ffe.firebaseapp.com",
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  authDomain: "sv-work-56ffe.firebaseapp.com",
+  // authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   databaseURL: "https://sv-work-56ffe-default-rtdb.firebaseio.com",
   projectId: "sv-work-56ffe",
   storageBucket: "sv-work-56ffe.appspot.com",

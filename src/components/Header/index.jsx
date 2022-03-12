@@ -55,7 +55,7 @@ function Header(props) {
     if (window.innerWidth <= 960) {
       setButton(false);
     } else {
-      setButton(true);
+    setButton(true);
     }
   };
 

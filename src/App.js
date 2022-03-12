@@ -24,8 +24,8 @@ function App() {
   // Configure Firebase.
   const config = {
     apiKey: "AIzaSyAEaJSqwXBi9pu7Ue3JzSA9uupRhnxY-34",
-    // authDomain: "sv-work-56ffe.firebaseapp.com",
-    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    authDomain: "sv-work-56ffe.firebaseapp.com",
+    // authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   };
 
   !firebase.apps.length ? firebase.initializeApp(config) : firebase.app();
