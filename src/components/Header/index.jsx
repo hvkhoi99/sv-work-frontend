@@ -88,10 +88,10 @@ function Header(props) {
     showButton();
     onFetchCountNotifications();
   }, [onFetchCountNotifications]);
-  
+
   window.addEventListener('resize', showButton);
 
-  console.log("1")
+  // console.log("1")
 
   useEffect(() => {
     const fetchNotifications = async () => {
