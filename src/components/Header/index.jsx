@@ -51,16 +51,6 @@ function Header(props) {
   );
   const _limit = 6;
 
-  const showButton = () => {
-    if (window.innerWidth <= 960) {
-      setButton(false);
-    } else {
-    setButton(true);
-    }
-  };
-
-  window.addEventListener('resize', showButton);
-
   const onFetchCountNotifications = useCallback(async () => {
     try {
       const data = user.role_id === 2
@@ -90,6 +80,16 @@ function Header(props) {
     showButton();
     onFetchCountNotifications();
   }, [onFetchCountNotifications]);
+
+  const showButton = () => {
+    if (window.innerWidth <= 960) {
+      setButton(false);
+    } else {
+    setButton(true);
+    }
+  };
+
+  window.addEventListener('resize', showButton);
 
   useEffect(() => {
     const fetchNotifications = async () => {
