@@ -1,3 +1,4 @@
+import NotFoundPage from 'components/NotFound';
 import React from 'react';
 import { Route, Switch, useRouteMatch } from 'react-router-dom';
 import ConfirmFirstUpdatePage from './pages/ConfirmFirstUpdate';
@@ -17,6 +18,7 @@ function BeginnerFeature(props) {
       <Route exact path={`${match.url}`} component={ConfirmFirstUpdatePage} />
       <Route exact path={`${match.url}/recruiter`} component={RecruiterUpdateProfilePage} />
       <Route exact path={`${match.url}/student`} component={StudentUpdateProfilePage} />
+      <Route path="*" component={NotFoundPage} />
     </Switch>
     </>
   );

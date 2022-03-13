@@ -1,5 +1,6 @@
 import Footer from 'components/Footer';
 import Header from 'components/Header';
+import NotFoundPage from 'components/NotFound';
 import RecruiterHomeFeature from 'features/Recruiter/Home';
 import React from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
@@ -20,6 +21,7 @@ function StudentFindFeature(props) {
       <Header />
       <Switch>
         <Route exact path={`${match.url}`} component={FindJobsPage} />
+        <Route path="*" component={NotFoundPage} />
       </Switch>
       <Footer />
     </>

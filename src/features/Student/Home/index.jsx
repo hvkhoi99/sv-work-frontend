@@ -34,6 +34,7 @@ function StudentHomeFeature(props) {
           <Header />
           <Switch>
             <Route exact path={match.url} component={StudentHomePage} />
+            {/* <Route path="*" component={NotFoundPage} /> */}
           </Switch>
           <Footer />
         </>
