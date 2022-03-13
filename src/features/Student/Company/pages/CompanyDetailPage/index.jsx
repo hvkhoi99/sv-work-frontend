@@ -39,7 +39,7 @@ function CompanyDetailPage(props) {
   const { enqueueSnackbar } = useSnackbar();
   const [jobs, setJobs] = useState([]);
   const [isJobsLoading, setIsJobsLoading] = useState(true);
-  const _limit = 3;
+  const _limit = 4;
   const { search } = useLocation();
   const page = parseInt(queryString.parse(search).page);
   const [currentPage, setCurrentPage] = useState(page > 1 ? page : 1);
