@@ -273,13 +273,12 @@
 
   &__content {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 
     margin: 2rem 0;
 
-    &:after {
-      content: "";
-      flex: 0 0 45%;
+    & > .recruitment-card {
+      margin: 0 2rem;
     }
   }
 }

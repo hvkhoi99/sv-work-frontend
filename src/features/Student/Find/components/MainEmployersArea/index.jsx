@@ -35,7 +35,7 @@ function MainEmployersArea(props) {
   const [total, setTotal] = useState(0);
   const [show, setShow] = useState(true);
 
-  const _limit = 2;
+  const _limit = 4;
 
   useEffect(() => {
     setMainLoading(true);
