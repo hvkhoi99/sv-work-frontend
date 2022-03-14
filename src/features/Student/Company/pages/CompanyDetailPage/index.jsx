@@ -86,6 +86,7 @@ function CompanyDetailPage(props) {
         } else {
           setJobs([]);
         }
+        //
         setIsJobsLoading(false);
         return;
       } catch (error) {
