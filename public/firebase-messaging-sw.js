@@ -35,7 +35,8 @@ messaging.onBackgroundMessage(function (payload) {
 
   const notificationTitle = payload.notification.title;
   const notificationOptions = {
-    body: payload.notification.body,
+    // body: payload.notification.body,
+    body: "You have a new message.",
     icon: "/logo192.png",
   };
 
