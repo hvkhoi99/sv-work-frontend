@@ -5,11 +5,11 @@ import InputField from "custom-fields/InputField";
 import { login } from 'features/Auth/adminSlice';
 import 'firebase/compat/auth';
 import { FastField, Form, Formik } from 'formik';
+import { getToken } from 'init-fcm';
 import { useSnackbar } from 'notistack';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import helper from 'utils/common';
 import * as Yup from 'yup';
 import './AdminLogin.scss';
 
@@ -25,8 +25,8 @@ function AdminLoginPage(props) {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const isRecruiterPath = localStorage.getItem('isRecruiterPath');
-  // const [isTokenFound, setTokenFound] = useState(false);
-  // const [firebaseToken, setFirebaseToken] = useState(null);
+  const [isTokenFound, setTokenFound] = useState(false);
+  const [firebaseToken, setFirebaseToken] = useState(null);
 
   const validationSchema = Yup.object().shape({
     email: Yup
@@ -38,37 +38,24 @@ function AdminLoginPage(props) {
       .required('Password is required')
   })
 
-    // console.log("Token found", isTokenFound);
-
-  // useEffect(() => {
-  //   let data;
-
-  //   async function tokenFunc() {
-  //     data = await getToken(setTokenFound);
-  //     if (data) {
-  //       // console.log("Token is", data);
-  //       setFirebaseToken(data);
-  //     }
-  //     setTimeout(() => {
-  //       setIsLoading(false);
-  //     }, 1000);
-  //     return data;
-  //   }
-
-  //   tokenFunc();
-  // }, [setTokenFound]);
-
+    console.log("Token found", isTokenFound);
   useEffect(() => {
-    helper.scrollToTop();
+    let data;
 
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000)
+    async function tokenFunc() {
+      data = await getToken(setTokenFound);
+      if (data) {
+        // console.log("Token is", data);
+        setFirebaseToken(data);
+      }
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+      return data;
+    }
 
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
+    tokenFunc();
+  }, [setTokenFound]);
 
   const onSignIn = async (values) => {
     try {
@@ -81,7 +68,7 @@ function AdminLoginPage(props) {
       const action = login({
         email: values.email,
         password: values.password,
-        // device_token: firebaseToken
+        device_token: firebaseToken
       });
 
       const actionResult = await dispatch(action);
