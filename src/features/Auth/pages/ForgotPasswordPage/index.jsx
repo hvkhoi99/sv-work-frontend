@@ -34,7 +34,6 @@ function ForgotPasswordPage(props) {
     // reset
   } = useForm({ resolver: yupResolver(schema) });
 
-
   useEffect(() => {
     helper.scrollToTop();
     const timer = setTimeout(() => {
