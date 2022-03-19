@@ -136,23 +136,7 @@ function StudentHomePage(props) {
     fetchTopEvents();
   }, []);
 
-  // useEffect(() => {
-  //   const fetchTopRecruitments = async () => {
-  //     try {
-  //       const topJobs = await homeApi.getTopRecruitments();
-  //       if (topJobs.data.status === 1) {
-  //         setTopJobs(topJobs.data.data);
-  //       }
-  //       setIsRecruitmentLoading(false);
-  //       return;
-  //     } catch (error) {
-  //       console.log("Cannot get top Recruitments. Error: ", error.message);
-  //       return;
-  //     }
-  //   }
-
-  //   fetchTopRecruitments();
-  // }, []);
+  //
 
   useEffect(() => {
     const fetchTopRecruiters = async () => {
@@ -455,6 +439,7 @@ function StudentHomePage(props) {
                 >Post</button>
               </div>
             </div>
+            
             <div
               data-aos="fade-zoom-in"
               className="home__container__top-events__right">
