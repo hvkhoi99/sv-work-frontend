@@ -98,7 +98,7 @@ function RecruiterHomePage(props) {
               {/* <img src={Images.smDot} alt="smDot" /> */}
               <GoIcons.GoPrimitiveDot className="dot-icon" />
             </div>
-            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quidem ipsa rem quis, odio numquam ducimus soluta explicabo exercitationem aperiam dolor blanditiis impedit ipsam modi officiis, facere quas reiciendis deserunt doloremque.</p>
+            <p>Not only the content of the job posting, but the content of the title is also an important factor to attract candidates. So, choose a perfect headline and compelling content to make your job posting stand out. Create new now!</p>
             <div className="recruiter-home__container__recruitment__right__button">
               <button
                 type="button"
@@ -124,7 +124,7 @@ function RecruiterHomePage(props) {
               <GoIcons.GoPrimitiveDot
                 className="dot-icon" />
             </div>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Id maxime minus fugiat iste facilis dolorum quae voluptatem? Ipsam, explicabo eum accusamus labore itaque sunt nesciunt inventore voluptatum magnam. Alias, sit!</p>
+            <p>No need to wait for candidates to find you on their own, you can use different methods to find candidates that match your requirements. We will bring you the most accurate results to satisfy your requirements.</p>
             <div className="recruiter-home__container__find-candidates__left__button">
               <button
                 type="button"
@@ -146,7 +146,7 @@ function RecruiterHomePage(props) {
               <h3>Recruitment Management</h3>
               <GoIcons.GoPrimitiveDot className="dot-icon" />
             </div>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, expedita? Adipisci eum velit, aut eaque modi ea quibusdam doloribus doloremque, ducimus debitis culpa voluptate beatae id accusamus, praesentium molestiae. Hic.</p>
+            <p>Managing recruitment posts and posts is sometimes difficult because of its complexity. We want to give you a new experience of managing your posted job postings simply and easily in our "Manage Job Posts" page.</p>
             <div className="recruiter-home__container__recruitment-management__top__button">
               <button
                 type="button"

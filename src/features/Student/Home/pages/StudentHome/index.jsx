@@ -389,7 +389,7 @@ function StudentHomePage(props) {
               <div
                 data-aos="fade-right"
                 className="home__container__overview__main__text">
-                <p>“Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto inventore quas maxime sequi aut! Assumenda aperiam eveniet saepe ad sunt nam necessitatibus sit odio. Voluptatum a eum recusandae. Soluta, amet.”</p>
+                <p>“We want to create a platform to help employers find young, dynamic and creative human resources, and at the same time help students easily find and have many opportunities to experience real work before graduation.”</p>
               </div>
               <div
                 // data-aos="fade-left"
@@ -444,10 +444,7 @@ function StudentHomePage(props) {
                 <div className="home__container__top-events__left__title__dot"></div>
               </div>
               <div className="home__container__top-events__left__description">
-                <p>"Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Dolore alias atque eveniet odio beatae quidem asperiores dolorum excepturi
-                  fuga eaque vitae laboriosam,
-                  vero natus ratione facilis fugit quod similique deleniti!"
+                <p>"Events can be held regularly to provide, answer questions and attract candidates to the company. Join now because maybe the information you need to know may be coming soon!"
                 </p>
               </div>
               <div className="home__container__top-events__left__btn-group">
